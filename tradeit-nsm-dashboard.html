@@ -335,6 +335,28 @@
             border-color: var(--accent);
             color: var(--accent);
         }
+
+        .term {
+            border-bottom: 1px dotted var(--text-muted);
+            cursor: help;
+            position: relative;
+        }
+        .term:hover::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            z-index: 20;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
     </style>
 </head>
 <body>
@@ -343,7 +365,8 @@
             <span class="badge">FOR INTERNAL USE</span>
             <h1>Tradeit — Brand Integration Performance</h1>
             <h2>NSM Analysis: Jan–Feb 2026 | € Value per Conversion</h2>
-            <p>Primary metric: € per 1K EBU (replaces deprecated OVU formula)</p>
+            <p>Primary metric: € per 1K EBU</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span> = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.</p>
         </header>
 
         <div class="tabs">
@@ -359,12 +382,12 @@
                 <div class="kpi-card">
                     <div class="kpi-title">Jan Total Value</div>
                     <div class="kpi-value">€11,343</div>
-                    <div class="kpi-sub">€19/1K EBU | 591K EBU</div>
+                    <div class="kpi-sub">€19/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 591K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Feb Total Value</div>
                     <div class="kpi-value">€12,566</div>
-                    <div class="kpi-sub">€21/1K EBU | 601K EBU</div>
+                    <div class="kpi-sub">€21/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 601K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">MoM Change</div>
@@ -376,7 +399,17 @@
 
 
         <div class="section" id="section-2">
-            <h2 class="section-title">2. Region-Level Summary</h2>
+            <h2 class="section-title">2. NSM Trend</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                Apr–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Feb 2026 use actual mission data.
+            </p>
+            <div class="chart-container">
+                <canvas id="nsmTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="section" id="section-3">
+            <h2 class="section-title">3. Region-Level Summary</h2>
             <div class="grid-2">
                 <div>
                     <div class="table-wrapper">
@@ -412,8 +445,8 @@
         </div>
 
 
-        <div class="section" id="section-3">
-            <h2 class="section-title">3. Month-over-Month Comparison</h2>
+        <div class="section" id="section-4">
+            <h2 class="section-title">4. Month-over-Month Comparison</h2>
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
                 NA declined <span class="highlight" style="color: var(--red);">-18.4%</span> in efficiency while CIS grew <span class="highlight" style="color: var(--green);">+24.0%</span>.
             </p>
@@ -423,8 +456,8 @@
         </div>
 
 
-        <div class="section" id="section-4">
-            <h2 class="section-title">4. NA A/B Test (January)</h2>
+        <div class="section" id="section-5">
+            <h2 class="section-title">5. NA A/B Test (January)</h2>
             <div class="grid-2">
                 <div class="ab-card">
                     <h3>Group A (1000 FP)</h3>
@@ -432,9 +465,9 @@
                     <div class="ab-stat"><span>Value Generated</span> <span>€502.37</span></div>
                     <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€23.33</span></div>
                     <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                    <div class="ab-stat"><span>AL Rate</span> <span>4.734%</span></div>
-                    <div class="ab-stat"><span>C1 Rate</span> <span>0.817%</span></div>
-                    <div class="ab-stat"><span>C2 Rate</span> <span>0.088%</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span>4.734%</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span>0.817%</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span>0.088%</span></div>
                 </div>
                 <div class="ab-card" style="border-color: var(--accent);">
                     <h3>Group B (2000 FP) - <span style="color:var(--text);">Winner</span></h3>
@@ -442,16 +475,16 @@
                     <div class="ab-stat"><span>Value Generated</span> <span>€520.87</span></div>
                     <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€24.04</span></div>
                     <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                    <div class="ab-stat"><span>AL Rate</span> <span class="highlight" style="color: var(--green);">5.193% (+10.4%)</span></div>
-                    <div class="ab-stat"><span>C1 Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
-                    <div class="ab-stat"><span>C2 Rate</span> <span style="color: var(--red);">0.078%</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span class="highlight" style="color: var(--green);">5.193% (+10.4%)</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
+                    <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span style="color: var(--red);">0.078%</span></div>
                 </div>
             </div>
         </div>
 
 
-        <div class="section" id="section-5">
-            <h2 class="section-title">5. Segment Performance (€/1K EBU)</h2>
+        <div class="section" id="section-6">
+            <h2 class="section-title">6. Segment Performance (€/1K EBU)</h2>
             <div class="grid-2">
                 <div class="table-wrapper">
                     <table>
@@ -461,9 +494,9 @@
                             </tr>
                             <tr>
                                 <th>Region</th>
-                                <th class="number">TOFU</th>
-                                <th class="number">MOFU</th>
-                                <th class="number">BOFU</th>
+                                <th class="number"><span class="term" data-tip="Top of Funnel — new/unactivated users">TOFU</span></th>
+                                <th class="number"><span class="term" data-tip="Middle of Funnel — linked, no trade yet">MOFU</span></th>
+                                <th class="number"><span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -482,9 +515,9 @@
                             </tr>
                             <tr>
                                 <th>Region</th>
-                                <th class="number">TOFU</th>
-                                <th class="number">MOFU</th>
-                                <th class="number">BOFU</th>
+                                <th class="number"><span class="term" data-tip="Top of Funnel — new/unactivated users">TOFU</span></th>
+                                <th class="number"><span class="term" data-tip="Middle of Funnel — linked, no trade yet">MOFU</span></th>
+                                <th class="number"><span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -499,31 +532,49 @@
         </div>
 
 
-        <div class="section" id="section-6">
-            <h2 class="section-title">6. Value Breakdown by Conversion Type</h2>
-            <div class="grid-2">
-                <div class="chart-container small">
-                    <canvas id="janBreakdownChart"></canvas>
-                </div>
-                <div class="chart-container small">
-                    <canvas id="febBreakdownChart"></canvas>
-                </div>
-            </div>
+        
         </div>
 
 
         <div class="section" id="section-7">
-            <h2 class="section-title">7. Funnel Conversion Rates</h2>
+            <h2 class="section-title">7. Tradeit Conversion Funnel</h2>
+            <div class="insight-card" style="padding: 2rem; background-color: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Total Eligible</div>
+                    </div>
+                    <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Account Linkage — €0.38">AL</span></div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Account Linkage (€0.38)</div>
+                    </div>
+                    <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="First Trade — €0.04">C1</span></div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">First Trade (€0.04)</div>
+                    </div>
+                    <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Trade $250+ — €8.75">C2</span></div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Trade $250+ (€8.75)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section-8">
+            <h2 class="section-title">8. Funnel Conversion Rates</h2>
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
                             <th>Month</th>
                             <th>Region</th>
-                            <th class="number">TOFU AL%</th>
-                            <th class="number">TOFU C1%</th>
-                            <th class="number">MOFU C1%</th>
-                            <th class="number">BOFU C2%</th>
+                            <th class="number"><span class="term" data-tip="Top of Funnel — new/unactivated users">TOFU</span> <span class="term" data-tip="Account Linkage — €0.38">AL</span>%</th>
+                            <th class="number"><span class="term" data-tip="Top of Funnel — new/unactivated users">TOFU</span> <span class="term" data-tip="First Trade — €0.04">C1</span>%</th>
+                            <th class="number"><span class="term" data-tip="Middle of Funnel — linked, no trade yet">MOFU</span> <span class="term" data-tip="First Trade — €0.04">C1</span>%</th>
+                            <th class="number"><span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> <span class="term" data-tip="Trade $250+ — €8.75">C2</span>%</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -541,23 +592,35 @@
         </div>
 
 
-        <div class="section" id="section-8">
-            <h2 class="section-title">8. Key Insights</h2>
+        <div class="section" id="section-9">
+            <h2 class="section-title">9. Value Breakdown by Conversion Type</h2>
+            <div class="grid-2">
+                <div class="chart-container small">
+                    <canvas id="janBreakdownChart"></canvas>
+                </div>
+                <div class="chart-container small">
+                    <canvas id="febBreakdownChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section-10">
+            <h2 class="section-title">10. Key Insights</h2>
             <div class="insight-card">
-                <h3>1. C2 Dominates Value</h3>
-                <p>The C2 conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.</p>
+                <h3>1. <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Dominates Value</h3>
+                <p>The <span class="term" data-tip="Trade $250+ — €8.75">C2</span> conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.</p>
             </div>
             <div class="insight-card">
                 <h3>2. CIS Volume vs Efficiency</h3>
-                <p>CIS represents 79% of the total EBU audience, but suffers from a low AL rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.</p>
+                <p>CIS represents 79% of the total <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> audience, but suffers from a low <span class="term" data-tip="Account Linkage — €0.38">AL</span> rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.</p>
             </div>
             <div class="insight-card">
                 <h3>3. Shifting Regional Momentum</h3>
-                <p>MoM efficiency diverged significantly: NA's €/1K EBU declined by -18.4%, whereas CIS saw substantial growth of +24.0%.</p>
+                <p>MoM efficiency diverged significantly: NA's €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> declined by -18.4%, whereas CIS saw substantial growth of +24.0%.</p>
             </div>
             <div class="insight-card">
-                <h3>4. BOFU is the C2 Engine</h3>
-                <p>The BOFU segment yields the highest €/1K EBU by far, operating as a pure C2 generation engine, though constrained by a small audience size.</p>
+                <h3>4. <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> is the <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Engine</h3>
+                <p>The <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> segment yields the highest €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> by far, operating as a pure <span class="term" data-tip="Trade $250+ — €8.75">C2</span> generation engine, though constrained by a small audience size.</p>
             </div>
             <div class="insight-card">
                 <h3>5. Untracked Opportunities</h3>
@@ -847,6 +910,128 @@
             { event: 'sell_or_buy_200_dollars', data: [23, 26, 26, 27, 19, 47, 56, 25, 19, 39, 27, 45, 0, 0, 0, 0, 0, 0] },
             { event: 'notification', data: [0, 0, 0, 1, 257, 530, 0, 0, 0, 1, 0, 1, 52, 6335, 2835, 6974, 14112, 2] }
         ];
+
+        
+        // NSM Trend Calculation
+        const trendLabels = ['Apr 25', 'May 25', 'Jun 25', 'Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26'];
+        
+        const estValues = [];
+        const actualValues = [];
+        const ebuLineData = [];
+        
+        for (let i = 11; i >= 3; i--) {
+            const tradeit = cdpData[0].data[i];
+            const trade = cdpData[2].data[i];
+            const trade250 = cdpData[4].data[i];
+            
+            const estVal = (tradeit * 0.38) + (trade * 0.04) + (trade250 * 8.75);
+            estValues.push(estVal);
+            actualValues.push(null);
+            ebuLineData.push(null);
+        }
+        
+        // Jan 26
+        estValues.push(null);
+        actualValues.push(11343);
+        ebuLineData.push(19);
+        
+        // Feb 26
+        estValues.push(null);
+        actualValues.push(12566);
+        ebuLineData.push(21);
+        
+        const ctxNsmTrend = document.getElementById('nsmTrendChart').getContext('2d');
+        new Chart(ctxNsmTrend, {
+            type: 'bar',
+            data: {
+                labels: trendLabels,
+                datasets: [
+                    {
+                        type: 'line',
+                        label: '€/1K EBU',
+                        data: ebuLineData,
+                        borderColor: '#22c55e',
+                        backgroundColor: '#22c55e',
+                        borderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        showLine: false,
+                        yAxisID: 'y1',
+                        order: 1
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Estimated € Value (CDP)',
+                        data: estValues,
+                        backgroundColor: 'rgba(255, 85, 0, 0.4)',
+                        borderRadius: 4,
+                        order: 2
+                    },
+                    {
+                        type: 'bar',
+                        label: 'Actual € Value (Missions)',
+                        data: actualValues,
+                        backgroundColor: '#ff5500',
+                        borderRadius: 4,
+                        order: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#d4d6dd' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) label += ': ';
+                                if (context.datasetIndex === 0) {
+                                    if (context.parsed.y !== null) {
+                                        return label + '€' + context.parsed.y;
+                                    }
+                                    return null;
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += '€' + context.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#d4d6dd' },
+                        stacked: true
+                    },
+                    y: {
+                        grid: { color: gridColor },
+                        ticks: { 
+                            color: '#d4d6dd',
+                            callback: value => '€' + value.toLocaleString('en-US')
+                        },
+                        stacked: true,
+                        beginAtZero: true
+                    },
+                    y1: {
+                        position: 'right',
+                        grid: { display: false },
+                        ticks: {
+                            color: '#22c55e',
+                            callback: value => '€' + value
+                        },
+                        min: 0,
+                        max: 60
+                    }
+                }
+            }
+        });
 
         // Format number with commas
         const formatNumber = num => num === 0 ? '-' : num.toLocaleString('en-US');
