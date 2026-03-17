@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prebid Experiment: Moba vs Publift</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #FEFEFE;
+    --surface: #EEEEEE;
+    --surface-2: #CCCCCC;
+    --border: #CCCCCC;
+    --text: #000000;
+    --text-muted: #595959;
+    --accent: #4285F4;
+    --accent-light: #4285F4;
+    --green: #0097A7;
+    --green-bg: #EEEEEE;
+    --red: #D63031;
+    --orange: #FFAB40;
+    --orange-bg: #EEEEEE;
+    --blue: #78909C;
+    --blue-bg: #EEEEEE;
+    --dark-bar: #262626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 80px 80px 80px; /* 60px below top bar + 40px top bar = 100px; 50px above footer + 30px footer = 80px */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide.active { display: flex; opacity: 1; }
+
+  /* Top Bar */
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--dark-bar);
+    z-index: 1;
+  }
+
+  /* Footer Bar */
+  .slide::after {
+    content: 'CONFIDENTIAL';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: var(--dark-bar);
+    color: #FFFFFF;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    font-size: 7pt;
+    display: flex;
+    align-items: center;
+    padding-left: 80px;
+    z-index: 10;
+  }
+
+  /* We position .label over the top bar */
+  .label {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    height: 40px;
+    color: #FFFFFF;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px; /* 16-18pt per spec */
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    letter-spacing: normal;
+    z-index: 2;
+    margin: 0;
+  }
+
+  /* Specific fix for labels inside KPI cards */
+  .kpi .label {
+    position: static;
+    height: auto;
+    color: #000000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: normal;
+    font-weight: 700;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 0;
+    right: 80px;
+    height: 30px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 7pt;
+    color: #FFFFFF;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    z-index: 11;
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 45px; /* Right above the footer bar */
+    left: 80px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  h1, h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32pt !important;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: #000000;
+    margin-top: 20px; /* Provide some gap from top bar if needed */
+  }
+
+  h3 { 
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; 
+    font-weight: 600; 
+    line-height: 1.3; 
+    margin-bottom: 12px; 
+    color: #000000;
+  }
+
+  .subtitle { 
+    font-family: 'Barlow', sans-serif;
+    font-size: 13pt; 
+    color: #000000; 
+    font-weight: 400; 
+    line-height: 1.5; 
+  }
+
+  .gradient-text {
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    color: #000000;
+  }
+
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .warning { color: var(--orange); }
+
+  .kpi-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .kpi {
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    border-radius: 0; /* Minimal design per templates usually implies no border-radius or standard, spec didn't specify radius but said #EEEEEE background, #CCCCCC border */
+    padding: 28px 32px;
+    flex: 1;
+    text-align: center;
+    color: #000000;
+  }
+
+  .kpi .kpi-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    margin: 8px 0 4px;
+  }
+
+  .kpi .kpi-desc {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: #000000;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13pt;
+    margin-top: 16px;
+  }
+
+  th {
+    text-align: right;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #000000;
+    border: 1px solid #000000;
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: normal;
+    background: transparent;
+  }
+
+  th:first-child { text-align: left; }
+
+  td {
+    padding: 10px 14px;
+    text-align: right;
+    border: 1px solid #000000;
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    color: #000000;
+  }
+
+  td:first-child { text-align: left; font-weight: 500; }
+
+  tr.total-row td {
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    font-weight: 700;
+    background: transparent;
+  }
+
+  .bar-group { margin-bottom: 28px; }
+  .bar-group-label { 
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px; 
+    font-weight: 700; 
+    margin-bottom: 10px; 
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+    gap: 12px;
+  }
+
+  .bar-row-label {
+    width: 110px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    text-align: right;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 36px;
+    background: transparent;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .bar-moba { background: var(--accent); }
+  .bar-publift { background: var(--blue); }
+  .bar-publift-net { background: rgba(120,144,156,0.45); }
+
+  .callout {
+    background: #EEEEEE;
+    border: none;
+    border-left: 4px solid var(--accent);
+    border-radius: 0;
+    padding: 24px 32px;
+    margin-top: 20px;
+  }
+
+  .callout-orange { border-left-color: var(--orange); }
+  .callout-green { border-left-color: var(--green); }
+  .callout-blue { border-left-color: var(--accent); }
+
+  .callout h3 { color: #000000 !important; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  .phase-list { list-style: none; margin-top: 16px; }
+
+  .phase-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 13pt;
+    line-height: 1.5;
+  }
+
+  .phase-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .method-list {
+    list-style: none;
+    margin-top: 8px;
+  }
+
+  .method-list li {
+    font-size: 13pt;
+    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text);
+  }
+
+  .method-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+  }
+
+  .nav-hint {
+    position: fixed;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active" data-slide="1">
+    <div class="label">Experiment Results</div>
+    <h1 class="gradient-text">Prebid Evaluation:<br>Moba vs Publift</h1>
+    <p class="subtitle" style="max-width: 700px; margin-top: 8px;">
+      A/B test on CSStats.gg &mdash; 20 days, 7.1M page views<br>
+      25 Feb &ndash; 16 Mar 2026
+    </p>
+    <div class="kpi-row" style="max-width: 700px;">
+      <div style="font-size: 14px; color: var(--text-muted); padding: 12px 0;">
+        <strong style="color: var(--text);">Platform:</strong> CSStats.gg (1.2M DAU, 9.3M MAU)<br>
+        <strong style="color: var(--text);">Split:</strong> 50/50 via GA experiment<br>
+        <strong style="color: var(--text);">Primary metric:</strong> Revenue per Page View<br>
+        <strong style="color: var(--text);">Exclusion:</strong> Russia (GAM unavailable)
+      </div>
+    </div>
+    <div class="slide-footer">Moritz Natalini &middot; Monetisation & Partnerships &middot; FACEIT / ESL FACEIT Group</div>
+    <div class="slide-number">1 / 8</div>
+  </div>
+
+  <!-- SLIDE 2: HEADLINE VERDICT -->
+  <div class="slide" data-slide="2">
+    <div class="label">Verdict</div>
+    <h1 style="font-size: 44px;">Moba outperforms Publift<br>by <span class="positive">+7.8%</span> on net RPV</h1>
+    <p class="subtitle" style="max-width: 750px; margin-top: 8px;">
+      After deducting Publift's ~15% commission, Moba delivers higher Revenue per Page View across <strong style="color: var(--text);">all three market tiers</strong>. US excluded due to data anomaly.
+    </p>
+    <div class="kpi-row" style="margin-top: 40px;">
+      <div class="kpi">
+        <div class="label">Moba eCPM</div>
+        <div class="kpi-val">$0.1233</div>
+        <div class="kpi-desc">Revenue per 1K page views</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Publift eCPM (Net)</div>
+        <div class="kpi-val">$0.1144</div>
+        <div class="kpi-desc">After 15% rev share deducted</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Moba Advantage</div>
+        <div class="kpi-val positive">+7.8%</div>
+        <div class="kpi-desc">Higher net RPV across all tiers</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Commission Saved</div>
+        <div class="kpi-val positive">$70.93</div>
+        <div class="kpi-desc">15% on Publift gross in test period</div>
+      </div>
+    </div>
+    <div class="slide-footer">Excluding Russia &amp; US | 25 Feb &ndash; 16 Mar 2026</div>
+    <div class="slide-number">2 / 8</div>
+  </div>
+
+  <!-- SLIDE 3: TIER TABLE (excl. US) -->
+  <div class="slide" data-slide="3">
+    <div class="label">Tier-Level Analysis &mdash; Excluding US Anomaly</div>
+    <h2>Moba wins every tier on net revenue</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Moba Views</th>
+          <th>Publift Views</th>
+          <th>Moba Rev</th>
+          <th>Publift Gross</th>
+          <th>Publift Net</th>
+          <th>Moba eCPM</th>
+          <th>Publift eCPM</th>
+          <th>Delta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tier 1 (7 countries)</td>
+          <td>668,818</td>
+          <td>666,925</td>
+          <td>$144.29</td>
+          <td>$161.28</td>
+          <td>$137.09</td>
+          <td>$0.2157</td>
+          <td>$0.2056</td>
+          <td class="positive"><strong>+5.0%</strong></td>
+        </tr>
+        <tr>
+          <td>Tier 2 (33 countries)</td>
+          <td>1,398,746</td>
+          <td>1,372,129</td>
+          <td>$198.11</td>
+          <td>$216.84</td>
+          <td>$184.31</td>
+          <td>$0.1416</td>
+          <td>$0.1343</td>
+          <td class="positive"><strong>+5.4%</strong></td>
+        </tr>
+        <tr>
+          <td>Tier 3 (90 countries)</td>
+          <td>1,516,559</td>
+          <td>1,473,182</td>
+          <td>$99.53</td>
+          <td>$94.76</td>
+          <td>$80.55</td>
+          <td>$0.0656</td>
+          <td>$0.0547</td>
+          <td class="positive"><strong>+20.0%</strong></td>
+        </tr>
+        <tr class="total-row">
+          <td>Total</td>
+          <td>3,585,491</td>
+          <td>3,513,757</td>
+          <td>$441.99</td>
+          <td>$472.88</td>
+          <td>$401.95</td>
+          <td>$0.1233</td>
+          <td>$0.1144</td>
+          <td class="positive"><strong>+7.8%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 12px;">Publift Net = Gross &times; 0.85 (after ~15% revenue share). eCPM = Revenue / Page Views &times; 1,000. Russia excluded.</p>
+    <div class="slide-number">3 / 8</div>
+  </div>
+
+  <!-- SLIDE 4: VISUAL BAR CHART -->
+  <div class="slide" data-slide="4">
+    <div class="label">Visual Comparison</div>
+    <h2>eCPM by Tier (excl. US)</h2>
+    <p class="subtitle" style="margin-bottom: 32px; font-size: 16px;">
+      <span style="display:inline-block; width:14px; height:14px; background:var(--accent); border-radius:3px; vertical-align:middle; margin-right:4px;"></span> Moba &nbsp;&nbsp;
+      <span style="display:inline-block; width:14px; height:14px; background:var(--blue); border-radius:3px; vertical-align:middle; margin-right:4px;"></span> Publift Gross &nbsp;&nbsp;
+      <span style="display:inline-block; width:14px; height:14px; background:rgba(120,144,156,0.45); border-radius:3px; vertical-align:middle; margin-right:4px;"></span> Publift Net (after 15%)
+    </p>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;">
+      <div class="bar-group">
+        <div class="bar-group-label">Tier 1 (excl. US)</div>
+        <div class="bar-row"><div class="bar-row-label">Moba</div><div class="bar-track"><div class="bar-fill bar-moba" style="width:89%">$0.2157</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Gross</div><div class="bar-track"><div class="bar-fill bar-publift" style="width:100%">$0.2418</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Net</div><div class="bar-track"><div class="bar-fill bar-publift-net" style="width:85%">$0.2056</div></div></div>
+        <div style="text-align:center; margin-top:8px;"><span class="positive" style="font-weight:700; font-size:20px;">+5.0%</span></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-group-label">Tier 2</div>
+        <div class="bar-row"><div class="bar-row-label">Moba</div><div class="bar-track"><div class="bar-fill bar-moba" style="width:89.6%">$0.1416</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Gross</div><div class="bar-track"><div class="bar-fill bar-publift" style="width:100%">$0.1580</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Net</div><div class="bar-track"><div class="bar-fill bar-publift-net" style="width:85%">$0.1343</div></div></div>
+        <div style="text-align:center; margin-top:8px;"><span class="positive" style="font-weight:700; font-size:20px;">+5.4%</span></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-group-label">Tier 3</div>
+        <div class="bar-row"><div class="bar-row-label">Moba</div><div class="bar-track"><div class="bar-fill bar-moba" style="width:100%">$0.0656</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Gross</div><div class="bar-track"><div class="bar-fill bar-publift" style="width:98%">$0.0643</div></div></div>
+        <div class="bar-row"><div class="bar-row-label">Publift Net</div><div class="bar-track"><div class="bar-fill bar-publift-net" style="width:83.3%">$0.0547</div></div></div>
+        <div style="text-align:center; margin-top:8px;"><span class="positive" style="font-weight:700; font-size:20px;">+20.0%</span></div>
+      </div>
+    </div>
+    <div class="slide-number">4 / 8</div>
+  </div>
+
+  <!-- SLIDE 5: US ANOMALY -->
+  <div class="slide" data-slide="5">
+    <div class="label">Data Quality Flag</div>
+    <h2>US Revenue Anomaly <span class="warning">(234x discrepancy)</span></h2>
+
+    <div class="two-col" style="margin-top: 24px;">
+      <div>
+        <div class="callout callout-orange">
+          <h3 style="color: var(--orange); font-size: 18px; margin-bottom: 16px;">The numbers</h3>
+          <table style="font-size: 16px; margin: 0;">
+            <thead><tr><th></th><th>Moba</th><th>Publift</th></tr></thead>
+            <tbody>
+              <tr><td>Page Views</td><td>6,312</td><td>5,498</td></tr>
+              <tr><td>Revenue</td><td><strong>$67.84</strong></td><td><strong>$0.29</strong></td></tr>
+              <tr><td>eCPM</td><td class="positive">$10.75</td><td class="negative">$0.05</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-top: 8px;">Possible causes</h3>
+        <ul class="method-list">
+          <li>Publift may lack US demand partners on this unit</li>
+        </ul>
+        <div style="margin-top: 24px; padding: 16px 20px; background: var(--surface); border-radius: 10px; border-left: 3px solid var(--orange);">
+          <p style="font-size: 15px;"><strong>Action:</strong> Investigate GAM config before using US data. Does not block non-US rollout.</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">5 / 8</div>
+  </div>
+
+  <!-- SLIDE 6: TOP COUNTRIES -->
+  <div class="slide" data-slide="6">
+    <div class="label">Country Breakdown</div>
+    <h2>Top 10 Revenue Countries</h2>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3 style="color: var(--accent-light); font-size: 17px; margin-bottom: 8px;">Moba (Prebid)</h3>
+        <table style="font-size: 15px;">
+          <thead><tr><th>#</th><th>Country</th><th>Revenue</th><th>eCPM</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><span class="warning">United States*</span></td><td>$67.84</td><td class="warning">$10.75</td></tr>
+            <tr><td>2</td><td>Germany</td><td>$57.31</td><td>$0.23</td></tr>
+            <tr><td>3</td><td>Brazil</td><td>$45.07</td><td>$0.14</td></tr>
+            <tr><td>4</td><td>Finland</td><td>$39.28</td><td>$0.46</td></tr>
+            <tr><td>5</td><td>Poland</td><td>$34.14</td><td>$0.07</td></tr>
+            <tr><td>6</td><td>Canada</td><td>$29.20</td><td>$0.38</td></tr>
+            <tr><td>7</td><td>UK</td><td>$17.97</td><td>$0.21</td></tr>
+            <tr><td>8</td><td>Denmark</td><td>$16.79</td><td>$0.31</td></tr>
+            <tr><td>9</td><td>Sweden</td><td>$16.34</td><td>$0.24</td></tr>
+            <tr><td>10</td><td>France</td><td>$14.28</td><td>$0.13</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="color: var(--blue); font-size: 17px; margin-bottom: 8px;">Publift (Gross)</h3>
+        <table style="font-size: 15px;">
+          <thead><tr><th>#</th><th>Country</th><th>Revenue</th><th>eCPM</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Germany</td><td>$59.33</td><td>$0.25</td></tr>
+            <tr><td>2</td><td>Poland</td><td>$49.17</td><td>$0.10</td></tr>
+            <tr><td>3</td><td>Brazil</td><td>$41.06</td><td>$0.13</td></tr>
+            <tr><td>4</td><td>Canada</td><td>$28.61</td><td>$0.37</td></tr>
+            <tr><td>5</td><td>Finland</td><td>$28.27</td><td>$0.34</td></tr>
+            <tr><td>6</td><td>UK</td><td>$23.84</td><td>$0.27</td></tr>
+            <tr><td>7</td><td>Sweden</td><td>$20.44</td><td>$0.29</td></tr>
+            <tr><td>8</td><td>France</td><td>$18.74</td><td>$0.14</td></tr>
+            <tr><td>9</td><td>Australia</td><td>$18.63</td><td>$0.37</td></tr>
+            <tr><td>10</td><td>Denmark</td><td>$16.19</td><td>$0.31</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">* US flagged as anomalous &mdash; see slide 5</p>
+    <div class="slide-number">6 / 8</div>
+  </div>
+
+  <!-- SLIDE 7: METHODOLOGY -->
+  <div class="slide" data-slide="7">
+    <div class="label">Methodology</div>
+    <h2>Experiment Setup &amp; Key Decisions</h2>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3>Setup</h3>
+        <ul class="method-list">
+          <li><strong>Platform:</strong> CSStats.gg &mdash; 1.2M daily users, 9.3M MAU</li>
+          <li><strong>A/B split:</strong> 50/50 via GA experiment (ads_ab_variant)</li>
+          <li><strong>Duration:</strong> 20 days (25 Feb &ndash; 16 Mar 2026)</li>
+          <li><strong>Page views:</strong> Moba 3.59M / Publift 3.52M (excl. Russia)</li>
+        </ul>
+
+        <h3 style="margin-top: 28px;">Data Sources</h3>
+        <ul class="method-list">
+          <li>GA4 page views by experiment cohort &amp; geo</li>
+          <li>GAM: Moba ad units (2 IDs)</li>
+          <li>GAM: Publift ad unit (1 ID)</li>
+          <li>Internal tier classification (T1: 8, T2: 33, T3: 90)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Key Decisions</h3>
+        <ul class="method-list">
+          <li><strong>Russia excluded</strong> &mdash; GAM does not operate there; 2.6M views removed from both cohorts</li>
+          <li><strong>Fill rate rejected</strong> &mdash; Publift uses a GAM placeholder line item for unfilled impressions, inflating fill rate to ~100%</li>
+          <li><strong>RPV as primary metric</strong> &mdash; Revenue per Page View is the only apples-to-apples comparison</li>
+          <li><strong>Publift commission</strong> &mdash; ~15% deducted from gross to show true publisher revenue</li>
+          <li><strong>US presented separately</strong> &mdash; 234x anomaly flagged for investigation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-number">7 / 8</div>
+  </div>
+
+  <!-- SLIDE 8: NEXT STEPS -->
+  <div class="slide" data-slide="8">
+    <div class="label">Next Steps</div>
+    <h2>Validate on FACEIT &amp; expand to outstream</h2>
+
+    <div style="max-width: 900px; margin-top: 8px;">
+      <p class="subtitle" style="margin-bottom: 32px;">
+        The test on CSStats generated enough data to demonstrate a significant revenue uplift. From a product perspective, it is worth validating the same approach on FACEIT.
+      </p>
+    </div>
+
+    <ul class="phase-list" style="max-width: 900px;">
+      <li>
+        <div class="phase-num">1</div>
+        <div><strong>Run Moba prebid experiment on FACEIT</strong><br><span style="color:var(--text-muted); font-size:15px;">Replicate the CSStats A/B test on FACEIT display inventory to validate uplift at scale with our own audience.</span></div>
+      </li>
+      <li>
+        <div class="phase-num">2</div>
+        <div><strong>Test Moba prebid for outstream video</strong><br><span style="color:var(--text-muted); font-size:15px;">Extend the evaluation to outstream video inventory &mdash; a separate demand layer where prebid competition could unlock additional yield.</span></div>
+      </li>
+      <li>
+        <div class="phase-num">3</div>
+        <div><strong>Investigate US anomaly</strong><br><span style="color:var(--text-muted); font-size:15px;">Verify GAM ad unit config &amp; demand partner setup for the 234x revenue discrepancy. Does not block non-US rollout.</span></div>
+      </li>
+    </ul>
+
+    <div class="callout callout-green" style="max-width: 900px; margin-top: 24px;">
+      <p style="font-size: 16px;"><strong>CSStats result:</strong> Moba delivers <span class="positive" style="font-weight:700;">+7.8%</span> higher net RPV than Publift across all tiers (excl. US). Over the 20-day test: $441.99 Moba vs $401.95 Publift net &mdash; ~$40 incremental revenue.</p>
+    </div>
+    <div class="slide-footer">Moritz Natalini &middot; Monetisation & Partnerships &middot; FACEIT / ESL FACEIT Group</div>
+    <div class="slide-number">8 / 8</div>
+  </div>
+
+</div>
+
+<div class="nav-hint">Arrow keys or click to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+  });
+
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>
