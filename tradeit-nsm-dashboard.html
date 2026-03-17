@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradeit — Brand Integration Performance</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #050508;
+            --surface: #0c0d12;
+            --border: #1a1c24;
+            --text: #d4d6dd;
+            --text-muted: #6b6f82;
+            --accent: #ff5500;
+            --green: #22c55e;
+            --red: #ef4444;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(255, 85, 0, 0.15);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        /* KPIs */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .kpi-title {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-sub {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .kpi-sub.positive {
+            color: var(--green);
+        }
+
+        /* Grids & Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        .chart-container.small {
+            height: 250px;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: rgba(26, 28, 36, 0.5);
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td.number {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        th.number {
+            text-align: right;
+        }
+
+        /* Callouts / Highlights */
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .insight-card {
+            background-color: var(--bg);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .insight-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .insight-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .ab-card {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .ab-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .ab-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .ab-stat span:first-child {
+            color: var(--text-muted);
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 900px) {
+            .kpi-grid, .grid-2, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <span class="badge">FOR INTERNAL USE</span>
+            <h1>Tradeit — Brand Integration Performance</h1>
+            <h2>NSM Analysis: Jan–Feb 2026 | € Value per Conversion</h2>
+            <p>Primary metric: € per 1K EBU (replaces deprecated OVU formula)</p>
+        </header>
+
+        <div class="section" id="section-1">
+            <h2 class="section-title">1. Headline KPIs</h2>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Jan Total Value</div>
+                    <div class="kpi-value">€11,343.42</div>
+                    <div class="kpi-sub">€19.20/1K EBU | 590,714 EBU</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Feb Total Value</div>
+                    <div class="kpi-value">€12,565.98</div>
+                    <div class="kpi-sub">€20.92/1K EBU | 600,527 EBU</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">MoM Change</div>
+                    <div class="kpi-value">+€1,222.56</div>
+                    <div class="kpi-sub positive">+10.8% Total | +9.0% Rate</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-2">
+            <h2 class="section-title">2. Region-Level Summary</h2>
+            <div class="grid-2">
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Region</th>
+                                    <th class="number">EBU</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">€/1K EBU</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Jan</td><td>North America</td><td class="number">53,497</td><td class="number">€3,170.91</td><td class="number highlight">€59.27</td></tr>
+                                <tr><td>Jan</td><td>CIS</td><td class="number">464,261</td><td class="number">€6,086.55</td><td class="number">€13.11</td></tr>
+                                <tr><td>Jan</td><td>MENA</td><td class="number">18,057</td><td class="number">€878.71</td><td class="number">€48.66</td></tr>
+                                <tr><td>Jan</td><td>APAC</td><td class="number">54,899</td><td class="number">€1,207.25</td><td class="number">€21.99</td></tr>
+                                <tr><td>Feb</td><td>North America</td><td class="number">57,385</td><td class="number">€2,775.73</td><td class="number highlight">€48.37</td></tr>
+                                <tr><td>Feb</td><td>CIS</td><td class="number">473,938</td><td class="number">€7,702.17</td><td class="number">€16.25</td></tr>
+                                <tr><td>Feb</td><td>MENA</td><td class="number">18,611</td><td class="number">€914.15</td><td class="number">€49.12</td></tr>
+                                <tr><td>Feb</td><td>APAC</td><td class="number">50,593</td><td class="number">€1,173.93</td><td class="number">€23.20</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="regionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-3">
+            <h2 class="section-title">3. Month-over-Month Comparison</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                NA declined <span class="highlight" style="color: var(--red);">-18.4%</span> in efficiency while CIS grew <span class="highlight" style="color: var(--green);">+24.0%</span>.
+            </p>
+            <div class="chart-container">
+                <canvas id="momChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-4">
+            <h2 class="section-title">4. NA A/B Test (January)</h2>
+            <div class="grid-2">
+                <div class="ab-card">
+                    <h3>Group A (1000 FP)</h3>
+                    <div class="ab-stat"><span>EBU</span> <span>21,533</span></div>
+                    <div class="ab-stat"><span>Value Generated</span> <span>€502.37</span></div>
+                    <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€23.33</span></div>
+                    <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                    <div class="ab-stat"><span>AL Rate</span> <span>4.734%</span></div>
+                    <div class="ab-stat"><span>C1 Rate</span> <span>0.817%</span></div>
+                    <div class="ab-stat"><span>C2 Rate</span> <span>0.088%</span></div>
+                </div>
+                <div class="ab-card" style="border-color: var(--accent);">
+                    <h3>Group B (2000 FP) - <span style="color:var(--text);">Winner</span></h3>
+                    <div class="ab-stat"><span>EBU</span> <span>21,667</span></div>
+                    <div class="ab-stat"><span>Value Generated</span> <span>€520.87</span></div>
+                    <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€24.04</span></div>
+                    <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                    <div class="ab-stat"><span>AL Rate</span> <span class="highlight" style="color: var(--green);">5.193% (+10.4%)</span></div>
+                    <div class="ab-stat"><span>C1 Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
+                    <div class="ab-stat"><span>C2 Rate</span> <span style="color: var(--red);">0.078%</span></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-5">
+            <h2 class="section-title">5. Segment Performance (€/1K EBU)</h2>
+            <div class="grid-2">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="4" style="background-color: rgba(255,85,0,0.1); color: var(--accent); text-align: center;">JANUARY</th>
+                            </tr>
+                            <tr>
+                                <th>Region</th>
+                                <th class="number">TOFU</th>
+                                <th class="number">MOFU</th>
+                                <th class="number">BOFU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>North America</td><td class="number">€23.69</td><td class="number">€21.96</td><td class="number highlight">€445.21</td></tr>
+                            <tr><td>CIS</td><td class="number">€7.80</td><td class="number">€3.20</td><td class="number highlight">€123.16</td></tr>
+                            <tr><td>MENA</td><td class="number">€24.02</td><td class="number">€14.18</td><td class="number highlight">€352.72</td></tr>
+                            <tr><td>APAC</td><td class="number">€11.79</td><td class="number">€22.85</td><td class="number highlight">€243.93</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="4" style="background-color: rgba(255,85,0,0.1); color: var(--accent); text-align: center;">FEBRUARY</th>
+                            </tr>
+                            <tr>
+                                <th>Region</th>
+                                <th class="number">TOFU</th>
+                                <th class="number">MOFU</th>
+                                <th class="number">BOFU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>North America</td><td class="number">€23.57</td><td class="number">€17.34</td><td class="number highlight">€344.76</td></tr>
+                            <tr><td>CIS</td><td class="number">€11.47</td><td class="number">€3.16</td><td class="number highlight">€121.83</td></tr>
+                            <tr><td>MENA</td><td class="number">€19.71</td><td class="number">€0.98</td><td class="number highlight">€381.37</td></tr>
+                            <tr><td>APAC</td><td class="number">€12.56</td><td class="number">€14.03</td><td class="number highlight">€257.59</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-6">
+            <h2 class="section-title">6. Value Breakdown by Conversion Type</h2>
+            <div class="grid-2">
+                <div class="chart-container small">
+                    <canvas id="janBreakdownChart"></canvas>
+                </div>
+                <div class="chart-container small">
+                    <canvas id="febBreakdownChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-7">
+            <h2 class="section-title">7. Funnel Conversion Rates</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Region</th>
+                            <th class="number">TOFU AL%</th>
+                            <th class="number">TOFU C1%</th>
+                            <th class="number">MOFU C1%</th>
+                            <th class="number">BOFU C2%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Jan</td><td>North America</td><td class="number">4.22%</td><td class="number">0.92%</td><td class="number">1.70%</td><td class="number highlight">5.09%</td></tr>
+                        <tr><td>Jan</td><td>CIS</td><td class="number">1.63%</td><td class="number">0.31%</td><td class="number">0.88%</td><td class="number highlight">1.41%</td></tr>
+                        <tr><td>Jan</td><td>MENA</td><td class="number">4.16%</td><td class="number">1.12%</td><td class="number">2.93%</td><td class="number highlight">4.03%</td></tr>
+                        <tr><td>Jan</td><td>APAC</td><td class="number">2.16%</td><td class="number">0.42%</td><td class="number">1.89%</td><td class="number highlight">2.79%</td></tr>
+                        <tr><td>Feb</td><td>North America</td><td class="number">4.09%</td><td class="number">1.04%</td><td class="number">1.61%</td><td class="number highlight">3.94%</td></tr>
+                        <tr><td>Feb</td><td>CIS</td><td class="number">2.31%</td><td class="number">0.47%</td><td class="number">1.11%</td><td class="number highlight">1.39%</td></tr>
+                        <tr><td>Feb</td><td>MENA</td><td class="number">4.12%</td><td class="number">1.21%</td><td class="number">2.46%</td><td class="number highlight">4.36%</td></tr>
+                        <tr><td>Feb</td><td>APAC</td><td class="number">2.17%</td><td class="number">0.47%</td><td class="number">1.48%</td><td class="number highlight">2.94%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="section" id="section-8">
+            <h2 class="section-title">8. Key Insights</h2>
+            <div class="insight-card">
+                <h3>1. C2 Dominates Value</h3>
+                <p>The C2 conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.</p>
+            </div>
+            <div class="insight-card">
+                <h3>2. CIS Volume vs Efficiency</h3>
+                <p>CIS represents 79% of the total EBU audience, but suffers from a low AL rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.</p>
+            </div>
+            <div class="insight-card">
+                <h3>3. Shifting Regional Momentum</h3>
+                <p>MoM efficiency diverged significantly: NA's €/1K EBU declined by -18.4%, whereas CIS saw substantial growth of +24.0%.</p>
+            </div>
+            <div class="insight-card">
+                <h3>4. BOFU is the C2 Engine</h3>
+                <p>The BOFU segment yields the highest €/1K EBU by far, operating as a pure C2 generation engine, though constrained by a small audience size.</p>
+            </div>
+            <div class="insight-card">
+                <h3>5. Untracked Opportunities</h3>
+                <p>High-value actions like Trade $1,000+ (€35.00) and frequent actions like Trade 5 (€0.18) remain untracked in current missions, representing untapped potential.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data source: Sponsored Competitions - Tradeit - Custom Missions 26.csv | Generated by AI PM Assistant
+        </div>
+    </div>
+
+    <script>
+
+        Chart.defaults.color = '#6b6f82';
+        Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+        const gridColor = '#1a1c24';
+
+
+        const ctxRegion = document.getElementById('regionChart').getContext('2d');
+        new Chart(ctxRegion, {
+            type: 'bar',
+            data: {
+                labels: ['NA', 'CIS', 'MENA', 'APAC'],
+                datasets: [
+                    {
+                        label: 'Jan €/1K EBU',
+                        data: [59.27, 13.11, 48.66, 21.99],
+                        backgroundColor: '#ff5500',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Feb €/1K EBU',
+                        data: [48.37, 16.25, 49.12, 23.20],
+                        backgroundColor: 'rgba(255, 85, 0, 0.4)',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#d4d6dd' }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: gridColor },
+                        ticks: { color: '#d4d6dd', callback: value => '€' + value }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#d4d6dd' }
+                    }
+                }
+            }
+        });
+
+
+        const ctxMom = document.getElementById('momChart').getContext('2d');
+        new Chart(ctxMom, {
+            type: 'bar',
+            data: {
+                labels: ['North America', 'CIS', 'MENA', 'APAC'],
+                datasets: [
+                    {
+                        label: 'Jan',
+                        data: [59.27, 13.11, 48.66, 21.99],
+                        backgroundColor: '#1a1c24',
+                        borderColor: '#6b6f82',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Feb',
+                        data: [48.37, 16.25, 49.12, 23.20],
+                        backgroundColor: '#ff5500',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#d4d6dd' }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: context => '€' + context.raw
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: gridColor },
+                        ticks: { color: '#d4d6dd', callback: value => '€' + value }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#d4d6dd' }
+                    }
+                }
+            }
+        });
+
+
+        const pieOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#d4d6dd' }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: context => ` ${context.label}: €${context.raw} (${context.parsed}%)`
+                    }
+                }
+            }
+        };
+
+        const ctxJanBreakdown = document.getElementById('janBreakdownChart').getContext('2d');
+        new Chart(ctxJanBreakdown, {
+            type: 'doughnut',
+            data: {
+                labels: ['AL (32.7%)', 'C1 (0.9%)', 'C2 (66.3%)'],
+                datasets: [{
+                    data: [3711.46, 106.96, 7525.00],
+                    backgroundColor: ['#22c55e', '#fbbf24', '#ff5500'],
+                    borderColor: '#050508',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...pieOptions,
+                plugins: {
+                    ...pieOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'January (€11,343.42)',
+                        color: '#d4d6dd',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+
+        const ctxFebBreakdown = document.getElementById('febBreakdownChart').getContext('2d');
+        new Chart(ctxFebBreakdown, {
+            type: 'doughnut',
+            data: {
+                labels: ['AL (37.9%)', 'C1 (1.1%)', 'C2 (61.0%)'],
+                datasets: [{
+                    data: [4758.74, 142.24, 7665.00],
+                    backgroundColor: ['#22c55e', '#fbbf24', '#ff5500'],
+                    borderColor: '#050508',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...pieOptions,
+                plugins: {
+                    ...pieOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'February (€12,565.98)',
+                        color: '#d4d6dd',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
