@@ -141,7 +141,8 @@
         
         <div class="partner-selector-wrapper">
             <div class="partner-selector">
-                <button id="btn-tradeit" class="partner-btn active" onclick="switchPartner('tradeit')">Tradeit</button>
+                <button id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">Combined</button>
+                <button id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">Tradeit</button>
                 <button id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">Winline</button>
             </div>
         </div>
@@ -154,8 +155,107 @@
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span> = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.</p>
         </header>
 
+        <!-- COMBINED CONTAINER -->
+        <div id="combined-container">
+            <div class="section" id="combined-section-1">
+                <h2 class="section-title">1. Portfolio Headline KPIs</h2>
+                <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="kpi-card">
+                        <div class="kpi-title">Total Portfolio Value (Jan '26)</div>
+                        <div class="kpi-value">€121,773</div>
+                        <div class="kpi-sub">€110,430 Winline + €11,343 Tradeit</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Winline Share</div>
+                        <div class="kpi-value">90.7%</div>
+                        <div class="kpi-sub" style="color: #ff5500;">Value Dominance</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Tradeit Share</div>
+                        <div class="kpi-value">9.3%</div>
+                        <div class="kpi-sub" style="color: var(--green);">Volume Base</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-title">Total EBU</div>
+                        <div class="kpi-value">726K</div>
+                        <div class="kpi-sub">591K Tradeit + 135K Winline</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-2">
+                <h2 class="section-title">2. Monthly € Value by Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Winline Feb data pending.</p>
+                <div class="chart-container">
+                    <canvas id="combinedStackedBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-3">
+                <h2 class="section-title">3. € per 1K EBU by Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Highlights efficiency difference across partners.</p>
+                <div class="chart-container">
+                    <canvas id="combinedGroupedBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-4">
+                <h2 class="section-title">4. Partner Comparison Table</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Partner</th>
+                                <th>Period</th>
+                                <th class="number">Total €</th>
+                                <th class="number">EBU</th>
+                                <th class="number">€/1K EBU</th>
+                                <th>Top Conversion</th>
+                                <th>Top Conv. Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number">134,863</td><td class="number highlight">€819</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
+                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€11,343</td><td class="number">590,714</td><td class="number">€19</td><td>Trade $250+ (C2)</td><td>€7,524 (66.3%)</td></tr>
+                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€12,566</td><td class="number">600,527</td><td class="number">€21</td><td>Trade $250+ (C2)</td><td>€7,661 (61.0%)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-5">
+                <h2 class="section-title">5. Value Breakdown Comparison (Jan '26)</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Winline Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedWinlineDoughnut"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Tradeit Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedTradeitDoughnut"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-6">
+                <h2 class="section-title">6. Weekly Breakdown</h2>
+                <div class="insight-card" style="opacity: 0.7; border-left-color: var(--text-muted);">
+                    <h3 style="color: var(--text-muted);">Coming Soon</h3>
+                    <p>Weekly data will be available from next week. This section will show week-by-week € value trends for each partner.</p>
+                </div>
+            </div>
+
+            <div class="footer">
+                Data source: Sponsored Competitions Mission Data + CDP (Snowflake) | Generated by AI PM Assistant
+            </div>
+        </div>
+
         <!-- TRADEIT CONTAINER -->
-        <div id="tradeit-container">
+        <div id="tradeit-container" style="display: none;">
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">CDP Data</button>
@@ -708,6 +808,7 @@
 
         // Chart Registry
         const charts = {
+            combined: {},
             tradeit: {},
             winline: {}
         };
@@ -761,20 +862,34 @@
             const h1 = document.getElementById('header-title');
             const h2 = document.getElementById('header-subtitle');
             
-            if (partner === 'tradeit') {
+            if (partner === 'combined') {
+                h1.textContent = 'Combined — Brand Integration Portfolio';
+                h2.textContent = 'All Partners | Monthly € Value per Conversion';
+                document.getElementById('combined-container').style.display = 'block';
+                document.getElementById('tradeit-container').style.display = 'none';
+                document.getElementById('winline-container').style.display = 'none';
+                
+                destroyCharts('tradeit');
+                destroyCharts('winline');
+                initCombinedCharts();
+            } else if (partner === 'tradeit') {
                 h1.textContent = 'Tradeit — Brand Integration Performance';
                 h2.textContent = 'NSM Analysis: Jan–Feb 2026 | € Value per Conversion';
+                document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'block';
                 document.getElementById('winline-container').style.display = 'none';
                 
+                destroyCharts('combined');
                 destroyCharts('winline');
                 initTradeitCharts();
             } else {
                 h1.textContent = 'Winline — Brand Integration Performance';
                 h2.textContent = 'NSM Analysis: Jan 2026 | € Value per Conversion';
+                document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'block';
                 
+                destroyCharts('combined');
                 destroyCharts('tradeit');
                 initWinlineCharts();
             }
@@ -840,6 +955,90 @@
                 el.style.display = showingAllWinlineMonths ? 'table-cell' : 'none';
             });
             document.getElementById('winlineToggleRowsBtn').textContent = showingAllWinlineMonths ? 'Show Less' : 'Show All Available Months';
+        }
+
+        // Chart Initialization (Combined)
+        function initCombinedCharts() {
+            if (Object.keys(charts.combined).length > 0) return;
+
+            // Stacked Bar Chart
+            const ctxStacked = document.getElementById('combinedStackedBarChart').getContext('2d');
+            charts.combined.stackedBar = new Chart(ctxStacked, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan \'26', 'Feb \'26'],
+                    datasets: [
+                        { label: 'Winline', data: [110430, null], backgroundColor: '#ff5500', borderRadius: 4 },
+                        { label: 'Tradeit', data: [11343, 12566], backgroundColor: '#22c55e', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#d4d6dd' } },
+                        tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.dataset.label + ': €' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) : null } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#d4d6dd' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#d4d6dd', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Grouped Bar Chart
+            const ctxGrouped = document.getElementById('combinedGroupedBarChart').getContext('2d');
+            charts.combined.groupedBar = new Chart(ctxGrouped, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan \'26', 'Feb \'26'],
+                    datasets: [
+                        { label: 'Winline', data: [819, null], backgroundColor: '#ff5500', borderRadius: 4 },
+                        { label: 'Tradeit', data: [19, 21], backgroundColor: '#22c55e', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#d4d6dd' } },
+                        tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.dataset.label + ': €' + c.parsed.y.toLocaleString('en-US') : null } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#d4d6dd' } },
+                        y: { grid: { color: gridColor }, ticks: { color: '#d4d6dd', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Pie Options
+            const pieOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#d4d6dd' } },
+                    tooltip: { callbacks: { label: c => ` ${c.label}: €${c.raw.toLocaleString('en-US', {maximumFractionDigits: 2})} (${c.parsed}%)` } }
+                }
+            };
+
+            // Winline Doughnut
+            const ctxWinlineDoughnut = document.getElementById('combinedWinlineDoughnut').getContext('2d');
+            charts.combined.winlineDoughnut = new Chart(ctxWinlineDoughnut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AL (€4.33)', 'KYC (€8.66)', 'FTD (€121.10)', '2nd Dep (€4.33)', 'Bet* (€4.33)'],
+                    datasets: [{ data: [15436, 2269, 21071, 41564, 30089], backgroundColor: ['#22c55e', '#3b82f6', '#ff5500', '#fbbf24', '#a855f7'], borderColor: '#050508', borderWidth: 2 }]
+                },
+                options: pieOptions
+            });
+
+            // Tradeit Doughnut
+            const ctxTradeitDoughnut = document.getElementById('combinedTradeitDoughnut').getContext('2d');
+            charts.combined.tradeitDoughnut = new Chart(ctxTradeitDoughnut, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AL (€0.38)', 'C1 (€0.04)', 'C2 (€8.75)'],
+                    datasets: [{ data: [3711.46, 106.96, 7525.00], backgroundColor: ['#22c55e', '#fbbf24', '#ff5500'], borderColor: '#050508', borderWidth: 2 }]
+                },
+                options: pieOptions
+            });
         }
 
         // Chart Initialization (Tradeit)
@@ -1055,7 +1254,7 @@
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderTables();
-            switchPartner('tradeit'); // Load default
+            switchPartner('combined'); // Load default
         });
     </script>
 </body>
