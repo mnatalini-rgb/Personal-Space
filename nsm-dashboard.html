@@ -146,12 +146,16 @@
                 <button id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">Combined</button>
                 <button id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">Tradeit</button>
                 <button id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">Winline</button>
+                <button id="btn-whitemarket" class="partner-btn" onclick="switchPartner('whitemarket')">WhiteMarket</button>
             </div>
         </div>
 
         <header class="header">
             <span class="badge">FOR INTERNAL USE</span>
-            <h1 id="header-title">Tradeit — Brand Integration Performance</h1>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                <img id="header-logo" src="" alt="" style="height: 40px; width: auto; display: none; border-radius: 6px;">
+                <h1 id="header-title">Tradeit — Brand Integration Performance</h1>
+            </div>
             <h2 id="header-subtitle">NSM Analysis: Jan–Feb 2026 | € Value per Conversion</h2>
             <p>Primary metric: € per 1K EBU</p>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span> = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.</p>
@@ -164,18 +168,18 @@
                 <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
                     <div class="kpi-card">
                         <div class="kpi-title">Total Portfolio Value (Jan-Mar*)</div>
-                        <div class="kpi-value">€511,879</div>
-                        <div class="kpi-sub">€417,337 Winline + €94,539 Tradeit</div>
+                        <div class="kpi-value">€516,016</div>
+                        <div class="kpi-sub">€417,337 Winline + €94,418 Tradeit + €4,261 WhiteMarket</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Winline Share</div>
-                        <div class="kpi-value">81.5%</div>
+                        <div class="kpi-value">80.9%</div>
                         <div class="kpi-sub" style="color: #2563eb;">Value Dominance</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Tradeit Share</div>
-                        <div class="kpi-value">18.5%</div>
-                        <div class="kpi-sub" style="color: var(--green);">Volume Base</div>
+                        <div class="kpi-value">18.3%</div>
+                        <div class="kpi-sub" style="color: var(--green);">Volume Base | WhiteMarket 0.8%</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Total EBU</div>
@@ -223,6 +227,9 @@
                             <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number">590,714</td><td class="number">€21</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
                             <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td class="number">600,527</td><td class="number">€22</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
                             <tr><td>Tradeit</td><td>Mar '26*</td><td class="number">€68,719</td><td class="number">—</td><td class="number">—</td><td>Trade $250+ (C2)</td><td>€10,588 (15.4%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Jan '26</td><td class="number">€1,542</td><td class="number">—</td><td class="number">—</td><td>Trade $100+ (C2)</td><td>€550 (35.7%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Feb '26</td><td class="number">€1,606</td><td class="number">—</td><td class="number">—</td><td>Trade $100+ (C2)</td><td>€688 (42.8%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Mar '26*</td><td class="number">€1,113</td><td class="number">—</td><td class="number">—</td><td>AL</td><td>€731 (65.7%)</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -259,36 +266,72 @@
                                 <th>Week</th>
                                 <th class="number">Tradeit €</th>
                                 <th class="number">Winline €</th>
+                                <th class="number">WhiteMarket €</th>
                                 <th class="number">Combined €</th>
                                 <th class="number">WoW %</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Dec 29</td><td class="number">€5,265</td><td class="number">€42,562</td><td class="number">€47,827</td><td class="number">—</td></tr>
-                            <tr><td>Jan 5</td><td class="number">€2,696</td><td class="number">€36,779</td><td class="number">€39,475</td><td class="number" style="color: var(--red);">-17%</td></tr>
-                            <tr><td>Jan 12</td><td class="number">€1,698</td><td class="number">€30,771</td><td class="number">€32,469</td><td class="number" style="color: var(--red);">-18%</td></tr>
-                            <tr><td>Jan 19</td><td class="number">€1,577</td><td class="number">€19,852</td><td class="number">€21,429</td><td class="number" style="color: var(--red);">-34%</td></tr>
-                            <tr><td>Jan 26</td><td class="number">€908</td><td class="number">€8,458</td><td class="number">€9,366</td><td class="number" style="color: var(--red);">-56%</td></tr>
-                            <tr><td>Feb 2</td><td class="number">€7,714</td><td class="number">€89,586</td><td class="number">€97,300</td><td class="number" style="color: var(--green);">+939%</td></tr>
-                            <tr><td>Feb 9</td><td class="number">€2,532</td><td class="number">€34,876</td><td class="number">€37,408</td><td class="number" style="color: var(--red);">-62%</td></tr>
-                            <tr><td>Feb 16</td><td class="number">€1,967</td><td class="number">€23,926</td><td class="number">€25,893</td><td class="number" style="color: var(--red);">-31%</td></tr>
-                            <tr><td>Feb 23</td><td class="number">€1,179</td><td class="number">€41,130</td><td class="number">€42,309</td><td class="number" style="color: var(--green);">+63%</td></tr>
-                            <tr><td>Mar 2</td><td class="number">€94</td><td class="number">€57,191</td><td class="number">€57,285</td><td class="number" style="color: var(--green);">+35%</td></tr>
-                            <tr><td>Mar 9</td><td class="number">€58,907</td><td class="number">€26,430</td><td class="number">€85,337</td><td class="number" style="color: var(--green);">+49%</td></tr>
-                            <tr><td>Mar 16</td><td class="number">€10,002</td><td class="number">€5,779</td><td class="number">€15,781</td><td class="number" style="color: var(--red);">-82%</td></tr>
+                            <tr><td>Dec 29</td><td class="number">€5,265</td><td class="number">€42,562</td><td class="number">€299</td><td class="number">€48,126</td><td class="number">—</td></tr>
+                            <tr><td>Jan 5</td><td class="number">€2,696</td><td class="number">€36,779</td><td class="number">€334</td><td class="number">€39,809</td><td class="number" style="color: var(--red);">-17%</td></tr>
+                            <tr><td>Jan 12</td><td class="number">€1,698</td><td class="number">€30,771</td><td class="number">€369</td><td class="number">€32,838</td><td class="number" style="color: var(--red);">-18%</td></tr>
+                            <tr><td>Jan 19</td><td class="number">€1,577</td><td class="number">€19,852</td><td class="number">€249</td><td class="number">€21,678</td><td class="number" style="color: var(--red);">-34%</td></tr>
+                            <tr><td>Jan 26</td><td class="number">€908</td><td class="number">€8,458</td><td class="number">€292</td><td class="number">€9,658</td><td class="number" style="color: var(--red);">-55%</td></tr>
+                            <tr><td>Feb 2</td><td class="number">€7,714</td><td class="number">€89,586</td><td class="number">€543</td><td class="number">€97,843</td><td class="number" style="color: var(--green);">+913%</td></tr>
+                            <tr><td>Feb 9</td><td class="number">€2,532</td><td class="number">€34,876</td><td class="number">€434</td><td class="number">€37,842</td><td class="number" style="color: var(--red);">-61%</td></tr>
+                            <tr><td>Feb 16</td><td class="number">€1,967</td><td class="number">€23,926</td><td class="number">€297</td><td class="number">€26,190</td><td class="number" style="color: var(--red);">-31%</td></tr>
+                            <tr><td>Feb 23</td><td class="number">€1,179</td><td class="number">€41,130</td><td class="number">€331</td><td class="number">€42,640</td><td class="number" style="color: var(--green);">+63%</td></tr>
+                            <tr><td>Mar 2</td><td class="number">€94</td><td class="number">€57,191</td><td class="number">€627</td><td class="number">€57,912</td><td class="number" style="color: var(--green);">+36%</td></tr>
+                            <tr><td>Mar 9</td><td class="number">€58,907</td><td class="number">€26,430</td><td class="number">€323</td><td class="number">€85,660</td><td class="number" style="color: var(--green);">+48%</td></tr>
+                            <tr><td>Mar 16</td><td class="number">€10,002</td><td class="number">€5,779</td><td class="number">€162</td><td class="number">€15,943</td><td class="number" style="color: var(--red);">-81%</td></tr>
                         </tbody>
                         <tfoot>
                             <tr style="font-weight: bold; border-top: 2px solid var(--border);">
                                 <td>TOTAL</td>
                                 <td class="number">€94,539</td>
                                 <td class="number">€417,340</td>
-                                <td class="number">€511,879</td>
+                                <td class="number">€4,261</td>
+                                <td class="number">€516,140</td>
                                 <td class="number">—</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
+
+            <div class="section">
+                <h2 class="section-title">7. Monthly NSM Summary (All Partners)</h2>
+                <div class="grid-2">
+                    <div>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Partner</th>
+                                        <th class="number">Jan '26</th>
+                                        <th class="number">Feb '26</th>
+                                        <th class="number">Mar '26*</th>
+                                        <th class="number">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Winline</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
+                                    <tr><td>Tradeit</td><td class="number">€12,255</td><td class="number">€13,444</td><td class="number">€68,719</td><td class="number highlight">€94,418</td></tr>
+                                    <tr><td>WhiteMarket</td><td class="number">€1,542</td><td class="number">€1,606</td><td class="number">€1,113</td><td class="number highlight">€4,261</td></tr>
+                                    <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Portfolio Total</td><td class="number">€152,219</td><td class="number">€173,549</td><td class="number">€190,248</td><td class="number highlight">€516,016</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Slight difference vs weekly total (€516,140) due to week-month boundary rounding.</p>
+                    </div>
+                    <div>
+                        <div class="chart-container">
+                            <canvas id="combinedMonthlySummaryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="footer">
                 Data source: Sponsored Competitions Mission Data + CDP (Snowflake) | Generated by AI PM Assistant
@@ -558,6 +601,39 @@
                         <p>High-value actions like Trade $1,000+ (€35.00) and frequent actions like Trade 5 (€0.18) remain untracked in current missions, representing untapped potential.</p>
                     </div>
                 </div>
+                <div class="section">
+                    <h2 class="section-title">11. Monthly NSM Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Conversion</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                            <th class="number">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>AL (€0.38)</td><td class="number">€4,553</td><td class="number">€5,637</td><td class="number">€57,370</td><td class="number highlight">€67,560</td></tr>
+                                        <tr><td>C1 (€0.04)</td><td class="number">€108</td><td class="number">€142</td><td class="number">€762</td><td class="number highlight">€1,012</td></tr>
+                                        <tr><td>C2 (€8.75)</td><td class="number">€7,595</td><td class="number">€7,665</td><td class="number">€10,588</td><td class="number highlight">€25,848</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€12,255</td><td class="number">€13,444</td><td class="number">€68,719</td><td class="number highlight">€94,418</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Mar = Partial month (data through 20 Mar 2026). Mar includes new regions: EU, LATAM, CIS EXC.</p>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="tradeitMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="footer">
                     Data source: Sponsored Competitions - Tradeit - Custom Missions 26.csv | Generated by AI PM Assistant
@@ -590,6 +666,7 @@
                             <div class="kpi-sub">trade_250_dollars</div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="section">
@@ -1046,6 +1123,40 @@
                         <p>Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
                     </div>
                 </div>
+                <div class="section">
+                    <h2 class="section-title">7. Monthly NSM Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Conversion</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                            <th class="number">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
+                                        <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
+                                        <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
+                                        <tr><td>2nd Dep (€4.33)</td><td class="number">€49,535</td><td class="number">€57,996</td><td class="number">€46,344</td><td class="number highlight">€153,875</td></tr>
+                                        <tr><td>Bet (€4.33)</td><td class="number">€36,091</td><td class="number">€43,504</td><td class="number">€34,380</td><td class="number highlight">€113,975</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="winlineMissionsMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="footer">
                     Data source: Sponsored Competitions - Winline - Custom Missions'26.numbers | Generated by AI PM Assistant
@@ -1207,42 +1318,9 @@
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">Bet treated as €4.33 (same rate as 2nd Deposit). Winline is CIS-only — no regional breakdown needed.</p>
                 </div>
 
-                <div class="section">
-                    <h2 class="section-title">C. Monthly Summary</h2>
-                    <div class="grid-2">
-                        <div>
-                            <div class="table-wrapper">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Conversion</th>
-                                            <th class="number">Jan '26</th>
-                                            <th class="number">Feb '26</th>
-                                            <th class="number">Mar '26*</th>
-                                            <th class="number">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
-                                        <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
-                                        <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
-                                        <tr><td>2nd Dep (€4.33)</td><td class="number">€49,535</td><td class="number">€57,996</td><td class="number">€46,344</td><td class="number highlight">€153,875</td></tr>
-                                        <tr><td>Bet (€4.33)</td><td class="number">€36,091</td><td class="number">€43,504</td><td class="number">€34,380</td><td class="number highlight">€113,975</td></tr>
-                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="chart-container">
-                                <canvas id="winlineMissionsMonthlySummaryChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="section">
-                    <h2 class="section-title">D. Funnel Stage Performance</h2>
+                    <h2 class="section-title">C. Funnel Stage Performance</h2>
                     <div class="grid-2">
                         <div>
                             <div class="table-wrapper">
@@ -1272,7 +1350,7 @@
                 </div>
 
                 <div class="section">
-                    <h2 class="section-title">E. Feb A/B Test Analysis</h2>
+                    <h2 class="section-title">D. Feb A/B Test Analysis</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">February ran MAIN GROUP vs TEST GROUP variants for Missions 3-8. Test groups received minimal traffic.</p>
                     <div class="grid-2">
                         <div class="ab-card">
@@ -1301,7 +1379,7 @@
                 </div>
 
                 <div class="section">
-                    <h2 class="section-title">F. Key Insights</h2>
+                    <h2 class="section-title">E. Key Insights</h2>
                     <div class="insight-card">
                         <h3>1. Consistent Monthly Growth</h3>
                         <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
@@ -1321,7 +1399,7 @@
                 </div>
 
                 <div class="section" id="winline-weekly-performance-section">
-                    <h2 class="section-title">G. Weekly Performance Trend</h2>
+                    <h2 class="section-title">F. Weekly Performance Trend</h2>
                     <div class="insight-card">
                         <canvas id="winlineWeeklyPerformanceChart" height="100"></canvas>
                         
@@ -1391,6 +1469,241 @@
             </div>
         </div>
 
+        <!-- WHITEMARKET CONTAINER -->
+        <div id="whitemarket-container" style="display: none;">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')">NSM Analysis</button>
+                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')">Missions</button>
+            </div>
+
+            <!-- WHITEMARKET NSM TAB -->
+            <div id="whitemarket-tab-nsm" class="tab-content active">
+                <div class="section" id="wm-section-1">
+                    <h2 class="section-title">1. Headline KPIs</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total NSM Value</div>
+                            <div class="kpi-value">€4,261</div>
+                            <div class="kpi-sub">Jan–Mar 2026* (partial)</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Active ALs</div>
+                            <div class="kpi-value">5,510</div>
+                            <div class="kpi-sub">€2,094 value</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Trade Conversions</div>
+                            <div class="kpi-value">1,475</div>
+                            <div class="kpi-sub">1,340 C1 + 124 C2 + 11 C3</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Avg Weekly Value</div>
+                            <div class="kpi-value">€355</div>
+                            <div class="kpi-sub">12 active weeks</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-section-2">
+                    <h2 class="section-title">2. NSM Trend</h2>
+                    <div class="chart-container">
+                        <canvas id="whiteMarketNsmTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-section-3">
+                    <h2 class="section-title">3. Value Breakdown by Conversion Type</h2>
+                    <div class="chart-container small">
+                        <canvas id="whiteMarketBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-section-4">
+                    <h2 class="section-title">4. Monthly NSM Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th class="number">AL €</th>
+                                            <th class="number">C1 €</th>
+                                            <th class="number">C2 €</th>
+                                            <th class="number">C3 €</th>
+                                            <th class="number">Total €</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Jan</td><td class="number">€711</td><td class="number">€31</td><td class="number">€550</td><td class="number">€250</td><td class="number highlight">€1,542</td></tr>
+                                        <tr><td>Feb</td><td class="number">€652</td><td class="number">€17</td><td class="number">€688</td><td class="number">€250</td><td class="number highlight">€1,606</td></tr>
+                                        <tr><td>Mar*</td><td class="number">€731</td><td class="number">€19</td><td class="number">€313</td><td class="number">€50</td><td class="number highlight">€1,113</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€2,094</td><td class="number">€67</td><td class="number">€1,550</td><td class="number">€550</td><td class="number highlight">€4,261</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="whiteMarketMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-section-5">
+                    <h2 class="section-title">5. Key Insights</h2>
+                    <div class="insight-card">
+                        <p>WhiteMarket is the smallest partner at €4,261 (0.8% of portfolio). AL accounts for 49% of value — the highest AL share among all partners. BOFU segment (AL+BUY) drives 79% of trade value. Ukraine-only deployment with 12 active weeks Jan–Mar 2026.</p>
+                    </div>
+                </div>
+                <div class="footer">
+                    Data source: WhiteMarket Mission CSVs (2026) + AL events data | UA only | Generated by AI PM Assistant
+                </div>
+            </div>
+
+            <!-- WHITEMARKET MISSIONS TAB -->
+            <div id="whitemarket-tab-missions" class="tab-content">
+                <div class="section" id="wm-missions-a">
+                    <h2 class="section-title">A. Mission KPIs</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total ALs</div>
+                            <div class="kpi-value">5,510</div>
+                            <div class="kpi-sub">Account Linkages</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">C1 Completions</div>
+                            <div class="kpi-value">1,340</div>
+                            <div class="kpi-sub">Buy any amount</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">C2 Completions</div>
+                            <div class="kpi-value">124</div>
+                            <div class="kpi-sub">Buy $100+</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">C3 Completions</div>
+                            <div class="kpi-value">11</div>
+                            <div class="kpi-sub">Buy $300+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-missions-b">
+                    <h2 class="section-title">B. Campaign Breakdown</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Segment</th>
+                                    <th>Month</th>
+                                    <th class="number">C1</th>
+                                    <th class="number">C2</th>
+                                    <th class="number">C3</th>
+                                    <th class="number">€ Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>M1 TOFU (NO AL)</td><td>Jan</td><td class="number">69</td><td class="number">5</td><td class="number">0</td><td class="number">€66</td></tr>
+                                <tr><td>M1 TOFU (NO AL)</td><td>Feb</td><td class="number">63</td><td class="number">12</td><td class="number">0</td><td class="number">€153</td></tr>
+                                <tr><td>M1 TOFU (NO AL)</td><td>Mar*</td><td class="number">50</td><td class="number">3</td><td class="number">0</td><td class="number">€40</td></tr>
+                                <tr><td>M2 MOFU (AL+NO BUY)</td><td>Jan</td><td class="number">115</td><td class="number">8</td><td class="number">0</td><td class="number">€106</td></tr>
+                                <tr><td>M2 MOFU (AL+NO BUY)</td><td>Feb</td><td class="number">63</td><td class="number">11</td><td class="number">0</td><td class="number">€141</td></tr>
+                                <tr><td>M2 MOFU (AL+NO BUY)</td><td>Mar*</td><td class="number">62</td><td class="number">3</td><td class="number">0</td><td class="number">€41</td></tr>
+                                <tr><td>M3 BOFU (AL+BUY)</td><td>Jan</td><td class="number">435</td><td class="number">31</td><td class="number">5</td><td class="number highlight">€659</td></tr>
+                                <tr><td>M3 BOFU (AL+BUY)</td><td>Feb</td><td class="number">212</td><td class="number">32</td><td class="number">5</td><td class="number highlight">€661</td></tr>
+                                <tr><td>M3 BOFU (AL+BUY)</td><td>Mar*</td><td class="number">271</td><td class="number">19</td><td class="number">1</td><td class="number highlight">€301</td></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                    <td colspan="2">TOTAL</td>
+                                    <td class="number">1,340</td>
+                                    <td class="number">124</td>
+                                    <td class="number">11</td>
+                                    <td class="number">€2,167</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-missions-c">
+                    <h2 class="section-title">C. Funnel Stage Performance</h2>
+                    <div class="chart-container">
+                        <canvas id="whiteMarketFunnelChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-missions-d">
+                    <h2 class="section-title">D. Key Insights</h2>
+                    <div class="insight-card">
+                        <p>BOFU (AL+BUY) dominates with 79% of trade value. C2 ($100+ trades) is the biggest value driver at €1,550. C3 ($300+) is rare (11 total) but high-value at €50 each. TOFU+MOFU primarily generate AL volume for downstream conversion.</p>
+                    </div>
+                </div>
+
+                <div class="section" id="wm-missions-e">
+                    <h2 class="section-title">E. Weekly Performance</h2>
+                    <div class="chart-container">
+                        <canvas id="whiteMarketWeeklyChart"></canvas>
+                    </div>
+                    
+                    <div class="table-wrapper" style="margin-top: 2rem;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Week</th>
+                                    <th class="number">AL</th>
+                                    <th class="number">C1</th>
+                                    <th class="number">C2</th>
+                                    <th class="number">C3</th>
+                                    <th class="number">€ AL</th>
+                                    <th class="number">€ C1</th>
+                                    <th class="number">€ C2</th>
+                                    <th class="number">€ C3</th>
+                                    <th class="number">€ Total</th>
+                                    <th class="number">WoW %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Dec 29</td><td class="number">388</td><td class="number">274</td><td class="number">7</td><td class="number">1</td><td class="number">€147</td><td class="number">€14</td><td class="number">€88</td><td class="number">€50</td><td class="number">€299</td><td class="number">—</td></tr>
+                                <tr><td>Jan 5</td><td class="number">405</td><td class="number">100</td><td class="number">10</td><td class="number">1</td><td class="number">€154</td><td class="number">€5</td><td class="number">€125</td><td class="number">€50</td><td class="number">€334</td><td class="number" style="color: var(--green);">+12%</td></tr>
+                                <tr><td>Jan 12</td><td class="number">276</td><td class="number">31</td><td class="number">9</td><td class="number">3</td><td class="number">€105</td><td class="number">€2</td><td class="number">€113</td><td class="number">€150</td><td class="number">€369</td><td class="number" style="color: var(--green);">+11%</td></tr>
+                                <tr><td>Jan 19</td><td class="number">321</td><td class="number">31</td><td class="number">10</td><td class="number">0</td><td class="number">€122</td><td class="number">€2</td><td class="number">€125</td><td class="number">€0</td><td class="number">€249</td><td class="number" style="color: var(--red);">-33%</td></tr>
+                                <tr><td>Jan 26</td><td class="number">481</td><td class="number">183</td><td class="number">8</td><td class="number">0</td><td class="number">€183</td><td class="number">€9</td><td class="number">€100</td><td class="number">€0</td><td class="number">€292</td><td class="number" style="color: var(--green);">+17%</td></tr>
+                                <tr><td>Feb 2</td><td class="number">550</td><td class="number">182</td><td class="number">18</td><td class="number">2</td><td class="number">€209</td><td class="number">€9</td><td class="number">€225</td><td class="number">€100</td><td class="number">€543</td><td class="number" style="color: var(--green);">+86%</td></tr>
+                                <tr><td>Feb 9</td><td class="number">376</td><td class="number">73</td><td class="number">19</td><td class="number">1</td><td class="number">€143</td><td class="number">€4</td><td class="number">€238</td><td class="number">€50</td><td class="number">€434</td><td class="number" style="color: var(--red);">-20%</td></tr>
+                                <tr><td>Feb 16</td><td class="number">413</td><td class="number">61</td><td class="number">11</td><td class="number">0</td><td class="number">€157</td><td class="number">€3</td><td class="number">€138</td><td class="number">€0</td><td class="number">€297</td><td class="number" style="color: var(--red);">-32%</td></tr>
+                                <tr><td>Feb 23</td><td class="number">376</td><td class="number">22</td><td class="number">7</td><td class="number">2</td><td class="number">€143</td><td class="number">€1</td><td class="number">€88</td><td class="number">€100</td><td class="number">€331</td><td class="number" style="color: var(--green);">+12%</td></tr>
+                                <tr><td>Mar 2</td><td class="number">1018</td><td class="number">312</td><td class="number">18</td><td class="number">0</td><td class="number">€387</td><td class="number">€16</td><td class="number">€225</td><td class="number">€0</td><td class="number">€627</td><td class="number" style="color: var(--green);">+89%</td></tr>
+                                <tr><td>Mar 9</td><td class="number">514</td><td class="number">54</td><td class="number">6</td><td class="number">1</td><td class="number">€195</td><td class="number">€3</td><td class="number">€75</td><td class="number">€50</td><td class="number">€323</td><td class="number" style="color: var(--red);">-49%</td></tr>
+                                <tr><td>Mar 16</td><td class="number">392</td><td class="number">17</td><td class="number">1</td><td class="number">0</td><td class="number">€149</td><td class="number">€1</td><td class="number">€13</td><td class="number">€0</td><td class="number">€162</td><td class="number" style="color: var(--red);">-50%</td></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                    <td>TOTAL</td>
+                                    <td class="number">5,510</td>
+                                    <td class="number">1,340</td>
+                                    <td class="number">124</td>
+                                    <td class="number">11</td>
+                                    <td class="number">€2,094</td>
+                                    <td class="number">€67</td>
+                                    <td class="number">€1,550</td>
+                                    <td class="number">€550</td>
+                                    <td class="number">€4,261</td>
+                                    <td class="number">—</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    Data source: WhiteMarket Mission CSVs (2026) + AL events data | UA only | Generated by AI PM Assistant
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1403,7 +1716,8 @@
         const charts = {
             combined: {},
             tradeit: {},
-            winline: {}
+            winline: {},
+            whitemarket: {}
         };
 
         // Data Models
@@ -1454,6 +1768,18 @@
             // Update UI
             const h1 = document.getElementById('header-title');
             const h2 = document.getElementById('header-subtitle');
+            const logo = document.getElementById('header-logo');
+            
+            const logos = {
+                combined: { src: '', alt: '', show: false },
+                tradeit: { src: 'https://tradeit.gg/_ipx/w_170/images/logo-full.svg', alt: 'Tradeit logo', show: true },
+                winline: { src: 'https://winline.ru/favicon.ico', alt: 'Winline logo', show: true },
+                whitemarket: { src: 'https://white.market/favicon.ico', alt: 'WhiteMarket logo', show: true }
+            };
+            const l = logos[partner];
+            logo.src = l.src;
+            logo.alt = l.alt;
+            logo.style.display = l.show ? 'block' : 'none';
             
             if (partner === 'combined') {
                 h1.textContent = 'Combined — Brand Integration Portfolio';
@@ -1461,9 +1787,11 @@
                 document.getElementById('combined-container').style.display = 'block';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'none';
+                document.getElementById('whitemarket-container').style.display = 'none';
                 
                 destroyCharts('tradeit');
                 destroyCharts('winline');
+                destroyCharts('whitemarket');
                 initCombinedCharts();
             } else if (partner === 'tradeit') {
                 h1.textContent = 'Tradeit — Brand Integration Performance';
@@ -1471,20 +1799,36 @@
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'block';
                 document.getElementById('winline-container').style.display = 'none';
+                document.getElementById('whitemarket-container').style.display = 'none';
                 
                 destroyCharts('combined');
                 destroyCharts('winline');
+                destroyCharts('whitemarket');
                 initTradeitCharts();
-            } else {
+            } else if (partner === 'winline') {
                 h1.textContent = 'Winline — Brand Integration Performance';
                 h2.textContent = 'NSM Analysis: Jan–Mar 2026 | € Value per Conversion';
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'block';
+                document.getElementById('whitemarket-container').style.display = 'none';
                 
                 destroyCharts('combined');
                 destroyCharts('tradeit');
+                destroyCharts('whitemarket');
                 initWinlineCharts();
+            } else if (partner === 'whitemarket') {
+                h1.textContent = 'WhiteMarket — Brand Integration Performance';
+                h2.textContent = 'NSM Analysis: Jan–Mar 2026 | € Value per Conversion';
+                document.getElementById('combined-container').style.display = 'none';
+                document.getElementById('tradeit-container').style.display = 'none';
+                document.getElementById('winline-container').style.display = 'none';
+                document.getElementById('whitemarket-container').style.display = 'block';
+                
+                destroyCharts('combined');
+                destroyCharts('tradeit');
+                destroyCharts('winline');
+                initWhiteMarketCharts();
             }
         }
 
@@ -1552,6 +1896,54 @@
 
         // Chart Initialization (Combined)
         function initCombinedCharts() {
+            const combinedMonthlyCtx = document.getElementById('combinedMonthlySummaryChart');
+            if (combinedMonthlyCtx) {
+                charts.combined.monthlySummary = new Chart(combinedMonthlyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
+                        datasets: [
+                            {
+                                label: 'Winline',
+                                data: [138422, 158499, 120416],
+                                backgroundColor: '#2563eb',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'Tradeit',
+                                data: [12255, 13444, 68719],
+                                backgroundColor: '#059669',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'WhiteMarket',
+                                data: [1542, 1606, 1113],
+                                backgroundColor: '#7c3aed',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': €' + context.raw.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, stacked: true },
+                            y: { grid: { color: gridColor }, stacked: true, ticks: { callback: function(value) { return '€' + value; } } }
+                        }
+                    }
+                });
+            }
+
             if (Object.keys(charts.combined).length > 0) return;
 
             // Stacked Bar Chart
@@ -1562,7 +1954,8 @@
                     labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
                     datasets: [
                         { label: 'Winline', data: [138422, 158499, 120416], backgroundColor: '#2563eb', borderRadius: 4 },
-                        { label: 'Tradeit', data: [12255, 13444, 68719], backgroundColor: '#059669', borderRadius: 4 }
+                        { label: 'Tradeit', data: [12255, 13444, 68719], backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'WhiteMarket', data: [1542, 1606, 1113], backgroundColor: '#7c3aed', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -1586,7 +1979,8 @@
                     labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
                     datasets: [
                         { label: 'Winline', data: [819, null, null], backgroundColor: '#2563eb', borderRadius: 4 },
-                        { label: 'Tradeit', data: [21, 22, null], backgroundColor: '#059669', borderRadius: 4 }
+                        { label: 'Tradeit', data: [21, 22, null], backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'WhiteMarket (No EBU data)', data: [null, null, null], backgroundColor: '#7c3aed', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -1641,7 +2035,8 @@
                     labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
                     datasets: [
                         { label: 'Winline', data: [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779], backgroundColor: '#2563eb' },
-                        { label: 'Tradeit', data: [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002], backgroundColor: '#059669' }
+                        { label: 'Tradeit', data: [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002], backgroundColor: '#059669' },
+                        { label: 'WhiteMarket', data: [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162], backgroundColor: '#7c3aed' }
                     ]
                 },
                 options: {
@@ -1661,6 +2056,52 @@
 
         // Chart Initialization (Tradeit)
         function initTradeitCharts() {
+            const tradeitMonthlyCtx = document.getElementById('tradeitMonthlySummaryChart');
+            if (tradeitMonthlyCtx) {
+                charts.tradeit.monthlySummary = new Chart(tradeitMonthlyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
+                        datasets: [
+                            {
+                                label: 'C2 (€8.75)',
+                                data: [7595, 7665, 10588],
+                                backgroundColor: '#d97706',
+                                borderRadius: {topLeft: 6, topRight: 6}
+                            },
+                            {
+                                label: 'C1 (€0.04)',
+                                data: [108, 142, 762],
+                                backgroundColor: '#059669'
+                            },
+                            {
+                                label: 'AL (€0.38)',
+                                data: [4553, 5637, 57370],
+                                backgroundColor: '#2563eb'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': €' + context.raw.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { stacked: true, grid: { display: false } },
+                            y: { stacked: true, grid: { color: gridColor }, ticks: { callback: function(value) { return '€' + value; } } }
+                        }
+                    }
+                });
+            }
+
             if (Object.keys(charts.tradeit).length > 0) return;
 
             // Region Chart
@@ -1969,6 +2410,120 @@
                     }
                 });
             }
+        }
+
+        // Chart Initialization (WhiteMarket)
+        function initWhiteMarketCharts() {
+            if (Object.keys(charts.whitemarket).length > 0) return;
+
+            // NSM Trend (Section 2)
+            const ctxNsmTrend = document.getElementById('whiteMarketNsmTrendChart').getContext('2d');
+            charts.whitemarket.nsmTrend = new Chart(ctxNsmTrend, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
+                    datasets: [
+                        { label: '€ Value', data: [1542, 1606, 1113], backgroundColor: '#7c3aed', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: c => c.parsed.y !== null ? '€' + c.parsed.y.toLocaleString('en-US') : null } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Value Breakdown (Section 3)
+            const ctxBreakdown = document.getElementById('whiteMarketBreakdownChart').getContext('2d');
+            charts.whitemarket.breakdown = new Chart(ctxBreakdown, {
+                type: 'doughnut',
+                data: {
+                    labels: ['AL (49.1%)', 'C1 (1.6%)', 'C2 (36.4%)', 'C3 (12.9%)'],
+                    datasets: [{ data: [2094, 67, 1550, 550], backgroundColor: ['#059669', '#3b82f6', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#1a1a2e' } },
+                        tooltip: { callbacks: { label: c => ` ${c.label}: €${c.raw.toLocaleString()}` } }
+                    }
+                }
+            });
+
+            // Monthly Summary (Section 4)
+            const ctxMonthly = document.getElementById('whiteMarketMonthlySummaryChart').getContext('2d');
+            charts.whitemarket.monthlySummary = new Chart(ctxMonthly, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
+                    datasets: [
+                        { label: 'AL', data: [711, 652, 731], backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'C1', data: [31, 17, 19], backgroundColor: '#3b82f6', borderRadius: 4 },
+                        { label: 'C2', data: [550, 688, 313], backgroundColor: '#d97706', borderRadius: 4 },
+                        { label: 'C3', data: [250, 250, 50], backgroundColor: '#7c3aed', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Funnel Chart (Missions Section C)
+            const ctxFunnel = document.getElementById('whiteMarketFunnelChart').getContext('2d');
+            charts.whitemarket.missionsFunnel = new Chart(ctxFunnel, {
+                type: 'bar',
+                data: {
+                    labels: ['TOFU', 'MOFU', 'BOFU'],
+                    datasets: [
+                        { label: 'Jan', data: [66, 106, 659], backgroundColor: '#e2e4e9', borderColor: '#6b7280', borderWidth: 1, borderRadius: 4 },
+                        { label: 'Feb', data: [153, 141, 661], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
+                        { label: 'Mar*', data: [40, 41, 301], backgroundColor: '#2563eb', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                    }
+                }
+            });
+
+            // Weekly Performance (Missions Section E)
+            const ctxWeekly = document.getElementById('whiteMarketWeeklyChart').getContext('2d');
+            charts.whitemarket.weeklyPerformance = new Chart(ctxWeekly, {
+                type: 'bar',
+                data: {
+                    labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                    datasets: [
+                        { label: 'AL €', data: [147, 154, 105, 122, 183, 209, 143, 157, 143, 387, 195, 149], backgroundColor: '#059669' },
+                        { label: 'C1 €', data: [14, 5, 2, 2, 9, 9, 4, 3, 1, 16, 3, 1], backgroundColor: '#3b82f6' },
+                        { label: 'C2 €', data: [88, 125, 113, 125, 100, 225, 238, 138, 88, 225, 75, 13], backgroundColor: '#d97706' },
+                        { label: 'C3 €', data: [50, 50, 150, 0, 0, 100, 50, 0, 100, 0, 50, 0], backgroundColor: '#7c3aed' }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                    }
+                }
+            });
         }
 
         // Init
