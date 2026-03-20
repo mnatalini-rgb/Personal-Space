@@ -7,14 +7,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg: #0e0f11;
-            --surface: #151618;
-            --border: #232529;
-            --text: #eeeeee;
-            --text-muted: #8b8d91;
-            --accent: #5e6ad2;
-            --green: #2ecc71;
-            --red: #e74c3c;
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --border: #e2e4e9;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --green: #059669;
+            --red: #dc2626;
+            --yellow: #d97706;
             --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
             --radius-lg: 12px;
             --radius-md: 8px;
@@ -69,17 +71,17 @@
         }
 
         .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
-        .badge { display: inline-block; background-color: rgba(94, 106, 210, 0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
         .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
         .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
         .header p { color: var(--text-muted); font-size: 1rem; }
 
-        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; }
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
 
         /* KPIs */
         .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
-        .kpi-card { background-color: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
         .kpi-sub { font-size: 0.9rem; color: var(--text); }
@@ -91,21 +93,21 @@
         .chart-container.small { height: 250px; }
 
         /* Tables */
-        .table-wrapper { overflow-x: auto; background-color: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; }
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
         th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
-        th { background-color: rgba(35, 37, 41, 0.5); color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        th { background-color: #f1f3f5; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
         tr:last-child td { border-bottom: none; }
         td.number { text-align: right; font-variant-numeric: tabular-nums; }
         th.number { text-align: right; }
 
         /* Highlights */
         .highlight { color: var(--accent); font-weight: 600; }
-        .insight-card { background-color: var(--bg); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; }
         .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); }
         .insight-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-        .ab-card { background-color: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; }
+        .ab-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; }
         .ab-card h3 { color: var(--accent); margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
         .ab-stat { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.95rem; }
         .ab-stat span:first-child { color: var(--text-muted); }
@@ -117,8 +119,8 @@
         /* Tabs */
         .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 0; position: sticky; top: 0; background-color: var(--bg); z-index: 10; }
         .tab-btn { background: none; border: none; color: var(--text-muted); font-size: 1.1rem; font-weight: 600; padding: 1rem 1.5rem; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s ease; font-family: inherit; }
-        .tab-btn:hover { color: var(--text); background-color: var(--surface); }
-        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background-color: var(--surface); }
+        .tab-btn:hover { color: var(--text); background-color: #f1f3f5; }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background-color: #ffffff; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -132,7 +134,7 @@
         .term:hover::after {
             content: attr(data-tip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
             background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.3rem 0.6rem;
-            border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 20; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 20; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
     </style>
 </head>
@@ -162,17 +164,17 @@
                 <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
                     <div class="kpi-card">
                         <div class="kpi-title">Total Portfolio Value (Jan '26)</div>
-                        <div class="kpi-value">€121,773</div>
-                        <div class="kpi-sub">€110,430 Winline + €11,343 Tradeit</div>
+                        <div class="kpi-value">€122,685</div>
+                        <div class="kpi-sub">€110,430 Winline + €12,255 Tradeit</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Winline Share</div>
-                        <div class="kpi-value">90.7%</div>
-                        <div class="kpi-sub" style="color: #5e6ad2;">Value Dominance</div>
+                        <div class="kpi-value">90.0%</div>
+                        <div class="kpi-sub" style="color: #2563eb;">Value Dominance</div>
                     </div>
                     <div class="kpi-card">
                         <div class="kpi-title">Tradeit Share</div>
-                        <div class="kpi-value">9.3%</div>
+                        <div class="kpi-value">10.0%</div>
                         <div class="kpi-sub" style="color: var(--green);">Volume Base</div>
                     </div>
                     <div class="kpi-card">
@@ -216,8 +218,8 @@
                         </thead>
                         <tbody>
                             <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number">134,863</td><td class="number highlight">€819</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
-                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€11,343</td><td class="number">590,714</td><td class="number">€19</td><td>Trade $250+ (C2)</td><td>€7,524 (66.3%)</td></tr>
-                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€12,566</td><td class="number">600,527</td><td class="number">€21</td><td>Trade $250+ (C2)</td><td>€7,661 (61.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number">590,714</td><td class="number">€21</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td class="number">600,527</td><td class="number">€22</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -259,6 +261,7 @@
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">CDP Data</button>
+                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'missions')">Missions</button>
             </div>
 
             <!-- TRADEIT NSM TAB -->
@@ -268,19 +271,31 @@
                     <div class="kpi-grid">
                         <div class="kpi-card">
                             <div class="kpi-title">Jan Total Value</div>
-                            <div class="kpi-value">€11,343</div>
-                            <div class="kpi-sub">€19/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 591K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                            <div class="kpi-value">€12,255</div>
+                            <div class="kpi-sub">€21/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 591K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-title">Feb Total Value</div>
-                            <div class="kpi-value">€12,566</div>
-                            <div class="kpi-sub">€21/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 601K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                            <div class="kpi-value">€13,444</div>
+                            <div class="kpi-sub">€22/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 601K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-title">MoM Change</div>
-                            <div class="kpi-value">+€1,223</div>
-                            <div class="kpi-sub positive">+10.8% Total | +9.0% Rate</div>
+                            <div class="kpi-value">+€1,189</div>
+                            <div class="kpi-sub positive">+9.7% Total | +4.8% Rate</div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="section region-filter-section" style="margin-top: 2rem; margin-bottom: 2rem;">
+                    <div class="partner-selector" id="missionsRegionFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
+                        <button class="partner-btn active" data-region="All Regions">All Regions</button>
+                        <button class="partner-btn" data-region="EU">EU</button>
+                        <button class="partner-btn" data-region="CIS">CIS</button>
+                        <button class="partner-btn" data-region="LATAM">LATAM</button>
+                        <button class="partner-btn" data-region="NA">NA</button>
+                        <button class="partner-btn" data-region="MENA">MENA</button>
+                        <button class="partner-btn" data-region="APAC">APAC</button>
                     </div>
                 </div>
 
@@ -310,14 +325,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td>Jan</td><td>North America</td><td class="number">53,497</td><td class="number">€3,170.91</td><td class="number highlight">€59.27</td></tr>
-                                        <tr><td>Jan</td><td>CIS</td><td class="number">464,261</td><td class="number">€6,086.55</td><td class="number">€13.11</td></tr>
-                                        <tr><td>Jan</td><td>MENA</td><td class="number">18,057</td><td class="number">€878.71</td><td class="number">€48.66</td></tr>
-                                        <tr><td>Jan</td><td>APAC</td><td class="number">54,899</td><td class="number">€1,207.25</td><td class="number">€21.99</td></tr>
-                                        <tr><td>Feb</td><td>North America</td><td class="number">57,385</td><td class="number">€2,775.73</td><td class="number highlight">€48.37</td></tr>
-                                        <tr><td>Feb</td><td>CIS</td><td class="number">473,938</td><td class="number">€7,702.17</td><td class="number">€16.25</td></tr>
-                                        <tr><td>Feb</td><td>MENA</td><td class="number">18,611</td><td class="number">€914.15</td><td class="number">€49.12</td></tr>
-                                        <tr><td>Feb</td><td>APAC</td><td class="number">50,593</td><td class="number">€1,173.93</td><td class="number">€23.20</td></tr>
+                                        <tr><td>Jan</td><td>North America</td><td class="number">53,497</td><td class="number">€3,377.05</td><td class="number highlight">€63.13</td></tr>
+                                        <tr><td>Jan</td><td>CIS</td><td class="number">464,261</td><td class="number">€6,534.67</td><td class="number">€14.08</td></tr>
+                                        <tr><td>Jan</td><td>MENA</td><td class="number">18,057</td><td class="number">€965.36</td><td class="number">€53.46</td></tr>
+                                        <tr><td>Jan</td><td>APAC</td><td class="number">54,899</td><td class="number">€1,378.30</td><td class="number">€25.11</td></tr>
+                                        <tr><td>Feb</td><td>North America</td><td class="number">57,385</td><td class="number">€3,021.59</td><td class="number highlight">€52.65</td></tr>
+                                        <tr><td>Feb</td><td>CIS</td><td class="number">473,938</td><td class="number">€8,004.27</td><td class="number">€16.89</td></tr>
+                                        <tr><td>Feb</td><td>MENA</td><td class="number">18,611</td><td class="number">€1,023.21</td><td class="number">€54.98</td></tr>
+                                        <tr><td>Feb</td><td>APAC</td><td class="number">50,593</td><td class="number">€1,395.09</td><td class="number">€27.57</td></tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -333,7 +348,7 @@
                 <div class="section" id="section-4">
                     <h2 class="section-title">4. Month-over-Month Comparison</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
-                        NA declined <span class="highlight" style="color: var(--red);">-18.4%</span> in efficiency while CIS grew <span class="highlight" style="color: var(--green);">+24.0%</span>.
+                        NA declined <span class="highlight" style="color: var(--red);">-16.6%</span> in efficiency while CIS grew <span class="highlight" style="color: var(--green);">+20.0%</span>.
                     </p>
                     <div class="chart-container">
                         <canvas id="momChart"></canvas>
@@ -346,20 +361,20 @@
                         <div class="ab-card">
                             <h3>Group A (1000 FP)</h3>
                             <div class="ab-stat"><span>EBU</span> <span>21,533</span></div>
-                            <div class="ab-stat"><span>Value Generated</span> <span>€502.37</span></div>
-                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€23.33</span></div>
+                            <div class="ab-stat"><span>Value Generated</span> <span>€591.67</span></div>
+                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€27.48</span></div>
                             <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span>4.734%</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span>5.113%</span></div>
                             <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span>0.817%</span></div>
                             <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span>0.088%</span></div>
                         </div>
                         <div class="ab-card" style="border-color: var(--accent);">
                             <h3>Group B (2000 FP) - <span style="color:var(--text);">Winner</span></h3>
                             <div class="ab-stat"><span>EBU</span> <span>21,667</span></div>
-                            <div class="ab-stat"><span>Value Generated</span> <span>€520.87</span></div>
-                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€24.04</span></div>
+                            <div class="ab-stat"><span>Value Generated</span> <span>€620.05</span></div>
+                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€28.62</span></div>
                             <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span class="highlight" style="color: var(--green);">5.193% (+10.4%)</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span class="highlight" style="color: var(--green);">5.617% (+9.9%)</span></div>
                             <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
                             <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span style="color: var(--red);">0.078%</span></div>
                         </div>
@@ -373,7 +388,7 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th colspan="4" style="background-color: rgba(94,106,210,0.1); color: var(--accent); text-align: center;">JANUARY</th>
+                                        <th colspan="4" style="background-color: rgba(37,99,235,0.1); color: var(--accent); text-align: center;">JANUARY</th>
                                     </tr>
                                     <tr>
                                         <th>Region</th>
@@ -394,7 +409,7 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th colspan="4" style="background-color: rgba(94,106,210,0.1); color: var(--accent); text-align: center;">FEBRUARY</th>
+                                        <th colspan="4" style="background-color: rgba(37,99,235,0.1); color: var(--accent); text-align: center;">FEBRUARY</th>
                                     </tr>
                                     <tr>
                                         <th>Region</th>
@@ -416,7 +431,7 @@
 
                 <div class="section" id="section-7">
                     <h2 class="section-title">7. Tradeit Conversion Funnel</h2>
-                    <div class="insight-card" style="padding: 2rem; background-color: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
+                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
                             <div style="flex: 1;">
                                 <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
@@ -591,13 +606,268 @@
                     Data source: CDP — rep__cdp_service__user_events (Snowflake) | Distinct Users per Event per Month
                 </div>
             </div>
-        </div>
 
-        <!-- WINLINE CONTAINER -->
+            <!-- TRADEIT MISSIONS TAB -->
+            <div id="tradeit-tab-missions" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">A. Conversion KPIs (Mission Data)</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">AL Count</div>
+                            <div class="kpi-value">177,788</div>
+                            <div class="kpi-sub">Jan: 11,981 | Feb: 14,834 | Mar*: 150,973</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">C1 (First Trade)</div>
+                            <div class="kpi-value">25,302</div>
+                            <div class="kpi-sub">Jan: 2,690 | Feb: 3,556 | Mar*: 19,056</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">C2 (Trade $250+)</div>
+                            <div class="kpi-value">2,954</div>
+                            <div class="kpi-sub">Jan: 868 | Feb: 876 | Mar*: 1,210</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total Conversions</div>
+                            <div class="kpi-value">206,044</div>
+                            <div class="kpi-sub">Jan: 15,539 | Feb: 19,266 | Mar*: 171,239</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #f39c12;">
+                            <div class="kpi-title">Total € Value</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">€94,418</div>
+                            <div class="kpi-sub" style="color: #f39c12;">Jan: €12,255 | Feb: €13,444 | Mar*: €68,719</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">B. Regional Breakdown (Campaign Level)</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">*Mar = Partial month (data through 20 Mar 2026)</p>
+                    <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Region</th>
+                                    <th>Segment</th>
+                                    <th class="number"><span class="term" data-tip="Account Linkage (€0.38)">AL</span></th>
+                                    <th class="number"><span class="term" data-tip="First Trade (€0.04)">C1</span></th>
+                                    <th class="number"><span class="term" data-tip="Trade $250+ (€8.75)">C2</span></th>
+                                    <th class="number">€ Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Jan</td><td>NA</td><td>General (A)</td><td class="number">1,101</td><td class="number">176</td><td class="number">19</td><td class="number">€592</td></tr>
+                                <tr><td>Jan</td><td>NA</td><td>General (B)</td><td class="number">1,217</td><td class="number">221</td><td class="number">17</td><td class="number">€620</td></tr>
+                                <tr><td>Jan</td><td>NA</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">102</td><td class="number">14</td><td class="number">€127</td></tr>
+                                <tr><td>Jan</td><td>NA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">233</td><td class="number">€2,039</td></tr>
+                                <tr><td>Jan</td><td>CIS</td><td>General</td><td class="number">7,371</td><td class="number">1,195</td><td class="number">65</td><td class="number">€3,418</td></tr>
+                                <tr><td>Jan</td><td>CIS</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">491</td><td class="number">18</td><td class="number">€177</td></tr>
+                                <tr><td>Jan</td><td>CIS</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">336</td><td class="number">€2,940</td></tr>
+                                <tr><td>Jan</td><td>MENA</td><td>General</td><td class="number">813</td><td class="number">164</td><td class="number">13</td><td class="number">€429</td></tr>
+                                <tr><td>Jan</td><td>MENA</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">59</td><td class="number">3</td><td class="number">€29</td></tr>
+                                <tr><td>Jan</td><td>MENA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">58</td><td class="number">€508</td></tr>
+                                <tr><td>Jan</td><td>APAC</td><td>General</td><td class="number">1,479</td><td class="number">206</td><td class="number">19</td><td class="number">€737</td></tr>
+                                <tr><td>Jan</td><td>APAC</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">76</td><td class="number">10</td><td class="number">€91</td></tr>
+                                <tr><td>Jan</td><td>APAC</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">63</td><td class="number">€551</td></tr>
+                                
+                                <tr><td style="border-top: 2px solid var(--accent);">Feb</td><td style="border-top: 2px solid var(--accent);">NA</td><td style="border-top: 2px solid var(--accent);">General</td><td class="number" style="border-top: 2px solid var(--accent);">2,571</td><td class="number" style="border-top: 2px solid var(--accent);">491</td><td class="number" style="border-top: 2px solid var(--accent);">41</td><td class="number" style="border-top: 2px solid var(--accent);">€1,355</td></tr>
+                                <tr><td>Feb</td><td>NA</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">93</td><td class="number">11</td><td class="number">€100</td></tr>
+                                <tr><td>Feb</td><td>NA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">179</td><td class="number">€1,566</td></tr>
+                                <tr><td>Feb</td><td>CIS</td><td>General</td><td class="number">9,820</td><td class="number">1,826</td><td class="number">112</td><td class="number">€4,785</td></tr>
+                                <tr><td>Feb</td><td>CIS</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">647</td><td class="number">18</td><td class="number">€183</td></tr>
+                                <tr><td>Feb</td><td>CIS</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">347</td><td class="number">€3,036</td></tr>
+                                <tr><td>Feb</td><td>MENA</td><td>General</td><td class="number">895</td><td class="number">179</td><td class="number">6</td><td class="number">€400</td></tr>
+                                <tr><td>Feb</td><td>MENA</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">55</td><td class="number">0</td><td class="number">€2</td></tr>
+                                <tr><td>Feb</td><td>MENA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">71</td><td class="number">€621</td></tr>
+                                <tr><td>Feb</td><td>APAC</td><td>General</td><td class="number">1,548</td><td class="number">207</td><td class="number">21</td><td class="number">€780</td></tr>
+                                <tr><td>Feb</td><td>APAC</td><td>AL&NoTrade</td><td class="number">—</td><td class="number">58</td><td class="number">6</td><td class="number">€55</td></tr>
+                                <tr><td>Feb</td><td>APAC</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">64</td><td class="number">€560</td></tr>
+
+                                <tr><td style="border-top: 2px solid var(--accent);">Mar*</td><td style="border-top: 2px solid var(--accent);">EU</td><td style="border-top: 2px solid var(--accent);">General</td><td class="number" style="border-top: 2px solid var(--accent);">83,586</td><td class="number" style="border-top: 2px solid var(--accent);">10,427</td><td class="number" style="border-top: 2px solid var(--accent);">756</td><td class="number" style="border-top: 2px solid var(--accent);">€38,795</td></tr>
+                                <tr><td>Mar*</td><td>CIS EXC</td><td>General</td><td class="number">9,872</td><td class="number">1,100</td><td class="number">31</td><td class="number">€4,067</td></tr>
+                                <tr><td>Mar*</td><td>CIS</td><td>General MB</td><td class="number">44,685</td><td class="number">4,023</td><td class="number">72</td><td class="number">€17,771</td></tr>
+                                <tr><td>Mar*</td><td>LATAM</td><td>General</td><td class="number">4,805</td><td class="number">624</td><td class="number">38</td><td class="number">€2,183</td></tr>
+                                <tr><td>Mar*</td><td>NA</td><td>General MB</td><td class="number">2,568</td><td class="number">246</td><td class="number">14</td><td class="number">€1,108</td></tr>
+                                <tr><td>Mar*</td><td>MENA</td><td>General MB</td><td class="number">2,668</td><td class="number">241</td><td class="number">5</td><td class="number">€1,067</td></tr>
+                                <tr><td>Mar*</td><td>APAC</td><td>General MB</td><td class="number">2,789</td><td class="number">209</td><td class="number">6</td><td class="number">€1,121</td></tr>
+                                <tr><td>Mar*</td><td>CIS</td><td>AL&NoTrade MB</td><td class="number">—</td><td class="number">1,909</td><td class="number">24</td><td class="number">€286</td></tr>
+                                <tr><td>Mar*</td><td>NA</td><td>AL&NoTrade MB</td><td class="number">—</td><td class="number">126</td><td class="number">2</td><td class="number">€23</td></tr>
+                                <tr><td>Mar*</td><td>NA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">50</td><td class="number">€438</td></tr>
+                                <tr><td>Mar*</td><td>MENA</td><td>AL&NoTrade MB</td><td class="number">—</td><td class="number">79</td><td class="number">2</td><td class="number">€21</td></tr>
+                                <tr><td>Mar*</td><td>MENA</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">27</td><td class="number">€236</td></tr>
+                                <tr><td>Mar*</td><td>CIS</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">165</td><td class="number">€1,444</td></tr>
+                                <tr><td>Mar*</td><td>APAC</td><td>AL&NoTrade MB</td><td class="number">—</td><td class="number">72</td><td class="number">2</td><td class="number">€20</td></tr>
+                                <tr><td>Mar*</td><td>APAC</td><td>AL&Trade</td><td class="number">—</td><td class="number">—</td><td class="number">16</td><td class="number">€140</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">C. Regional Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Region</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>EU</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€38,795</td></tr>
+                                        <tr><td>CIS</td><td class="number">€6,535</td><td class="number">€8,004</td><td class="number highlight">€19,501</td></tr>
+                                        <tr><td>LATAM</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€2,183</td></tr>
+                                        <tr><td>NA</td><td class="number">€3,377</td><td class="number">€3,022</td><td class="number highlight">€1,568</td></tr>
+                                        <tr><td>MENA</td><td class="number">€965</td><td class="number">€1,023</td><td class="number highlight">€1,324</td></tr>
+                                        <tr><td>APAC</td><td class="number">€1,378</td><td class="number">€1,395</td><td class="number highlight">€1,281</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="missionsRegionalSummaryChart"></canvas>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">D. Segment Performance</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">See NSM Analysis tab for detailed €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> breakdown. TOFU = General, MOFU = AL&NoTrade, BOFU = AL&Trade.</p>
+                    <div class="insight-card">
+                        <h3>Segment Value Generation</h3>
+                        <p>BOFU (AL&Trade) consistently drives the highest conversion value per user despite having the smallest audience size, confirming that re-engaging already linked users is highly efficient for generating C2 actions.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">E. A/B Test — Group B (January NA)</h2>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Group A (General Mission NA Jan26)</h3>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,101</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>176</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>19</span></div>
+                            <div class="ab-stat"><span>Total Value</span> <span>€592</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span>5.11%</span></div>
+                        </div>
+                        <div class="ab-card" style="border-color: var(--accent);">
+                            <h3>Group B (General Mission Group B NA Jan26) - <span style="color:var(--text);">Winner</span></h3>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,217</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>221</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>17</span></div>
+                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€620 (+4.8%)</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span class="highlight" style="color: var(--green);">5.62% (+9.9%)</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">F. Mystery Box Experiment (March)</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Comparing January/February Control against March Mystery Box Experiment for General missions. <em>AL Rate pending March EBU data. Downstream rates shown as % of AL.</em></p>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>Variant</th>
+                                    <th class="number">AL Count</th>
+                                    <th class="number">C1 Rate (of AL)</th>
+                                    <th class="number">C2 Rate (of AL)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CIS</td><td>Control (Jan/Feb)</td><td class="number">17,191</td><td class="number">17.57%</td><td class="number">1.03%</td></tr>
+                                <tr><td>CIS</td><td>Mystery Box (Mar)</td><td class="number highlight">44,685</td><td class="number" style="color: var(--red);">9.00%</td><td class="number" style="color: var(--red);">0.16%</td></tr>
+                                
+                                <tr><td style="border-top: 1px solid var(--border);">NA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">4,889</td><td class="number" style="border-top: 1px solid var(--border);">18.16%</td><td class="number" style="border-top: 1px solid var(--border);">1.57%</td></tr>
+                                <tr><td>NA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,568</td><td class="number" style="color: var(--red);">9.58%</td><td class="number" style="color: var(--red);">0.55%</td></tr>
+
+                                <tr><td style="border-top: 1px solid var(--border);">MENA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">1,708</td><td class="number" style="border-top: 1px solid var(--border);">20.08%</td><td class="number" style="border-top: 1px solid var(--border);">1.11%</td></tr>
+                                <tr><td>MENA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,668</td><td class="number" style="color: var(--red);">9.03%</td><td class="number" style="color: var(--red);">0.19%</td></tr>
+
+                                <tr><td style="border-top: 1px solid var(--border);">APAC</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">3,027</td><td class="number" style="border-top: 1px solid var(--border);">13.64%</td><td class="number" style="border-top: 1px solid var(--border);">1.32%</td></tr>
+                                <tr><td>APAC</td><td>Mystery Box (Mar)</td><td class="number highlight">2,789</td><td class="number" style="color: var(--red);">7.49%</td><td class="number" style="color: var(--red);">0.22%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Weekly Performance placeholder (Section G) — INSIDE Missions tab -->
+                <div class="section" id="weekly-performance-section">
+                    <h2 class="section-title">G. Weekly Performance Trend</h2>
+                    <div class="insight-card">
+                        <canvas id="weeklyPerformanceChart" height="100"></canvas>
+                        
+                        <div class="table-wrapper" style="margin-top: 2rem;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Week</th>
+                                        <th class="number">AL</th>
+                                        <th class="number">C1</th>
+                                        <th class="number">C2</th>
+                                        <th class="number">Total Conv</th>
+                                        <th class="number">AL €</th>
+                                        <th class="number">C1 €</th>
+                                        <th class="number">C2 €</th>
+                                        <th class="number">Total €</th>
+                                        <th class="number">WoW %</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Dec 29</td><td class="number">2,288</td><td class="number">1,186</td><td class="number">497</td><td class="number">3,971</td><td class="number">€869</td><td class="number">€47</td><td class="number">€4,349</td><td class="number">€5,265</td><td class="number">—</td></tr>
+                                    <tr><td>Jan 5</td><td class="number">2,607</td><td class="number">634</td><td class="number">192</td><td class="number">3,433</td><td class="number">€991</td><td class="number">€25</td><td class="number">€1,680</td><td class="number">€2,696</td><td class="number" style="color: var(--red);">-49%</td></tr>
+                                    <tr><td>Jan 12</td><td class="number">2,099</td><td class="number">394</td><td class="number">101</td><td class="number">2,594</td><td class="number">€798</td><td class="number">€16</td><td class="number">€884</td><td class="number">€1,698</td><td class="number" style="color: var(--red);">-37%</td></tr>
+                                    <tr><td>Jan 19</td><td class="number">2,776</td><td class="number">341</td><td class="number">58</td><td class="number">3,175</td><td class="number">€1,055</td><td class="number">€14</td><td class="number">€508</td><td class="number">€1,577</td><td class="number" style="color: var(--red);">-7%</td></tr>
+                                    <tr><td>Jan 26</td><td class="number">1,917</td><td class="number">135</td><td class="number">20</td><td class="number">2,072</td><td class="number">€728</td><td class="number">€5</td><td class="number">€175</td><td class="number">€908</td><td class="number" style="color: var(--red);">-42%</td></tr>
+                                    <tr><td>Feb 2</td><td class="number">5,921</td><td class="number">2,306</td><td class="number">614</td><td class="number">8,841</td><td class="number">€2,250</td><td class="number">€92</td><td class="number">€5,372</td><td class="number">€7,714</td><td class="number" style="color: var(--green);">+750%</td></tr>
+                                    <tr><td>Feb 9</td><td class="number">3,351</td><td class="number">613</td><td class="number">141</td><td class="number">4,105</td><td class="number">€1,273</td><td class="number">€25</td><td class="number">€1,234</td><td class="number">€2,532</td><td class="number" style="color: var(--red);">-67%</td></tr>
+                                    <tr><td>Feb 16</td><td class="number">2,947</td><td class="number">403</td><td class="number">95</td><td class="number">3,445</td><td class="number">€1,120</td><td class="number">€16</td><td class="number">€831</td><td class="number">€1,967</td><td class="number" style="color: var(--red);">-22%</td></tr>
+                                    <tr><td>Feb 23</td><td class="number">2,480</td><td class="number">234</td><td class="number">26</td><td class="number">2,740</td><td class="number">€942</td><td class="number">€9</td><td class="number">€228</td><td class="number">€1,179</td><td class="number" style="color: var(--red);">-40%</td></tr>
+                                    <tr><td>Mar 2</td><td class="number">247</td><td class="number">0</td><td class="number">0</td><td class="number">247</td><td class="number">€94</td><td class="number">€0</td><td class="number">€0</td><td class="number">€94</td><td class="number" style="color: var(--red);">-92%</td></tr>
+                                    <tr><td style="border-left: 3px solid var(--accent); padding-left: 0.8rem;">Mar 9</td><td class="number">129,075</td><td class="number">17,457</td><td class="number">1,047</td><td class="number">147,579</td><td class="number">€49,048</td><td class="number">€698</td><td class="number">€9,161</td><td class="number">€58,907</td><td class="number" style="color: var(--green);">+62,567%</td></tr>
+                                    <tr><td>Mar 16</td><td class="number">22,401</td><td class="number">1,599</td><td class="number">163</td><td class="number">24,163</td><td class="number">€8,512</td><td class="number">€64</td><td class="number">€1,426</td><td class="number">€10,002</td><td class="number" style="color: var(--red);">-83%</td></tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                        <td>Total</td>
+                                        <td class="number">178,109</td>
+                                        <td class="number">25,302</td>
+                                        <td class="number">2,954</td>
+                                        <td class="number">206,365</td>
+                                        <td class="number">€67,681</td>
+                                        <td class="number">€1,012</td>
+                                        <td class="number">€25,848</td>
+                                        <td class="number">€94,539</td>
+                                        <td class="number">—</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="insight-card" style="margin-top: 1.5rem;">
+                        <p style="margin: 0;"><strong>March week 2 (Mar 9)</strong> drove 62% of total value — EU launch + Mystery Box activation created a massive spike. Week 1 of each month consistently outperforms as new campaigns launch.</p>
+                    </div>
+                </div>
+            </div>
+
+        
+
+            <!-- WINLINE CONTAINER -->
         <div id="winline-container" style="display: none;">
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')">CDP Data</button>
+                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'missions')">Missions</button>
             </div>
 
             <!-- WINLINE NSM TAB -->
@@ -606,19 +876,19 @@
                     <h2 class="section-title">1. Headline KPIs</h2>
                     <div class="kpi-grid">
                         <div class="kpi-card">
-                            <div class="kpi-title">Jan Total Value</div>
-                            <div class="kpi-value">€110,430</div>
-                            <div class="kpi-sub">€819/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 135K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                            <div class="kpi-title">January Total</div>
+                            <div class="kpi-value">€138,422</div>
+                            <div class="kpi-sub">AL: 4,809 | KYC: 322 | FTD: 241</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Feb Total Value</div>
-                            <div class="kpi-value">—</div>
-                            <div class="kpi-sub">Awaiting Feb data</div>
+                            <div class="kpi-title">February Total</div>
+                            <div class="kpi-value">€158,499</div>
+                            <div class="kpi-sub positive">MoM: +€20,077 (+14.5%)</div>
                         </div>
-                        <div class="kpi-card">
-                            <div class="kpi-title">MoM Change</div>
-                            <div class="kpi-value">—</div>
-                            <div class="kpi-sub">Awaiting Feb data</div>
+                        <div class="kpi-card" style="border-color: #f39c12;">
+                            <div class="kpi-title">March Total (Partial)</div>
+                            <div class="kpi-value">€120,416</div>
+                            <div class="kpi-sub" style="color: #f39c12;">⚠️ Data through Mar 20</div>
                         </div>
                     </div>
                 </div>
@@ -626,7 +896,7 @@
                 <div class="section" id="winline-section-2">
                     <h2 class="section-title">2. NSM Trend</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
-                        Sep–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan 2026 uses actual mission data.
+                        Sep–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Mar 2026 uses actual mission data. March is partial (through Mar 20).
                     </p>
                     <div class="chart-container">
                         <canvas id="winlineNsmTrendChart"></canvas>
@@ -635,36 +905,53 @@
 
                 <div class="section" id="winline-section-3">
                     <h2 class="section-title">3. Mission Breakdown</h2>
-                    <div class="table-wrapper">
+                    <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
                         <table>
-                            <thead>
+                            <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
                                 <tr>
+                                    <th>Month</th>
                                     <th>Mission</th>
-                                    <th>Segment</th>
+                                    <th>Funnel</th>
                                     <th class="number"><span class="term" data-tip="Account Linkage (€4.33)">AL</span></th>
                                     <th class="number"><span class="term" data-tip="Identification/KYC (€8.66)">KYC</span></th>
                                     <th class="number"><span class="term" data-tip="First Time Deposit (€121.10)">FTD</span></th>
                                     <th class="number"><span class="term" data-tip="Second Deposit (€4.33)">2nd Dep</span></th>
-                                    <th class="number"><span class="term" data-tip="Second Deposit (€4.33)">Bet*</span></th>
-                                    <th class="number">Total €</th>
+                                    <th class="number"><span class="term" data-tip="Bet (€4.33)">Bet</span></th>
+                                    <th class="number">€ Value</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>Agnostic Mission 1</td><td>TOFU</td><td class="number">1,317</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€5,703</td></tr>
-                                <tr><td>Agnostic Mission 2 (Mystery Box)</td><td>TOFU</td><td class="number">2,248</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€9,734</td></tr>
-                                <tr><td>Mission 3 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">262</td><td class="number">60</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€9,535</td></tr>
-                                <tr><td>Mission 4 (No FTD)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">114</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€13,805</td></tr>
-                                <tr><td>Mission 5 (FTD)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">6,920</td><td class="number">5,107</td><td class="number highlight">€52,077</td></tr>
-                                <tr><td>Mission 6 (Chain)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">2,679</td><td class="number">1,842</td><td class="number highlight">€19,576</td></tr>
+                                <tr><td>Jan</td><td>Agnostic 1 (General)</td><td>TOFU</td><td class="number">1,854</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€8,028</td></tr>
+                                <tr><td>Jan</td><td>Agnostic 2 (Mystery Box)</td><td>TOFU</td><td class="number">2,955</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€12,795</td></tr>
+                                <tr><td>Jan</td><td>Mission 3 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">322</td><td class="number">72</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€11,508</td></tr>
+                                <tr><td>Jan</td><td>Mission 4 (No FTD)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">169</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€20,466</td></tr>
+                                <tr><td>Jan</td><td>Mission 5 (FTD)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">8,119</td><td class="number">6,040</td><td class="number highlight">€61,308</td></tr>
+                                <tr><td>Jan</td><td>Mission 6 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">3,321</td><td class="number">2,295</td><td class="number highlight">€24,317</td></tr>
+
+                                <tr><td style="border-top: 2px solid var(--accent);">Feb</td><td style="border-top: 2px solid var(--accent);">Agnostic 1 (Main Group)</td><td style="border-top: 2px solid var(--accent);">TOFU</td><td class="number" style="border-top: 2px solid var(--accent);">4,621</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number highlight" style="border-top: 2px solid var(--accent);">€20,009</td></tr>
+                                <tr><td>Feb</td><td>Agnostic 2 (Test Group)</td><td>TOFU</td><td class="number">24</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€104</td></tr>
+                                <tr><td>Feb</td><td>Mission 3 (No KYC Main)</td><td>MOFU</td><td class="number">—</td><td class="number">315</td><td class="number">58</td><td class="number">—</td><td class="number">19</td><td class="number highlight">€9,834</td></tr>
+                                <tr><td>Feb</td><td>Mission 4 (No KYC Test)</td><td>MOFU</td><td class="number">—</td><td class="number">29</td><td class="number">9</td><td class="number">—</td><td class="number">6</td><td class="number highlight">€1,367</td></tr>
+                                <tr><td>Feb</td><td>Mission 5 (No FTD Main)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">189</td><td class="number">—</td><td class="number">63</td><td class="number highlight">€23,161</td></tr>
+                                <tr><td>Feb</td><td>Mission 6 (No FTD Test)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">24</td><td class="number">—</td><td class="number">4</td><td class="number highlight">€2,924</td></tr>
+                                <tr><td>Feb</td><td>Mission 7 (FTD Main)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">9,250</td><td class="number">7,071</td><td class="number highlight">€70,670</td></tr>
+                                <tr><td>Feb</td><td>Mission 8 (FTD Test)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">69</td><td class="number">35</td><td class="number highlight">€450</td></tr>
+                                <tr><td>Feb</td><td>Mission 9 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">4,075</td><td class="number">2,849</td><td class="number highlight">€29,981</td></tr>
+
+                                <tr><td style="border-top: 2px solid var(--accent);">Mar*</td><td style="border-top: 2px solid var(--accent);">Agnostic 1 (General)</td><td style="border-top: 2px solid var(--accent);">TOFU</td><td class="number" style="border-top: 2px solid var(--accent);">4,106</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number highlight" style="border-top: 2px solid var(--accent);">€17,779</td></tr>
+                                <tr><td>Mar*</td><td>Mission 2 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">223</td><td class="number">44</td><td class="number">—</td><td class="number">13</td><td class="number highlight">€7,316</td></tr>
+                                <tr><td>Mar*</td><td>Mission 3 (No FTD)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">121</td><td class="number">—</td><td class="number">45</td><td class="number highlight">€14,848</td></tr>
+                                <tr><td>Mar*</td><td>Mission 4 (FTD)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">7,588</td><td class="number">5,782</td><td class="number highlight">€57,892</td></tr>
+                                <tr><td>Mar*</td><td>Mission 5 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">3,115</td><td class="number">2,100</td><td class="number highlight">€22,581</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Bet and DEP tasks treated as Second Deposit (€4.33) pending partner clarification.</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Mar = Partial month (data through 20 Mar 2026). All values rounded to whole €. Bet treated as €4.33 (same as 2nd Deposit).</p>
                 </div>
 
                 <div class="section" id="winline-section-4">
                     <h2 class="section-title">4. Winline Conversion Funnel</h2>
-                    <div class="insight-card" style="padding: 2rem; background-color: var(--bg); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
+                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
                         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
                             <div style="flex: 1;">
                                 <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
@@ -704,20 +991,20 @@
                 <div class="section" id="winline-section-6">
                     <h2 class="section-title">6. Key Insights</h2>
                     <div class="insight-card">
-                        <h3>1. <span class="term" data-tip="First Time Deposit (€121.10)">FTD</span> Dominates Per-Unit Value</h3>
-                        <p>At €121.10 per conversion, <span class="term" data-tip="First Time Deposit (€121.10)">FTD</span> is the highest-value single action, but only 174 users converted (0.13% of <span class="term" data-tip="Eligible Brand Integration Users">EBU</span>).</p>
+                        <h3>1. Consistent Monthly Growth</h3>
+                        <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
                     </div>
                     <div class="insight-card">
-                        <h3>2. BOFU Drives Volume</h3>
-                        <p>Missions 5+6 (BOFU) generated €71,653 (64.9% of total), driven by large deposit and bet volumes from already-deposited users.</p>
+                        <h3>2. BOFU Drives Majority of Value</h3>
+                        <p>FTD + Deposit missions (Missions 5-6 Jan, 7-9 Feb, 4-5 Mar) generate 64-68% of total monthly value through repeat deposit and bet activity.</p>
                     </div>
                     <div class="insight-card">
-                        <h3>3. <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> is the Bottleneck</h3>
-                        <p>Only 262 users passed <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> from 23,552 eligible (1.1% rate), severely limiting <span class="term" data-tip="First Time Deposit (€121.10)">FTD</span> flow.</p>
+                        <h3>3. <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> Remains the Bottleneck</h3>
+                        <p>KYC conversion consistently low: 322 (Jan), 344 (Feb), 223 (Mar*). Only ~1% of eligible users pass KYC, limiting FTD pipeline.</p>
                     </div>
                     <div class="insight-card">
-                        <h3>4. Bet Classification Pending</h3>
-                        <p>DEP and BET tasks are currently classified as Second Deposit (€4.33). Clarification with partner may reclassify these, potentially changing the value distribution significantly.</p>
+                        <h3>4. Feb A/B Test: Main Group Dominates</h3>
+                        <p>Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
                     </div>
                 </div>
 
@@ -796,14 +1083,216 @@
                     Data source: CDP — rep__cdp_service__user_events (Snowflake) | Distinct Users per Event per Month
                 </div>
             </div>
+
+            <!-- WINLINE MISSIONS TAB -->
+            <div id="winline-tab-missions" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title">A. Conversion KPIs (Mission Data)</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">AL</div>
+                            <div class="kpi-value">13,560</div>
+                            <div class="kpi-sub">Jan: 4,809 | Feb: 4,645 | Mar*: 4,106</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">KYC</div>
+                            <div class="kpi-value">889</div>
+                            <div class="kpi-sub">Jan: 322 | Feb: 344 | Mar*: 223</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">FTD</div>
+                            <div class="kpi-value">686</div>
+                            <div class="kpi-sub">Jan: 241 | Feb: 280 | Mar*: 165</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">2nd Dep</div>
+                            <div class="kpi-value">35,537</div>
+                            <div class="kpi-sub">Jan: 11,440 | Feb: 13,394 | Mar*: 10,703</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Bet</div>
+                            <div class="kpi-value">26,322</div>
+                            <div class="kpi-sub">Jan: 8,335 | Feb: 10,047 | Mar*: 7,940</div>
+                        </div>
+                    </div>
+                    <div class="insight-card" style="margin-top: 1.5rem; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); text-align: center;">
+                        <span style="font-weight: 600; color: var(--text);">Total € Value: €417,337</span> 
+                        <span style="color: var(--text-muted); font-size: 0.9rem; margin-left: 0.5rem;">(Jan: €138,422 | Feb: €158,499 | Mar*: €120,416)</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">B. Mission Breakdown (All Months)</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">*Mar = Partial month (data through 20 Mar 2026). All € values rounded to whole numbers.</p>
+                    <div class="table-wrapper" style="max-height: 600px; overflow-y: auto;">
+                        <table>
+                            <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Mission</th>
+                                    <th>Funnel</th>
+                                    <th class="number"><span class="term" data-tip="Account Linkage (€4.33)">AL</span></th>
+                                    <th class="number"><span class="term" data-tip="Identification/KYC (€8.66)">KYC</span></th>
+                                    <th class="number"><span class="term" data-tip="First Deposit 500 RUB (€121.10)">FTD</span></th>
+                                    <th class="number"><span class="term" data-tip="Second Deposit (€4.33)">2nd Dep</span></th>
+                                    <th class="number"><span class="term" data-tip="Bet (€4.33)">Bet</span></th>
+                                    <th class="number">€ Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Jan</td><td>Agnostic 1 (General)</td><td>TOFU</td><td class="number">1,854</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€8,028</td></tr>
+                                <tr><td>Jan</td><td>Agnostic 2 (Mystery Box)</td><td>TOFU</td><td class="number">2,955</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€12,795</td></tr>
+                                <tr><td>Jan</td><td>Mission 3 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">322</td><td class="number">72</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€11,508</td></tr>
+                                <tr><td>Jan</td><td>Mission 4 (No FTD)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">169</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€20,466</td></tr>
+                                <tr><td>Jan</td><td>Mission 5 (FTD)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">8,119</td><td class="number">6,040</td><td class="number highlight">€61,308</td></tr>
+                                <tr><td>Jan</td><td>Mission 6 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">3,321</td><td class="number">2,295</td><td class="number highlight">€24,317</td></tr>
+
+                                <tr><td style="border-top: 2px solid var(--accent);">Feb</td><td style="border-top: 2px solid var(--accent);">Agnostic 1 (Main Group)</td><td style="border-top: 2px solid var(--accent);">TOFU</td><td class="number" style="border-top: 2px solid var(--accent);">4,621</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number highlight" style="border-top: 2px solid var(--accent);">€20,009</td></tr>
+                                <tr><td>Feb</td><td>Agnostic 2 (Test Group)</td><td>TOFU</td><td class="number">24</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€104</td></tr>
+                                <tr><td>Feb</td><td>Mission 3 (No KYC Main)</td><td>MOFU</td><td class="number">—</td><td class="number">315</td><td class="number">58</td><td class="number">—</td><td class="number">19</td><td class="number highlight">€9,834</td></tr>
+                                <tr><td>Feb</td><td>Mission 4 (No KYC Test)</td><td>MOFU</td><td class="number">—</td><td class="number">29</td><td class="number">9</td><td class="number">—</td><td class="number">6</td><td class="number highlight">€1,367</td></tr>
+                                <tr><td>Feb</td><td>Mission 5 (No FTD Main)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">189</td><td class="number">—</td><td class="number">63</td><td class="number highlight">€23,161</td></tr>
+                                <tr><td>Feb</td><td>Mission 6 (No FTD Test)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">24</td><td class="number">—</td><td class="number">4</td><td class="number highlight">€2,924</td></tr>
+                                <tr><td>Feb</td><td>Mission 7 (FTD Main)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">9,250</td><td class="number">7,071</td><td class="number highlight">€70,670</td></tr>
+                                <tr><td>Feb</td><td>Mission 8 (FTD Test)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">69</td><td class="number">35</td><td class="number highlight">€450</td></tr>
+                                <tr><td>Feb</td><td>Mission 9 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">4,075</td><td class="number">2,849</td><td class="number highlight">€29,981</td></tr>
+
+                                <tr><td style="border-top: 2px solid var(--accent);">Mar*</td><td style="border-top: 2px solid var(--accent);">Agnostic 1 (General)</td><td style="border-top: 2px solid var(--accent);">TOFU</td><td class="number" style="border-top: 2px solid var(--accent);">4,106</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number" style="border-top: 2px solid var(--accent);">—</td><td class="number highlight" style="border-top: 2px solid var(--accent);">€17,779</td></tr>
+                                <tr><td>Mar*</td><td>Mission 2 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">223</td><td class="number">44</td><td class="number">—</td><td class="number">13</td><td class="number highlight">€7,316</td></tr>
+                                <tr><td>Mar*</td><td>Mission 3 (No FTD)</td><td>MOFU</td><td class="number">—</td><td class="number">—</td><td class="number">121</td><td class="number">—</td><td class="number">45</td><td class="number highlight">€14,848</td></tr>
+                                <tr><td>Mar*</td><td>Mission 4 (FTD)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">7,588</td><td class="number">5,782</td><td class="number highlight">€57,892</td></tr>
+                                <tr><td>Mar*</td><td>Mission 5 (Whale)</td><td>BOFU</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">3,115</td><td class="number">2,100</td><td class="number highlight">€22,581</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">Bet treated as €4.33 (same rate as 2nd Deposit). Winline is CIS-only — no regional breakdown needed.</p>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">C. Monthly Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Conversion</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                            <th class="number">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
+                                        <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
+                                        <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
+                                        <tr><td>2nd Dep (€4.33)</td><td class="number">€49,535</td><td class="number">€57,996</td><td class="number">€46,344</td><td class="number highlight">€153,875</td></tr>
+                                        <tr><td>Bet (€4.33)</td><td class="number">€36,091</td><td class="number">€43,504</td><td class="number">€34,380</td><td class="number highlight">€113,975</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="winlineMissionsMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">D. Funnel Stage Performance</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Funnel Stage</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>TOFU (General/Agnostic)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td></tr>
+                                        <tr><td>MOFU (No KYC / No FTD)</td><td class="number">€31,974</td><td class="number">€37,286</td><td class="number">€22,164</td></tr>
+                                        <tr><td>BOFU (FTD / Whale)</td><td class="number">€85,625</td><td class="number">€101,101</td><td class="number">€80,473</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="winlineMissionsFunnelChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">E. Feb A/B Test Analysis</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">February ran MAIN GROUP vs TEST GROUP variants for Missions 3-8. Test groups received minimal traffic.</p>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Main Group</h3>
+                            <div class="ab-stat"><span>Agnostic 1 (AL)</span> <span>4,621</span></div>
+                            <div class="ab-stat"><span>M3 No KYC (KYC/FTD)</span> <span>315 / 58</span></div>
+                            <div class="ab-stat"><span>M5 No FTD (FTD)</span> <span>189</span></div>
+                            <div class="ab-stat"><span>M7 FTD (2nd Dep/Bet)</span> <span>9,250 / 7,071</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€153,654</span></div>
+                        </div>
+                        <div class="ab-card">
+                            <h3>Test Group</h3>
+                            <div class="ab-stat"><span>Agnostic 2 (AL)</span> <span>24</span></div>
+                            <div class="ab-stat"><span>M4 No KYC (KYC/FTD)</span> <span>29 / 9</span></div>
+                            <div class="ab-stat"><span>M6 No FTD (FTD)</span> <span>24</span></div>
+                            <div class="ab-stat"><span>M8 FTD (2nd Dep/Bet)</span> <span>69 / 35</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>Total Value</span> <span>€4,845</span></div>
+                        </div>
+                    </div>
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <h3>Test Group Findings</h3>
+                        <p>Test groups received &lt;1% of traffic (e.g., Agnostic 2 had 24 AL vs Main's 4,621). Minimal sample size means no statistically significant conclusions can be drawn. Mission 9 (Whale) was not split — ran as single group with €29,981 value.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">F. Key Insights</h2>
+                    <div class="insight-card">
+                        <h3>1. Consistent Monthly Growth</h3>
+                        <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>2. BOFU Drives 60-64% of Value</h3>
+                        <p>Deposit + Bet missions consistently generate the majority of monthly value. Jan: €85,625 (61.9%), Feb: €101,101 (63.8%), Mar*: €80,473 (66.8%).</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>3. KYC is the Bottleneck</h3>
+                        <p>KYC completions remain low: 322 (Jan), 344 (Feb), 223 (Mar*). Only ~1% of eligible users pass KYC, limiting the FTD pipeline. Despite high FTD unit value (€121.10), the volume is constrained.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>4. FTD Has Highest Per-Unit Impact</h3>
+                        <p>Each FTD conversion is worth €121.10 — 28x an AL (€4.33). With only 241 (Jan), 280 (Feb), 165 (Mar*) FTDs, even small improvements in KYC→FTD funnel would significantly increase total value.</p>
+                    </div>
+                </div>
+
+                <div class="footer">
+                    Data source: Winline Mission CSVs (2026) — Challenge-level completion data | Generated by AI PM Assistant
+                </div>
+            </div>
         </div>
 
     </div>
 
     <script>
-        Chart.defaults.color = '#8b8d91';
+        Chart.defaults.color = '#6b7280';
         Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
-        const gridColor = '#232529';
+        const gridColor = '#e2e4e9';
         const formatNumber = num => num === 0 ? '-' : num.toLocaleString('en-US');
 
         // Chart Registry
@@ -884,7 +1373,7 @@
                 initTradeitCharts();
             } else {
                 h1.textContent = 'Winline — Brand Integration Performance';
-                h2.textContent = 'NSM Analysis: Jan 2026 | € Value per Conversion';
+                h2.textContent = 'NSM Analysis: Jan–Mar 2026 | € Value per Conversion';
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'block';
@@ -966,21 +1455,21 @@
             charts.combined.stackedBar = new Chart(ctxStacked, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan \'26', 'Feb \'26'],
+                    labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
                     datasets: [
-                        { label: 'Winline', data: [110430, null], backgroundColor: '#5e6ad2', borderRadius: 4 },
-                        { label: 'Tradeit', data: [11343, 12566], backgroundColor: '#2ecc71', borderRadius: 4 }
+                        { label: 'Winline', data: [138422, 158499, 120416], backgroundColor: '#2563eb', borderRadius: 4 },
+                        { label: 'Tradeit', data: [12255, 13444, 68719], backgroundColor: '#059669', borderRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#eeeeee' } },
+                        legend: { position: 'top', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.dataset.label + ': €' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) : null } }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#eeeeee' }, stacked: true },
-                        y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
                     }
                 }
             });
@@ -990,21 +1479,21 @@
             charts.combined.groupedBar = new Chart(ctxGrouped, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan \'26', 'Feb \'26'],
+                    labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
                     datasets: [
-                        { label: 'Winline', data: [819, null], backgroundColor: '#5e6ad2', borderRadius: 4 },
-                        { label: 'Tradeit', data: [19, 21], backgroundColor: '#2ecc71', borderRadius: 4 }
+                        { label: 'Winline', data: [819, null, null], backgroundColor: '#2563eb', borderRadius: 4 },
+                        { label: 'Tradeit', data: [21, 22, null], backgroundColor: '#059669', borderRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#eeeeee' } },
+                        legend: { position: 'top', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.dataset.label + ': €' + c.parsed.y.toLocaleString('en-US') : null } }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#eeeeee' } },
-                        y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
                     }
                 }
             });
@@ -1013,7 +1502,7 @@
             const pieOptions = {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom', labels: { color: '#eeeeee' } },
+                    legend: { position: 'bottom', labels: { color: '#1a1a2e' } },
                     tooltip: { callbacks: { label: c => ` ${c.label}: €${c.raw.toLocaleString('en-US', {maximumFractionDigits: 2})} (${c.parsed}%)` } }
                 }
             };
@@ -1024,7 +1513,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (€4.33)', 'KYC (€8.66)', 'FTD (€121.10)', '2nd Dep (€4.33)', 'Bet* (€4.33)'],
-                    datasets: [{ data: [15436, 2269, 21071, 41564, 30089], backgroundColor: ['#2ecc71', '#3b82f6', '#5e6ad2', '#fbbf24', '#a855f7'], borderColor: '#0e0f11', borderWidth: 2 }]
+                    datasets: [{ data: [58715, 7699, 83075, 153875, 113975], backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: pieOptions
             });
@@ -1035,7 +1524,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (€0.38)', 'C1 (€0.04)', 'C2 (€8.75)'],
-                    datasets: [{ data: [3711.46, 106.96, 7525.00], backgroundColor: ['#2ecc71', '#fbbf24', '#5e6ad2'], borderColor: '#0e0f11', borderWidth: 2 }]
+                    datasets: [{ data: [4552.78, 107.60, 7595.00], backgroundColor: ['#059669', '#d97706', '#2563eb'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: pieOptions
             });
@@ -1052,16 +1541,16 @@
                 data: {
                     labels: ['NA', 'CIS', 'MENA', 'APAC'],
                     datasets: [
-                        { label: 'Jan €/1K EBU', data: [59.27, 13.11, 48.66, 21.99], backgroundColor: '#5e6ad2', borderRadius: 4 },
-                        { label: 'Feb €/1K EBU', data: [48.37, 16.25, 49.12, 23.20], backgroundColor: 'rgba(94, 106, 210, 0.4)', borderRadius: 4 }
+                        { label: 'Jan €/1K EBU', data: [63.13, 14.08, 53.46, 25.11], backgroundColor: '#2563eb', borderRadius: 4 },
+                        { label: 'Feb €/1K EBU', data: [52.65, 16.89, 54.98, 27.57], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 }
                     ]
                 },
                 options: {
                     indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top', labels: { color: '#eeeeee' } } },
+                    plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } } },
                     scales: {
-                        x: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v } },
-                        y: { grid: { display: false }, ticks: { color: '#eeeeee' } }
+                        x: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v } },
+                        y: { grid: { display: false }, ticks: { color: '#1a1a2e' } }
                     }
                 }
             });
@@ -1073,19 +1562,19 @@
                 data: {
                     labels: ['North America', 'CIS', 'MENA', 'APAC'],
                     datasets: [
-                        { label: 'Jan', data: [59.27, 13.11, 48.66, 21.99], backgroundColor: '#232529', borderColor: '#8b8d91', borderWidth: 1, borderRadius: 4 },
-                        { label: 'Feb', data: [48.37, 16.25, 49.12, 23.20], backgroundColor: '#5e6ad2', borderRadius: 4 }
+                        { label: 'Jan', data: [63.13, 14.08, 53.46, 25.11], backgroundColor: '#e2e4e9', borderColor: '#6b7280', borderWidth: 1, borderRadius: 4 },
+                        { label: 'Feb', data: [52.65, 16.89, 54.98, 27.57], backgroundColor: '#2563eb', borderRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#eeeeee' } },
+                        legend: { position: 'top', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => '€' + c.raw } }
                     },
                     scales: {
-                        y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v } },
-                        x: { grid: { display: false }, ticks: { color: '#eeeeee' } }
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v } },
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' } }
                     }
                 }
             });
@@ -1094,7 +1583,7 @@
             const pieOptions = {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom', labels: { color: '#eeeeee' } },
+                    legend: { position: 'bottom', labels: { color: '#1a1a2e' } },
                     tooltip: { callbacks: { label: c => ` ${c.label}: €${c.raw} (${c.parsed}%)` } }
                 }
             };
@@ -1104,10 +1593,10 @@
             charts.tradeit.janBreakdown = new Chart(ctxJanBreakdown, {
                 type: 'doughnut',
                 data: {
-                    labels: ['AL (32.7%)', 'C1 (0.9%)', 'C2 (66.3%)'],
-                    datasets: [{ data: [3711.46, 106.96, 7525.00], backgroundColor: ['#2ecc71', '#fbbf24', '#5e6ad2'], borderColor: '#0e0f11', borderWidth: 2 }]
+                    labels: ['AL (37.1%)', 'C1 (0.9%)', 'C2 (62.0%)'],
+                    datasets: [{ data: [4552.78, 107.60, 7595.00], backgroundColor: ['#059669', '#d97706', '#2563eb'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
-                options: { ...pieOptions, plugins: { ...pieOptions.plugins, title: { display: true, text: 'January (€11,343.42)', color: '#eeeeee', font: { size: 14 } } } }
+                options: { ...pieOptions, plugins: { ...pieOptions.plugins, title: { display: true, text: 'January (€12,255)', color: '#1a1a2e', font: { size: 14 } } } }
             });
 
             // Feb Breakdown
@@ -1115,10 +1604,10 @@
             charts.tradeit.febBreakdown = new Chart(ctxFebBreakdown, {
                 type: 'doughnut',
                 data: {
-                    labels: ['AL (37.9%)', 'C1 (1.1%)', 'C2 (61.0%)'],
-                    datasets: [{ data: [4758.74, 142.24, 7665.00], backgroundColor: ['#2ecc71', '#fbbf24', '#5e6ad2'], borderColor: '#0e0f11', borderWidth: 2 }]
+                    labels: ['AL (41.9%)', 'C1 (1.1%)', 'C2 (57.0%)'],
+                    datasets: [{ data: [5636.92, 142.24, 7665.00], backgroundColor: ['#059669', '#d97706', '#2563eb'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
-                options: { ...pieOptions, plugins: { ...pieOptions.plugins, title: { display: true, text: 'February (€12,565.98)', color: '#eeeeee', font: { size: 14 } } } }
+                options: { ...pieOptions, plugins: { ...pieOptions.plugins, title: { display: true, text: 'February (€13,444)', color: '#1a1a2e', font: { size: 14 } } } }
             });
 
             // NSM Trend
@@ -1128,7 +1617,7 @@
                 const estVal = (tradeitCdpData[0].data[i] * 0.38) + (tradeitCdpData[2].data[i] * 0.04) + (tradeitCdpData[4].data[i] * 8.75);
                 estValues.push(estVal); actualValues.push(null); ebuLineData.push(null);
             }
-            estValues.push(null, null); actualValues.push(11343, 12566); ebuLineData.push(19, 21);
+            estValues.push(null, null); actualValues.push(12255, 13444); ebuLineData.push(21, 22);
 
             const ctxNsmTrend = document.getElementById('nsmTrendChart').getContext('2d');
             charts.tradeit.nsmTrend = new Chart(ctxNsmTrend, {
@@ -1136,15 +1625,15 @@
                 data: {
                     labels: trendLabels,
                     datasets: [
-                        { type: 'line', label: '€/1K EBU', data: ebuLineData, borderColor: '#2ecc71', backgroundColor: '#2ecc71', borderWidth: 2, pointRadius: 6, pointHoverRadius: 8, showLine: false, yAxisID: 'y1', order: 1 },
-                        { type: 'bar', label: 'Estimated € Value (CDP)', data: estValues, backgroundColor: 'rgba(94, 106, 210, 0.4)', borderRadius: 4, order: 2 },
-                        { type: 'bar', label: 'Actual € Value (Missions)', data: actualValues, backgroundColor: '#5e6ad2', borderRadius: 4, order: 2 }
+                        { type: 'line', label: '€/1K EBU', data: ebuLineData, borderColor: '#059669', backgroundColor: '#059669', borderWidth: 2, pointRadius: 6, pointHoverRadius: 8, showLine: false, yAxisID: 'y1', order: 1 },
+                        { type: 'bar', label: 'Estimated € Value (CDP)', data: estValues, backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4, order: 2 },
+                        { type: 'bar', label: 'Actual € Value (Missions)', data: actualValues, backgroundColor: '#2563eb', borderRadius: 4, order: 2 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#eeeeee' } },
+                        legend: { position: 'top', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => {
                             let l = c.dataset.label ? c.dataset.label + ': ' : '';
                             if (c.datasetIndex === 0) return c.parsed.y !== null ? l + '€' + c.parsed.y : null;
@@ -1152,9 +1641,9 @@
                         }}}
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#eeeeee' }, stacked: true },
-                        y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true },
-                        y1: { position: 'right', grid: { display: false }, ticks: { color: '#2ecc71', callback: v => '€' + v }, min: 0, max: 60 }
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true },
+                        y1: { position: 'right', grid: { display: false }, ticks: { color: '#059669', callback: v => '€' + v }, min: 0, max: 60 }
                     }
                 }
             });
@@ -1162,7 +1651,7 @@
             // CDP Trend
             const ctxCdp = document.getElementById('cdpTrendChart').getContext('2d');
             const cdpLabels = ['Apr 25', 'May 25', 'Jun 25', 'Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26'];
-            const colors = ['#5e6ad2', '#2ecc71', '#3b82f6', '#fbbf24', '#a855f7'];
+            const colors = ['#2563eb', '#059669', '#3b82f6', '#d97706', '#7c3aed'];
             const ds = tradeitCdpData.slice(0, 5).map((row, idx) => ({
                 label: row.event, data: row.data.slice(0, 12).reverse(),
                 borderColor: colors[idx], backgroundColor: 'transparent', borderWidth: 2, pointBackgroundColor: colors[idx], pointRadius: 4, tension: 0.2
@@ -1172,8 +1661,30 @@
                 type: 'line', data: { labels: cdpLabels, datasets: ds },
                 options: {
                     responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { position: 'bottom', labels: { color: '#eeeeee', usePointStyle: true, padding: 20 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw.toLocaleString()}` } } },
-                    scales: { x: { grid: { color: gridColor }, ticks: { color: '#eeeeee' } }, y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => v.toLocaleString() }, beginAtZero: true } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#1a1a2e', usePointStyle: true, padding: 20 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw.toLocaleString()}` } } },
+                    scales: { x: { grid: { color: gridColor }, ticks: { color: '#1a1a2e' } }, y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => v.toLocaleString() }, beginAtZero: true } }
+                }
+            });
+
+            // Missions Regional Summary Chart
+            const ctxMissionsRegion = document.getElementById('missionsRegionalSummaryChart').getContext('2d');
+            charts.tradeit.missionsRegion = new Chart(ctxMissionsRegion, {
+                type: 'bar',
+                data: {
+                    labels: ['EU', 'CIS', 'LATAM', 'NA', 'MENA', 'APAC'],
+                    datasets: [
+                        { label: 'Jan', data: [null, 6535, null, 3377, 965, 1378], backgroundColor: '#e2e4e9', borderColor: '#6b7280', borderWidth: 1, borderRadius: 4 },
+                        { label: 'Feb', data: [null, 8004, null, 3022, 1023, 1395], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
+                        { label: 'Mar (Partial)', data: [38795, 19501, 2183, 1568, 1324, 1281], backgroundColor: '#2563eb', borderRadius: 4 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => c.parsed.x !== null ? '€' + c.parsed.x.toLocaleString('en-US', {maximumFractionDigits:0}) : null } } },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() } },
+                        y: { grid: { display: false }, ticks: { color: '#1a1a2e' } }
+                    }
                 }
             });
         }
@@ -1187,21 +1698,21 @@
             charts.winline.nsmTrend = new Chart(ctxNsmTrend, {
                 type: 'bar',
                 data: {
-                    labels: ['Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26'],
+                    labels: ['Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26*'],
                     datasets: [
-                        { label: 'Estimated € Value (CDP)', data: [376386.96, 241867.14, 227231.37, 177782.27, null], backgroundColor: 'rgba(94, 106, 210, 0.4)', borderRadius: 4 },
-                        { label: 'Actual € Value (Missions)', data: [null, null, null, null, 110430], backgroundColor: '#5e6ad2', borderRadius: 4 }
+                        { label: 'Estimated € Value (CDP)', data: [376386.96, 241867.14, 227231.37, 177782.27, null, null, null], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
+                        { label: 'Actual € Value (Missions)', data: [null, null, null, null, 138422, 158499, 120416], backgroundColor: '#2563eb', borderRadius: 4 }
                     ]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#eeeeee' } },
+                        legend: { position: 'top', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => c.parsed.y !== null ? c.dataset.label + ': €' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) : null } }
                     },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#eeeeee' }, stacked: true },
-                        y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                        x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                        y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
                     }
                 }
             });
@@ -1211,13 +1722,13 @@
             charts.winline.breakdown = new Chart(ctxBreakdown, {
                 type: 'doughnut',
                 data: {
-                    labels: ['AL (14.0%)', 'KYC (2.1%)', 'FTD (19.1%)', '2nd Dep (37.6%)', 'Bet* (27.2%)'],
-                    datasets: [{ data: [15436, 2269, 21071, 41564, 30089], backgroundColor: ['#2ecc71', '#3b82f6', '#5e6ad2', '#fbbf24', '#a855f7'], borderColor: '#0e0f11', borderWidth: 2 }]
+                    labels: ['AL (14.1%)', 'KYC (1.8%)', 'FTD (19.9%)', '2nd Dep (36.9%)', 'Bet* (27.3%)'],
+                    datasets: [{ data: [58715, 7699, 83075, 153875, 113975], backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom', labels: { color: '#eeeeee' } },
+                        legend: { position: 'bottom', labels: { color: '#1a1a2e' } },
                         tooltip: { callbacks: { label: c => ` ${c.label}: €${c.raw.toLocaleString()} (${c.parsed}%)` } }
                     }
                 }
@@ -1227,11 +1738,11 @@
             const ctxCdp = document.getElementById('winlineCdpTrendChart').getContext('2d');
             const winlineLabels = ['Apr 25', 'May 25', 'Jun 25', 'Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26'];
             const winlineTrendData = [
-                { label: 'winline', data: [12457, 10028, 10807, 7248, 9420, 8339, 5486, 6752, 3547, 5511, 5117, 3970], color: '#5e6ad2' },
-                { label: 'identification', data: [4541, 4902, 5459, 2458, 2654, 2908, 2189, 2043, 1517, 1663, 1590, 802], color: '#2ecc71' },
+                { label: 'winline', data: [12457, 10028, 10807, 7248, 9420, 8339, 5486, 6752, 3547, 5511, 5117, 3970], color: '#2563eb' },
+                { label: 'identification', data: [4541, 4902, 5459, 2458, 2654, 2908, 2189, 2043, 1517, 1663, 1590, 802], color: '#059669' },
                 { label: 'first_dep', data: [3628, 4404, 6419, 1871, 2157, 2493, 1594, 1442, 1191, 873, 1182, 480], color: '#3b82f6' },
-                { label: 'first_bet', data: [3961, 4811, 8430, 2207, 2315, 2642, 1759, 1615, 1360, 1036, 1325, 565], color: '#fbbf24' },
-                { label: 'second_dep', data: [1520, 2596, 4456, 2112, 2074, 3047, 1414, 1311, 1168, 756, 1373, 553], color: '#a855f7' }
+                { label: 'first_bet', data: [3961, 4811, 8430, 2207, 2315, 2642, 1759, 1615, 1360, 1036, 1325, 565], color: '#d97706' },
+                { label: 'second_dep', data: [1520, 2596, 4456, 2112, 2074, 3047, 1414, 1311, 1168, 756, 1373, 553], color: '#7c3aed' }
             ];
 
             charts.winline.cdpTrend = new Chart(ctxCdp, {
@@ -1245,16 +1756,220 @@
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { position: 'bottom', labels: { color: '#eeeeee', usePointStyle: true, padding: 20 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw.toLocaleString()}` } } },
-                    scales: { x: { grid: { color: gridColor }, ticks: { color: '#eeeeee' } }, y: { grid: { color: gridColor }, ticks: { color: '#eeeeee', callback: v => v.toLocaleString() }, beginAtZero: true } }
+                    plugins: { legend: { position: 'bottom', labels: { color: '#1a1a2e', usePointStyle: true, padding: 20 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw.toLocaleString()}` } } },
+                    scales: { x: { grid: { color: gridColor }, ticks: { color: '#1a1a2e' } }, y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => v.toLocaleString() }, beginAtZero: true } }
                 }
             });
+
+            // Winline Missions - Monthly Summary Stacked Bar
+            const ctxWlMonthlySummary = document.getElementById('winlineMissionsMonthlySummaryChart');
+            if (ctxWlMonthlySummary) {
+                charts.winline.missionsMonthlySummary = new Chart(ctxWlMonthlySummary.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
+                        datasets: [
+                            { label: 'AL', data: [20823, 20113, 17779], backgroundColor: '#059669', borderRadius: 4 },
+                            { label: 'KYC', data: [2789, 2979, 1931], backgroundColor: '#3b82f6', borderRadius: 4 },
+                            { label: 'FTD', data: [29185, 33908, 19982], backgroundColor: '#2563eb', borderRadius: 4 },
+                            { label: '2nd Dep', data: [49535, 57996, 46344], backgroundColor: '#d97706', borderRadius: 4 },
+                            { label: 'Bet', data: [36091, 43504, 34380], backgroundColor: '#7c3aed', borderRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' }, stacked: true },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, stacked: true, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
+            // Winline Missions - Funnel Stage Grouped Bar
+            const ctxWlFunnel = document.getElementById('winlineMissionsFunnelChart');
+            if (ctxWlFunnel) {
+                charts.winline.missionsFunnel = new Chart(ctxWlFunnel.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['TOFU', 'MOFU', 'BOFU'],
+                        datasets: [
+                            { label: 'Jan', data: [20823, 31974, 85625], backgroundColor: '#e2e4e9', borderColor: '#6b7280', borderWidth: 1, borderRadius: 4 },
+                            { label: 'Feb', data: [20113, 37286, 101101], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
+                            { label: 'Mar*', data: [17779, 22164, 80473], backgroundColor: '#2563eb', borderRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
         }
 
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderTables();
             switchPartner('combined'); // Load default
+        });
+
+        // Missions Region Filter Logic
+        const missionsData = [
+            {month:'Jan', region:'NA', segment:'General (A)', al:1101, c1:176, c2:19, value:592},
+            {month:'Jan', region:'NA', segment:'General (B)', al:1217, c1:221, c2:17, value:620},
+            {month:'Jan', region:'NA', segment:'AL&NoTrade', al:0, c1:102, c2:14, value:127},
+            {month:'Jan', region:'NA', segment:'AL&Trade', al:0, c1:0, c2:233, value:2039},
+            {month:'Jan', region:'CIS', segment:'General', al:7371, c1:1195, c2:65, value:3418},
+            {month:'Jan', region:'CIS', segment:'AL&NoTrade', al:0, c1:491, c2:18, value:177},
+            {month:'Jan', region:'CIS', segment:'AL&Trade', al:0, c1:0, c2:336, value:2940},
+            {month:'Jan', region:'MENA', segment:'General', al:813, c1:164, c2:13, value:429},
+            {month:'Jan', region:'MENA', segment:'AL&NoTrade', al:0, c1:59, c2:3, value:29},
+            {month:'Jan', region:'MENA', segment:'AL&Trade', al:0, c1:0, c2:58, value:508},
+            {month:'Jan', region:'APAC', segment:'General', al:1479, c1:206, c2:19, value:737},
+            {month:'Jan', region:'APAC', segment:'AL&NoTrade', al:0, c1:76, c2:10, value:91},
+            {month:'Jan', region:'APAC', segment:'AL&Trade', al:0, c1:0, c2:63, value:551},
+            {month:'Feb', region:'NA', segment:'General', al:2571, c1:491, c2:41, value:1355},
+            {month:'Feb', region:'NA', segment:'AL&NoTrade', al:0, c1:93, c2:11, value:100},
+            {month:'Feb', region:'NA', segment:'AL&Trade', al:0, c1:0, c2:179, value:1566},
+            {month:'Feb', region:'CIS', segment:'General', al:9820, c1:1826, c2:112, value:4785},
+            {month:'Feb', region:'CIS', segment:'AL&NoTrade', al:0, c1:647, c2:18, value:183},
+            {month:'Feb', region:'CIS', segment:'AL&Trade', al:0, c1:0, c2:347, value:3036},
+            {month:'Feb', region:'MENA', segment:'General', al:895, c1:179, c2:6, value:400},
+            {month:'Feb', region:'MENA', segment:'AL&NoTrade', al:0, c1:55, c2:0, value:2},
+            {month:'Feb', region:'MENA', segment:'AL&Trade', al:0, c1:0, c2:71, value:621},
+            {month:'Feb', region:'APAC', segment:'General', al:1548, c1:207, c2:21, value:780},
+            {month:'Feb', region:'APAC', segment:'AL&NoTrade', al:0, c1:58, c2:6, value:55},
+            {month:'Feb', region:'APAC', segment:'AL&Trade', al:0, c1:0, c2:64, value:560},
+            {month:'Mar', region:'EU', segment:'General', al:83586, c1:10427, c2:756, value:38795},
+            {month:'Mar', region:'CIS', segment:'General (CIS EXC)', al:9872, c1:1100, c2:31, value:4067},
+            {month:'Mar', region:'CIS', segment:'General MB', al:44685, c1:4023, c2:72, value:17771},
+            {month:'Mar', region:'CIS', segment:'AL&NoTrade MB', al:0, c1:1909, c2:24, value:286},
+            {month:'Mar', region:'CIS', segment:'AL&Trade', al:0, c1:0, c2:165, value:1444},
+            {month:'Mar', region:'LATAM', segment:'General', al:4805, c1:624, c2:38, value:2183},
+            {month:'Mar', region:'NA', segment:'General MB', al:2568, c1:246, c2:14, value:1108},
+            {month:'Mar', region:'NA', segment:'AL&NoTrade MB', al:0, c1:126, c2:2, value:23},
+            {month:'Mar', region:'NA', segment:'AL&Trade', al:0, c1:0, c2:50, value:438},
+            {month:'Mar', region:'MENA', segment:'General MB', al:2668, c1:241, c2:5, value:1067},
+            {month:'Mar', region:'MENA', segment:'AL&NoTrade MB', al:0, c1:79, c2:2, value:21},
+            {month:'Mar', region:'MENA', segment:'AL&Trade', al:0, c1:0, c2:27, value:236},
+            {month:'Mar', region:'APAC', segment:'General MB', al:2789, c1:209, c2:6, value:1121},
+            {month:'Mar', region:'APAC', segment:'AL&NoTrade MB', al:0, c1:72, c2:2, value:20},
+            {month:'Mar', region:'APAC', segment:'AL&Trade', al:0, c1:0, c2:16, value:140}
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('#missionsRegionFilter .partner-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const region = e.target.dataset.region;
+                    const isAll = region === 'All Regions';
+                    
+                    const matchRegion = (cellText) => {
+                        if (isAll) return true;
+                        if (region === 'NA' && cellText === 'North America') return true;
+                        return cellText.startsWith(region);
+                    };
+
+                    // 1. Filter Section 3 (Region-Level Summary) table
+                    const s3Rows = document.querySelectorAll('#tradeit-tab-nsm #section-3 tbody tr');
+                    s3Rows.forEach(row => {
+                        const regionCell = row.cells[1].textContent.trim();
+                        row.style.display = matchRegion(regionCell) ? '' : 'none';
+                    });
+
+                    // 2. Filter Section 3 chart (regionChart)
+                    if (window.charts && charts.tradeit && charts.tradeit.region) {
+                        const chart = charts.tradeit.region;
+                        const regions = ['NA', 'CIS', 'MENA', 'APAC'];
+                        
+                        chart.data.labels = regions.filter(r => isAll || r === region);
+                        
+                        const janDataOrig = [63.13, 14.08, 53.46, 25.11];
+                        const febDataOrig = [52.65, 16.89, 54.98, 27.57];
+                        
+                        chart.data.datasets[0].data = chart.data.labels.map(l => janDataOrig[regions.indexOf(l)]);
+                        chart.data.datasets[1].data = chart.data.labels.map(l => febDataOrig[regions.indexOf(l)]);
+                        
+                        chart.update();
+                    }
+
+                    // 3. Filter Section 6 (Segment Performance) tables
+                    const s6Rows = document.querySelectorAll('#tradeit-tab-nsm #section-6 tbody tr');
+                    s6Rows.forEach(row => {
+                        const regionCell = row.cells[0].textContent.trim();
+                        row.style.display = matchRegion(regionCell) ? '' : 'none';
+                    });
+                });
+            });
+
+            // Weekly Performance Chart Initialization
+            const ctxWeekly = document.getElementById('weeklyPerformanceChart');
+            if (ctxWeekly) {
+                new Chart(ctxWeekly, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                        datasets: [
+                            {
+                                label: 'AL €',
+                                data: [869, 991, 798, 1055, 728, 2250, 1273, 1120, 942, 94, 49048, 8512],
+                                backgroundColor: '#2563eb'
+                            },
+                            {
+                                label: 'C1 €',
+                                data: [47, 25, 16, 14, 5, 92, 25, 16, 9, 0, 698, 64],
+                                backgroundColor: '#059669'
+                            },
+                            {
+                                label: 'C2 €',
+                                data: [4349, 1680, 884, 508, 175, 5372, 1234, 831, 228, 0, 9161, 1426],
+                                backgroundColor: '#d97706'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        scales: {
+                            x: { stacked: true },
+                            y: { 
+                                stacked: true,
+                                title: { display: true, text: '€ Value' },
+                                ticks: {
+                                    callback: function(value) { return '€' + value; }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(context.parsed.y);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
