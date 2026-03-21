@@ -231,76 +231,7 @@
             </div>
 
             <div class="section" id="combined-section-3">
-                <h2 class="section-title">3. Unique EBU per Partner</h2>
-                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Weekly unique users who activated a mission, by partner. Portfolio total is deduplicated.</p>
-                <div class="chart-container">
-                    <canvas id="combinedEbuByPartnerChart"></canvas>
-                </div>
-                <h3 style="margin-top: 2rem; font-size: 1rem; font-weight: 600; color: var(--text-primary);">Monthly Unique EBU Breakdown</h3>
-                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">Per-partner EBU can overlap — Portfolio (deduplicated) ≤ sum of partners.</p>
-                <div class="chart-container">
-                    <canvas id="combinedMonthlyEbuChart"></canvas>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-4">
-                <h2 class="section-title">4. € per 1K EBU by Partner</h2>
-                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Highlights efficiency difference across partners.</p>
-                <div class="chart-container">
-                    <canvas id="combinedGroupedBarChart"></canvas>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-5">
-                <h2 class="section-title">5. Partner Comparison Table</h2>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Partner</th>
-                                <th>Period</th>
-                                <th class="number">Total €</th>
-                                <th class="number">EBU</th>
-                                <th class="number">€/1K EBU</th>
-                                <th>Top Conversion</th>
-                                <th>Top Conv. Value</th>
-                            </tr>
-                        </thead>
-                        <tbody id="partner-comparison-body">
-                            <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number" rowspan="3">630,626</td><td class="number highlight" rowspan="3">€662</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
-                            <tr><td>Winline</td><td>Feb '26</td><td class="number highlight">€158,499</td><td>2nd Deposit</td><td>€57,996 (36.6%)</td></tr>
-                            <tr><td>Winline</td><td>Mar '26*</td><td class="number highlight">€120,416</td><td>2nd Deposit</td><td>€46,344 (38.5%)</td></tr>
-                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number" rowspan="3">1,534,990</td><td class="number" rowspan="3">€62</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
-                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
-                            <tr><td>Tradeit</td><td>Mar '26*</td><td class="number">€68,719</td><td>Trade $250+ (C2)</td><td>€10,588 (15.4%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Jan '26</td><td class="number">€1,542</td><td class="number" rowspan="3">99,745</td><td class="number" rowspan="3">€43</td><td>Trade $100+ (C2)</td><td>€550 (35.7%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Feb '26</td><td class="number">€1,606</td><td>Trade $100+ (C2)</td><td>€688 (42.8%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Mar '26*</td><td class="number">€1,113</td><td>AL</td><td>€731 (65.7%)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-6">
-                <h2 class="section-title">6. Value Breakdown Comparison (Jan '26)</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Winline Breakdown</h3>
-                        <div class="chart-container small">
-                            <canvas id="combinedWinlineDoughnut"></canvas>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Tradeit Breakdown</h3>
-                        <div class="chart-container small">
-                            <canvas id="combinedTradeitDoughnut"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-7">
-                <h2 class="section-title">7. Weekly NSM Trend (All Partners)</h2>
+                <h2 class="section-title">3. Weekly NSM Trend (All Partners)</h2>
                 <div class="chart-container">
                     <canvas id="combinedWeeklyChart"></canvas>
                 </div>
@@ -342,6 +273,75 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-4">
+                <h2 class="section-title">4. Value Breakdown Comparison (Jan '26)</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Winline Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedWinlineDoughnut"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Tradeit Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedTradeitDoughnut"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-5">
+                <h2 class="section-title">5. € per 1K EBU by Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Highlights efficiency difference across partners.</p>
+                <div class="chart-container">
+                    <canvas id="combinedGroupedBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-6">
+                <h2 class="section-title">6. Partner Comparison Table</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Partner</th>
+                                <th>Period</th>
+                                <th class="number">Total €</th>
+                                <th class="number">EBU</th>
+                                <th class="number">€/1K EBU</th>
+                                <th>Top Conversion</th>
+                                <th>Top Conv. Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="partner-comparison-body">
+                            <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number" rowspan="3">630,626</td><td class="number highlight" rowspan="3">€662</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
+                            <tr><td>Winline</td><td>Feb '26</td><td class="number highlight">€158,499</td><td>2nd Deposit</td><td>€57,996 (36.6%)</td></tr>
+                            <tr><td>Winline</td><td>Mar '26*</td><td class="number highlight">€120,416</td><td>2nd Deposit</td><td>€46,344 (38.5%)</td></tr>
+                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number" rowspan="3">1,534,990</td><td class="number" rowspan="3">€62</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Mar '26*</td><td class="number">€68,719</td><td>Trade $250+ (C2)</td><td>€10,588 (15.4%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Jan '26</td><td class="number">€1,542</td><td class="number" rowspan="3">99,745</td><td class="number" rowspan="3">€43</td><td>Trade $100+ (C2)</td><td>€550 (35.7%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Feb '26</td><td class="number">€1,606</td><td>Trade $100+ (C2)</td><td>€688 (42.8%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Mar '26*</td><td class="number">€1,113</td><td>AL</td><td>€731 (65.7%)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-7">
+                <h2 class="section-title">7. Unique EBU per Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Weekly unique users who activated a mission, by partner. Portfolio total is deduplicated.</p>
+                <div class="chart-container">
+                    <canvas id="combinedEbuByPartnerChart"></canvas>
+                </div>
+                <h3 style="margin-top: 2rem; font-size: 1rem; font-weight: 600; color: var(--text-primary);">Monthly Unique EBU Breakdown</h3>
+                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">Per-partner EBU can overlap — Portfolio (deduplicated) ≤ sum of partners.</p>
+                <div class="chart-container">
+                    <canvas id="combinedMonthlyEbuChart"></canvas>
                 </div>
             </div>
 
@@ -388,6 +388,148 @@
                     </div>
                 </div>
 
+                <!-- === CANONICAL SECTION 2: Monthly NSM Summary === -->
+                <div class="section" id="section-2">
+                    <h2 class="section-title">2. Monthly NSM Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Conversion</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                            <th class="number">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>AL (€0.38)</td><td class="number">€4,553</td><td class="number">€5,637</td><td class="number">€57,370</td><td class="number highlight">€67,560</td></tr>
+                                        <tr><td>C1 (€0.04)</td><td class="number">€108</td><td class="number">€142</td><td class="number">€762</td><td class="number highlight">€1,012</td></tr>
+                                        <tr><td>C2 (€8.75)</td><td class="number">€7,595</td><td class="number">€7,665</td><td class="number">€10,588</td><td class="number highlight">€25,848</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€12,255</td><td class="number">€13,444</td><td class="number">€68,719</td><td class="number highlight">€94,418</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Mar = Partial month (data through 20 Mar 2026). Mar includes new regions: EU, LATAM, CIS EXC.</p>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="tradeitMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 3: Weekly NSM Trend === -->
+                <div class="section" id="section-3">
+                    <h2 class="section-title">3. Weekly NSM Trend</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Weekly € value generated by Tradeit missions. Data from BQ mission completions × verified € per conversion.</p>
+                    <div class="chart-container">
+                        <canvas id="tradeitWeeklyNsmChart"></canvas>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 2rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Week</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">WoW %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tradeit-weekly-nsm-body">
+                                <tr><td>Dec 29</td><td class="number">€5,265</td><td class="number">—</td></tr>
+                                <tr><td>Jan 5</td><td class="number">€2,696</td><td class="number" style="color: var(--red);">-49%</td></tr>
+                                <tr><td>Jan 12</td><td class="number">€1,698</td><td class="number" style="color: var(--red);">-37%</td></tr>
+                                <tr><td>Jan 19</td><td class="number">€1,577</td><td class="number" style="color: var(--red);">-7%</td></tr>
+                                <tr><td>Jan 26</td><td class="number">€908</td><td class="number" style="color: var(--red);">-42%</td></tr>
+                                <tr><td>Feb 2</td><td class="number">€7,714</td><td class="number" style="color: var(--green);">+749%</td></tr>
+                                <tr><td>Feb 9</td><td class="number">€2,532</td><td class="number" style="color: var(--red);">-67%</td></tr>
+                                <tr><td>Feb 16</td><td class="number">€1,967</td><td class="number" style="color: var(--red);">-22%</td></tr>
+                                <tr><td>Feb 23</td><td class="number">€1,179</td><td class="number" style="color: var(--red);">-40%</td></tr>
+                                <tr><td>Mar 2</td><td class="number">€94</td><td class="number" style="color: var(--red);">-92%</td></tr>
+                                <tr><td>Mar 9</td><td class="number">€58,907</td><td class="number" style="color: var(--green);">+62,567%</td></tr>
+                                <tr><td>Mar 16</td><td class="number">€10,002</td><td class="number" style="color: var(--red);">-83%</td></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                    <td>TOTAL</td>
+                                    <td class="number">€94,539</td>
+                                    <td class="number">—</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 4: Value Breakdown === -->
+                <div class="section" id="section-4">
+                    <h2 class="section-title">4. Value Breakdown by Conversion Type</h2>
+                    <div class="grid-2">
+                        <div class="chart-container small">
+                            <canvas id="janBreakdownChart"></canvas>
+                        </div>
+                        <div class="chart-container small">
+                            <canvas id="febBreakdownChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 5: Conversion Funnel === -->
+                <div class="section" id="section-5">
+                    <h2 class="section-title">5. Tradeit Conversion Funnel</h2>
+                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Total Eligible</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Account Linkage — €0.38">AL</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Account Linkage (€0.38)</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="First Trade — €0.04">C1</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">First Trade (€0.04)</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Trade $250+ — €8.75">C2</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Trade $250+ (€8.75)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 6: Key Insights === -->
+                <div class="section" id="section-6">
+                    <h2 class="section-title">6. Key Insights</h2>
+                    <div class="insight-card">
+                        <h3>1. <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Dominates Value</h3>
+                        <p>The <span class="term" data-tip="Trade $250+ — €8.75">C2</span> conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>2. CIS Volume vs Efficiency</h3>
+                        <p>CIS represents 79% of the total <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> audience, but suffers from a low <span class="term" data-tip="Account Linkage — €0.38">AL</span> rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>3. Shifting Regional Momentum</h3>
+                        <p>MoM efficiency diverged significantly: NA's €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> declined by -18.4%, whereas CIS saw substantial growth of +24.0%.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>4. <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> is the <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Engine</h3>
+                        <p>The <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> segment yields the highest €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> by far, operating as a pure <span class="term" data-tip="Trade $250+ — €8.75">C2</span> generation engine, though constrained by a small audience size.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>5. Untracked Opportunities</h3>
+                        <p>High-value actions like Trade $1,000+ (€35.00) and frequent actions like Trade 5 (€0.18) remain untracked in current missions, representing untapped potential.</p>
+                    </div>
+                </div>
+
+                <!-- === PARTNER-SPECIFIC SECTIONS (7+) === -->
                 <div class="section region-filter-section" style="margin-top: 2rem; margin-bottom: 2rem;">
                     <div class="partner-selector" id="missionsRegionFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
                         <button class="partner-btn active" data-region="All Regions">All Regions</button>
@@ -400,8 +542,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-2">
-                    <h2 class="section-title">2. NSM Trend</h2>
+                <div class="section" id="section-7">
+                    <h2 class="section-title">7. NSM Trend (Historical)</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
                         Apr–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Feb 2026 use actual mission data.
                     </p>
@@ -410,8 +552,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-3">
-                    <h2 class="section-title">3. Region-Level Summary</h2>
+                <div class="section" id="section-8">
+                    <h2 class="section-title">8. Region-Level Summary</h2>
                     <div class="grid-2">
                         <div>
                             <div class="table-wrapper">
@@ -446,8 +588,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-4">
-                    <h2 class="section-title">4. Month-over-Month Comparison</h2>
+                <div class="section" id="section-9">
+                    <h2 class="section-title">9. Month-over-Month Comparison</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
                         NA declined <span class="highlight" style="color: var(--red);">-16.6%</span> in efficiency while CIS grew <span class="highlight" style="color: var(--green);">+20.0%</span>.
                     </p>
@@ -456,8 +598,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-5">
-                    <h2 class="section-title">5. NA A/B Test (January)</h2>
+                <div class="section" id="section-10">
+                    <h2 class="section-title">10. NA A/B Test (January)</h2>
                     <div class="grid-2">
                         <div class="ab-card">
                             <h3>Group A (1000 FP)</h3>
@@ -482,8 +624,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-6">
-                    <h2 class="section-title">6. Segment Performance (€/1K EBU)</h2>
+                <div class="section" id="section-11">
+                    <h2 class="section-title">11. Segment Performance (€/1K EBU)</h2>
                     <div class="grid-2">
                         <div class="table-wrapper">
                             <table>
@@ -530,35 +672,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="section-7">
-                    <h2 class="section-title">7. Tradeit Conversion Funnel</h2>
-                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Total Eligible</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Account Linkage — €0.38">AL</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Account Linkage (€0.38)</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="First Trade — €0.04">C1</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">First Trade (€0.04)</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Trade $250+ — €8.75">C2</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Trade $250+ (€8.75)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section" id="section-8">
-                    <h2 class="section-title">8. Funnel Conversion Rates</h2>
+                <div class="section" id="section-12">
+                    <h2 class="section-title">12. Funnel Conversion Rates</h2>
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -582,74 +697,6 @@
                                 <tr><td>Feb</td><td>APAC</td><td class="number">2.17%</td><td class="number">0.47%</td><td class="number">1.48%</td><td class="number highlight">2.94%</td></tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-                <div class="section" id="section-9">
-                    <h2 class="section-title">9. Value Breakdown by Conversion Type</h2>
-                    <div class="grid-2">
-                        <div class="chart-container small">
-                            <canvas id="janBreakdownChart"></canvas>
-                        </div>
-                        <div class="chart-container small">
-                            <canvas id="febBreakdownChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section" id="section-10">
-                    <h2 class="section-title">10. Key Insights</h2>
-                    <div class="insight-card">
-                        <h3>1. <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Dominates Value</h3>
-                        <p>The <span class="term" data-tip="Trade $250+ — €8.75">C2</span> conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>2. CIS Volume vs Efficiency</h3>
-                        <p>CIS represents 79% of the total <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> audience, but suffers from a low <span class="term" data-tip="Account Linkage — €0.38">AL</span> rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>3. Shifting Regional Momentum</h3>
-                        <p>MoM efficiency diverged significantly: NA's €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> declined by -18.4%, whereas CIS saw substantial growth of +24.0%.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>4. <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> is the <span class="term" data-tip="Trade $250+ — €8.75">C2</span> Engine</h3>
-                        <p>The <span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span> segment yields the highest €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> by far, operating as a pure <span class="term" data-tip="Trade $250+ — €8.75">C2</span> generation engine, though constrained by a small audience size.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>5. Untracked Opportunities</h3>
-                        <p>High-value actions like Trade $1,000+ (€35.00) and frequent actions like Trade 5 (€0.18) remain untracked in current missions, representing untapped potential.</p>
-                    </div>
-                </div>
-                <div class="section">
-                    <h2 class="section-title">11. Monthly NSM Summary</h2>
-                    <div class="grid-2">
-                        <div>
-                            <div class="table-wrapper">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Conversion</th>
-                                            <th class="number">Jan '26</th>
-                                            <th class="number">Feb '26</th>
-                                            <th class="number">Mar '26*</th>
-                                            <th class="number">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>AL (€0.38)</td><td class="number">€4,553</td><td class="number">€5,637</td><td class="number">€57,370</td><td class="number highlight">€67,560</td></tr>
-                                        <tr><td>C1 (€0.04)</td><td class="number">€108</td><td class="number">€142</td><td class="number">€762</td><td class="number highlight">€1,012</td></tr>
-                                        <tr><td>C2 (€8.75)</td><td class="number">€7,595</td><td class="number">€7,665</td><td class="number">€10,588</td><td class="number highlight">€25,848</td></tr>
-                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€12,255</td><td class="number">€13,444</td><td class="number">€68,719</td><td class="number highlight">€94,418</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Mar = Partial month (data through 20 Mar 2026). Mar includes new regions: EU, LATAM, CIS EXC.</p>
-                        </div>
-                        <div>
-                            <div class="chart-container">
-                                <canvas id="tradeitMonthlySummaryChart"></canvas>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1035,8 +1082,147 @@
                     </div>
                 </div>
 
+                <!-- === CANONICAL SECTION 2: Monthly NSM Summary === -->
                 <div class="section" id="winline-section-2">
-                    <h2 class="section-title">2. NSM Trend</h2>
+                    <h2 class="section-title">2. Monthly NSM Summary</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Conversion</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26*</th>
+                                            <th class="number">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="winline-monthly-summary-body">
+                                        <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
+                                        <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
+                                        <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
+                                        <tr><td>2nd Dep (€4.33)</td><td class="number">€49,535</td><td class="number">€57,996</td><td class="number">€46,344</td><td class="number highlight">€153,875</td></tr>
+                                        <tr><td>Bet (€4.33)</td><td class="number">€36,091</td><td class="number">€43,504</td><td class="number">€34,380</td><td class="number highlight">€113,975</td></tr>
+                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="winlineMissionsMonthlySummaryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 3: Weekly NSM Trend === -->
+                <div class="section" id="winline-section-3">
+                    <h2 class="section-title">3. Weekly NSM Trend</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Weekly € value generated by Winline missions. Data from verified CDP constants.</p>
+                    <div class="chart-container">
+                        <canvas id="winlineWeeklyNsmChart"></canvas>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 2rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Week</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">WoW %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="winline-weekly-nsm-body">
+                                <tr><td>Dec 29</td><td class="number">€42,562</td><td class="number">—</td></tr>
+                                <tr><td>Jan 5</td><td class="number">€36,779</td><td class="number" style="color: var(--red);">-14%</td></tr>
+                                <tr><td>Jan 12</td><td class="number">€30,771</td><td class="number" style="color: var(--red);">-16%</td></tr>
+                                <tr><td>Jan 19</td><td class="number">€19,852</td><td class="number" style="color: var(--red);">-35%</td></tr>
+                                <tr><td>Jan 26</td><td class="number">€8,458</td><td class="number" style="color: var(--red);">-57%</td></tr>
+                                <tr><td>Feb 2</td><td class="number">€89,586</td><td class="number" style="color: var(--green);">+959%</td></tr>
+                                <tr><td>Feb 9</td><td class="number">€34,876</td><td class="number" style="color: var(--red);">-61%</td></tr>
+                                <tr><td>Feb 16</td><td class="number">€23,926</td><td class="number" style="color: var(--red);">-31%</td></tr>
+                                <tr><td>Feb 23</td><td class="number">€41,130</td><td class="number" style="color: var(--green);">+72%</td></tr>
+                                <tr><td>Mar 2</td><td class="number">€57,191</td><td class="number" style="color: var(--green);">+39%</td></tr>
+                                <tr><td>Mar 9</td><td class="number">€26,430</td><td class="number" style="color: var(--red);">-54%</td></tr>
+                                <tr><td>Mar 16</td><td class="number">€5,779</td><td class="number" style="color: var(--red);">-78%</td></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                    <td>TOTAL</td>
+                                    <td class="number">€417,340</td>
+                                    <td class="number">—</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 4: Value Breakdown === -->
+                <div class="section" id="winline-section-4">
+                    <h2 class="section-title">4. Value Breakdown by Conversion Type</h2>
+                    <div class="chart-container">
+                        <canvas id="winlineValueBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 5: Conversion Funnel === -->
+                <div class="section" id="winline-section-5">
+                    <h2 class="section-title">5. Winline Conversion Funnel</h2>
+                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Total Eligible</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Account Linkage (€4.33)">AL</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Account Linkage (€4.33)</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Identification/KYC (€8.66)">KYC</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">Identification (€8.66)</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="First Time Deposit (€121.10)">FTD</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">First Deposit (€121.10)</div>
+                            </div>
+                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Second Deposit (€4.33)">2nd Dep</span></div>
+                                <div style="font-size: 0.85rem; color: var(--text-muted);">2+ Deposit (€4.33)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === CANONICAL SECTION 6: Key Insights === -->
+                <div class="section" id="winline-section-6">
+                    <h2 class="section-title">6. Key Insights</h2>
+                    <div class="insight-card">
+                        <h3>1. Consistent Monthly Growth</h3>
+                        <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>2. BOFU Drives Majority of Value</h3>
+                        <p>FTD + Deposit missions (Missions 5-6 Jan, 7-9 Feb, 4-5 Mar) generate 64-68% of total monthly value through repeat deposit and bet activity.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>3. <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> Remains the Bottleneck</h3>
+                        <p>KYC conversion consistently low: 322 (Jan), 344 (Feb), 223 (Mar*). Only ~1% of eligible users pass KYC, limiting FTD pipeline.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>4. Feb A/B Test: Main Group Dominates</h3>
+                        <p>Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
+                    </div>
+                </div>
+
+                <!-- === PARTNER-SPECIFIC SECTIONS (7+) === -->
+                <div class="section" id="winline-section-7">
+                    <h2 class="section-title">7. NSM Trend (Historical)</h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
                         Sep–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Mar 2026 uses actual mission data. March is partial (through Mar 20).
                     </p>
@@ -1045,8 +1231,8 @@
                     </div>
                 </div>
 
-                <div class="section" id="winline-section-3">
-                    <h2 class="section-title">3. Mission Breakdown</h2>
+                <div class="section" id="winline-section-8">
+                    <h2 class="section-title">8. Mission Breakdown</h2>
                     <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
@@ -1089,98 +1275,6 @@
                         </table>
                     </div>
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">*Mar = Partial month (data through 20 Mar 2026). All values rounded to whole €. Bet treated as €4.33 (same as 2nd Deposit).</p>
-                </div>
-
-                <div class="section" id="winline-section-4">
-                    <h2 class="section-title">4. Winline Conversion Funnel</h2>
-                    <div class="insight-card" style="padding: 2rem; background-color: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: center;">
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Total Eligible</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Account Linkage (€4.33)">AL</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Account Linkage (€4.33)</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Identification/KYC (€8.66)">KYC</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">Identification (€8.66)</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="First Time Deposit (€121.10)">FTD</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">First Deposit (€121.10)</div>
-                            </div>
-                            <div style="color: var(--accent); font-size: 1.5rem;">→</div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;"><span class="term" data-tip="Second Deposit (€4.33)">2nd Dep</span></div>
-                                <div style="font-size: 0.85rem; color: var(--text-muted);">2+ Deposit (€4.33)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section" id="winline-section-5">
-                    <h2 class="section-title">5. Value Breakdown by Conversion Type</h2>
-                    <div class="chart-container">
-                        <canvas id="winlineValueBreakdownChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section" id="winline-section-6">
-                    <h2 class="section-title">6. Key Insights</h2>
-                    <div class="insight-card">
-                        <h3>1. Consistent Monthly Growth</h3>
-                        <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>2. BOFU Drives Majority of Value</h3>
-                        <p>FTD + Deposit missions (Missions 5-6 Jan, 7-9 Feb, 4-5 Mar) generate 64-68% of total monthly value through repeat deposit and bet activity.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>3. <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> Remains the Bottleneck</h3>
-                        <p>KYC conversion consistently low: 322 (Jan), 344 (Feb), 223 (Mar*). Only ~1% of eligible users pass KYC, limiting FTD pipeline.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3>4. Feb A/B Test: Main Group Dominates</h3>
-                        <p>Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
-                    </div>
-                </div>
-                <div class="section">
-                    <h2 class="section-title">7. Monthly NSM Summary</h2>
-                    <div class="grid-2">
-                        <div>
-                            <div class="table-wrapper">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Conversion</th>
-                                            <th class="number">Jan '26</th>
-                                            <th class="number">Feb '26</th>
-                                            <th class="number">Mar '26*</th>
-                                            <th class="number">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="winline-monthly-summary-body">
-                                        <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
-                                        <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
-                                        <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
-                                        <tr><td>2nd Dep (€4.33)</td><td class="number">€49,535</td><td class="number">€57,996</td><td class="number">€46,344</td><td class="number highlight">€153,875</td></tr>
-                                        <tr><td>Bet (€4.33)</td><td class="number">€36,091</td><td class="number">€43,504</td><td class="number">€34,380</td><td class="number highlight">€113,975</td></tr>
-                                        <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="chart-container">
-                                <canvas id="winlineMissionsMonthlySummaryChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
 
@@ -1532,22 +1626,9 @@
                     </div>
                 </div>
 
+                <!-- 2. Monthly NSM Summary (Strategic — team success metric) -->
                 <div class="section" id="wm-section-2">
-                    <h2 class="section-title">2. NSM Trend</h2>
-                    <div class="chart-container">
-                        <canvas id="whiteMarketNsmTrendChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section" id="wm-section-3">
-                    <h2 class="section-title">3. Value Breakdown by Conversion Type</h2>
-                    <div class="chart-container small">
-                        <canvas id="whiteMarketBreakdownChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section" id="wm-section-4">
-                    <h2 class="section-title">4. Monthly NSM Summary</h2>
+                    <h2 class="section-title">2. Monthly NSM Summary</h2>
                     <div class="grid-2">
                         <div>
                             <div class="table-wrapper">
@@ -1579,10 +1660,84 @@
                     </div>
                 </div>
 
+                <!-- 3. Weekly NSM Trend (Tactical — Monday updates, mission monitoring) -->
+                <div class="section" id="wm-section-3">
+                    <h2 class="section-title">3. Weekly NSM Trend</h2>
+                    <div class="chart-container">
+                        <canvas id="wmWeeklyNsmChart"></canvas>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 1.5rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Week</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">WoW</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wm-weekly-nsm-body">
+                                <tr><td>Dec 29</td><td class="number">€299</td><td class="number">—</td></tr>
+                                <tr><td>Jan 5</td><td class="number">€334</td><td class="number" style="color: var(--green);">+12%</td></tr>
+                                <tr><td>Jan 12</td><td class="number">€369</td><td class="number" style="color: var(--green);">+11%</td></tr>
+                                <tr><td>Jan 19</td><td class="number">€249</td><td class="number" style="color: var(--red);">−33%</td></tr>
+                                <tr><td>Jan 26</td><td class="number">€292</td><td class="number" style="color: var(--green);">+17%</td></tr>
+                                <tr><td>Feb 2</td><td class="number">€543</td><td class="number" style="color: var(--green);">+86%</td></tr>
+                                <tr><td>Feb 9</td><td class="number">€434</td><td class="number" style="color: var(--red);">−20%</td></tr>
+                                <tr><td>Feb 16</td><td class="number">€297</td><td class="number" style="color: var(--red);">−32%</td></tr>
+                                <tr><td>Feb 23</td><td class="number">€331</td><td class="number" style="color: var(--green);">+12%</td></tr>
+                                <tr><td>Mar 2</td><td class="number">€627</td><td class="number" style="color: var(--green);">+89%</td></tr>
+                                <tr><td>Mar 9</td><td class="number">€323</td><td class="number" style="color: var(--red);">−49%</td></tr>
+                                <tr><td>Mar 16</td><td class="number">€162</td><td class="number" style="color: var(--red);">−50%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. Value Breakdown by Conversion Type -->
+                <div class="section" id="wm-section-4">
+                    <h2 class="section-title">4. Value Breakdown by Conversion Type</h2>
+                    <div class="chart-container small">
+                        <canvas id="whiteMarketBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 5. Conversion Funnel -->
                 <div class="section" id="wm-section-5">
-                    <h2 class="section-title">5. Key Insights</h2>
+                    <h2 class="section-title">5. Conversion Funnel</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th class="number">Users</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">Conversion Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>EBU (Eligible Users)</td><td class="number">91,800</td><td class="number">—</td><td class="number">100%</td></tr>
+                                <tr><td>AL (Account Linkage)</td><td class="number">5,510</td><td class="number">€2,094</td><td class="number">6.0%</td></tr>
+                                <tr><td>C1 — Buy any</td><td class="number">1,340</td><td class="number">€67</td><td class="number">24.3% of AL</td></tr>
+                                <tr><td>C2 — Buy $100+</td><td class="number">124</td><td class="number">€1,550</td><td class="number">9.3% of C1</td></tr>
+                                <tr><td>C3 — Buy $300+</td><td class="number">11</td><td class="number">€550</td><td class="number">8.9% of C2</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6. Key Insights -->
+                <div class="section" id="wm-section-6">
+                    <h2 class="section-title">6. Key Insights</h2>
                     <div class="insight-card">
                         <p>WhiteMarket is the smallest partner at €4,261 (0.8% of portfolio). AL accounts for 49% of value — the highest AL share among all partners. BOFU segment (AL+BUY) drives 79% of trade value. Ukraine-only deployment with 12 active weeks Jan–Mar 2026.</p>
+                    </div>
+                </div>
+
+                <!-- 7. NSM Trend Historical -->
+                <div class="section" id="wm-section-7">
+                    <h2 class="section-title">7. NSM Trend Historical</h2>
+                    <div class="chart-container">
+                        <canvas id="whiteMarketNsmTrendChart"></canvas>
                     </div>
                 </div>
                 <div class="footer">
@@ -2082,7 +2237,7 @@
             missionCompletions: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18410","month":"2026-01","partner":"Tradeit","unique_users":"18410"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18292","month":"2026-01","partner":"Tradeit","unique_users":"18292"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"221","month":"2026-01","partner":"Tradeit","unique_users":"221"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"176","month":"2026-01","partner":"Tradeit","unique_users":"176"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"19","month":"2026-01","partner":"Tradeit","unique_users":"19"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"17","month":"2026-01","partner":"Tradeit","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"364668","month":"2026-02","partner":"Tradeit","unique_users":"364668"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"55082","month":"2026-02","partner":"Tradeit","unique_users":"55082"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"39972","month":"2026-02","partner":"Tradeit","unique_users":"39972"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"38724","month":"2026-02","partner":"Tradeit","unique_users":"38724"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"23649","month":"2026-02","partner":"Tradeit","unique_users":"23649"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"13180","month":"2026-02","partner":"Tradeit","unique_users":"13180"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"5133","month":"2026-02","partner":"Tradeit","unique_users":"5133"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"4036","month":"2026-02","partner":"Tradeit","unique_users":"4036"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"3595","month":"2026-02","partner":"Tradeit","unique_users":"3595"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2095","month":"2026-02","partner":"Tradeit","unique_users":"2095"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2001","month":"2026-02","partner":"Tradeit","unique_users":"2001"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1826","month":"2026-02","partner":"Tradeit","unique_users":"1826"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"1513","month":"2026-02","partner":"Tradeit","unique_users":"1513"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"647","month":"2026-02","partner":"Tradeit","unique_users":"647"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"491","month":"2026-02","partner":"Tradeit","unique_users":"491"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"347","month":"2026-02","partner":"Tradeit","unique_users":"347"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"207","month":"2026-02","partner":"Tradeit","unique_users":"207"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"112","month":"2026-02","partner":"Tradeit","unique_users":"112"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"93","month":"2026-02","partner":"Tradeit","unique_users":"93"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Trade an item $250+","completions":"71","month":"2026-02","partner":"Tradeit","unique_users":"71"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-02","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"58","month":"2026-02","partner":"Tradeit","unique_users":"58"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"55","month":"2026-02","partner":"Tradeit","unique_users":"55"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"41","month":"2026-02","partner":"Tradeit","unique_users":"41"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade an item $250+","completions":"21","month":"2026-02","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"18","month":"2026-02","partner":"Tradeit","unique_users":"18"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"11","month":"2026-02","partner":"Tradeit","unique_users":"11"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"452936","month":"2026-03","partner":"Tradeit","unique_users":"452936"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"268819","month":"2026-03","partner":"Tradeit","unique_users":"268819"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Сыграй 1 матч","completions":"141058","month":"2026-03","partner":"Tradeit","unique_users":"141058"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"43857","month":"2026-03","partner":"Tradeit","unique_users":"43857"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"33777","month":"2026-03","partner":"Tradeit","unique_users":"33777"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"24142","month":"2026-03","partner":"Tradeit","unique_users":"24142"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"19395","month":"2026-03","partner":"Tradeit","unique_users":"19395"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"18456","month":"2026-03","partner":"Tradeit","unique_users":"18456"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade any item with Tradeit","completions":"10949","month":"2026-03","partner":"Tradeit","unique_users":"10949"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"9264","month":"2026-03","partner":"Tradeit","unique_users":"9264"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"4236","month":"2026-03","partner":"Tradeit","unique_users":"4236"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"3664","month":"2026-03","partner":"Tradeit","unique_users":"3664"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2883","month":"2026-03","partner":"Tradeit","unique_users":"2883"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2758","month":"2026-03","partner":"Tradeit","unique_users":"2758"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2018","month":"2026-03","partner":"Tradeit","unique_users":"2018"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1656","month":"2026-03","partner":"Tradeit","unique_users":"1656"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1632","month":"2026-03","partner":"Tradeit","unique_users":"1632"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1305","month":"2026-03","partner":"Tradeit","unique_users":"1305"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1143","month":"2026-03","partner":"Tradeit","unique_users":"1143"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade an item $250+","completions":"826","month":"2026-03","partner":"Tradeit","unique_users":"826"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade any item with Tradeit","completions":"662","month":"2026-03","partner":"Tradeit","unique_users":"662"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"273","month":"2026-03","partner":"Tradeit","unique_users":"273"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"262","month":"2026-03","partner":"Tradeit","unique_users":"262"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"230","month":"2026-03","partner":"Tradeit","unique_users":"230"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"188","month":"2026-03","partner":"Tradeit","unique_users":"188"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"143","month":"2026-03","partner":"Tradeit","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"85","month":"2026-03","partner":"Tradeit","unique_users":"85"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"80","month":"2026-03","partner":"Tradeit","unique_users":"80"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"77","month":"2026-03","partner":"Tradeit","unique_users":"77"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-03","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade an item $250+","completions":"42","month":"2026-03","partner":"Tradeit","unique_users":"42"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Trade an item $250+","completions":"35","month":"2026-03","partner":"Tradeit","unique_users":"35"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"26","month":"2026-03","partner":"Tradeit","unique_users":"26"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Trade an item $250+","completions":"23","month":"2026-03","partner":"Tradeit","unique_users":"23"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"21","month":"2026-03","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"14","month":"2026-03","partner":"Tradeit","unique_users":"14"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"13","month":"2026-03","partner":"Tradeit","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade an item $250+","completions":"7","month":"2026-03","partner":"Tradeit","unique_users":"7"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-03","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"4","month":"2026-03","partner":"Tradeit","unique_users":"4"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"47987","month":"2026-02","partner":"WhiteMarket","unique_users":"47914"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Здобудь 2 перемоги","completions":"35292","month":"2026-02","partner":"WhiteMarket","unique_users":"35292"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"17584","month":"2026-02","partner":"WhiteMarket","unique_users":"17577"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"2381","month":"2026-02","partner":"WhiteMarket","unique_users":"2381"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"345","month":"2026-02","partner":"WhiteMarket","unique_users":"345"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"98","month":"2026-02","partner":"WhiteMarket","unique_users":"98"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"68","month":"2026-02","partner":"WhiteMarket","unique_users":"68"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"34","month":"2026-02","partner":"WhiteMarket","unique_users":"34"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"12","month":"2026-02","partner":"WhiteMarket","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"11","month":"2026-02","partner":"WhiteMarket","unique_users":"11"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","month":"2026-02","partner":"WhiteMarket","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"41489","month":"2026-03","partner":"WhiteMarket","unique_users":"41442"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Здобудь 2 перемоги","completions":"29887","month":"2026-03","partner":"WhiteMarket","unique_users":"29887"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"16125","month":"2026-03","partner":"WhiteMarket","unique_users":"16122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зіграй 1 матч","completions":"2339","month":"2026-03","partner":"WhiteMarket","unique_users":"2339"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"284","month":"2026-03","partner":"WhiteMarket","unique_users":"284"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"64","month":"2026-03","partner":"WhiteMarket","unique_users":"64"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"53","month":"2026-03","partner":"WhiteMarket","unique_users":"53"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"20","month":"2026-03","partner":"WhiteMarket","unique_users":"20"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","month":"2026-03","partner":"WhiteMarket","unique_users":"1"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"301839","month":"2026-02","partner":"Winline","unique_users":"301839"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"75881","month":"2026-02","partner":"Winline","unique_users":"75881"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"35121","month":"2026-02","partner":"Winline","unique_users":"35121"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"23896","month":"2026-02","partner":"Winline","unique_users":"23896"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"18604","month":"2026-02","partner":"Winline","unique_users":"18604"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9250","month":"2026-02","partner":"Winline","unique_users":"9250"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7071","month":"2026-02","partner":"Winline","unique_users":"7071"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"4621","month":"2026-02","partner":"Winline","unique_users":"4621"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4075","month":"2026-02","partner":"Winline","unique_users":"4075"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"3407","month":"2026-02","partner":"Winline","unique_users":"3407"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2849","month":"2026-02","partner":"Winline","unique_users":"2849"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1290","month":"2026-02","partner":"Winline","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1261","month":"2026-02","partner":"Winline","unique_users":"1261"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"1203","month":"2026-02","partner":"Winline","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"1147","month":"2026-02","partner":"Winline","unique_users":"1147"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"872","month":"2026-02","partner":"Winline","unique_users":"872"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"344","month":"2026-02","partner":"Winline","unique_users":"344"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"189","month":"2026-02","partner":"Winline","unique_users":"189"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"69","month":"2026-02","partner":"Winline","unique_users":"69"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"63","month":"2026-02","partner":"Winline","unique_users":"63"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"58","month":"2026-02","partner":"Winline","unique_users":"58"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"35","month":"2026-02","partner":"Winline","unique_users":"35"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"29","month":"2026-02","partner":"Winline","unique_users":"29"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"21","month":"2026-02","partner":"Winline","unique_users":"21"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"19","month":"2026-02","partner":"Winline","unique_users":"19"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"9","month":"2026-02","partner":"Winline","unique_users":"9"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"6","month":"2026-02","partner":"Winline","unique_users":"6"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"4","month":"2026-02","partner":"Winline","unique_users":"4"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1","month":"2026-02","partner":"Winline","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"272411","month":"2026-03","partner":"Winline","unique_users":"272411"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"70336","month":"2026-03","partner":"Winline","unique_users":"70336"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"23116","month":"2026-03","partner":"Winline","unique_users":"23116"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"18147","month":"2026-03","partner":"Winline","unique_users":"18147"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"7856","month":"2026-03","partner":"Winline","unique_users":"7856"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"6024","month":"2026-03","partner":"Winline","unique_users":"6024"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"4918","month":"2026-03","partner":"Winline","unique_users":"4918"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"4274","month":"2026-03","partner":"Winline","unique_users":"4274"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"3293","month":"2026-03","partner":"Winline","unique_users":"3293"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2237","month":"2026-03","partner":"Winline","unique_users":"2237"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"234","month":"2026-03","partner":"Winline","unique_users":"234"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"125","month":"2026-03","partner":"Winline","unique_users":"125"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"51","month":"2026-03","partner":"Winline","unique_users":"51"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"47","month":"2026-03","partner":"Winline","unique_users":"47"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"13","month":"2026-03","partner":"Winline","unique_users":"13"}],
             weeklyMissionCompletions: [{"challenge_name":"Play 1 game on FACEIT","completions":"36702","partner":"Tradeit","unique_users":"36702","week_start":"2026-01-26"},{"challenge_name":"Trade any item with Tradeit","completions":"397","partner":"Tradeit","unique_users":"397","week_start":"2026-01-26"},{"challenge_name":"Trade an item $250+","completions":"36","partner":"Tradeit","unique_users":"36","week_start":"2026-01-26"},{"challenge_name":"Сыграй 1 матч","completions":"443399","partner":"Tradeit","unique_users":"443399","week_start":"2026-02-23"},{"challenge_name":"Play 1 game on FACEIT","completions":"110249","partner":"Tradeit","unique_users":"110249","week_start":"2026-02-23"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2473","partner":"Tradeit","unique_users":"2473","week_start":"2026-02-23"},{"challenge_name":"Trade any item with Tradeit","completions":"1083","partner":"Tradeit","unique_users":"1083","week_start":"2026-02-23"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"477","partner":"Tradeit","unique_users":"477","week_start":"2026-02-23"},{"challenge_name":"Trade an item $250+","completions":"399","partner":"Tradeit","unique_users":"399","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"67952","partner":"WhiteMarket","unique_users":"67872","week_start":"2026-02-23"},{"challenge_name":"Здобудь 2 перемоги","completions":"35292","partner":"WhiteMarket","unique_users":"35292","week_start":"2026-02-23"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"511","partner":"WhiteMarket","unique_users":"511","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"57","partner":"WhiteMarket","unique_users":"57","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","partner":"WhiteMarket","unique_users":"5","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матчей","completions":"525909","partner":"Winline","unique_users":"383108","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матч","completions":"60223","partner":"Winline","unique_users":"45739","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9720","partner":"Winline","unique_users":"9354","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7324","partner":"Winline","unique_users":"7128","week_start":"2026-02-23"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"5374","partner":"Winline","unique_users":"5374","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4105","partner":"Winline","unique_users":"4077","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2865","partner":"Winline","unique_users":"2851","week_start":"2026-02-23"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"362","partner":"Winline","unique_users":"362","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"290","partner":"Winline","unique_users":"289","week_start":"2026-02-23"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"94","partner":"Winline","unique_users":"94","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"42904","partner":"WhiteMarket","unique_users":"42888","week_start":"2026-03-02"},{"challenge_name":"Здобудь 2 перемоги","completions":"18395","partner":"WhiteMarket","unique_users":"18395","week_start":"2026-03-02"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"182","partner":"WhiteMarket","unique_users":"182","week_start":"2026-03-02"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"8","partner":"WhiteMarket","unique_users":"8","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матчей","completions":"151451","partner":"Winline","unique_users":"150181","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матч","completions":"17709","partner":"Winline","unique_users":"17709","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"3665","partner":"Winline","unique_users":"3665","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2727","partner":"Winline","unique_users":"2727","week_start":"2026-03-02"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1532","partner":"Winline","unique_users":"1532","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1177","partner":"Winline","unique_users":"1177","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"688","partner":"Winline","unique_users":"688","week_start":"2026-03-02"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"85","partner":"Winline","unique_users":"85","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"63","partner":"Winline","unique_users":"63","week_start":"2026-03-02"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"18","partner":"Winline","unique_users":"17","week_start":"2026-03-02"},{"challenge_name":"Play 1 game on FACEIT","completions":"444104","partner":"Tradeit","unique_users":"443285","week_start":"2026-03-09"},{"challenge_name":"Сыграй 1 матч","completions":"370667","partner":"Tradeit","unique_users":"370667","week_start":"2026-03-09"},{"challenge_name":"Trade any item with Tradeit","completions":"9536","partner":"Tradeit","unique_users":"9532","week_start":"2026-03-09"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"5413","partner":"Tradeit","unique_users":"5413","week_start":"2026-03-09"},{"challenge_name":"Trade an item $250+","completions":"569","partner":"Tradeit","unique_users":"568","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"149","partner":"Tradeit","unique_users":"149","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"13","partner":"Tradeit","unique_users":"13","week_start":"2026-03-09"},{"challenge_name":"Зіграй 1 матч","completions":"11331","partner":"WhiteMarket","unique_users":"11324","week_start":"2026-03-09"},{"challenge_name":"Здобудь 2 перемоги","completions":"7666","partner":"WhiteMarket","unique_users":"7666","week_start":"2026-03-09"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"128","partner":"WhiteMarket","unique_users":"128","week_start":"2026-03-09"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"14","partner":"WhiteMarket","unique_users":"14","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матчей","completions":"61432","partner":"Winline","unique_users":"61051","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матч","completions":"6364","partner":"Winline","unique_users":"6364","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"2530","partner":"Winline","unique_users":"2530","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2113","partner":"Winline","unique_users":"2113","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1376","partner":"Winline","unique_users":"1376","week_start":"2026-03-09"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1350","partner":"Winline","unique_users":"1350","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"997","partner":"Winline","unique_users":"997","week_start":"2026-03-09"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"80","partner":"Winline","unique_users":"80","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"59","partner":"Winline","unique_users":"59","week_start":"2026-03-09"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"27","partner":"Winline","unique_users":"27","week_start":"2026-03-09"},{"challenge_name":"Play 1 game on FACEIT","completions":"108369","partner":"Tradeit","unique_users":"107564","week_start":"2026-03-16"},{"challenge_name":"Сыграй 1 матч","completions":"102462","partner":"Tradeit","unique_users":"102461","week_start":"2026-03-16"},{"challenge_name":"Trade any item with Tradeit","completions":"3145","partner":"Tradeit","unique_users":"3137","week_start":"2026-03-16"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1984","partner":"Tradeit","unique_users":"1984","week_start":"2026-03-16"},{"challenge_name":"Trade an item $250+","completions":"456","partner":"Tradeit","unique_users":"456","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"158","partner":"Tradeit","unique_users":"158","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"8","partner":"Tradeit","unique_users":"8","week_start":"2026-03-16"},{"challenge_name":"Зіграй 1 матч","completions":"5718","partner":"WhiteMarket","unique_users":"5716","week_start":"2026-03-16"},{"challenge_name":"Здобудь 2 перемоги","completions":"3826","partner":"WhiteMarket","unique_users":"3826","week_start":"2026-03-16"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"91","partner":"WhiteMarket","unique_users":"91","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"4","partner":"WhiteMarket","unique_users":"4","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","partner":"WhiteMarket","unique_users":"1","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матчей","completions":"28343","partner":"Winline","unique_users":"28195","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матч","completions":"2677","partner":"Winline","unique_users":"2677","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1261","partner":"Winline","unique_users":"1261","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"966","partner":"Winline","unique_users":"966","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"710","partner":"Winline","unique_users":"710","week_start":"2026-03-16"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"684","partner":"Winline","unique_users":"684","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"536","partner":"Winline","unique_users":"536","week_start":"2026-03-16"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"51","partner":"Winline","unique_users":"51","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"40","partner":"Winline","unique_users":"40","week_start":"2026-03-16"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"17","partner":"Winline","unique_users":"17","week_start":"2026-03-16"}],
             rewardClaims: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"39049","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21651"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"38869","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21516"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"1193","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"963"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"1060","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"457460","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"364863"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"287838","month":"2026-02","partner":"Tradeit","reward_status":"in_progress","unique_users":"287838"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"85311","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"58042"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"84291","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"47021"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"81891","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"44494"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"35657","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"24599"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"28448","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"27915"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"27155","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"14739"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"12880","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"12573"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"10979","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"9134"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"7459","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"5747"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"5893","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"4373"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3945","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"3896"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3608","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3544"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"3515","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3424"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"2668","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2507"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"2458","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1944"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2253","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2156","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2109"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2124","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2069"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2017","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1954"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1572","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"1554"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1564","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1493"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"1190","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"969"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"794","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"617"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"13","month":"2026-02","partner":"Tradeit","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"1024641","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"253783"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"908228","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"513925"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"629231","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"296065"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"283952","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"149591"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"214464","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"47465"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"88464","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"21979"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"73855","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"14775"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"71062","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"40092"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"70624","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"29373"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"68297","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"16956"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"65353","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"53850"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"53986","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"22473"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"34778","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"8575"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"26828","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"23814"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"24710","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"24681"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"23005","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"10610"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"21130","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"19566"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"20743","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"20728"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"18253","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"4228"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"13808","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3115"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"10740","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"2148"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9946","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"9934"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9621","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"9446"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"8103","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1825"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"8074","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"2018"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"7717","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"6604"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"7400","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"1480"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"3483","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2818"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"3395","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"679"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"3313","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3310"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"2793","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2714"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"2227","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2101"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1795","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1792"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1718","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1633"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1638","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1584"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1623","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1600"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1583","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1581"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"1499","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1299"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"1437","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1241"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1414","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1413"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"1392","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1322","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1287"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1306","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1296"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"572","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"340","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"85"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"308","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"77"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"290","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"290"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"263","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"223"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"78","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"26"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"46","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"46"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"44","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"44"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"43","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"43"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"29","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"29"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"22","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"22"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"21","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"18","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"10"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"17","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"8","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"4"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"4","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"4"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2921","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"2422"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"1382","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"1147"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"246","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"246"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"184","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"158"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"79","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"67"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"50","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"44"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"129285","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"52952"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"32490","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"18525"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"4469","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"2497"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2540","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"1341"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"2175","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"2122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"557","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"395"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"114702","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"46323"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"17297","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"17252"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13773","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"13747"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2464","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"2459"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"2372","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"2330"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2052","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"1907"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"1859","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"962"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"585","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"430"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"12","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"6","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"3","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"3"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"514700","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"306090"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"102443","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"102443"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"92122","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"75837"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"71039","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"70993"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"42001","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"35094"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"37142","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"37116"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"25229","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"25216"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"24333","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"23883"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"19027","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"18588"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"18959","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"18945"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"18276","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"14991"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"17744","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17744"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"8575","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4673"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5133","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4992"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"2380","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"1490","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1488"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1343","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1312","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1260"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1301","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1301"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"1290","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1282"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1278","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1277"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1233","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1233"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"1016","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1016"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"976","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"847","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"847"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"603","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"308"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"355"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"297"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"242","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"242"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"44","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"24"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"24","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"24"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"17","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"2","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"547525","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"291757"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"80099","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"67045"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"66900","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"66846"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"35925","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"18567"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"24692","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"24497"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"22289","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"21967"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"17453","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"17174"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"10400","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4915"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"7638","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4242"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"3718","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"3709"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"91","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"91"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"79","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"42"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"57","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"57"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"41","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"41"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"37","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"37"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"26","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"26"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"2","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"2"}],
-            buildTimestamp: "2026-03-21T16:33:11Z"
+            buildTimestamp: "2026-03-21T17:16:14Z"
         }; // %%BQ_DATA_PLACEHOLDER%%
 
         Chart.defaults.color = '#6b7280';
@@ -3240,6 +3395,40 @@
                 });
             }
 
+            const tradeitWeeklyCtx = document.getElementById('tradeitWeeklyNsmChart');
+            if (tradeitWeeklyCtx) {
+                const tradeitWeeklyData = [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002];
+                charts.tradeit.weeklyNsm = new Chart(tradeitWeeklyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                        datasets: [{
+                            label: '€ Value',
+                            data: tradeitWeeklyData,
+                            borderColor: '#059669',
+                            backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#059669',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            tension: 0.2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: c => '€' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) } }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
             if (Object.keys(charts.tradeit).length > 0) return;
 
             // Region Chart
@@ -3544,6 +3733,40 @@
                 });
             }
 
+            const winlineWeeklyCtx = document.getElementById('winlineWeeklyNsmChart');
+            if (winlineWeeklyCtx) {
+                const winlineWeeklyData = [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779];
+                charts.winline.weeklyNsm = new Chart(winlineWeeklyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: weeklyLabels,
+                        datasets: [{
+                            label: '€ Value',
+                            data: winlineWeeklyData,
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#2563eb',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            tension: 0.2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: c => '€' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) } }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
             // Winline Missions - Funnel Stage Grouped Bar
             const ctxWlFunnel = document.getElementById('winlineMissionsFunnelChart');
             if (ctxWlFunnel) {
@@ -3699,6 +3922,40 @@
                     }
                 }
             });
+
+            const wmWeeklyCtx = document.getElementById('wmWeeklyNsmChart');
+            if (wmWeeklyCtx) {
+                const wmWeeklyData = [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162];
+                charts.whitemarket.weeklyNsm = new Chart(wmWeeklyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: weeklyLabels,
+                        datasets: [{
+                            label: '€ Value',
+                            data: wmWeeklyData,
+                            borderColor: '#7c3aed',
+                            backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#7c3aed',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            tension: 0.2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { callbacks: { label: c => '€' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) } }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
 
             // Funnel Chart (Missions Section C)
             const ctxFunnel = document.getElementById('whiteMarketFunnelChart').getContext('2d');
