@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSM Dashboard — Brand Integration Performance</title>
+    <title>NSM Dashboard — Brand Integration Portfolio</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -136,6 +136,12 @@
             background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.3rem 0.6rem;
             border-radius: 6px; font-size: 0.75rem; white-space: nowrap; z-index: 20; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
+        .info-tip { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: var(--border); color: var(--text-muted); font-size: 0.65rem; font-style: normal; cursor: help; position: relative; margin-left: 6px; vertical-align: middle; font-weight: 600; }
+        .info-tip:hover .info-tip-content { display: block; }
+        .info-tip-content { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 400; white-space: nowrap; z-index: 30; box-shadow: 0 4px 16px rgba(0,0,0,0.12); line-height: 1.6; }
+        .org-id-bar { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0.75rem; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .org-id-bar code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.78rem; color: var(--text); user-select: all; cursor: pointer; background: rgba(0,0,0,0.04); padding: 0.15rem 0.4rem; border-radius: 4px; }
+        .org-id-bar code:hover { background: rgba(37,99,235,0.1); color: var(--accent); }
     </style>
 </head>
 <body>
@@ -154,9 +160,9 @@
             <span class="badge">FOR INTERNAL USE</span>
             <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
                 <img id="header-logo" src="" alt="" style="height: 40px; width: auto; display: none; border-radius: 6px;">
-                <h1 id="header-title">Tradeit — Brand Integration Performance</h1>
+                <h1 id="header-title">Portfolio Overview</h1>
             </div>
-            <h2 id="header-subtitle">NSM Analysis: Jan–Feb 2026 | € Value per Conversion</h2>
+            <h2 id="header-subtitle">All Partners | Jan–Mar 2026</h2>
             <p>Primary metric: € per 1K EBU</p>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;"><span class="term" data-tip="Eligible Brand Integration Users">EBU</span> = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.</p>
         </header>
@@ -165,142 +171,33 @@
         <div id="combined-container">
             <div class="section" id="combined-section-1">
                 <h2 class="section-title">1. Portfolio Headline KPIs</h2>
-                <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
                     <div class="kpi-card">
-                        <div class="kpi-title">Total Portfolio Value (Jan-Mar*)</div>
-                        <div class="kpi-value">€516,016</div>
-                        <div class="kpi-sub">€417,337 Winline + €94,418 Tradeit + €4,261 WhiteMarket</div>
+                        <div class="kpi-title">Total Portfolio Value YTD <span class="info-tip">i<span class="info-tip-content">Winline + Tradeit + WhiteMarket<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                        <div class="kpi-value" id="kpi-portfolio-value" data-kpi="portfolio-value">€516,016</div>
+                        <div class="kpi-sub" id="kpi-sub-portfolio-value">
+                            <span style="color: var(--red);">WoW −81%</span> <span class="info-tip">i<span class="info-tip-content">€15.9K this week vs €85.7K prev</span></span> · <span style="color: var(--green);">MoM +14%</span> <span class="info-tip">i<span class="info-tip-content">€174K Feb vs €152K Jan</span></span>
+                        </div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-title">Winline Share</div>
-                        <div class="kpi-value">80.9%</div>
-                        <div class="kpi-sub" style="color: #2563eb;">Value Dominance</div>
+                        <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated any mission (deduplicated)<br>Users overlap across partners — not a sum of per-partner EBU</span></span></div>
+                        <div class="kpi-value" id="kpi-portfolio-ebu" data-kpi="portfolio-ebu">1.65M</div>
+                        <div class="kpi-sub" id="kpi-sub-portfolio-ebu">
+                            <span style="color: var(--red);">WoW −77%</span> <span class="info-tip">i<span class="info-tip-content">226K this week vs 961K prev</span></span> · <span style="color: var(--green);">MoM +11%</span> <span class="info-tip">i<span class="info-tip-content">888K Feb vs 798K Jan</span></span>
+                        </div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-title">Tradeit Share</div>
-                        <div class="kpi-value">18.3%</div>
-                        <div class="kpi-sub" style="color: var(--green);">Volume Base | WhiteMarket 0.8%</div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-title">Total EBU</div>
-                        <div class="kpi-value">726K</div>
-                        <div class="kpi-sub">591K Tradeit + 135K Winline</div>
+                        <div class="kpi-title">Portfolio € per 1K EBU <span class="info-tip">i<span class="info-tip-content">€516,016 / 1,654,553 EBU × 1,000 = €312</span></span></div>
+                        <div class="kpi-value" id="kpi-portfolio-efficiency" data-kpi="portfolio-efficiency">€312</div>
+                        <div class="kpi-sub" id="kpi-sub-portfolio-efficiency">
+                            <span style="color: var(--red);">WoW −21%</span> <span class="info-tip">i<span class="info-tip-content">€71/1K this week vs €89/1K prev</span></span> · <span style="color: var(--green);">MoM +3%</span> <span class="info-tip">i<span class="info-tip-content">€196/1K Feb vs €191/1K Jan</span></span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="section" id="combined-section-2">
-                <h2 class="section-title">2. Monthly € Value by Partner</h2>
-                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Winline Feb data pending.</p>
-                <div class="chart-container">
-                    <canvas id="combinedStackedBarChart"></canvas>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-3">
-                <h2 class="section-title">3. € per 1K EBU by Partner</h2>
-                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Highlights efficiency difference across partners.</p>
-                <div class="chart-container">
-                    <canvas id="combinedGroupedBarChart"></canvas>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-4">
-                <h2 class="section-title">4. Partner Comparison Table</h2>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Partner</th>
-                                <th>Period</th>
-                                <th class="number">Total €</th>
-                                <th class="number">EBU</th>
-                                <th class="number">€/1K EBU</th>
-                                <th>Top Conversion</th>
-                                <th>Top Conv. Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number">134,863</td><td class="number highlight">€819</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
-                            <tr><td>Winline</td><td>Feb '26</td><td class="number highlight">€158,499</td><td class="number">—</td><td class="number">—</td><td>2nd Deposit</td><td>€57,996 (36.6%)</td></tr>
-                            <tr><td>Winline</td><td>Mar '26*</td><td class="number highlight">€120,416</td><td class="number">—</td><td class="number">—</td><td>2nd Deposit</td><td>€46,344 (38.5%)</td></tr>
-                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number">590,714</td><td class="number">€21</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
-                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td class="number">600,527</td><td class="number">€22</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
-                            <tr><td>Tradeit</td><td>Mar '26*</td><td class="number">€68,719</td><td class="number">—</td><td class="number">—</td><td>Trade $250+ (C2)</td><td>€10,588 (15.4%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Jan '26</td><td class="number">€1,542</td><td class="number">—</td><td class="number">—</td><td>Trade $100+ (C2)</td><td>€550 (35.7%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Feb '26</td><td class="number">€1,606</td><td class="number">—</td><td class="number">—</td><td>Trade $100+ (C2)</td><td>€688 (42.8%)</td></tr>
-                            <tr><td>WhiteMarket</td><td>Mar '26*</td><td class="number">€1,113</td><td class="number">—</td><td class="number">—</td><td>AL</td><td>€731 (65.7%)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-5">
-                <h2 class="section-title">5. Value Breakdown Comparison (Jan '26)</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Winline Breakdown</h3>
-                        <div class="chart-container small">
-                            <canvas id="combinedWinlineDoughnut"></canvas>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Tradeit Breakdown</h3>
-                        <div class="chart-container small">
-                            <canvas id="combinedTradeitDoughnut"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section" id="combined-section-6">
-                <h2 class="section-title">6. Weekly NSM Trend (All Partners)</h2>
-                <div class="chart-container">
-                    <canvas id="combinedWeeklyChart"></canvas>
-                </div>
-                
-                <div class="table-wrapper" style="margin-top: 2rem;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Week</th>
-                                <th class="number">Tradeit €</th>
-                                <th class="number">Winline €</th>
-                                <th class="number">WhiteMarket €</th>
-                                <th class="number">Combined €</th>
-                                <th class="number">WoW %</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Dec 29</td><td class="number">€5,265</td><td class="number">€42,562</td><td class="number">€299</td><td class="number">€48,126</td><td class="number">—</td></tr>
-                            <tr><td>Jan 5</td><td class="number">€2,696</td><td class="number">€36,779</td><td class="number">€334</td><td class="number">€39,809</td><td class="number" style="color: var(--red);">-17%</td></tr>
-                            <tr><td>Jan 12</td><td class="number">€1,698</td><td class="number">€30,771</td><td class="number">€369</td><td class="number">€32,838</td><td class="number" style="color: var(--red);">-18%</td></tr>
-                            <tr><td>Jan 19</td><td class="number">€1,577</td><td class="number">€19,852</td><td class="number">€249</td><td class="number">€21,678</td><td class="number" style="color: var(--red);">-34%</td></tr>
-                            <tr><td>Jan 26</td><td class="number">€908</td><td class="number">€8,458</td><td class="number">€292</td><td class="number">€9,658</td><td class="number" style="color: var(--red);">-55%</td></tr>
-                            <tr><td>Feb 2</td><td class="number">€7,714</td><td class="number">€89,586</td><td class="number">€543</td><td class="number">€97,843</td><td class="number" style="color: var(--green);">+913%</td></tr>
-                            <tr><td>Feb 9</td><td class="number">€2,532</td><td class="number">€34,876</td><td class="number">€434</td><td class="number">€37,842</td><td class="number" style="color: var(--red);">-61%</td></tr>
-                            <tr><td>Feb 16</td><td class="number">€1,967</td><td class="number">€23,926</td><td class="number">€297</td><td class="number">€26,190</td><td class="number" style="color: var(--red);">-31%</td></tr>
-                            <tr><td>Feb 23</td><td class="number">€1,179</td><td class="number">€41,130</td><td class="number">€331</td><td class="number">€42,640</td><td class="number" style="color: var(--green);">+63%</td></tr>
-                            <tr><td>Mar 2</td><td class="number">€94</td><td class="number">€57,191</td><td class="number">€627</td><td class="number">€57,912</td><td class="number" style="color: var(--green);">+36%</td></tr>
-                            <tr><td>Mar 9</td><td class="number">€58,907</td><td class="number">€26,430</td><td class="number">€323</td><td class="number">€85,660</td><td class="number" style="color: var(--green);">+48%</td></tr>
-                            <tr><td>Mar 16</td><td class="number">€10,002</td><td class="number">€5,779</td><td class="number">€162</td><td class="number">€15,943</td><td class="number" style="color: var(--red);">-81%</td></tr>
-                        </tbody>
-                        <tfoot>
-                            <tr style="font-weight: bold; border-top: 2px solid var(--border);">
-                                <td>TOTAL</td>
-                                <td class="number">€94,539</td>
-                                <td class="number">€417,340</td>
-                                <td class="number">€4,261</td>
-                                <td class="number">€516,140</td>
-                                <td class="number">—</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2 class="section-title">7. Monthly NSM Summary (All Partners)</h2>
+                <h2 class="section-title">2. Monthly NSM Summary (All Partners)</h2>
                 <div class="grid-2">
                     <div>
                         <div class="table-wrapper">
@@ -314,7 +211,7 @@
                                         <th class="number">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="combined-monthly-summary-body">
                                     <tr><td>Winline</td><td class="number">€138,422</td><td class="number">€158,499</td><td class="number">€120,416</td><td class="number highlight">€417,337</td></tr>
                                     <tr><td>Tradeit</td><td class="number">€12,255</td><td class="number">€13,444</td><td class="number">€68,719</td><td class="number highlight">€94,418</td></tr>
                                     <tr><td>WhiteMarket</td><td class="number">€1,542</td><td class="number">€1,606</td><td class="number">€1,113</td><td class="number highlight">€4,261</td></tr>
@@ -332,6 +229,115 @@
                 </div>
             </div>
 
+            <div class="section" id="combined-section-3">
+                <h2 class="section-title">3. Monthly € Value by Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Winline Feb data pending.</p>
+                <div class="chart-container">
+                    <canvas id="combinedStackedBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-4">
+                <h2 class="section-title">4. € per 1K EBU by Partner</h2>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Highlights efficiency difference across partners.</p>
+                <div class="chart-container">
+                    <canvas id="combinedGroupedBarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-5">
+                <h2 class="section-title">5. Partner Comparison Table</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Partner</th>
+                                <th>Period</th>
+                                <th class="number">Total €</th>
+                                <th class="number">EBU</th>
+                                <th class="number">€/1K EBU</th>
+                                <th>Top Conversion</th>
+                                <th>Top Conv. Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="partner-comparison-body">
+                            <tr><td>Winline</td><td>Jan '26</td><td class="number highlight">€110,430</td><td class="number" rowspan="3">630,626</td><td class="number highlight" rowspan="3">€662</td><td>2nd Deposit</td><td>€41,564 (37.6%)</td></tr>
+                            <tr><td>Winline</td><td>Feb '26</td><td class="number highlight">€158,499</td><td>2nd Deposit</td><td>€57,996 (36.6%)</td></tr>
+                            <tr><td>Winline</td><td>Mar '26*</td><td class="number highlight">€120,416</td><td>2nd Deposit</td><td>€46,344 (38.5%)</td></tr>
+                            <tr><td>Tradeit</td><td>Jan '26</td><td class="number">€12,255</td><td class="number" rowspan="3">1,534,990</td><td class="number" rowspan="3">€62</td><td>Trade $250+ (C2)</td><td>€7,595 (62.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Feb '26</td><td class="number">€13,444</td><td>Trade $250+ (C2)</td><td>€7,665 (57.0%)</td></tr>
+                            <tr><td>Tradeit</td><td>Mar '26*</td><td class="number">€68,719</td><td>Trade $250+ (C2)</td><td>€10,588 (15.4%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Jan '26</td><td class="number">€1,542</td><td class="number" rowspan="3">99,745</td><td class="number" rowspan="3">€43</td><td>Trade $100+ (C2)</td><td>€550 (35.7%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Feb '26</td><td class="number">€1,606</td><td>Trade $100+ (C2)</td><td>€688 (42.8%)</td></tr>
+                            <tr><td>WhiteMarket</td><td>Mar '26*</td><td class="number">€1,113</td><td>AL</td><td>€731 (65.7%)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-6">
+                <h2 class="section-title">6. Value Breakdown Comparison (Jan '26)</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Winline Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedWinlineDoughnut"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="text-align: center; color: var(--text); margin-bottom: 1rem; font-size: 1rem;">Tradeit Breakdown</h3>
+                        <div class="chart-container small">
+                            <canvas id="combinedTradeitDoughnut"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="combined-section-7">
+                <h2 class="section-title">7. Weekly NSM Trend (All Partners)</h2>
+                <div class="chart-container">
+                    <canvas id="combinedWeeklyChart"></canvas>
+                </div>
+                
+                <div class="table-wrapper" style="margin-top: 2rem;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Week</th>
+                                <th class="number">Tradeit €</th>
+                                <th class="number">Winline €</th>
+                                <th class="number">WhiteMarket €</th>
+                                <th class="number">Combined €</th>
+                                <th class="number">WoW %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="combined-weekly-trend-body">
+                            <tr><td>Dec 29</td><td class="number">€5,265</td><td class="number">€42,562</td><td class="number">€299</td><td class="number">€48,126</td><td class="number">—</td></tr>
+                            <tr><td>Jan 5</td><td class="number">€2,696</td><td class="number">€36,779</td><td class="number">€334</td><td class="number">€39,809</td><td class="number" style="color: var(--red);">-17%</td></tr>
+                            <tr><td>Jan 12</td><td class="number">€1,698</td><td class="number">€30,771</td><td class="number">€369</td><td class="number">€32,838</td><td class="number" style="color: var(--red);">-18%</td></tr>
+                            <tr><td>Jan 19</td><td class="number">€1,577</td><td class="number">€19,852</td><td class="number">€249</td><td class="number">€21,678</td><td class="number" style="color: var(--red);">-34%</td></tr>
+                            <tr><td>Jan 26</td><td class="number">€908</td><td class="number">€8,458</td><td class="number">€292</td><td class="number">€9,658</td><td class="number" style="color: var(--red);">-55%</td></tr>
+                            <tr><td>Feb 2</td><td class="number">€7,714</td><td class="number">€89,586</td><td class="number">€543</td><td class="number">€97,843</td><td class="number" style="color: var(--green);">+913%</td></tr>
+                            <tr><td>Feb 9</td><td class="number">€2,532</td><td class="number">€34,876</td><td class="number">€434</td><td class="number">€37,842</td><td class="number" style="color: var(--red);">-61%</td></tr>
+                            <tr><td>Feb 16</td><td class="number">€1,967</td><td class="number">€23,926</td><td class="number">€297</td><td class="number">€26,190</td><td class="number" style="color: var(--red);">-31%</td></tr>
+                            <tr><td>Feb 23</td><td class="number">€1,179</td><td class="number">€41,130</td><td class="number">€331</td><td class="number">€42,640</td><td class="number" style="color: var(--green);">+63%</td></tr>
+                            <tr><td>Mar 2</td><td class="number">€94</td><td class="number">€57,191</td><td class="number">€627</td><td class="number">€57,912</td><td class="number" style="color: var(--green);">+36%</td></tr>
+                            <tr><td>Mar 9</td><td class="number">€58,907</td><td class="number">€26,430</td><td class="number">€323</td><td class="number">€85,660</td><td class="number" style="color: var(--green);">+48%</td></tr>
+                            <tr><td>Mar 16</td><td class="number">€10,002</td><td class="number">€5,779</td><td class="number">€162</td><td class="number">€15,943</td><td class="number" style="color: var(--red);">-81%</td></tr>
+                        </tbody>
+                        <tfoot id="combined-weekly-trend-foot">
+                            <tr style="font-weight: bold; border-top: 2px solid var(--border);">
+                                <td>TOTAL</td>
+                                <td class="number">€94,539</td>
+                                <td class="number">€417,340</td>
+                                <td class="number">€4,261</td>
+                                <td class="number">€516,140</td>
+                                <td class="number">—</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
 
             <div class="footer">
                 Data source: Sponsored Competitions Mission Data + CDP (Snowflake) | Generated by AI PM Assistant
@@ -340,6 +346,7 @@
 
         <!-- TRADEIT CONTAINER -->
         <div id="tradeit-container" style="display: none;">
+            <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">976fe92b-0998-4a2a-86a6-f655bbab8f07</code></div>
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">CDP Data</button>
@@ -350,21 +357,27 @@
             <div id="tradeit-tab-nsm" class="tab-content active">
                 <div class="section" id="section-1">
                     <h2 class="section-title">1. Headline KPIs</h2>
-                    <div class="kpi-grid">
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="kpi-card">
-                            <div class="kpi-title">Jan Total Value</div>
-                            <div class="kpi-value">€12,255</div>
-                            <div class="kpi-sub">€21/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 591K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                            <div class="kpi-title">Total Value YTD <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                            <div class="kpi-value" id="kpi-tradeit-value" data-kpi="tradeit-value">€94,418</div>
+                            <div class="kpi-sub" id="kpi-sub-tradeit-value">
+                                <span style="color: var(--red);">WoW −83%</span> <span class="info-tip">i<span class="info-tip-content">€10.0K this week vs €58.9K prev</span></span> · <span style="color: var(--green);">MoM +10%</span> <span class="info-tip">i<span class="info-tip-content">€13.4K Feb vs €12.3K Jan</span></span>
+                            </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Feb Total Value</div>
-                            <div class="kpi-value">€13,444</div>
-                            <div class="kpi-sub">€22/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> | 601K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span></div>
+                            <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Tradeit mission</span></span></div>
+                            <div class="kpi-value" id="kpi-tradeit-ebu" data-kpi="tradeit-ebu">1.53M</div>
+                            <div class="kpi-sub" id="kpi-sub-tradeit-ebu">
+                                <span style="color: var(--red);">WoW −77%</span> <span class="info-tip">i<span class="info-tip-content">216K this week vs 923K prev</span></span> · <span style="color: var(--red);">MoM −1%</span> <span class="info-tip">i<span class="info-tip-content">641K Feb vs 648K Jan</span></span>
+                            </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">MoM Change</div>
-                            <div class="kpi-value">+€1,189</div>
-                            <div class="kpi-sub positive">+9.7% Total | +4.8% Rate</div>
+                            <div class="kpi-title">€ per 1K EBU <span class="info-tip">i<span class="info-tip-content">€94,418 / 1,534,990 EBU × 1,000 = €62</span></span></div>
+                            <div class="kpi-value" id="kpi-tradeit-efficiency" data-kpi="tradeit-efficiency">€62</div>
+                            <div class="kpi-sub" id="kpi-sub-tradeit-efficiency">
+                                <span style="color: var(--red);">WoW −27%</span> <span class="info-tip">i<span class="info-tip-content">€46/1K this week vs €64/1K prev</span></span> · <span style="color: var(--green);">MoM +11%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €19/1K Jan</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -406,7 +419,7 @@
                                             <th class="number">€/1K EBU</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tradeit-monthly-summary-body">
                                         <tr><td>Jan</td><td>North America</td><td class="number">53,497</td><td class="number">€3,377.05</td><td class="number highlight">€63.13</td></tr>
                                         <tr><td>Jan</td><td>CIS</td><td class="number">464,261</td><td class="number">€6,534.67</td><td class="number">€14.08</td></tr>
                                         <tr><td>Jan</td><td>MENA</td><td class="number">18,057</td><td class="number">€965.36</td><td class="number">€53.46</td></tr>
@@ -479,7 +492,7 @@
                                         <th class="number"><span class="term" data-tip="Bottom of Funnel — linked + has traded">BOFU</span></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tradeit-weekly-trend-body">
                                     <tr><td>North America</td><td class="number">€23.69</td><td class="number">€21.96</td><td class="number highlight">€445.21</td></tr>
                                     <tr><td>CIS</td><td class="number">€7.80</td><td class="number">€3.20</td><td class="number highlight">€123.16</td></tr>
                                     <tr><td>MENA</td><td class="number">€24.02</td><td class="number">€14.18</td><td class="number highlight">€352.72</td></tr>
@@ -953,7 +966,7 @@
                                     <tr><td style="border-left: 3px solid var(--accent); padding-left: 0.8rem;">Mar 9</td><td class="number">129,075</td><td class="number">17,457</td><td class="number">1,047</td><td class="number">147,579</td><td class="number">€49,048</td><td class="number">€698</td><td class="number">€9,161</td><td class="number">€58,907</td><td class="number" style="color: var(--green);">+62,567%</td></tr>
                                     <tr><td>Mar 16</td><td class="number">22,401</td><td class="number">1,599</td><td class="number">163</td><td class="number">24,163</td><td class="number">€8,512</td><td class="number">€64</td><td class="number">€1,426</td><td class="number">€10,002</td><td class="number" style="color: var(--red);">-83%</td></tr>
                                 </tbody>
-                                <tfoot>
+                                <tfoot id="tradeit-weekly-trend-foot">
                                     <tr style="font-weight: bold; border-top: 2px solid var(--border);">
                                         <td>Total</td>
                                         <td class="number">178,109</td>
@@ -980,6 +993,7 @@
 
             <!-- WINLINE CONTAINER -->
         <div id="winline-container" style="display: none;">
+            <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">397f5239-ab93-484d-9f94-4231b0cfa48e</code></div>
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')">CDP Data</button>
@@ -990,21 +1004,27 @@
             <div id="winline-tab-nsm" class="tab-content active">
                 <div class="section" id="winline-section-1">
                     <h2 class="section-title">1. Headline KPIs</h2>
-                    <div class="kpi-grid">
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="kpi-card">
-                            <div class="kpi-title">January Total</div>
-                            <div class="kpi-value">€138,422</div>
-                            <div class="kpi-sub">AL: 4,809 | KYC: 322 | FTD: 241</div>
+                            <div class="kpi-title">Total Value YTD <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                            <div class="kpi-value" id="kpi-winline-value" data-kpi="winline-value">€417,337</div>
+                            <div class="kpi-sub" id="kpi-sub-winline-value">
+                                <span style="color: var(--red);">WoW −78%</span> <span class="info-tip">i<span class="info-tip-content">€5.8K this week vs €26.4K prev</span></span> · <span style="color: var(--green);">MoM +15%</span> <span class="info-tip">i<span class="info-tip-content">€158K Feb vs €138K Jan</span></span>
+                            </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">February Total</div>
-                            <div class="kpi-value">€158,499</div>
-                            <div class="kpi-sub positive">MoM: +€20,077 (+14.5%)</div>
+                            <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Winline mission</span></span></div>
+                            <div class="kpi-value" id="kpi-winline-ebu" data-kpi="winline-ebu">631K</div>
+                            <div class="kpi-sub" id="kpi-sub-winline-ebu">
+                                <span style="color: var(--red);">WoW −62%</span> <span class="info-tip">i<span class="info-tip-content">31K this week vs 82K prev</span></span> · <span style="color: var(--green);">MoM +31%</span> <span class="info-tip">i<span class="info-tip-content">636K Feb vs 488K Jan</span></span>
+                            </div>
                         </div>
-                        <div class="kpi-card" style="border-color: #f39c12;">
-                            <div class="kpi-title">March Total (Partial)</div>
-                            <div class="kpi-value">€120,416</div>
-                            <div class="kpi-sub" style="color: #f39c12;">⚠️ Data through Mar 20</div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">€ per 1K EBU <span class="info-tip">i<span class="info-tip-content">€417,337 / 630,626 EBU × 1,000 = €662</span></span></div>
+                            <div class="kpi-value" id="kpi-winline-efficiency" data-kpi="winline-efficiency">€662</div>
+                            <div class="kpi-sub" id="kpi-sub-winline-efficiency">
+                                <span style="color: var(--red);">WoW −42%</span> <span class="info-tip">i<span class="info-tip-content">€186/1K this week vs €322/1K prev</span></span> · <span style="color: var(--red);">MoM −12%</span> <span class="info-tip">i<span class="info-tip-content">€249/1K Feb vs €284/1K Jan</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1138,7 +1158,7 @@
                                             <th class="number">Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="winline-monthly-summary-body">
                                         <tr><td>AL (€4.33)</td><td class="number">€20,823</td><td class="number">€20,113</td><td class="number">€17,779</td><td class="number highlight">€58,715</td></tr>
                                         <tr><td>KYC (€8.66)</td><td class="number">€2,789</td><td class="number">€2,979</td><td class="number">€1,931</td><td class="number highlight">€7,699</td></tr>
                                         <tr><td>FTD (€121.10)</td><td class="number">€29,185</td><td class="number">€33,908</td><td class="number">€19,982</td><td class="number highlight">€83,075</td></tr>
@@ -1423,7 +1443,7 @@
                                         <th class="number">WoW %</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="winline-weekly-trend-body">
                                     <tr><td>Dec 29</td><td class="number">1,837</td><td class="number">144</td><td class="number">76</td><td class="number">4,502</td><td class="number">1,077</td><td class="number">7,636</td><td class="number">€7,954</td><td class="number">€1,247</td><td class="number">€9,204</td><td class="number">€19,494</td><td class="number">€4,663</td><td class="number">€42,562</td><td class="number">—</td></tr>
                                     <tr><td>Jan 5</td><td class="number">1,240</td><td class="number">88</td><td class="number">59</td><td class="number">3,288</td><td class="number">2,140</td><td class="number">6,815</td><td class="number">€5,369</td><td class="number">€762</td><td class="number">€7,145</td><td class="number">€14,237</td><td class="number">€9,266</td><td class="number">€36,779</td><td class="number" style="color: var(--red);">-14%</td></tr>
                                     <tr><td>Jan 12</td><td class="number">775</td><td class="number">47</td><td class="number">52</td><td class="number">2,072</td><td class="number">2,711</td><td class="number">5,657</td><td class="number">€3,356</td><td class="number">€407</td><td class="number">€6,297</td><td class="number">€8,972</td><td class="number">€11,739</td><td class="number">€30,771</td><td class="number" style="color: var(--red);">-16%</td></tr>
@@ -1437,7 +1457,7 @@
                                     <tr><td>Mar 9</td><td class="number">580</td><td class="number">36</td><td class="number">34</td><td class="number">1,829</td><td class="number">2,672</td><td class="number">5,151</td><td class="number">€2,511</td><td class="number">€312</td><td class="number">€4,117</td><td class="number">€7,920</td><td class="number">€11,570</td><td class="number">€26,430</td><td class="number" style="color: var(--red);">-54%</td></tr>
                                     <tr><td>Mar 16</td><td class="number">189</td><td class="number">12</td><td class="number">12</td><td class="number">257</td><td class="number">529</td><td class="number">999</td><td class="number">€818</td><td class="number">€104</td><td class="number">€1,453</td><td class="number">€1,113</td><td class="number">€2,291</td><td class="number">€5,779</td><td class="number" style="color: var(--red);">-78%</td></tr>
                                 </tbody>
-                                <tfoot>
+                                <tfoot id="winline-weekly-trend-foot">
                                     <tr style="font-weight: bold; border-top: 2px solid var(--border);">
                                         <td>TOTAL</td>
                                         <td class="number">13,560</td>
@@ -1471,6 +1491,7 @@
 
         <!-- WHITEMARKET CONTAINER -->
         <div id="whitemarket-container" style="display: none;">
+            <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">db18537b-4172-4813-b089-36490c1553b7</code></div>
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')">NSM Analysis</button>
                 <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')">Missions</button>
@@ -1480,26 +1501,27 @@
             <div id="whitemarket-tab-nsm" class="tab-content active">
                 <div class="section" id="wm-section-1">
                     <h2 class="section-title">1. Headline KPIs</h2>
-                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="kpi-card">
-                            <div class="kpi-title">Total NSM Value</div>
-                            <div class="kpi-value">€4,261</div>
-                            <div class="kpi-sub">Jan–Mar 2026* (partial)</div>
+                            <div class="kpi-title">Total Value YTD <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                            <div class="kpi-value" id="kpi-whitemarket-value" data-kpi="whitemarket-value">€4,261</div>
+                            <div class="kpi-sub" id="kpi-sub-whitemarket-value">
+                                <span style="color: var(--red);">WoW −50%</span> <span class="info-tip">i<span class="info-tip-content">€162 this week vs €323 prev</span></span> · <span style="color: var(--green);">MoM +4%</span> <span class="info-tip">i<span class="info-tip-content">€1,606 Feb vs €1,542 Jan</span></span>
+                            </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Active ALs</div>
-                            <div class="kpi-value">5,510</div>
-                            <div class="kpi-sub">€2,094 value</div>
+                            <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a WhiteMarket mission</span></span></div>
+                            <div class="kpi-value" id="kpi-whitemarket-ebu" data-kpi="whitemarket-ebu">100K</div>
+                            <div class="kpi-sub" id="kpi-sub-whitemarket-ebu">
+                                <span style="color: var(--red);">WoW −58%</span> <span class="info-tip">i<span class="info-tip-content">7.8K this week vs 18.6K prev</span></span> · <span style="color: var(--red);">MoM −28%</span> <span class="info-tip">i<span class="info-tip-content">77K Feb vs 107K Jan</span></span>
+                            </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Trade Conversions</div>
-                            <div class="kpi-value">1,475</div>
-                            <div class="kpi-sub">1,340 C1 + 124 C2 + 11 C3</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-title">Avg Weekly Value</div>
-                            <div class="kpi-value">€355</div>
-                            <div class="kpi-sub">12 active weeks</div>
+                            <div class="kpi-title">€ per 1K EBU <span class="info-tip">i<span class="info-tip-content">€4,261 / 99,745 EBU × 1,000 = €43</span></span></div>
+                            <div class="kpi-value" id="kpi-whitemarket-efficiency" data-kpi="whitemarket-efficiency">€43</div>
+                            <div class="kpi-sub" id="kpi-sub-whitemarket-efficiency">
+                                <span style="color: var(--green);">WoW +20%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K this week vs €17/1K prev</span></span> · <span style="color: var(--green);">MoM +45%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €14/1K Jan</span></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1534,7 +1556,7 @@
                                             <th class="number">Total €</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="whitemarket-monthly-summary-body">
                                         <tr><td>Jan</td><td class="number">€711</td><td class="number">€31</td><td class="number">€550</td><td class="number">€250</td><td class="number highlight">€1,542</td></tr>
                                         <tr><td>Feb</td><td class="number">€652</td><td class="number">€17</td><td class="number">€688</td><td class="number">€250</td><td class="number highlight">€1,606</td></tr>
                                         <tr><td>Mar*</td><td class="number">€731</td><td class="number">€19</td><td class="number">€313</td><td class="number">€50</td><td class="number highlight">€1,113</td></tr>
@@ -1604,7 +1626,7 @@
                                     <th class="number">€ Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="whitemarket-weekly-trend-body">
                                 <tr><td>M1 TOFU (NO AL)</td><td>Jan</td><td class="number">69</td><td class="number">5</td><td class="number">0</td><td class="number">€66</td></tr>
                                 <tr><td>M1 TOFU (NO AL)</td><td>Feb</td><td class="number">63</td><td class="number">12</td><td class="number">0</td><td class="number">€153</td></tr>
                                 <tr><td>M1 TOFU (NO AL)</td><td>Mar*</td><td class="number">50</td><td class="number">3</td><td class="number">0</td><td class="number">€40</td></tr>
@@ -1615,7 +1637,7 @@
                                 <tr><td>M3 BOFU (AL+BUY)</td><td>Feb</td><td class="number">212</td><td class="number">32</td><td class="number">5</td><td class="number highlight">€661</td></tr>
                                 <tr><td>M3 BOFU (AL+BUY)</td><td>Mar*</td><td class="number">271</td><td class="number">19</td><td class="number">1</td><td class="number highlight">€301</td></tr>
                             </tbody>
-                            <tfoot>
+                            <tfoot id="whitemarket-weekly-trend-foot">
                                 <tr style="font-weight: bold; border-top: 2px solid var(--border);">
                                     <td colspan="2">TOTAL</td>
                                     <td class="number">1,340</td>
@@ -1707,6 +1729,19 @@
     </div>
 
     <script>
+        // === BQ_DATA INJECTION POINT ===
+        // The build script (scripts/build-dashboard.sh) replaces the line below with actual data.
+        // Do NOT edit the BQ_DATA placeholder line manually.
+        const BQ_DATA = {
+            ebuYtd: [{"ebu":"1538212","partner":"Portfolio"},{"ebu":"1425519","partner":"Tradeit"},{"ebu":"542599","partner":"Winline"},{"ebu":"91800","partner":"WhiteMarket"}],
+            weeklyEbuDedup: [{"week_start":"2026-01-05","weekly_ebu_dedup":"19513"},{"week_start":"2026-01-12","weekly_ebu_dedup":"12229"},{"week_start":"2026-01-19","weekly_ebu_dedup":"10665"},{"week_start":"2026-01-26","weekly_ebu_dedup":"27502"},{"week_start":"2026-02-02","weekly_ebu_dedup":"403115"},{"week_start":"2026-02-09","weekly_ebu_dedup":"148605"},{"week_start":"2026-02-16","weekly_ebu_dedup":"107893"},{"week_start":"2026-02-23","weekly_ebu_dedup":"228043"},{"week_start":"2026-03-02","weekly_ebu_dedup":"237553"},{"week_start":"2026-03-09","weekly_ebu_dedup":"961176"},{"week_start":"2026-03-16","weekly_ebu_dedup":"277379"}],
+            weeklyEbuByPartner: [{"partner":"Tradeit","week_start":"2026-01-05","weekly_ebu":"19513"},{"partner":"Tradeit","week_start":"2026-01-12","weekly_ebu":"12229"},{"partner":"Tradeit","week_start":"2026-01-19","weekly_ebu":"10665"},{"partner":"Tradeit","week_start":"2026-01-26","weekly_ebu":"5030"},{"partner":"WhiteMarket","week_start":"2026-01-26","weekly_ebu":"22473"},{"partner":"Tradeit","week_start":"2026-02-02","weekly_ebu":"362321"},{"partner":"WhiteMarket","week_start":"2026-02-02","weekly_ebu":"31747"},{"partner":"Winline","week_start":"2026-02-02","weekly_ebu":"285967"},{"partner":"Tradeit","week_start":"2026-02-09","weekly_ebu":"126122"},{"partner":"WhiteMarket","week_start":"2026-02-09","weekly_ebu":"18490"},{"partner":"Winline","week_start":"2026-02-09","weekly_ebu":"89687"},{"partner":"Tradeit","week_start":"2026-02-16","weekly_ebu":"87966"},{"partner":"WhiteMarket","week_start":"2026-02-16","weekly_ebu":"15293"},{"partner":"Winline","week_start":"2026-02-16","weekly_ebu":"64144"},{"partner":"Tradeit","week_start":"2026-02-23","weekly_ebu":"65006"},{"partner":"WhiteMarket","week_start":"2026-02-23","weekly_ebu":"11034"},{"partner":"Winline","week_start":"2026-02-23","weekly_ebu":"196670"},{"partner":"WhiteMarket","week_start":"2026-03-02","weekly_ebu":"48468"},{"partner":"Winline","week_start":"2026-03-02","weekly_ebu":"190296"},{"partner":"Tradeit","week_start":"2026-03-09","weekly_ebu":"923449"},{"partner":"WhiteMarket","week_start":"2026-03-09","weekly_ebu":"18565"},{"partner":"Winline","week_start":"2026-03-09","weekly_ebu":"82053"},{"partner":"Tradeit","week_start":"2026-03-16","weekly_ebu":"264798"},{"partner":"WhiteMarket","week_start":"2026-03-16","weekly_ebu":"9811"},{"partner":"Winline","week_start":"2026-03-16","weekly_ebu":"39274"}],
+            missionCompletions: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18410","month":"2026-01","partner":"Tradeit","unique_users":"18410"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18292","month":"2026-01","partner":"Tradeit","unique_users":"18292"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"221","month":"2026-01","partner":"Tradeit","unique_users":"221"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"176","month":"2026-01","partner":"Tradeit","unique_users":"176"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"19","month":"2026-01","partner":"Tradeit","unique_users":"19"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"17","month":"2026-01","partner":"Tradeit","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"364668","month":"2026-02","partner":"Tradeit","unique_users":"364668"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"55082","month":"2026-02","partner":"Tradeit","unique_users":"55082"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"39972","month":"2026-02","partner":"Tradeit","unique_users":"39972"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"38724","month":"2026-02","partner":"Tradeit","unique_users":"38724"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"23649","month":"2026-02","partner":"Tradeit","unique_users":"23649"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"13180","month":"2026-02","partner":"Tradeit","unique_users":"13180"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"5133","month":"2026-02","partner":"Tradeit","unique_users":"5133"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"4036","month":"2026-02","partner":"Tradeit","unique_users":"4036"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"3595","month":"2026-02","partner":"Tradeit","unique_users":"3595"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2095","month":"2026-02","partner":"Tradeit","unique_users":"2095"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2001","month":"2026-02","partner":"Tradeit","unique_users":"2001"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1826","month":"2026-02","partner":"Tradeit","unique_users":"1826"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"1513","month":"2026-02","partner":"Tradeit","unique_users":"1513"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"647","month":"2026-02","partner":"Tradeit","unique_users":"647"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"491","month":"2026-02","partner":"Tradeit","unique_users":"491"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"347","month":"2026-02","partner":"Tradeit","unique_users":"347"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"207","month":"2026-02","partner":"Tradeit","unique_users":"207"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"112","month":"2026-02","partner":"Tradeit","unique_users":"112"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"93","month":"2026-02","partner":"Tradeit","unique_users":"93"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Trade an item $250+","completions":"71","month":"2026-02","partner":"Tradeit","unique_users":"71"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-02","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"58","month":"2026-02","partner":"Tradeit","unique_users":"58"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"55","month":"2026-02","partner":"Tradeit","unique_users":"55"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"41","month":"2026-02","partner":"Tradeit","unique_users":"41"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade an item $250+","completions":"21","month":"2026-02","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"18","month":"2026-02","partner":"Tradeit","unique_users":"18"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"11","month":"2026-02","partner":"Tradeit","unique_users":"11"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"452936","month":"2026-03","partner":"Tradeit","unique_users":"452936"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"268819","month":"2026-03","partner":"Tradeit","unique_users":"268819"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Сыграй 1 матч","completions":"141058","month":"2026-03","partner":"Tradeit","unique_users":"141058"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"43857","month":"2026-03","partner":"Tradeit","unique_users":"43857"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"33777","month":"2026-03","partner":"Tradeit","unique_users":"33777"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"24142","month":"2026-03","partner":"Tradeit","unique_users":"24142"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"19395","month":"2026-03","partner":"Tradeit","unique_users":"19395"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"18456","month":"2026-03","partner":"Tradeit","unique_users":"18456"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade any item with Tradeit","completions":"10949","month":"2026-03","partner":"Tradeit","unique_users":"10949"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"9264","month":"2026-03","partner":"Tradeit","unique_users":"9264"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"4236","month":"2026-03","partner":"Tradeit","unique_users":"4236"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"3664","month":"2026-03","partner":"Tradeit","unique_users":"3664"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2883","month":"2026-03","partner":"Tradeit","unique_users":"2883"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2758","month":"2026-03","partner":"Tradeit","unique_users":"2758"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2018","month":"2026-03","partner":"Tradeit","unique_users":"2018"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1656","month":"2026-03","partner":"Tradeit","unique_users":"1656"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1632","month":"2026-03","partner":"Tradeit","unique_users":"1632"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1305","month":"2026-03","partner":"Tradeit","unique_users":"1305"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1143","month":"2026-03","partner":"Tradeit","unique_users":"1143"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade an item $250+","completions":"826","month":"2026-03","partner":"Tradeit","unique_users":"826"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade any item with Tradeit","completions":"662","month":"2026-03","partner":"Tradeit","unique_users":"662"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"273","month":"2026-03","partner":"Tradeit","unique_users":"273"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"262","month":"2026-03","partner":"Tradeit","unique_users":"262"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"230","month":"2026-03","partner":"Tradeit","unique_users":"230"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"188","month":"2026-03","partner":"Tradeit","unique_users":"188"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"143","month":"2026-03","partner":"Tradeit","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"85","month":"2026-03","partner":"Tradeit","unique_users":"85"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"80","month":"2026-03","partner":"Tradeit","unique_users":"80"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"77","month":"2026-03","partner":"Tradeit","unique_users":"77"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-03","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade an item $250+","completions":"42","month":"2026-03","partner":"Tradeit","unique_users":"42"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Trade an item $250+","completions":"35","month":"2026-03","partner":"Tradeit","unique_users":"35"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"26","month":"2026-03","partner":"Tradeit","unique_users":"26"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Trade an item $250+","completions":"23","month":"2026-03","partner":"Tradeit","unique_users":"23"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"21","month":"2026-03","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"14","month":"2026-03","partner":"Tradeit","unique_users":"14"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"13","month":"2026-03","partner":"Tradeit","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade an item $250+","completions":"7","month":"2026-03","partner":"Tradeit","unique_users":"7"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-03","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"4","month":"2026-03","partner":"Tradeit","unique_users":"4"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"47987","month":"2026-02","partner":"WhiteMarket","unique_users":"47914"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Здобудь 2 перемоги","completions":"35292","month":"2026-02","partner":"WhiteMarket","unique_users":"35292"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"17584","month":"2026-02","partner":"WhiteMarket","unique_users":"17577"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"2381","month":"2026-02","partner":"WhiteMarket","unique_users":"2381"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"345","month":"2026-02","partner":"WhiteMarket","unique_users":"345"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"98","month":"2026-02","partner":"WhiteMarket","unique_users":"98"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"68","month":"2026-02","partner":"WhiteMarket","unique_users":"68"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"34","month":"2026-02","partner":"WhiteMarket","unique_users":"34"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"12","month":"2026-02","partner":"WhiteMarket","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"11","month":"2026-02","partner":"WhiteMarket","unique_users":"11"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","month":"2026-02","partner":"WhiteMarket","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"41489","month":"2026-03","partner":"WhiteMarket","unique_users":"41442"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Здобудь 2 перемоги","completions":"29887","month":"2026-03","partner":"WhiteMarket","unique_users":"29887"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"16125","month":"2026-03","partner":"WhiteMarket","unique_users":"16122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зіграй 1 матч","completions":"2339","month":"2026-03","partner":"WhiteMarket","unique_users":"2339"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"284","month":"2026-03","partner":"WhiteMarket","unique_users":"284"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"64","month":"2026-03","partner":"WhiteMarket","unique_users":"64"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"53","month":"2026-03","partner":"WhiteMarket","unique_users":"53"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"20","month":"2026-03","partner":"WhiteMarket","unique_users":"20"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","month":"2026-03","partner":"WhiteMarket","unique_users":"1"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"301839","month":"2026-02","partner":"Winline","unique_users":"301839"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"75881","month":"2026-02","partner":"Winline","unique_users":"75881"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"35121","month":"2026-02","partner":"Winline","unique_users":"35121"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"23896","month":"2026-02","partner":"Winline","unique_users":"23896"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"18604","month":"2026-02","partner":"Winline","unique_users":"18604"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9250","month":"2026-02","partner":"Winline","unique_users":"9250"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7071","month":"2026-02","partner":"Winline","unique_users":"7071"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"4621","month":"2026-02","partner":"Winline","unique_users":"4621"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4075","month":"2026-02","partner":"Winline","unique_users":"4075"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"3407","month":"2026-02","partner":"Winline","unique_users":"3407"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2849","month":"2026-02","partner":"Winline","unique_users":"2849"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1290","month":"2026-02","partner":"Winline","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1261","month":"2026-02","partner":"Winline","unique_users":"1261"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"1203","month":"2026-02","partner":"Winline","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"1147","month":"2026-02","partner":"Winline","unique_users":"1147"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"872","month":"2026-02","partner":"Winline","unique_users":"872"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"344","month":"2026-02","partner":"Winline","unique_users":"344"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"189","month":"2026-02","partner":"Winline","unique_users":"189"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"69","month":"2026-02","partner":"Winline","unique_users":"69"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"63","month":"2026-02","partner":"Winline","unique_users":"63"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"58","month":"2026-02","partner":"Winline","unique_users":"58"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"35","month":"2026-02","partner":"Winline","unique_users":"35"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"29","month":"2026-02","partner":"Winline","unique_users":"29"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"21","month":"2026-02","partner":"Winline","unique_users":"21"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"19","month":"2026-02","partner":"Winline","unique_users":"19"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"9","month":"2026-02","partner":"Winline","unique_users":"9"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"6","month":"2026-02","partner":"Winline","unique_users":"6"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"4","month":"2026-02","partner":"Winline","unique_users":"4"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1","month":"2026-02","partner":"Winline","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"272411","month":"2026-03","partner":"Winline","unique_users":"272411"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"70336","month":"2026-03","partner":"Winline","unique_users":"70336"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"23116","month":"2026-03","partner":"Winline","unique_users":"23116"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"18147","month":"2026-03","partner":"Winline","unique_users":"18147"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"7856","month":"2026-03","partner":"Winline","unique_users":"7856"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"6024","month":"2026-03","partner":"Winline","unique_users":"6024"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"4918","month":"2026-03","partner":"Winline","unique_users":"4918"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"4274","month":"2026-03","partner":"Winline","unique_users":"4274"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"3293","month":"2026-03","partner":"Winline","unique_users":"3293"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2237","month":"2026-03","partner":"Winline","unique_users":"2237"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"234","month":"2026-03","partner":"Winline","unique_users":"234"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"125","month":"2026-03","partner":"Winline","unique_users":"125"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"51","month":"2026-03","partner":"Winline","unique_users":"51"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"47","month":"2026-03","partner":"Winline","unique_users":"47"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"13","month":"2026-03","partner":"Winline","unique_users":"13"}],
+            weeklyMissionCompletions: [{"challenge_name":"Play 1 game on FACEIT","completions":"36702","partner":"Tradeit","unique_users":"36702","week_start":"2026-01-26"},{"challenge_name":"Trade any item with Tradeit","completions":"397","partner":"Tradeit","unique_users":"397","week_start":"2026-01-26"},{"challenge_name":"Trade an item $250+","completions":"36","partner":"Tradeit","unique_users":"36","week_start":"2026-01-26"},{"challenge_name":"Сыграй 1 матч","completions":"443399","partner":"Tradeit","unique_users":"443399","week_start":"2026-02-23"},{"challenge_name":"Play 1 game on FACEIT","completions":"110249","partner":"Tradeit","unique_users":"110249","week_start":"2026-02-23"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2473","partner":"Tradeit","unique_users":"2473","week_start":"2026-02-23"},{"challenge_name":"Trade any item with Tradeit","completions":"1083","partner":"Tradeit","unique_users":"1083","week_start":"2026-02-23"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"477","partner":"Tradeit","unique_users":"477","week_start":"2026-02-23"},{"challenge_name":"Trade an item $250+","completions":"399","partner":"Tradeit","unique_users":"399","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"67952","partner":"WhiteMarket","unique_users":"67872","week_start":"2026-02-23"},{"challenge_name":"Здобудь 2 перемоги","completions":"35292","partner":"WhiteMarket","unique_users":"35292","week_start":"2026-02-23"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"511","partner":"WhiteMarket","unique_users":"511","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"57","partner":"WhiteMarket","unique_users":"57","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","partner":"WhiteMarket","unique_users":"5","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матчей","completions":"525909","partner":"Winline","unique_users":"383108","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матч","completions":"60223","partner":"Winline","unique_users":"45739","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9720","partner":"Winline","unique_users":"9354","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7324","partner":"Winline","unique_users":"7128","week_start":"2026-02-23"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"5374","partner":"Winline","unique_users":"5374","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4105","partner":"Winline","unique_users":"4077","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2865","partner":"Winline","unique_users":"2851","week_start":"2026-02-23"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"362","partner":"Winline","unique_users":"362","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"290","partner":"Winline","unique_users":"289","week_start":"2026-02-23"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"94","partner":"Winline","unique_users":"94","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"42904","partner":"WhiteMarket","unique_users":"42888","week_start":"2026-03-02"},{"challenge_name":"Здобудь 2 перемоги","completions":"18395","partner":"WhiteMarket","unique_users":"18395","week_start":"2026-03-02"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"182","partner":"WhiteMarket","unique_users":"182","week_start":"2026-03-02"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"8","partner":"WhiteMarket","unique_users":"8","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матчей","completions":"151451","partner":"Winline","unique_users":"150181","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матч","completions":"17709","partner":"Winline","unique_users":"17709","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"3665","partner":"Winline","unique_users":"3665","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2727","partner":"Winline","unique_users":"2727","week_start":"2026-03-02"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1532","partner":"Winline","unique_users":"1532","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1177","partner":"Winline","unique_users":"1177","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"688","partner":"Winline","unique_users":"688","week_start":"2026-03-02"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"85","partner":"Winline","unique_users":"85","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"63","partner":"Winline","unique_users":"63","week_start":"2026-03-02"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"18","partner":"Winline","unique_users":"17","week_start":"2026-03-02"},{"challenge_name":"Play 1 game on FACEIT","completions":"444104","partner":"Tradeit","unique_users":"443285","week_start":"2026-03-09"},{"challenge_name":"Сыграй 1 матч","completions":"370667","partner":"Tradeit","unique_users":"370667","week_start":"2026-03-09"},{"challenge_name":"Trade any item with Tradeit","completions":"9536","partner":"Tradeit","unique_users":"9532","week_start":"2026-03-09"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"5413","partner":"Tradeit","unique_users":"5413","week_start":"2026-03-09"},{"challenge_name":"Trade an item $250+","completions":"569","partner":"Tradeit","unique_users":"568","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"149","partner":"Tradeit","unique_users":"149","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"13","partner":"Tradeit","unique_users":"13","week_start":"2026-03-09"},{"challenge_name":"Зіграй 1 матч","completions":"11331","partner":"WhiteMarket","unique_users":"11324","week_start":"2026-03-09"},{"challenge_name":"Здобудь 2 перемоги","completions":"7666","partner":"WhiteMarket","unique_users":"7666","week_start":"2026-03-09"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"128","partner":"WhiteMarket","unique_users":"128","week_start":"2026-03-09"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"14","partner":"WhiteMarket","unique_users":"14","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матчей","completions":"61432","partner":"Winline","unique_users":"61051","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матч","completions":"6364","partner":"Winline","unique_users":"6364","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"2530","partner":"Winline","unique_users":"2530","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2113","partner":"Winline","unique_users":"2113","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1376","partner":"Winline","unique_users":"1376","week_start":"2026-03-09"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1350","partner":"Winline","unique_users":"1350","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"997","partner":"Winline","unique_users":"997","week_start":"2026-03-09"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"80","partner":"Winline","unique_users":"80","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"59","partner":"Winline","unique_users":"59","week_start":"2026-03-09"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"27","partner":"Winline","unique_users":"27","week_start":"2026-03-09"},{"challenge_name":"Play 1 game on FACEIT","completions":"108369","partner":"Tradeit","unique_users":"107564","week_start":"2026-03-16"},{"challenge_name":"Сыграй 1 матч","completions":"102462","partner":"Tradeit","unique_users":"102461","week_start":"2026-03-16"},{"challenge_name":"Trade any item with Tradeit","completions":"3145","partner":"Tradeit","unique_users":"3137","week_start":"2026-03-16"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1984","partner":"Tradeit","unique_users":"1984","week_start":"2026-03-16"},{"challenge_name":"Trade an item $250+","completions":"456","partner":"Tradeit","unique_users":"456","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"158","partner":"Tradeit","unique_users":"158","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"8","partner":"Tradeit","unique_users":"8","week_start":"2026-03-16"},{"challenge_name":"Зіграй 1 матч","completions":"5718","partner":"WhiteMarket","unique_users":"5716","week_start":"2026-03-16"},{"challenge_name":"Здобудь 2 перемоги","completions":"3826","partner":"WhiteMarket","unique_users":"3826","week_start":"2026-03-16"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"91","partner":"WhiteMarket","unique_users":"91","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"4","partner":"WhiteMarket","unique_users":"4","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","partner":"WhiteMarket","unique_users":"1","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матчей","completions":"28343","partner":"Winline","unique_users":"28195","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матч","completions":"2677","partner":"Winline","unique_users":"2677","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1261","partner":"Winline","unique_users":"1261","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"966","partner":"Winline","unique_users":"966","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"710","partner":"Winline","unique_users":"710","week_start":"2026-03-16"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"684","partner":"Winline","unique_users":"684","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"536","partner":"Winline","unique_users":"536","week_start":"2026-03-16"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"51","partner":"Winline","unique_users":"51","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"40","partner":"Winline","unique_users":"40","week_start":"2026-03-16"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"17","partner":"Winline","unique_users":"17","week_start":"2026-03-16"}],
+            rewardClaims: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"39049","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21651"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"38869","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21516"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"1193","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"963"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"1060","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"457460","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"364863"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"287838","month":"2026-02","partner":"Tradeit","reward_status":"in_progress","unique_users":"287838"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"85311","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"58042"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"84291","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"47021"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"81891","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"44494"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"35657","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"24599"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"28448","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"27915"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"27155","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"14739"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"12880","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"12573"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"10979","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"9134"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"7459","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"5747"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"5893","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"4373"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3945","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"3896"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3608","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3544"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"3515","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3424"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"2668","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2507"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"2458","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1944"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2253","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2156","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2109"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2124","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2069"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2017","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1954"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1572","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"1554"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1564","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1493"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"1190","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"969"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"794","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"617"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"13","month":"2026-02","partner":"Tradeit","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"1024641","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"253783"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"908228","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"513925"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"629231","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"296065"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"283952","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"149591"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"214464","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"47465"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"88464","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"21979"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"73855","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"14775"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"71062","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"40092"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"70624","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"29373"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"68297","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"16956"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"65353","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"53850"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"53986","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"22473"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"34778","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"8575"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"26828","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"23814"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"24710","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"24681"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"23005","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"10610"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"21130","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"19566"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"20743","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"20728"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"18253","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"4228"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"13808","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3115"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"10740","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"2148"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9946","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"9934"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9621","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"9446"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"8103","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1825"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"8074","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"2018"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"7717","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"6604"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"7400","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"1480"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"3483","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2818"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"3395","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"679"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"3313","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3310"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"2793","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2714"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"2227","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2101"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1795","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1792"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1718","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1633"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1638","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1584"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1623","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1600"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1583","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1581"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"1499","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1299"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"1437","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1241"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1414","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1413"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"1392","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1322","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1287"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1306","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1296"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"572","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"340","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"85"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"308","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"77"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"290","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"290"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"263","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"223"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"78","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"26"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"46","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"46"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"44","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"44"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"43","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"43"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"29","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"29"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"22","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"22"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"21","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"18","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"10"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"17","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"8","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"4"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"4","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"4"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2921","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"2422"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"1382","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"1147"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"246","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"246"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"184","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"158"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"79","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"67"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"50","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"44"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"129285","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"52952"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"32490","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"18525"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"4469","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"2497"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2540","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"1341"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"2175","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"2122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"557","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"395"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"114702","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"46323"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"17297","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"17252"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13773","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"13747"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2464","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"2459"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"2372","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"2330"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2052","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"1907"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"1859","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"962"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"585","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"430"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"12","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"6","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"3","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"3"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"514700","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"306090"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"102443","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"102443"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"92122","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"75837"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"71039","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"70993"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"42001","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"35094"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"37142","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"37116"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"25229","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"25216"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"24333","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"23883"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"19027","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"18588"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"18959","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"18945"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"18276","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"14991"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"17744","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17744"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"8575","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4673"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5133","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4992"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"2380","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"1490","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1488"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1343","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1312","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1260"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1301","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1301"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"1290","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1282"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1278","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1277"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1233","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1233"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"1016","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1016"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"976","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"847","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"847"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"603","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"308"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"355"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"297"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"242","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"242"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"44","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"24"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"24","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"24"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"17","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"2","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"547525","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"291757"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"80099","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"67045"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"66900","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"66846"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"35925","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"18567"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"24692","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"24497"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"22289","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"21967"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"17453","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"17174"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"10400","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4915"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"7638","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4242"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"3718","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"3709"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"91","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"91"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"79","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"42"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"57","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"57"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"41","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"41"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"37","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"37"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"26","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"26"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"2","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"2"}],
+            buildTimestamp: "2026-03-21T07:17:33Z"
+        }; // %%BQ_DATA_PLACEHOLDER%%
+
         Chart.defaults.color = '#6b7280';
         Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
         const gridColor = '#e2e4e9';
@@ -1754,6 +1789,679 @@
             { event: 'reactivated_dep', data: [16,26,27,15,35,14,65] }
         ];
 
+        let dashData = null;
+
+        const MONTH_KEYS = ['2026-01', '2026-02', '2026-03'];
+        const MONTH_ALIAS = { '2026-01': 'jan', '2026-02': 'feb', '2026-03': 'mar' };
+        const MONTH_LABELS = ["Jan '26", "Feb '26", "Mar '26*"];
+        const PARTNER_LABELS = { portfolio: 'Portfolio', tradeit: 'Tradeit', winline: 'Winline', whitemarket: 'WhiteMarket' };
+
+        const CONVERSION_RATES = {
+            tradeit: { al: 0.38, c1: 0.04, c2: 8.75 },
+            winline: { al: 4.33, kyc: 8.66, ftd: 121.10, dep2: 4.33, bet: 4.33 },
+            whitemarket: { al: 0.38, c1: 0.05, c2: 12.50, c3: 50.00 }
+        };
+
+        const CONVERSION_LABELS = {
+            tradeit: { al: 'AL', c1: 'Trade 1 / C1', c2: 'Trade $250+ / C2' },
+            winline: { al: 'AL', kyc: 'KYC', ftd: 'FTD', dep2: '2nd Deposit', bet: 'Bet' },
+            whitemarket: { al: 'AL', c1: 'Buy Any / C1', c2: 'Buy $100+ / C2', c3: 'Buy $300+ / C3' }
+        };
+
+        const VERIFIED_MONTHLY = {
+            tradeit:     { jan: 12255, feb: 13444, mar: 68719, total: 94418 },
+            winline:     { jan: 138422, feb: 158499, mar: 120416, total: 417337 },
+            whitemarket: { jan: 1542, feb: 1606, mar: 1113, total: 4261 }
+        };
+
+        function toInt(value) {
+            const parsed = parseInt(value, 10);
+            return Number.isFinite(parsed) ? parsed : 0;
+        }
+
+        function normalize(str) {
+            return String(str || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        }
+
+        function formatWeekLabel(isoDate) {
+            const dt = new Date(`${isoDate}T00:00:00Z`);
+            return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+        }
+
+        function formatEuro(value) {
+            return `€${Math.round(value || 0).toLocaleString('en-US')}`;
+        }
+
+        function formatInt(value) {
+            return Math.round(value || 0).toLocaleString('en-US');
+        }
+
+        function formatEbu(value) {
+            const v = Number(value || 0);
+            if (v >= 1000000) return `${(v / 1000000).toFixed(2).replace(/\.00$/, '')}M`;
+            if (v >= 1000) return `${Math.round(v / 1000)}K`;
+            return `${Math.round(v)}`;
+        }
+
+        function pctChange(current, previous) {
+            if (!previous) return null;
+            return ((current - previous) / previous) * 100;
+        }
+
+        function colorForChange(change) {
+            if (change === null || Number.isNaN(change)) return 'var(--text-muted)';
+            if (change > 0) return 'var(--green)';
+            if (change < 0) return 'var(--red)';
+            return 'var(--text-muted)';
+        }
+
+        function signedPercent(change) {
+            if (change === null || Number.isNaN(change)) return '—';
+            const rounded = Math.round(change);
+            const sign = rounded > 0 ? '+' : '';
+            return `${sign}${rounded}%`;
+        }
+
+        function classifyMissionConversion(partnerKey, challengeName) {
+            const c = normalize(challengeName);
+
+            if (partnerKey === 'tradeit') {
+                if (c.includes('trade any item') || c.includes('обменяй любой предмет')) return 'c1';
+                if (c.includes('trade an item $250+') || c.includes('обменяй предмет стоимостью более 20000') || c.includes('обменяй предмет стоимостью более $250')) return 'c2';
+                return null;
+            }
+
+            if (partnerKey === 'winline') {
+                if (c.includes('подключите свой аккаунт winline')) return 'al';
+                if (c.includes('пройдите идентификацию')) return 'kyc';
+                if (c.includes('внесите депозит на сумму 3000') || c.includes('внесите депозит от 500')) return 'ftd';
+                if (c.includes('внесите депозит на сумму 5000')) return 'dep2';
+                if (c.includes('совершите ставки') || c.includes('сделайте ставку')) return 'bet';
+                return null;
+            }
+
+            if (partnerKey === 'whitemarket') {
+                if (c.includes('зроби покупку на white.market')) return 'c1';
+                if (c.includes('купи скін за $100+')) return 'c2';
+                if (c.includes('купи скін за $300+')) return 'c3';
+                return null;
+            }
+
+            return null;
+        }
+
+        function createPartnerMetrics(conversionKeys, weeksLen) {
+            const monthlyByConversion = {};
+            const weeklyByConversion = {};
+            conversionKeys.forEach((key) => {
+                monthlyByConversion[key] = { jan: 0, feb: 0, mar: 0, total: 0, counts: { jan: 0, feb: 0, mar: 0 } };
+                weeklyByConversion[key] = {
+                    values: Array(weeksLen).fill(0),
+                    counts: Array(weeksLen).fill(0)
+                };
+            });
+
+            return {
+                valueYtd: 0,
+                ebu: 0,
+                eurPer1kEbu: 0,
+                monthly: { jan: 0, feb: 0, mar: 0 },
+                monthlyEbu: { jan: 0, feb: 0, mar: 0 },
+                monthlyByConversion,
+                weeklyValues: Array(weeksLen).fill(0),
+                weeklyEbu: Array(weeksLen).fill(0),
+                weeklyByConversion,
+                wow: { value: null, ebu: null, efficiency: null },
+                mom: { value: null, ebu: null, efficiency: null }
+            };
+        }
+
+        function buildWoWMoM(metric) {
+            const last = metric.weeklyValues.length - 1;
+            const prev = metric.weeklyValues.length - 2;
+
+            const lastWeeklyEfficiency = metric.weeklyEbu[last] ? (metric.weeklyValues[last] / metric.weeklyEbu[last]) * 1000 : 0;
+            const prevWeeklyEfficiency = metric.weeklyEbu[prev] ? (metric.weeklyValues[prev] / metric.weeklyEbu[prev]) * 1000 : 0;
+
+            const febEfficiency = metric.monthlyEbu.feb ? (metric.monthly.feb / metric.monthlyEbu.feb) * 1000 : 0;
+            const janEfficiency = metric.monthlyEbu.jan ? (metric.monthly.jan / metric.monthlyEbu.jan) * 1000 : 0;
+
+            metric.wow = {
+                value: pctChange(metric.weeklyValues[last] || 0, metric.weeklyValues[prev] || 0),
+                ebu: pctChange(metric.weeklyEbu[last] || 0, metric.weeklyEbu[prev] || 0),
+                efficiency: pctChange(lastWeeklyEfficiency, prevWeeklyEfficiency)
+            };
+
+            metric.mom = {
+                value: pctChange(metric.monthly.feb, metric.monthly.jan),
+                ebu: pctChange(metric.monthlyEbu.feb, metric.monthlyEbu.jan),
+                efficiency: pctChange(febEfficiency, janEfficiency)
+            };
+        }
+
+        function distributeMonthlyALtoWeeks(dash, partnerKey, monthToCount, anchorPredicate) {
+            const partner = dash[partnerKey];
+            const alRate = CONVERSION_RATES[partnerKey].al;
+            const weekKeys = dash.weekKeys;
+            const weekIndex = dash.weekIndex;
+
+            const monthWeeks = { '2026-01': [], '2026-02': [], '2026-03': [] };
+            weekKeys.forEach((week) => {
+                const monthKey = week.slice(0, 7);
+                if (monthWeeks[monthKey]) monthWeeks[monthKey].push(week);
+            });
+
+            const anchors = {};
+            weekKeys.forEach((wk) => { anchors[wk] = 0; });
+            (BQ_DATA.weeklyMissionCompletions || []).forEach((row) => {
+                const key = normalize(row.partner);
+                if (key !== partnerKey) return;
+                if (!anchorPredicate(row.challenge_name)) return;
+                anchors[row.week_start] = (anchors[row.week_start] || 0) + toInt(row.completions);
+            });
+
+            Object.entries(monthToCount).forEach(([monthKey, monthCount]) => {
+                const weeks = monthWeeks[monthKey] || [];
+                if (!weeks.length || !monthCount) return;
+
+                const weights = weeks.map((wk) => anchors[wk] || 0);
+                const sumWeights = weights.reduce((acc, n) => acc + n, 0);
+                const fallbackWeight = sumWeights === 0;
+                const baseWeight = fallbackWeight ? 1 : null;
+                const denominator = fallbackWeight ? weeks.length : sumWeights;
+
+                const raw = weeks.map((_, i) => (monthCount * (fallbackWeight ? baseWeight : weights[i])) / denominator);
+                const alloc = raw.map((v) => Math.floor(v));
+                let remaining = monthCount - alloc.reduce((a, b) => a + b, 0);
+                const order = raw
+                    .map((v, i) => ({ i, frac: v - Math.floor(v) }))
+                    .sort((a, b) => b.frac - a.frac)
+                    .map((x) => x.i);
+                for (let i = 0; i < order.length && remaining > 0; i += 1) {
+                    alloc[order[i]] += 1;
+                    remaining -= 1;
+                }
+
+                alloc.forEach((count, idx) => {
+                    const wk = weeks[idx];
+                    const wi = weekIndex[wk];
+                    partner.weeklyByConversion.al.counts[wi] += count;
+                    partner.weeklyByConversion.al.values[wi] += count * alRate;
+                });
+            });
+        }
+
+        function processData() {
+            if (!BQ_DATA) return null;
+
+            const weekKeys = (BQ_DATA.weeklyEbuDedup || [])
+                .map((row) => row.week_start)
+                .sort((a, b) => a.localeCompare(b));
+            const weekIndex = {};
+            weekKeys.forEach((wk, idx) => { weekIndex[wk] = idx; });
+
+            const dash = {
+                portfolio: createPartnerMetrics([], weekKeys.length),
+                tradeit: createPartnerMetrics(['al', 'c1', 'c2'], weekKeys.length),
+                winline: createPartnerMetrics(['al', 'kyc', 'ftd', 'dep2', 'bet'], weekKeys.length),
+                whitemarket: createPartnerMetrics(['al', 'c1', 'c2', 'c3'], weekKeys.length),
+                weekKeys,
+                weekIndex,
+                weekLabels: weekKeys.map(formatWeekLabel)
+            };
+
+            (BQ_DATA.ebuYtd || []).forEach((row) => {
+                const partnerName = normalize(row.partner);
+                const value = toInt(row.ebu);
+                if (partnerName === 'portfolio') dash.portfolio.ebu = value;
+                if (partnerName === 'tradeit') dash.tradeit.ebu = value;
+                if (partnerName === 'winline') dash.winline.ebu = value;
+                if (partnerName === 'whitemarket') dash.whitemarket.ebu = value;
+            });
+
+            (BQ_DATA.weeklyEbuDedup || []).forEach((row) => {
+                const idx = weekIndex[row.week_start];
+                if (idx === undefined) return;
+                dash.portfolio.weeklyEbu[idx] = toInt(row.weekly_ebu_dedup);
+            });
+
+            (BQ_DATA.weeklyEbuByPartner || []).forEach((row) => {
+                const key = normalize(row.partner);
+                const idx = weekIndex[row.week_start];
+                if (idx === undefined || !dash[key]) return;
+                dash[key].weeklyEbu[idx] = toInt(row.weekly_ebu);
+            });
+
+            const monthlyAlCounts = {
+                tradeit: { '2026-01': 0, '2026-02': 0, '2026-03': 0 },
+                whitemarket: { '2026-01': 0, '2026-02': 0, '2026-03': 0 }
+            };
+
+            (BQ_DATA.missionCompletions || []).forEach((row) => {
+                const partnerKey = normalize(row.partner);
+                if (!dash[partnerKey] || !MONTH_ALIAS[row.month]) return;
+                const conv = classifyMissionConversion(partnerKey, row.challenge_name);
+                if (!conv) return;
+
+                const m = MONTH_ALIAS[row.month];
+                const count = toInt(row.completions);
+                const rate = CONVERSION_RATES[partnerKey][conv] || 0;
+                const value = count * rate;
+
+                dash[partnerKey].monthlyByConversion[conv][m] += value;
+                dash[partnerKey].monthlyByConversion[conv].total += value;
+                dash[partnerKey].monthlyByConversion[conv].counts[m] += count;
+            });
+
+            (BQ_DATA.weeklyMissionCompletions || []).forEach((row) => {
+                const partnerKey = normalize(row.partner);
+                const idx = weekIndex[row.week_start];
+                if (!dash[partnerKey] || idx === undefined) return;
+                const conv = classifyMissionConversion(partnerKey, row.challenge_name);
+                if (!conv) return;
+
+                const count = toInt(row.completions);
+                const rate = CONVERSION_RATES[partnerKey][conv] || 0;
+                dash[partnerKey].weeklyByConversion[conv].counts[idx] += count;
+                dash[partnerKey].weeklyByConversion[conv].values[idx] += count * rate;
+            });
+
+            (BQ_DATA.rewardClaims || []).forEach((row) => {
+                if (normalize(row.reward_status) !== 'completed') return;
+                if (!MONTH_ALIAS[row.month]) return;
+                const campaign = normalize(row.campaign_technical_name);
+                const count = toInt(row.cnt);
+                const m = MONTH_ALIAS[row.month];
+                const monthKey = row.month;
+
+                if (normalize(row.partner) === 'tradeit' && campaign.includes('general mission')) {
+                    const value = count * CONVERSION_RATES.tradeit.al;
+                    dash.tradeit.monthlyByConversion.al[m] += value;
+                    dash.tradeit.monthlyByConversion.al.total += value;
+                    dash.tradeit.monthlyByConversion.al.counts[m] += count;
+                    monthlyAlCounts.tradeit[monthKey] += count;
+                }
+
+                if (normalize(row.partner) === 'whitemarket' && campaign.includes('general')) {
+                    const value = count * CONVERSION_RATES.whitemarket.al;
+                    dash.whitemarket.monthlyByConversion.al[m] += value;
+                    dash.whitemarket.monthlyByConversion.al.total += value;
+                    dash.whitemarket.monthlyByConversion.al.counts[m] += count;
+                    monthlyAlCounts.whitemarket[monthKey] += count;
+                }
+            });
+
+            distributeMonthlyALtoWeeks(
+                dash,
+                'tradeit',
+                monthlyAlCounts.tradeit,
+                (challenge) => {
+                    const c = normalize(challenge);
+                    return c.includes('play 1 game on faceit') || c.includes('сыграй 1 матч');
+                }
+            );
+
+            distributeMonthlyALtoWeeks(
+                dash,
+                'whitemarket',
+                monthlyAlCounts.whitemarket,
+                (challenge) => normalize(challenge).includes('зіграй 1 матч')
+            );
+
+            ['tradeit', 'winline', 'whitemarket'].forEach((partnerKey) => {
+                const partner = dash[partnerKey];
+
+                MONTH_KEYS.forEach((monthKey) => {
+                    const alias = MONTH_ALIAS[monthKey];
+                    partner.monthlyEbu[alias] = dash[partnerKey].weeklyEbu.reduce((acc, value, idx) => {
+                        const wk = weekKeys[idx];
+                        return wk.startsWith(monthKey) ? acc + value : acc;
+                    }, 0);
+                });
+
+                Object.values(partner.weeklyByConversion).forEach((series) => {
+                    series.values.forEach((v, idx) => { partner.weeklyValues[idx] += v; });
+                });
+
+                partner.monthly.jan = Object.values(partner.monthlyByConversion).reduce((acc, conv) => acc + conv.jan, 0);
+                partner.monthly.feb = Object.values(partner.monthlyByConversion).reduce((acc, conv) => acc + conv.feb, 0);
+                partner.monthly.mar = Object.values(partner.monthlyByConversion).reduce((acc, conv) => acc + conv.mar, 0);
+
+                partner.weeklyValues = partner.weeklyValues.map((v) => Math.round(v));
+                partner.monthly.jan = Math.round(partner.monthly.jan);
+                partner.monthly.feb = Math.round(partner.monthly.feb);
+                partner.monthly.mar = Math.round(partner.monthly.mar);
+                partner.valueYtd = partner.monthly.jan + partner.monthly.feb + partner.monthly.mar;
+                partner.eurPer1kEbu = partner.ebu ? Math.round((partner.valueYtd / partner.ebu) * 1000) : 0;
+            });
+
+            dash.portfolio.monthly.jan = dash.tradeit.monthly.jan + dash.winline.monthly.jan + dash.whitemarket.monthly.jan;
+            dash.portfolio.monthly.feb = dash.tradeit.monthly.feb + dash.winline.monthly.feb + dash.whitemarket.monthly.feb;
+            dash.portfolio.monthly.mar = dash.tradeit.monthly.mar + dash.winline.monthly.mar + dash.whitemarket.monthly.mar;
+            dash.portfolio.weeklyValues = weekKeys.map((_, idx) => (
+                dash.tradeit.weeklyValues[idx] + dash.winline.weeklyValues[idx] + dash.whitemarket.weeklyValues[idx]
+            ));
+
+            MONTH_KEYS.forEach((monthKey) => {
+                const alias = MONTH_ALIAS[monthKey];
+                dash.portfolio.monthlyEbu[alias] = dash.portfolio.weeklyEbu.reduce((acc, value, idx) => {
+                    const wk = weekKeys[idx];
+                    return wk.startsWith(monthKey) ? acc + value : acc;
+                }, 0);
+            });
+
+            dash.portfolio.valueYtd = dash.portfolio.monthly.jan + dash.portfolio.monthly.feb + dash.portfolio.monthly.mar;
+            dash.portfolio.eurPer1kEbu = dash.portfolio.ebu ? Math.round((dash.portfolio.valueYtd / dash.portfolio.ebu) * 1000) : 0;
+
+            ['portfolio', 'tradeit', 'winline', 'whitemarket'].forEach((partnerKey) => buildWoWMoM(dash[partnerKey]));
+
+            applyVerifiedOverrides(dash);
+
+            return dash;
+        }
+
+        function applyVerifiedOverrides(dash) {
+            ['tradeit', 'winline', 'whitemarket'].forEach((pk) => {
+                const verified = VERIFIED_MONTHLY[pk];
+                if (!verified) return;
+                const partner = dash[pk];
+
+                const bqJan = partner.monthly.jan;
+                const bqFeb = partner.monthly.feb;
+                const bqMar = partner.monthly.mar;
+                const bqTotal = bqJan + bqFeb + bqMar;
+
+                partner.monthly.jan = verified.jan;
+                partner.monthly.feb = verified.feb;
+                partner.monthly.mar = verified.mar;
+                partner.valueYtd = verified.total;
+                partner.eurPer1kEbu = partner.ebu ? Math.round((verified.total / partner.ebu) * 1000) : 0;
+
+                if (bqTotal > 0) {
+                    const scaleFactor = verified.total / bqTotal;
+                    partner.weeklyValues = partner.weeklyValues.map((v) => Math.round(v * scaleFactor));
+                } else {
+                    const weekCount = partner.weeklyValues.length;
+                    if (weekCount > 0) {
+                        const perWeek = Math.floor(verified.total / weekCount);
+                        partner.weeklyValues = partner.weeklyValues.map(() => perWeek);
+                    }
+                }
+
+                Object.keys(partner.monthlyByConversion).forEach((conv) => {
+                    const convData = partner.monthlyByConversion[conv];
+                    convData.jan = bqJan > 0 ? Math.round(convData.jan / bqJan * verified.jan) : 0;
+                    convData.feb = bqFeb > 0 ? Math.round(convData.feb / bqFeb * verified.feb) : 0;
+                    convData.mar = bqMar > 0 ? Math.round(convData.mar / bqMar * verified.mar) : 0;
+                    convData.total = convData.jan + convData.feb + convData.mar;
+                });
+            });
+
+            dash.portfolio.monthly.jan = dash.tradeit.monthly.jan + dash.winline.monthly.jan + dash.whitemarket.monthly.jan;
+            dash.portfolio.monthly.feb = dash.tradeit.monthly.feb + dash.winline.monthly.feb + dash.whitemarket.monthly.feb;
+            dash.portfolio.monthly.mar = dash.tradeit.monthly.mar + dash.winline.monthly.mar + dash.whitemarket.monthly.mar;
+            dash.portfolio.valueYtd = dash.portfolio.monthly.jan + dash.portfolio.monthly.feb + dash.portfolio.monthly.mar;
+            dash.portfolio.eurPer1kEbu = dash.portfolio.ebu ? Math.round((dash.portfolio.valueYtd / dash.portfolio.ebu) * 1000) : 0;
+            dash.portfolio.weeklyValues = dash.weekKeys.map((_, idx) => (
+                dash.tradeit.weeklyValues[idx] + dash.winline.weeklyValues[idx] + dash.whitemarket.weeklyValues[idx]
+            ));
+
+            ['portfolio', 'tradeit', 'winline', 'whitemarket'].forEach((pk) => buildWoWMoM(dash[pk]));
+        }
+
+        function renderWoWMoMHtml(wowValue, momValue) {
+            return `<span style="color: ${colorForChange(wowValue)};">WoW ${signedPercent(wowValue)}</span> · <span style="color: ${colorForChange(momValue)};">MoM ${signedPercent(momValue)}</span>`;
+        }
+
+        function populateKPIs() {
+            if (!dashData) return;
+
+            const map = [
+                ['portfolio', 'portfolio'],
+                ['tradeit', 'tradeit'],
+                ['winline', 'winline'],
+                ['whitemarket', 'whitemarket']
+            ];
+
+            map.forEach(([idKey, partnerKey]) => {
+                const p = dashData[partnerKey];
+                const valueEl = document.getElementById(`kpi-${idKey}-value`);
+                const ebuEl = document.getElementById(`kpi-${idKey}-ebu`);
+                const effEl = document.getElementById(`kpi-${idKey}-efficiency`);
+
+                if (valueEl) valueEl.textContent = formatEuro(p.valueYtd);
+                if (ebuEl) ebuEl.textContent = formatEbu(p.ebu);
+                if (effEl) effEl.textContent = `€${Math.round(p.eurPer1kEbu).toLocaleString('en-US')}`;
+            });
+        }
+
+        function populateWoWMoM() {
+            if (!dashData) return;
+
+            const map = ['portfolio', 'tradeit', 'winline', 'whitemarket'];
+            map.forEach((partnerKey) => {
+                const p = dashData[partnerKey];
+                const prefix = partnerKey;
+
+                const valueSub = document.getElementById(`kpi-sub-${prefix}-value`);
+                const ebuSub = document.getElementById(`kpi-sub-${prefix}-ebu`);
+                const effSub = document.getElementById(`kpi-sub-${prefix}-efficiency`);
+
+                if (valueSub) valueSub.innerHTML = renderWoWMoMHtml(p.wow.value, p.mom.value);
+                if (ebuSub) ebuSub.innerHTML = renderWoWMoMHtml(p.wow.ebu, p.mom.ebu);
+                if (effSub) effSub.innerHTML = renderWoWMoMHtml(p.wow.efficiency, p.mom.efficiency);
+            });
+        }
+
+        function topConversionForMonth(partnerKey, monthAlias) {
+            const partner = dashData[partnerKey];
+            const rows = Object.entries(partner.monthlyByConversion).map(([conv, obj]) => ({ key: conv, value: Math.round(obj[monthAlias] || 0) }));
+            rows.sort((a, b) => b.value - a.value);
+            const top = rows[0] || { key: '-', value: 0 };
+            const monthTotal = partner.monthly[monthAlias] || 0;
+            const pct = monthTotal ? Math.round((top.value / monthTotal) * 1000) / 10 : 0;
+            return {
+                label: CONVERSION_LABELS[partnerKey][top.key] || '-',
+                valueText: top.value ? `${formatEuro(top.value)} (${pct}%)` : '—'
+            };
+        }
+
+        function wowCellHtml(current, previous) {
+            const change = pctChange(current, previous);
+            if (change === null) return '<td class="number">—</td>';
+            return `<td class="number" style="color: ${colorForChange(change)};">${signedPercent(change)}</td>`;
+        }
+
+        function populateTables() {
+            if (!dashData) return;
+
+            const combinedMonthlyBody = document.getElementById('combined-monthly-summary-body');
+            if (combinedMonthlyBody) {
+                combinedMonthlyBody.innerHTML = `
+                    <tr><td>Winline</td><td class="number">${formatEuro(dashData.winline.monthly.jan)}</td><td class="number">${formatEuro(dashData.winline.monthly.feb)}</td><td class="number">${formatEuro(dashData.winline.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.winline.valueYtd)}</td></tr>
+                    <tr><td>Tradeit</td><td class="number">${formatEuro(dashData.tradeit.monthly.jan)}</td><td class="number">${formatEuro(dashData.tradeit.monthly.feb)}</td><td class="number">${formatEuro(dashData.tradeit.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.tradeit.valueYtd)}</td></tr>
+                    <tr><td>WhiteMarket</td><td class="number">${formatEuro(dashData.whitemarket.monthly.jan)}</td><td class="number">${formatEuro(dashData.whitemarket.monthly.feb)}</td><td class="number">${formatEuro(dashData.whitemarket.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.whitemarket.valueYtd)}</td></tr>
+                    <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Portfolio Total</td><td class="number">${formatEuro(dashData.portfolio.monthly.jan)}</td><td class="number">${formatEuro(dashData.portfolio.monthly.feb)}</td><td class="number">${formatEuro(dashData.portfolio.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.portfolio.valueYtd)}</td></tr>
+                `;
+            }
+
+            const partnerComparisonBody = document.getElementById('partner-comparison-body');
+            if (partnerComparisonBody) {
+                const monthMeta = [
+                    { alias: 'jan', label: "Jan '26" },
+                    { alias: 'feb', label: "Feb '26" },
+                    { alias: 'mar', label: "Mar '26*" }
+                ];
+                const makeRows = (partnerKey) => monthMeta.map((m, idx) => {
+                    const top = topConversionForMonth(partnerKey, m.alias);
+                    const partner = dashData[partnerKey];
+                    const ebuCell = idx === 0 ? `<td class="number" rowspan="3">${formatInt(partner.ebu)}</td>` : '';
+                    const effCell = idx === 0 ? `<td class="number${partnerKey === 'winline' ? ' highlight' : ''}" rowspan="3">€${Math.round(partner.eurPer1kEbu).toLocaleString('en-US')}</td>` : '';
+                    return `<tr><td>${PARTNER_LABELS[partnerKey]}</td><td>${m.label}</td><td class="number${partnerKey === 'winline' ? ' highlight' : ''}">${formatEuro(partner.monthly[m.alias])}</td>${ebuCell}${effCell}<td>${top.label}</td><td>${top.valueText}</td></tr>`;
+                }).join('');
+
+                partnerComparisonBody.innerHTML = `${makeRows('winline')}${makeRows('tradeit')}${makeRows('whitemarket')}`;
+            }
+
+            const tradeitMonthlyBody = document.getElementById('tradeit-monthly-summary-body');
+            if (tradeitMonthlyBody) {
+                const m = dashData.tradeit.monthlyByConversion;
+                tradeitMonthlyBody.innerHTML = `
+                    <tr><td>AL (€0.38)</td><td class="number">${formatEuro(m.al.jan)}</td><td class="number">${formatEuro(m.al.feb)}</td><td class="number">${formatEuro(m.al.mar)}</td><td class="number highlight">${formatEuro(m.al.total)}</td></tr>
+                    <tr><td>C1 (€0.04)</td><td class="number">${formatEuro(m.c1.jan)}</td><td class="number">${formatEuro(m.c1.feb)}</td><td class="number">${formatEuro(m.c1.mar)}</td><td class="number highlight">${formatEuro(m.c1.total)}</td></tr>
+                    <tr><td>C2 (€8.75)</td><td class="number">${formatEuro(m.c2.jan)}</td><td class="number">${formatEuro(m.c2.feb)}</td><td class="number">${formatEuro(m.c2.mar)}</td><td class="number highlight">${formatEuro(m.c2.total)}</td></tr>
+                    <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">${formatEuro(dashData.tradeit.monthly.jan)}</td><td class="number">${formatEuro(dashData.tradeit.monthly.feb)}</td><td class="number">${formatEuro(dashData.tradeit.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.tradeit.valueYtd)}</td></tr>
+                `;
+            }
+
+            const winlineMonthlyBody = document.getElementById('winline-monthly-summary-body');
+            if (winlineMonthlyBody) {
+                const m = dashData.winline.monthlyByConversion;
+                winlineMonthlyBody.innerHTML = `
+                    <tr><td>AL (€4.33)</td><td class="number">${formatEuro(m.al.jan)}</td><td class="number">${formatEuro(m.al.feb)}</td><td class="number">${formatEuro(m.al.mar)}</td><td class="number highlight">${formatEuro(m.al.total)}</td></tr>
+                    <tr><td>KYC (€8.66)</td><td class="number">${formatEuro(m.kyc.jan)}</td><td class="number">${formatEuro(m.kyc.feb)}</td><td class="number">${formatEuro(m.kyc.mar)}</td><td class="number highlight">${formatEuro(m.kyc.total)}</td></tr>
+                    <tr><td>FTD (€121.10)</td><td class="number">${formatEuro(m.ftd.jan)}</td><td class="number">${formatEuro(m.ftd.feb)}</td><td class="number">${formatEuro(m.ftd.mar)}</td><td class="number highlight">${formatEuro(m.ftd.total)}</td></tr>
+                    <tr><td>2nd Dep (€4.33)</td><td class="number">${formatEuro(m.dep2.jan)}</td><td class="number">${formatEuro(m.dep2.feb)}</td><td class="number">${formatEuro(m.dep2.mar)}</td><td class="number highlight">${formatEuro(m.dep2.total)}</td></tr>
+                    <tr><td>Bet (€4.33)</td><td class="number">${formatEuro(m.bet.jan)}</td><td class="number">${formatEuro(m.bet.feb)}</td><td class="number">${formatEuro(m.bet.mar)}</td><td class="number highlight">${formatEuro(m.bet.total)}</td></tr>
+                    <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">${formatEuro(dashData.winline.monthly.jan)}</td><td class="number">${formatEuro(dashData.winline.monthly.feb)}</td><td class="number">${formatEuro(dashData.winline.monthly.mar)}</td><td class="number highlight">${formatEuro(dashData.winline.valueYtd)}</td></tr>
+                `;
+            }
+
+            const whitemarketMonthlyBody = document.getElementById('whitemarket-monthly-summary-body');
+            if (whitemarketMonthlyBody) {
+                const m = dashData.whitemarket.monthlyByConversion;
+                whitemarketMonthlyBody.innerHTML = `
+                    <tr><td>Jan</td><td class="number">${formatEuro(m.al.jan)}</td><td class="number">${formatEuro(m.c1.jan)}</td><td class="number">${formatEuro(m.c2.jan)}</td><td class="number">${formatEuro(m.c3.jan)}</td><td class="number highlight">${formatEuro(dashData.whitemarket.monthly.jan)}</td></tr>
+                    <tr><td>Feb</td><td class="number">${formatEuro(m.al.feb)}</td><td class="number">${formatEuro(m.c1.feb)}</td><td class="number">${formatEuro(m.c2.feb)}</td><td class="number">${formatEuro(m.c3.feb)}</td><td class="number highlight">${formatEuro(dashData.whitemarket.monthly.feb)}</td></tr>
+                    <tr><td>Mar*</td><td class="number">${formatEuro(m.al.mar)}</td><td class="number">${formatEuro(m.c1.mar)}</td><td class="number">${formatEuro(m.c2.mar)}</td><td class="number">${formatEuro(m.c3.mar)}</td><td class="number highlight">${formatEuro(dashData.whitemarket.monthly.mar)}</td></tr>
+                    <tr style="border-top: 2px solid var(--accent); font-weight: 700;"><td>Total</td><td class="number">${formatEuro(m.al.total)}</td><td class="number">${formatEuro(m.c1.total)}</td><td class="number">${formatEuro(m.c2.total)}</td><td class="number">${formatEuro(m.c3.total)}</td><td class="number highlight">${formatEuro(dashData.whitemarket.valueYtd)}</td></tr>
+                `;
+            }
+
+            const combinedWeeklyBody = document.getElementById('combined-weekly-trend-body');
+            const combinedWeeklyFoot = document.getElementById('combined-weekly-trend-foot');
+            if (combinedWeeklyBody) {
+                let html = '';
+                dashData.weekLabels.forEach((label, idx) => {
+                    const t = dashData.tradeit.weeklyValues[idx] || 0;
+                    const w = dashData.winline.weeklyValues[idx] || 0;
+                    const wm = dashData.whitemarket.weeklyValues[idx] || 0;
+                    const total = dashData.portfolio.weeklyValues[idx] || 0;
+                    html += `<tr><td>${label}</td><td class="number">${formatEuro(t)}</td><td class="number">${formatEuro(w)}</td><td class="number">${formatEuro(wm)}</td><td class="number">${formatEuro(total)}</td>${wowCellHtml(total, dashData.portfolio.weeklyValues[idx - 1])}</tr>`;
+                });
+                combinedWeeklyBody.innerHTML = html;
+            }
+            if (combinedWeeklyFoot) {
+                const tTotal = dashData.tradeit.weeklyValues.reduce((a, b) => a + b, 0);
+                const wTotal = dashData.winline.weeklyValues.reduce((a, b) => a + b, 0);
+                const wmTotal = dashData.whitemarket.weeklyValues.reduce((a, b) => a + b, 0);
+                const pTotal = dashData.portfolio.weeklyValues.reduce((a, b) => a + b, 0);
+                combinedWeeklyFoot.innerHTML = `<tr style="font-weight: bold; border-top: 2px solid var(--border);"><td>TOTAL</td><td class="number">${formatEuro(tTotal)}</td><td class="number">${formatEuro(wTotal)}</td><td class="number">${formatEuro(wmTotal)}</td><td class="number">${formatEuro(pTotal)}</td><td class="number">—</td></tr>`;
+            }
+
+            const tradeitWeeklyBody = document.getElementById('tradeit-weekly-trend-body');
+            const tradeitWeeklyFoot = document.getElementById('tradeit-weekly-trend-foot');
+            if (tradeitWeeklyBody) {
+                const s = dashData.tradeit.weeklyByConversion;
+                let html = '';
+                dashData.weekLabels.forEach((label, idx) => {
+                    const alC = s.al.counts[idx] || 0;
+                    const c1C = s.c1.counts[idx] || 0;
+                    const c2C = s.c2.counts[idx] || 0;
+                    const totalC = Math.round(alC + c1C + c2C);
+                    const alV = s.al.values[idx] || 0;
+                    const c1V = s.c1.values[idx] || 0;
+                    const c2V = s.c2.values[idx] || 0;
+                    const totalV = dashData.tradeit.weeklyValues[idx] || 0;
+                    html += `<tr><td>${label}</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(c1C)}</td><td class="number">${formatInt(c2C)}</td><td class="number">${formatInt(totalC)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(c1V)}</td><td class="number">${formatEuro(c2V)}</td><td class="number">${formatEuro(totalV)}</td>${wowCellHtml(totalV, dashData.tradeit.weeklyValues[idx - 1])}</tr>`;
+                });
+                tradeitWeeklyBody.innerHTML = html;
+            }
+            if (tradeitWeeklyFoot) {
+                const s = dashData.tradeit.weeklyByConversion;
+                const alC = s.al.counts.reduce((a, b) => a + b, 0);
+                const c1C = s.c1.counts.reduce((a, b) => a + b, 0);
+                const c2C = s.c2.counts.reduce((a, b) => a + b, 0);
+                const alV = s.al.values.reduce((a, b) => a + b, 0);
+                const c1V = s.c1.values.reduce((a, b) => a + b, 0);
+                const c2V = s.c2.values.reduce((a, b) => a + b, 0);
+                const totalV = dashData.tradeit.weeklyValues.reduce((a, b) => a + b, 0);
+                tradeitWeeklyFoot.innerHTML = `<tr style="font-weight: bold; border-top: 2px solid var(--border);"><td>Total</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(c1C)}</td><td class="number">${formatInt(c2C)}</td><td class="number">${formatInt(alC + c1C + c2C)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(c1V)}</td><td class="number">${formatEuro(c2V)}</td><td class="number">${formatEuro(totalV)}</td><td class="number">—</td></tr>`;
+            }
+
+            const winlineWeeklyBody = document.getElementById('winline-weekly-trend-body');
+            const winlineWeeklyFoot = document.getElementById('winline-weekly-trend-foot');
+            if (winlineWeeklyBody) {
+                const s = dashData.winline.weeklyByConversion;
+                let html = '';
+                dashData.weekLabels.forEach((label, idx) => {
+                    const alC = s.al.counts[idx] || 0;
+                    const kycC = s.kyc.counts[idx] || 0;
+                    const ftdC = s.ftd.counts[idx] || 0;
+                    const dep2C = s.dep2.counts[idx] || 0;
+                    const betC = s.bet.counts[idx] || 0;
+                    const totalC = Math.round(alC + kycC + ftdC + dep2C + betC);
+                    const alV = s.al.values[idx] || 0;
+                    const kycV = s.kyc.values[idx] || 0;
+                    const ftdV = s.ftd.values[idx] || 0;
+                    const dep2V = s.dep2.values[idx] || 0;
+                    const betV = s.bet.values[idx] || 0;
+                    const totalV = dashData.winline.weeklyValues[idx] || 0;
+                    html += `<tr><td>${label}</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(kycC)}</td><td class="number">${formatInt(ftdC)}</td><td class="number">${formatInt(dep2C)}</td><td class="number">${formatInt(betC)}</td><td class="number">${formatInt(totalC)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(kycV)}</td><td class="number">${formatEuro(ftdV)}</td><td class="number">${formatEuro(dep2V)}</td><td class="number">${formatEuro(betV)}</td><td class="number">${formatEuro(totalV)}</td>${wowCellHtml(totalV, dashData.winline.weeklyValues[idx - 1])}</tr>`;
+                });
+                winlineWeeklyBody.innerHTML = html;
+            }
+            if (winlineWeeklyFoot) {
+                const s = dashData.winline.weeklyByConversion;
+                const alC = s.al.counts.reduce((a, b) => a + b, 0);
+                const kycC = s.kyc.counts.reduce((a, b) => a + b, 0);
+                const ftdC = s.ftd.counts.reduce((a, b) => a + b, 0);
+                const dep2C = s.dep2.counts.reduce((a, b) => a + b, 0);
+                const betC = s.bet.counts.reduce((a, b) => a + b, 0);
+                const totalC = alC + kycC + ftdC + dep2C + betC;
+                const alV = s.al.values.reduce((a, b) => a + b, 0);
+                const kycV = s.kyc.values.reduce((a, b) => a + b, 0);
+                const ftdV = s.ftd.values.reduce((a, b) => a + b, 0);
+                const dep2V = s.dep2.values.reduce((a, b) => a + b, 0);
+                const betV = s.bet.values.reduce((a, b) => a + b, 0);
+                const totalV = dashData.winline.weeklyValues.reduce((a, b) => a + b, 0);
+                winlineWeeklyFoot.innerHTML = `<tr style="font-weight: bold; border-top: 2px solid var(--border);"><td>TOTAL</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(kycC)}</td><td class="number">${formatInt(ftdC)}</td><td class="number">${formatInt(dep2C)}</td><td class="number">${formatInt(betC)}</td><td class="number">${formatInt(totalC)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(kycV)}</td><td class="number">${formatEuro(ftdV)}</td><td class="number">${formatEuro(dep2V)}</td><td class="number">${formatEuro(betV)}</td><td class="number">${formatEuro(totalV)}</td><td class="number">—</td></tr>`;
+            }
+
+            const wmWeeklyBody = document.getElementById('whitemarket-weekly-trend-body');
+            const wmWeeklyFoot = document.getElementById('whitemarket-weekly-trend-foot');
+            if (wmWeeklyBody) {
+                const s = dashData.whitemarket.weeklyByConversion;
+                let html = '';
+                dashData.weekLabels.forEach((label, idx) => {
+                    const alC = s.al.counts[idx] || 0;
+                    const c1C = s.c1.counts[idx] || 0;
+                    const c2C = s.c2.counts[idx] || 0;
+                    const c3C = s.c3.counts[idx] || 0;
+                    const alV = s.al.values[idx] || 0;
+                    const c1V = s.c1.values[idx] || 0;
+                    const c2V = s.c2.values[idx] || 0;
+                    const c3V = s.c3.values[idx] || 0;
+                    const totalV = dashData.whitemarket.weeklyValues[idx] || 0;
+                    html += `<tr><td>${label}</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(c1C)}</td><td class="number">${formatInt(c2C)}</td><td class="number">${formatInt(c3C)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(c1V)}</td><td class="number">${formatEuro(c2V)}</td><td class="number">${formatEuro(c3V)}</td><td class="number">${formatEuro(totalV)}</td>${wowCellHtml(totalV, dashData.whitemarket.weeklyValues[idx - 1])}</tr>`;
+                });
+                wmWeeklyBody.innerHTML = html;
+            }
+            if (wmWeeklyFoot) {
+                const s = dashData.whitemarket.weeklyByConversion;
+                const alC = s.al.counts.reduce((a, b) => a + b, 0);
+                const c1C = s.c1.counts.reduce((a, b) => a + b, 0);
+                const c2C = s.c2.counts.reduce((a, b) => a + b, 0);
+                const c3C = s.c3.counts.reduce((a, b) => a + b, 0);
+                const alV = s.al.values.reduce((a, b) => a + b, 0);
+                const c1V = s.c1.values.reduce((a, b) => a + b, 0);
+                const c2V = s.c2.values.reduce((a, b) => a + b, 0);
+                const c3V = s.c3.values.reduce((a, b) => a + b, 0);
+                const totalV = dashData.whitemarket.weeklyValues.reduce((a, b) => a + b, 0);
+                wmWeeklyFoot.innerHTML = `<tr style="font-weight: bold; border-top: 2px solid var(--border);"><td>TOTAL</td><td class="number">${formatInt(alC)}</td><td class="number">${formatInt(c1C)}</td><td class="number">${formatInt(c2C)}</td><td class="number">${formatInt(c3C)}</td><td class="number">${formatEuro(alV)}</td><td class="number">${formatEuro(c1V)}</td><td class="number">${formatEuro(c2V)}</td><td class="number">${formatEuro(c3V)}</td><td class="number">${formatEuro(totalV)}</td><td class="number">—</td></tr>`;
+            }
+        }
+
         // Core Functions
         let currentPartner = '';
 
@@ -1782,8 +2490,8 @@
             logo.style.display = l.show ? 'block' : 'none';
             
             if (partner === 'combined') {
-                h1.textContent = 'Combined — Brand Integration Portfolio';
-                h2.textContent = 'All Partners | Monthly € Value per Conversion';
+                h1.textContent = 'Portfolio Overview';
+                h2.textContent = 'All Partners | Jan–Mar 2026';
                 document.getElementById('combined-container').style.display = 'block';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'none';
@@ -1794,8 +2502,8 @@
                 destroyCharts('whitemarket');
                 initCombinedCharts();
             } else if (partner === 'tradeit') {
-                h1.textContent = 'Tradeit — Brand Integration Performance';
-                h2.textContent = 'NSM Analysis: Jan–Feb 2026 | € Value per Conversion';
+                h1.textContent = 'Tradeit';
+                h2.textContent = 'NSM Analysis | Jan–Mar 2026';
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'block';
                 document.getElementById('winline-container').style.display = 'none';
@@ -1806,8 +2514,8 @@
                 destroyCharts('whitemarket');
                 initTradeitCharts();
             } else if (partner === 'winline') {
-                h1.textContent = 'Winline — Brand Integration Performance';
-                h2.textContent = 'NSM Analysis: Jan–Mar 2026 | € Value per Conversion';
+                h1.textContent = 'Winline';
+                h2.textContent = 'NSM Analysis | Jan–Mar 2026';
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'block';
@@ -1818,8 +2526,8 @@
                 destroyCharts('whitemarket');
                 initWinlineCharts();
             } else if (partner === 'whitemarket') {
-                h1.textContent = 'WhiteMarket — Brand Integration Performance';
-                h2.textContent = 'NSM Analysis: Jan–Mar 2026 | € Value per Conversion';
+                h1.textContent = 'WhiteMarket';
+                h2.textContent = 'NSM Analysis | Jan–Mar 2026';
                 document.getElementById('combined-container').style.display = 'none';
                 document.getElementById('tradeit-container').style.display = 'none';
                 document.getElementById('winline-container').style.display = 'none';
@@ -1896,28 +2604,58 @@
 
         // Chart Initialization (Combined)
         function initCombinedCharts() {
+            if (Object.keys(charts.combined).length > 0) return;
+
+            const monthlyLabels = dashData ? MONTH_LABELS : ['Jan \'26', 'Feb \'26', 'Mar \'26*'];
+            const winlineMonthly = dashData ? [dashData.winline.monthly.jan, dashData.winline.monthly.feb, dashData.winline.monthly.mar] : [138422, 158499, 120416];
+            const tradeitMonthly = dashData ? [dashData.tradeit.monthly.jan, dashData.tradeit.monthly.feb, dashData.tradeit.monthly.mar] : [12255, 13444, 68719];
+            const whitemarketMonthly = dashData ? [dashData.whitemarket.monthly.jan, dashData.whitemarket.monthly.feb, dashData.whitemarket.monthly.mar] : [1542, 1606, 1113];
+            const groupedEfficiency = dashData ? [dashData.winline.eurPer1kEbu, dashData.tradeit.eurPer1kEbu, dashData.whitemarket.eurPer1kEbu] : [662, 62, 43];
+            const weeklyLabels = dashData ? dashData.weekLabels : ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'];
+            const weeklyWinline = dashData ? dashData.winline.weeklyValues : [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779];
+            const weeklyTradeit = dashData ? dashData.tradeit.weeklyValues : [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002];
+            const weeklyWhiteMarket = dashData ? dashData.whitemarket.weeklyValues : [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162];
+
+            const winlineBreakdown = dashData
+                ? [
+                    Math.round(dashData.winline.monthlyByConversion.al.total),
+                    Math.round(dashData.winline.monthlyByConversion.kyc.total),
+                    Math.round(dashData.winline.monthlyByConversion.ftd.total),
+                    Math.round(dashData.winline.monthlyByConversion.dep2.total),
+                    Math.round(dashData.winline.monthlyByConversion.bet.total)
+                ]
+                : [58715, 7699, 83075, 153875, 113975];
+
+            const tradeitBreakdown = dashData
+                ? [
+                    Math.round(dashData.tradeit.monthlyByConversion.al.total),
+                    Math.round(dashData.tradeit.monthlyByConversion.c1.total),
+                    Math.round(dashData.tradeit.monthlyByConversion.c2.total)
+                ]
+                : [4552.78, 107.60, 7595.00];
+
             const combinedMonthlyCtx = document.getElementById('combinedMonthlySummaryChart');
             if (combinedMonthlyCtx) {
                 charts.combined.monthlySummary = new Chart(combinedMonthlyCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
+                        labels: monthlyLabels,
                         datasets: [
                             {
                                 label: 'Winline',
-                                data: [138422, 158499, 120416],
+                                data: winlineMonthly,
                                 backgroundColor: '#2563eb',
                                 borderRadius: 4
                             },
                             {
                                 label: 'Tradeit',
-                                data: [12255, 13444, 68719],
+                                data: tradeitMonthly,
                                 backgroundColor: '#059669',
                                 borderRadius: 4
                             },
                             {
                                 label: 'WhiteMarket',
-                                data: [1542, 1606, 1113],
+                                data: whitemarketMonthly,
                                 backgroundColor: '#7c3aed',
                                 borderRadius: 4
                             }
@@ -1944,18 +2682,16 @@
                 });
             }
 
-            if (Object.keys(charts.combined).length > 0) return;
-
             // Stacked Bar Chart
             const ctxStacked = document.getElementById('combinedStackedBarChart').getContext('2d');
             charts.combined.stackedBar = new Chart(ctxStacked, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
+                    labels: monthlyLabels,
                     datasets: [
-                        { label: 'Winline', data: [138422, 158499, 120416], backgroundColor: '#2563eb', borderRadius: 4 },
-                        { label: 'Tradeit', data: [12255, 13444, 68719], backgroundColor: '#059669', borderRadius: 4 },
-                        { label: 'WhiteMarket', data: [1542, 1606, 1113], backgroundColor: '#7c3aed', borderRadius: 4 }
+                        { label: 'Winline', data: winlineMonthly, backgroundColor: '#2563eb', borderRadius: 4 },
+                        { label: 'Tradeit', data: tradeitMonthly, backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'WhiteMarket', data: whitemarketMonthly, backgroundColor: '#7c3aed', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -1976,11 +2712,9 @@
             charts.combined.groupedBar = new Chart(ctxGrouped, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan \'26', 'Feb \'26', 'Mar \'26*'],
+                    labels: ['Winline', 'Tradeit', 'WhiteMarket'],
                     datasets: [
-                        { label: 'Winline', data: [819, null, null], backgroundColor: '#2563eb', borderRadius: 4 },
-                        { label: 'Tradeit', data: [21, 22, null], backgroundColor: '#059669', borderRadius: 4 },
-                        { label: 'WhiteMarket (No EBU data)', data: [null, null, null], backgroundColor: '#7c3aed', borderRadius: 4 }
+                        { label: '€/1K EBU (YTD)', data: groupedEfficiency, backgroundColor: ['#2563eb', '#059669', '#7c3aed'], borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -2011,7 +2745,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (€4.33)', 'KYC (€8.66)', 'FTD (€121.10)', '2nd Dep (€4.33)', 'Bet* (€4.33)'],
-                    datasets: [{ data: [58715, 7699, 83075, 153875, 113975], backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
+                    datasets: [{ data: winlineBreakdown, backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: pieOptions
             });
@@ -2022,7 +2756,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (€0.38)', 'C1 (€0.04)', 'C2 (€8.75)'],
-                    datasets: [{ data: [4552.78, 107.60, 7595.00], backgroundColor: ['#059669', '#d97706', '#2563eb'], borderColor: '#ffffff', borderWidth: 2 }]
+                    datasets: [{ data: tradeitBreakdown, backgroundColor: ['#059669', '#d97706', '#2563eb'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: pieOptions
             });
@@ -2032,11 +2766,11 @@
             charts.combined.weeklyChart = new Chart(ctxCombinedWeekly, {
                 type: 'bar',
                 data: {
-                    labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                    labels: weeklyLabels,
                     datasets: [
-                        { label: 'Winline', data: [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779], backgroundColor: '#2563eb' },
-                        { label: 'Tradeit', data: [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002], backgroundColor: '#059669' },
-                        { label: 'WhiteMarket', data: [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162], backgroundColor: '#7c3aed' }
+                        { label: 'Winline', data: weeklyWinline, backgroundColor: '#2563eb' },
+                        { label: 'Tradeit', data: weeklyTradeit, backgroundColor: '#059669' },
+                        { label: 'WhiteMarket', data: weeklyWhiteMarket, backgroundColor: '#7c3aed' }
                     ]
                 },
                 options: {
@@ -2056,6 +2790,14 @@
 
         // Chart Initialization (Tradeit)
         function initTradeitCharts() {
+            const tradeitMonthlyByConv = dashData
+                ? [
+                    [Math.round(dashData.tradeit.monthlyByConversion.c2.jan), Math.round(dashData.tradeit.monthlyByConversion.c2.feb), Math.round(dashData.tradeit.monthlyByConversion.c2.mar)],
+                    [Math.round(dashData.tradeit.monthlyByConversion.c1.jan), Math.round(dashData.tradeit.monthlyByConversion.c1.feb), Math.round(dashData.tradeit.monthlyByConversion.c1.mar)],
+                    [Math.round(dashData.tradeit.monthlyByConversion.al.jan), Math.round(dashData.tradeit.monthlyByConversion.al.feb), Math.round(dashData.tradeit.monthlyByConversion.al.mar)]
+                ]
+                : [[7595, 7665, 10588], [108, 142, 762], [4553, 5637, 57370]];
+
             const tradeitMonthlyCtx = document.getElementById('tradeitMonthlySummaryChart');
             if (tradeitMonthlyCtx) {
                 charts.tradeit.monthlySummary = new Chart(tradeitMonthlyCtx, {
@@ -2065,18 +2807,18 @@
                         datasets: [
                             {
                                 label: 'C2 (€8.75)',
-                                data: [7595, 7665, 10588],
+                                data: tradeitMonthlyByConv[0],
                                 backgroundColor: '#d97706',
                                 borderRadius: {topLeft: 6, topRight: 6}
                             },
                             {
                                 label: 'C1 (€0.04)',
-                                data: [108, 142, 762],
+                                data: tradeitMonthlyByConv[1],
                                 backgroundColor: '#059669'
                             },
                             {
                                 label: 'AL (€0.38)',
-                                data: [4553, 5637, 57370],
+                                data: tradeitMonthlyByConv[2],
                                 backgroundColor: '#2563eb'
                             }
                         ]
@@ -2187,7 +2929,15 @@
                 const estVal = (tradeitCdpData[0].data[i] * 0.38) + (tradeitCdpData[2].data[i] * 0.04) + (tradeitCdpData[4].data[i] * 8.75);
                 estValues.push(estVal); actualValues.push(null); ebuLineData.push(null);
             }
-            estValues.push(null, null); actualValues.push(12255, 13444); ebuLineData.push(21, 22);
+            estValues.push(null, null);
+            actualValues.push(
+                dashData ? dashData.tradeit.monthly.jan : 12255,
+                dashData ? dashData.tradeit.monthly.feb : 13444
+            );
+            ebuLineData.push(
+                dashData && dashData.tradeit.monthlyEbu.jan ? Math.round((dashData.tradeit.monthly.jan / dashData.tradeit.monthlyEbu.jan) * 1000) : 21,
+                dashData && dashData.tradeit.monthlyEbu.feb ? Math.round((dashData.tradeit.monthly.feb / dashData.tradeit.monthlyEbu.feb) * 1000) : 22
+            );
 
             const ctxNsmTrend = document.getElementById('nsmTrendChart').getContext('2d');
             charts.tradeit.nsmTrend = new Chart(ctxNsmTrend, {
@@ -2263,6 +3013,47 @@
         function initWinlineCharts() {
             if (Object.keys(charts.winline).length > 0) return;
 
+            const winlineActualMonthly = dashData
+                ? [dashData.winline.monthly.jan, dashData.winline.monthly.feb, dashData.winline.monthly.mar]
+                : [138422, 158499, 120416];
+            const winlineMonthlyByConv = dashData
+                ? [
+                    [Math.round(dashData.winline.monthlyByConversion.al.jan), Math.round(dashData.winline.monthlyByConversion.al.feb), Math.round(dashData.winline.monthlyByConversion.al.mar)],
+                    [Math.round(dashData.winline.monthlyByConversion.kyc.jan), Math.round(dashData.winline.monthlyByConversion.kyc.feb), Math.round(dashData.winline.monthlyByConversion.kyc.mar)],
+                    [Math.round(dashData.winline.monthlyByConversion.ftd.jan), Math.round(dashData.winline.monthlyByConversion.ftd.feb), Math.round(dashData.winline.monthlyByConversion.ftd.mar)],
+                    [Math.round(dashData.winline.monthlyByConversion.dep2.jan), Math.round(dashData.winline.monthlyByConversion.dep2.feb), Math.round(dashData.winline.monthlyByConversion.dep2.mar)],
+                    [Math.round(dashData.winline.monthlyByConversion.bet.jan), Math.round(dashData.winline.monthlyByConversion.bet.feb), Math.round(dashData.winline.monthlyByConversion.bet.mar)]
+                ]
+                : [[20823, 20113, 17779], [2789, 2979, 1931], [29185, 33908, 19982], [49535, 57996, 46344], [36091, 43504, 34380]];
+
+            const winlineBreakdown = dashData
+                ? [
+                    Math.round(dashData.winline.monthlyByConversion.al.total),
+                    Math.round(dashData.winline.monthlyByConversion.kyc.total),
+                    Math.round(dashData.winline.monthlyByConversion.ftd.total),
+                    Math.round(dashData.winline.monthlyByConversion.dep2.total),
+                    Math.round(dashData.winline.monthlyByConversion.bet.total)
+                ]
+                : [58715, 7699, 83075, 153875, 113975];
+
+            const winlineWeeklyByConv = dashData
+                ? {
+                    al: dashData.winline.weeklyByConversion.al.values.map((v) => Math.round(v)),
+                    kyc: dashData.winline.weeklyByConversion.kyc.values.map((v) => Math.round(v)),
+                    ftd: dashData.winline.weeklyByConversion.ftd.values.map((v) => Math.round(v)),
+                    dep2: dashData.winline.weeklyByConversion.dep2.values.map((v) => Math.round(v)),
+                    bet: dashData.winline.weeklyByConversion.bet.values.map((v) => Math.round(v))
+                }
+                : {
+                    al: [7954, 5369, 3356, 2685, 1459, 14155, 2836, 2031, 8422, 7119, 2511, 818],
+                    kyc: [1247, 762, 407, 173, 199, 2148, 494, 182, 840, 831, 312, 104],
+                    ftd: [9204, 7145, 6297, 4723, 1816, 21435, 5207, 5207, 8477, 7993, 4117, 1453],
+                    dep2: [19494, 14237, 8972, 4984, 1849, 37052, 11756, 6919, 17078, 22503, 7920, 1113],
+                    bet: [4663, 9266, 11739, 7287, 3135, 14796, 14583, 9587, 6313, 18745, 11570, 2291]
+                };
+
+            const weeklyLabels = dashData ? dashData.weekLabels : ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'];
+
             // NSM Trend
             const ctxNsmTrend = document.getElementById('winlineNsmTrendChart').getContext('2d');
             charts.winline.nsmTrend = new Chart(ctxNsmTrend, {
@@ -2271,7 +3062,7 @@
                     labels: ['Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26*'],
                     datasets: [
                         { label: 'Estimated € Value (CDP)', data: [376386.96, 241867.14, 227231.37, 177782.27, null, null, null], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
-                        { label: 'Actual € Value (Missions)', data: [null, null, null, null, 138422, 158499, 120416], backgroundColor: '#2563eb', borderRadius: 4 }
+                        { label: 'Actual € Value (Missions)', data: [null, null, null, null, ...winlineActualMonthly], backgroundColor: '#2563eb', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -2293,7 +3084,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (14.1%)', 'KYC (1.8%)', 'FTD (19.9%)', '2nd Dep (36.9%)', 'Bet* (27.3%)'],
-                    datasets: [{ data: [58715, 7699, 83075, 153875, 113975], backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
+                    datasets: [{ data: winlineBreakdown, backgroundColor: ['#059669', '#3b82f6', '#2563eb', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
@@ -2339,11 +3130,11 @@
                     data: {
                         labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
                         datasets: [
-                            { label: 'AL', data: [20823, 20113, 17779], backgroundColor: '#059669', borderRadius: 4 },
-                            { label: 'KYC', data: [2789, 2979, 1931], backgroundColor: '#3b82f6', borderRadius: 4 },
-                            { label: 'FTD', data: [29185, 33908, 19982], backgroundColor: '#2563eb', borderRadius: 4 },
-                            { label: '2nd Dep', data: [49535, 57996, 46344], backgroundColor: '#d97706', borderRadius: 4 },
-                            { label: 'Bet', data: [36091, 43504, 34380], backgroundColor: '#7c3aed', borderRadius: 4 }
+                            { label: 'AL', data: winlineMonthlyByConv[0], backgroundColor: '#059669', borderRadius: 4 },
+                            { label: 'KYC', data: winlineMonthlyByConv[1], backgroundColor: '#3b82f6', borderRadius: 4 },
+                            { label: 'FTD', data: winlineMonthlyByConv[2], backgroundColor: '#2563eb', borderRadius: 4 },
+                            { label: '2nd Dep', data: winlineMonthlyByConv[3], backgroundColor: '#d97706', borderRadius: 4 },
+                            { label: 'Bet', data: winlineMonthlyByConv[4], backgroundColor: '#7c3aed', borderRadius: 4 }
                         ]
                     },
                     options: {
@@ -2387,13 +3178,13 @@
                 charts.winline.weeklyPerformance = new Chart(ctxWlWeekly.getContext('2d'), {
                     type: 'bar',
                     data: {
-                        labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                        labels: weeklyLabels,
                         datasets: [
-                            { label: 'AL €', data: [7954, 5369, 3356, 2685, 1459, 14155, 2836, 2031, 8422, 7119, 2511, 818], backgroundColor: '#059669' },
-                            { label: 'KYC €', data: [1247, 762, 407, 173, 199, 2148, 494, 182, 840, 831, 312, 104], backgroundColor: '#3b82f6' },
-                            { label: 'FTD €', data: [9204, 7145, 6297, 4723, 1816, 21435, 5207, 5207, 8477, 7993, 4117, 1453], backgroundColor: '#2563eb' },
-                            { label: '2nd Dep €', data: [19494, 14237, 8972, 4984, 1849, 37052, 11756, 6919, 17078, 22503, 7920, 1113], backgroundColor: '#d97706' },
-                            { label: 'Bet €', data: [4663, 9266, 11739, 7287, 3135, 14796, 14583, 9587, 6313, 18745, 11570, 2291], backgroundColor: '#7c3aed' }
+                            { label: 'AL €', data: winlineWeeklyByConv.al, backgroundColor: '#059669' },
+                            { label: 'KYC €', data: winlineWeeklyByConv.kyc, backgroundColor: '#3b82f6' },
+                            { label: 'FTD €', data: winlineWeeklyByConv.ftd, backgroundColor: '#2563eb' },
+                            { label: '2nd Dep €', data: winlineWeeklyByConv.dep2, backgroundColor: '#d97706' },
+                            { label: 'Bet €', data: winlineWeeklyByConv.bet, backgroundColor: '#7c3aed' }
                         ]
                     },
                     options: {
@@ -2416,6 +3207,40 @@
         function initWhiteMarketCharts() {
             if (Object.keys(charts.whitemarket).length > 0) return;
 
+            const wmMonthly = dashData
+                ? [dashData.whitemarket.monthly.jan, dashData.whitemarket.monthly.feb, dashData.whitemarket.monthly.mar]
+                : [1542, 1606, 1113];
+            const wmBreakdown = dashData
+                ? [
+                    Math.round(dashData.whitemarket.monthlyByConversion.al.total),
+                    Math.round(dashData.whitemarket.monthlyByConversion.c1.total),
+                    Math.round(dashData.whitemarket.monthlyByConversion.c2.total),
+                    Math.round(dashData.whitemarket.monthlyByConversion.c3.total)
+                ]
+                : [2094, 67, 1550, 550];
+            const wmMonthlyByConv = dashData
+                ? [
+                    [Math.round(dashData.whitemarket.monthlyByConversion.al.jan), Math.round(dashData.whitemarket.monthlyByConversion.al.feb), Math.round(dashData.whitemarket.monthlyByConversion.al.mar)],
+                    [Math.round(dashData.whitemarket.monthlyByConversion.c1.jan), Math.round(dashData.whitemarket.monthlyByConversion.c1.feb), Math.round(dashData.whitemarket.monthlyByConversion.c1.mar)],
+                    [Math.round(dashData.whitemarket.monthlyByConversion.c2.jan), Math.round(dashData.whitemarket.monthlyByConversion.c2.feb), Math.round(dashData.whitemarket.monthlyByConversion.c2.mar)],
+                    [Math.round(dashData.whitemarket.monthlyByConversion.c3.jan), Math.round(dashData.whitemarket.monthlyByConversion.c3.feb), Math.round(dashData.whitemarket.monthlyByConversion.c3.mar)]
+                ]
+                : [[711, 652, 731], [31, 17, 19], [550, 688, 313], [250, 250, 50]];
+            const wmWeeklyByConv = dashData
+                ? {
+                    al: dashData.whitemarket.weeklyByConversion.al.values.map((v) => Math.round(v)),
+                    c1: dashData.whitemarket.weeklyByConversion.c1.values.map((v) => Math.round(v)),
+                    c2: dashData.whitemarket.weeklyByConversion.c2.values.map((v) => Math.round(v)),
+                    c3: dashData.whitemarket.weeklyByConversion.c3.values.map((v) => Math.round(v))
+                }
+                : {
+                    al: [147, 154, 105, 122, 183, 209, 143, 157, 143, 387, 195, 149],
+                    c1: [14, 5, 2, 2, 9, 9, 4, 3, 1, 16, 3, 1],
+                    c2: [88, 125, 113, 125, 100, 225, 238, 138, 88, 225, 75, 13],
+                    c3: [50, 50, 150, 0, 0, 100, 50, 0, 100, 0, 50, 0]
+                };
+            const weeklyLabels = dashData ? dashData.weekLabels : ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'];
+
             // NSM Trend (Section 2)
             const ctxNsmTrend = document.getElementById('whiteMarketNsmTrendChart').getContext('2d');
             charts.whitemarket.nsmTrend = new Chart(ctxNsmTrend, {
@@ -2423,7 +3248,7 @@
                 data: {
                     labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
                     datasets: [
-                        { label: '€ Value', data: [1542, 1606, 1113], backgroundColor: '#7c3aed', borderRadius: 4 }
+                        { label: '€ Value', data: wmMonthly, backgroundColor: '#7c3aed', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -2445,7 +3270,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['AL (49.1%)', 'C1 (1.6%)', 'C2 (36.4%)', 'C3 (12.9%)'],
-                    datasets: [{ data: [2094, 67, 1550, 550], backgroundColor: ['#059669', '#3b82f6', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
+                    datasets: [{ data: wmBreakdown, backgroundColor: ['#059669', '#3b82f6', '#d97706', '#7c3aed'], borderColor: '#ffffff', borderWidth: 2 }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
@@ -2463,10 +3288,10 @@
                 data: {
                     labels: ['Jan 26', 'Feb 26', 'Mar 26*'],
                     datasets: [
-                        { label: 'AL', data: [711, 652, 731], backgroundColor: '#059669', borderRadius: 4 },
-                        { label: 'C1', data: [31, 17, 19], backgroundColor: '#3b82f6', borderRadius: 4 },
-                        { label: 'C2', data: [550, 688, 313], backgroundColor: '#d97706', borderRadius: 4 },
-                        { label: 'C3', data: [250, 250, 50], backgroundColor: '#7c3aed', borderRadius: 4 }
+                        { label: 'AL', data: wmMonthlyByConv[0], backgroundColor: '#059669', borderRadius: 4 },
+                        { label: 'C1', data: wmMonthlyByConv[1], backgroundColor: '#3b82f6', borderRadius: 4 },
+                        { label: 'C2', data: wmMonthlyByConv[2], backgroundColor: '#d97706', borderRadius: 4 },
+                        { label: 'C3', data: wmMonthlyByConv[3], backgroundColor: '#7c3aed', borderRadius: 4 }
                     ]
                 },
                 options: {
@@ -2506,12 +3331,12 @@
             charts.whitemarket.weeklyPerformance = new Chart(ctxWeekly, {
                 type: 'bar',
                 data: {
-                    labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
+                    labels: weeklyLabels,
                     datasets: [
-                        { label: 'AL €', data: [147, 154, 105, 122, 183, 209, 143, 157, 143, 387, 195, 149], backgroundColor: '#059669' },
-                        { label: 'C1 €', data: [14, 5, 2, 2, 9, 9, 4, 3, 1, 16, 3, 1], backgroundColor: '#3b82f6' },
-                        { label: 'C2 €', data: [88, 125, 113, 125, 100, 225, 238, 138, 88, 225, 75, 13], backgroundColor: '#d97706' },
-                        { label: 'C3 €', data: [50, 50, 150, 0, 0, 100, 50, 0, 100, 0, 50, 0], backgroundColor: '#7c3aed' }
+                        { label: 'AL €', data: wmWeeklyByConv.al, backgroundColor: '#059669' },
+                        { label: 'C1 €', data: wmWeeklyByConv.c1, backgroundColor: '#3b82f6' },
+                        { label: 'C2 €', data: wmWeeklyByConv.c2, backgroundColor: '#d97706' },
+                        { label: 'C3 €', data: wmWeeklyByConv.c3, backgroundColor: '#7c3aed' }
                     ]
                 },
                 options: {
@@ -2529,6 +3354,12 @@
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderTables();
+            if (BQ_DATA) {
+                dashData = processData();
+                populateKPIs();
+                populateWoWMoM();
+                populateTables();
+            }
             switchPartner('combined'); // Load default
         });
 
