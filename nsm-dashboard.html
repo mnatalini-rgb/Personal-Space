@@ -161,12 +161,12 @@
         
         <div class="partner-selector-wrapper">
             <div class="partner-selector">
-                <button id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">Combined</button>
-                <button id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">Tradeit</button>
-                <button id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">Winline</button>
-                <button id="btn-whitemarket" class="partner-btn" onclick="switchPartner('whitemarket')">WhiteMarket</button>
-                <button id="btn-paysafe" class="partner-btn" onclick="switchPartner('paysafe')">PaySafe</button>
-                <button id="btn-roadmap" class="partner-btn" onclick="switchPartner('roadmap')" style="margin-left: auto; border-left: 2px solid var(--border); padding-left: 1.5rem;">Roadmap</button>
+                <button type="button" id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">Combined</button>
+                <button type="button" id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">Tradeit</button>
+                <button type="button" id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">Winline</button>
+                <button type="button" id="btn-whitemarket" class="partner-btn" onclick="switchPartner('whitemarket')">WhiteMarket</button>
+                <button type="button" id="btn-paysafe" class="partner-btn" onclick="switchPartner('paysafe')">PaySafe</button>
+                <button type="button" id="btn-roadmap" class="partner-btn" onclick="switchPartner('roadmap')" style="margin-left: auto; border-left: 2px solid var(--border); padding-left: 1.5rem;">Roadmap</button>
             </div>
         </div>
 
@@ -184,9 +184,9 @@
         <!-- COMBINED CONTAINER -->
         <div id="combined-container">
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchPartnerTab(event, 'combined', 'nsm')">📊 NSM Analysis</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'audience')">👥 Audience</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'combined', 'nsm')">📊 NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'audience')">👥 Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'funnel')">🔄 Funnel</button>
             </div>
             <div id="combined-tab-nsm" class="tab-content active">
                 <div class="section" id="combined-section-1">
@@ -393,17 +393,30 @@
         <div id="tradeit-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">976fe92b-0998-4a2a-86a6-f655bbab8f07</code></div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">📊 NSM Analysis</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">🔗 CDP Data</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'missions')">🎯 Missions</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'experiments')">🧪 Experiments</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'rewards')">🎁 Rewards</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'audience')">👥 Audience</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">📊 NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">🔗 CDP Data</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'missions')">🎯 Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'experiments')">🧪 Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'rewards')">🎁 Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'audience')">👥 Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'funnel')">🔄 Funnel</button>
             </div>
 
             <!-- TRADEIT NSM TAB -->
             <div id="tradeit-tab-nsm" class="tab-content active">
+                <div class="section region-filter-section" style="margin-top: 2rem; margin-bottom: 2rem;">
+                    <div class="partner-selector" id="nsmRegionFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
+                        <button type="button" class="partner-btn active" data-region="All Regions" onclick="switchTradeitRegion(this)">All Regions</button>
+                        <button type="button" class="partner-btn" data-region="EU" onclick="switchTradeitRegion(this)">EU</button>
+                        <button type="button" class="partner-btn" data-region="CIS" onclick="switchTradeitRegion(this)">CIS</button>
+                        <button type="button" class="partner-btn" data-region="CIS EXC" onclick="switchTradeitRegion(this)">CIS EXC</button>
+                        <button type="button" class="partner-btn" data-region="LATAM" onclick="switchTradeitRegion(this)">LATAM</button>
+                        <button type="button" class="partner-btn" data-region="NA" onclick="switchTradeitRegion(this)">NA</button>
+                        <button type="button" class="partner-btn" data-region="MENA" onclick="switchTradeitRegion(this)">MENA</button>
+                        <button type="button" class="partner-btn" data-region="APAC" onclick="switchTradeitRegion(this)">APAC</button>
+                    </div>
+                </div>
+
                 <div class="section" id="section-1">
                     <div class="kpi-hero-wrapper">
                         <div class="kpi-hero">
@@ -575,17 +588,6 @@
                 </div>
 
                 <!-- === PARTNER-SPECIFIC SECTIONS (7+) === -->
-                <div class="section region-filter-section" style="margin-top: 2rem; margin-bottom: 2rem;">
-                    <div class="partner-selector" id="missionsRegionFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto;">
-                        <button class="partner-btn active" data-region="All Regions">All Regions</button>
-                        <button class="partner-btn" data-region="EU">EU</button>
-                        <button class="partner-btn" data-region="CIS">CIS</button>
-                        <button class="partner-btn" data-region="LATAM">LATAM</button>
-                        <button class="partner-btn" data-region="NA">NA</button>
-                        <button class="partner-btn" data-region="MENA">MENA</button>
-                        <button class="partner-btn" data-region="APAC">APAC</button>
-                    </div>
-                </div>
 
                 <div class="section" id="section-7">
                     <h2 class="section-title">7. NSM Trend (Historical)</h2>
@@ -640,32 +642,6 @@
                     </p>
                     <div class="chart-container">
                         <canvas id="momChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="section" id="section-10">
-                    <h2 class="section-title">10. NA A/B Test (January)</h2>
-                    <div class="grid-2">
-                        <div class="ab-card">
-                            <h3>Group A (1000 FP)</h3>
-                            <div class="ab-stat"><span>EBU</span> <span>21,533</span></div>
-                            <div class="ab-stat"><span>Value Generated</span> <span>€591.67</span></div>
-                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€27.48</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span>5.113%</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span>0.817%</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span>0.088%</span></div>
-                        </div>
-                        <div class="ab-card" style="border-color: var(--accent);">
-                            <h3>Group B (2000 FP) - <span style="color:var(--text);">Winner</span></h3>
-                            <div class="ab-stat"><span>EBU</span> <span>21,667</span></div>
-                            <div class="ab-stat"><span>Value Generated</span> <span>€620.05</span></div>
-                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€28.62</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span class="highlight" style="color: var(--green);">5.617% (+9.9%)</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span style="color: var(--red);">0.078%</span></div>
-                        </div>
                     </div>
                 </div>
 
@@ -796,7 +772,7 @@
 
                 <div class="section">
                     <h2 class="section-title">All Event Types (Monthly Unique Users)</h2>
-                    <button class="show-all-btn" id="toggleRowsBtn" onclick="toggleTradeitMonths()">Show All Available Months</button>
+                    <button type="button" class="show-all-btn" id="toggleRowsBtn" onclick="toggleTradeitMonths()">Show All Available Months</button>
                     <div class="table-wrapper">
                         <table id="cdpTable">
                             <thead>
@@ -973,63 +949,8 @@
                     </div>
                 </div>
 
-                <div class="section">
-                    <h2 class="section-title">E. A/B Test — Group B (January NA)</h2>
-                    <div class="grid-2">
-                        <div class="ab-card">
-                            <h3>Group A (General Mission NA Jan26)</h3>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,101</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>176</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>19</span></div>
-                            <div class="ab-stat"><span>Total Value</span> <span>€592</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span>AL Rate</span> <span>5.11%</span></div>
-                        </div>
-                        <div class="ab-card" style="border-color: var(--accent);">
-                            <h3>Group B (General Mission Group B NA Jan26) - <span style="color:var(--text);">Winner</span></h3>
-                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,217</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>221</span></div>
-                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>17</span></div>
-                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€620 (+4.8%)</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span>AL Rate</span> <span class="highlight" style="color: var(--green);">5.62% (+9.9%)</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">F. Mystery Box Experiment (March)</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Comparing January/February Control against March Mystery Box Experiment for General missions. <em>AL Rate pending March EBU data. Downstream rates shown as % of AL.</em></p>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Region</th>
-                                    <th>Variant</th>
-                                    <th class="number">AL Count</th>
-                                    <th class="number">C1 Rate (of AL)</th>
-                                    <th class="number">C2 Rate (of AL)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>CIS</td><td>Control (Jan/Feb)</td><td class="number">17,191</td><td class="number">17.57%</td><td class="number">1.03%</td></tr>
-                                <tr><td>CIS</td><td>Mystery Box (Mar)</td><td class="number highlight">44,685</td><td class="number" style="color: var(--red);">9.00%</td><td class="number" style="color: var(--red);">0.16%</td></tr>
-                                
-                                <tr><td style="border-top: 1px solid var(--border);">NA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">4,889</td><td class="number" style="border-top: 1px solid var(--border);">18.16%</td><td class="number" style="border-top: 1px solid var(--border);">1.57%</td></tr>
-                                <tr><td>NA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,568</td><td class="number" style="color: var(--red);">9.58%</td><td class="number" style="color: var(--red);">0.55%</td></tr>
-
-                                <tr><td style="border-top: 1px solid var(--border);">MENA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">1,708</td><td class="number" style="border-top: 1px solid var(--border);">20.08%</td><td class="number" style="border-top: 1px solid var(--border);">1.11%</td></tr>
-                                <tr><td>MENA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,668</td><td class="number" style="color: var(--red);">9.03%</td><td class="number" style="color: var(--red);">0.19%</td></tr>
-
-                                <tr><td style="border-top: 1px solid var(--border);">APAC</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">3,027</td><td class="number" style="border-top: 1px solid var(--border);">13.64%</td><td class="number" style="border-top: 1px solid var(--border);">1.32%</td></tr>
-                                <tr><td>APAC</td><td>Mystery Box (Mar)</td><td class="number highlight">2,789</td><td class="number" style="color: var(--red);">7.49%</td><td class="number" style="color: var(--red);">0.22%</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Weekly Performance placeholder (Section G) — INSIDE Missions tab -->
                 <div class="section" id="weekly-performance-section">
-                    <h2 class="section-title">G. Weekly Performance Trend</h2>
+                    <h2 class="section-title">E. Weekly Performance Trend</h2>
                     <div class="insight-card">
                         <canvas id="weeklyPerformanceChart" height="100"></canvas>
                         
@@ -1087,10 +1008,85 @@
             </div>
 
             <div id="tradeit-tab-experiments" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Per-partner experiment tracking — A/B tests, reward variants, and mission optimisation results.</p>
+                <div class="section" id="section-10">
+                    <h2 class="section-title">1. NA A/B Test (January)</h2>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Group A (1000 FP)</h3>
+                            <div class="ab-stat"><span>EBU</span> <span>21,533</span></div>
+                            <div class="ab-stat"><span>Value Generated</span> <span>€591.67</span></div>
+                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span>€27.48</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span>5.113%</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span>0.817%</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span>0.088%</span></div>
+                        </div>
+                        <div class="ab-card" style="border-color: var(--accent);">
+                            <h3>Group B (2000 FP) - <span style="color:var(--text);">Winner</span></h3>
+                            <div class="ab-stat"><span>EBU</span> <span>21,667</span></div>
+                            <div class="ab-stat"><span>Value Generated</span> <span>€620.05</span></div>
+                            <div class="ab-stat"><span>Efficiency (€/1K EBU)</span> <span class="highlight">€28.62</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Rate</span> <span class="highlight" style="color: var(--green);">5.617% (+9.9%)</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade — €0.04">C1</span> Rate</span> <span class="highlight" style="color: var(--green);">1.020% (+25.6%)</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ — €8.75">C2</span> Rate</span> <span style="color: var(--red);">0.078%</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">2. Mystery Box Experiment (March)</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Comparing January/February Control against March Mystery Box Experiment for General missions. <em>AL Rate pending March EBU data. Downstream rates shown as % of AL.</em></p>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th>Variant</th>
+                                    <th class="number">AL Count</th>
+                                    <th class="number">C1 Rate (of AL)</th>
+                                    <th class="number">C2 Rate (of AL)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CIS</td><td>Control (Jan/Feb)</td><td class="number">17,191</td><td class="number">17.57%</td><td class="number">1.03%</td></tr>
+                                <tr><td>CIS</td><td>Mystery Box (Mar)</td><td class="number highlight">44,685</td><td class="number" style="color: var(--red);">9.00%</td><td class="number" style="color: var(--red);">0.16%</td></tr>
+                                
+                                <tr><td style="border-top: 1px solid var(--border);">NA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">4,889</td><td class="number" style="border-top: 1px solid var(--border);">18.16%</td><td class="number" style="border-top: 1px solid var(--border);">1.57%</td></tr>
+                                <tr><td>NA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,568</td><td class="number" style="color: var(--red);">9.58%</td><td class="number" style="color: var(--red);">0.55%</td></tr>
+
+                                <tr><td style="border-top: 1px solid var(--border);">MENA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">1,708</td><td class="number" style="border-top: 1px solid var(--border);">20.08%</td><td class="number" style="border-top: 1px solid var(--border);">1.11%</td></tr>
+                                <tr><td>MENA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,668</td><td class="number" style="color: var(--red);">9.03%</td><td class="number" style="color: var(--red);">0.19%</td></tr>
+
+                                <tr><td style="border-top: 1px solid var(--border);">APAC</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">3,027</td><td class="number" style="border-top: 1px solid var(--border);">13.64%</td><td class="number" style="border-top: 1px solid var(--border);">1.32%</td></tr>
+                                <tr><td>APAC</td><td>Mystery Box (Mar)</td><td class="number highlight">2,789</td><td class="number" style="color: var(--red);">7.49%</td><td class="number" style="color: var(--red);">0.22%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">3. A/B Test — Group B (January NA)</h2>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Group A (General Mission NA Jan26)</h3>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,101</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>176</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>19</span></div>
+                            <div class="ab-stat"><span>Total Value</span> <span>€592</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span>5.11%</span></div>
+                        </div>
+                        <div class="ab-card" style="border-color: var(--accent);">
+                            <h3>Group B (General Mission Group B NA Jan26) - <span style="color:var(--text);">Winner</span></h3>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage (€0.38)">AL</span> Count</span> <span>1,217</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="First Trade (€0.04)">C1</span> Count</span> <span>221</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Trade $250+ (€8.75)">C2</span> Count</span> <span>17</span></div>
+                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€620 (+4.8%)</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span class="highlight" style="color: var(--green);">5.62% (+9.9%)</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="tradeit-tab-rewards" class="tab-content">
@@ -1122,24 +1118,24 @@
         <div id="winline-container" style="display: none;">
             <div class="org-id-bar" id="winline-org-id-bar">Organiser IDs: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Russia">397f5239-ab93-484d-9f94-4231b0cfa48e</code> <span style="opacity:0.4">|</span> <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Belarus">a8f12da7-d377-4b9f-aedf-a33cb1283b20</code> <span style="opacity:0.4">|</span> <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Kazakhstan">b5efeb75-4f23-494e-bc85-9319c1a87c75</code></div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')">📊 NSM Analysis</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')">🔗 CDP Data</button>
-<button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'missions')">🎯 Missions</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'takeovers')">📺 Brand Takeovers</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'experiments')">🧪 Experiments</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'rewards')">🎁 Rewards</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'audience')">👥 Audience</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')">📊 NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')">🔗 CDP Data</button>
+<button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'missions')">🎯 Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'takeovers')">📺 Brand Takeovers</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'experiments')">🧪 Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'rewards')">🎁 Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'audience')">👥 Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'funnel')">🔄 Funnel</button>
             </div>
 
             <!-- WINLINE NSM TAB -->
             <div id="winline-tab-nsm" class="tab-content active">
                 <div class="section" id="winline-section-1">
                     <div class="geo-filter" id="winlineGeoFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); overflow-x: auto; margin-bottom: 1rem;">
-                        <button class="partner-btn geo-btn active" data-wl-geo="all" onclick="switchWinlineGeo('all')">All</button>
-                        <button class="partner-btn geo-btn" data-wl-geo="ru" onclick="switchWinlineGeo('ru')">Russia</button>
-                        <button class="partner-btn geo-btn" data-wl-geo="by" onclick="switchWinlineGeo('by')">Belarus</button>
-                        <button class="partner-btn geo-btn" data-wl-geo="kz" onclick="switchWinlineGeo('kz')">Kazakhstan</button>
+                        <button type="button" class="partner-btn geo-btn active" data-wl-geo="all" onclick="switchWinlineGeo('all')">All</button>
+                        <button type="button" class="partner-btn geo-btn" data-wl-geo="ru" onclick="switchWinlineGeo('ru')">Russia</button>
+                        <button type="button" class="partner-btn geo-btn" data-wl-geo="by" onclick="switchWinlineGeo('by')">Belarus</button>
+                        <button type="button" class="partner-btn geo-btn" data-wl-geo="kz" onclick="switchWinlineGeo('kz')">Kazakhstan</button>
                     </div>
                     <div class="kpi-hero-wrapper">
                         <div class="kpi-hero">
@@ -1301,10 +1297,6 @@
                         <h3>3. <span class="term" data-tip="Identification/KYC (€8.66)">KYC</span> Remains the Bottleneck</h3>
                         <p>KYC conversion consistently low: 322 (Jan), 344 (Feb), 223 (Mar*). Only ~1% of eligible users pass KYC, limiting FTD pipeline.</p>
                     </div>
-                    <div class="insight-card">
-                        <h3>4. Feb A/B Test: Main Group Dominates</h3>
-                        <p>Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
-                    </div>
                 </div>
 
                 <!-- === PARTNER-SPECIFIC SECTIONS (7+) === -->
@@ -1414,7 +1406,7 @@
 
                 <div class="section">
                     <h2 class="section-title">All Event Types (Monthly Unique Users)</h2>
-                    <button class="show-all-btn" id="winlineToggleRowsBtn" onclick="toggleWinlineMonths()">Show All Available Months</button>
+                    <button type="button" class="show-all-btn" id="winlineToggleRowsBtn" onclick="toggleWinlineMonths()">Show All Available Months</button>
                     <div class="table-wrapper">
                         <table id="winlineCdpTable">
                             <thead>
@@ -1557,36 +1549,7 @@
                 </div>
 
                 <div class="section">
-                    <h2 class="section-title">D. Feb A/B Test Analysis</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">February ran MAIN GROUP vs TEST GROUP variants for Missions 3-8. Test groups received minimal traffic.</p>
-                    <div class="grid-2">
-                        <div class="ab-card">
-                            <h3>Main Group</h3>
-                            <div class="ab-stat"><span>Agnostic 1 (AL)</span> <span>4,621</span></div>
-                            <div class="ab-stat"><span>M3 No KYC (KYC/FTD)</span> <span>315 / 58</span></div>
-                            <div class="ab-stat"><span>M5 No FTD (FTD)</span> <span>189</span></div>
-                            <div class="ab-stat"><span>M7 FTD (2nd Dep/Bet)</span> <span>9,250 / 7,071</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€153,654</span></div>
-                        </div>
-                        <div class="ab-card">
-                            <h3>Test Group</h3>
-                            <div class="ab-stat"><span>Agnostic 2 (AL)</span> <span>24</span></div>
-                            <div class="ab-stat"><span>M4 No KYC (KYC/FTD)</span> <span>29 / 9</span></div>
-                            <div class="ab-stat"><span>M6 No FTD (FTD)</span> <span>24</span></div>
-                            <div class="ab-stat"><span>M8 FTD (2nd Dep/Bet)</span> <span>69 / 35</span></div>
-                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
-                            <div class="ab-stat"><span>Total Value</span> <span>€4,845</span></div>
-                        </div>
-                    </div>
-                    <div class="insight-card" style="margin-top: 1rem;">
-                        <h3>Test Group Findings</h3>
-                        <p>Test groups received &lt;1% of traffic (e.g., Agnostic 2 had 24 AL vs Main's 4,621). Minimal sample size means no statistically significant conclusions can be drawn. Mission 9 (Whale) was not split — ran as single group with €29,981 value.</p>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">E. Key Insights</h2>
+                    <h2 class="section-title">D. Key Insights</h2>
                     <div class="insight-card">
                         <h3>1. Consistent Monthly Growth</h3>
                         <p>Jan €138,422 → Feb €158,499 (+14.5% MoM). March on track at €120,416 through Mar 20 only.</p>
@@ -1606,7 +1569,7 @@
                 </div>
 
                 <div class="section" id="winline-weekly-performance-section">
-                    <h2 class="section-title">F. Weekly Performance Trend</h2>
+                    <h2 class="section-title">E. Weekly Performance Trend</h2>
                     <div class="insight-card">
                         <canvas id="winlineWeeklyPerformanceChart" height="100"></canvas>
                         
@@ -1684,10 +1647,34 @@
             </div>
 
             <div id="winline-tab-experiments" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Per-partner experiment tracking — A/B tests, reward variants, and mission optimisation results.</p>
+                <div class="section">
+                    <h2 class="section-title">Feb A/B Test Analysis</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Main Group generated 98% of Feb value (€155,608 vs Test Group €4,845). Test groups had minimal traffic allocation.</p>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">February ran MAIN GROUP vs TEST GROUP variants for Missions 3-8. Test groups received minimal traffic.</p>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Main Group</h3>
+                            <div class="ab-stat"><span>Agnostic 1 (AL)</span> <span>4,621</span></div>
+                            <div class="ab-stat"><span>M3 No KYC (KYC/FTD)</span> <span>315 / 58</span></div>
+                            <div class="ab-stat"><span>M5 No FTD (FTD)</span> <span>189</span></div>
+                            <div class="ab-stat"><span>M7 FTD (2nd Dep/Bet)</span> <span>9,250 / 7,071</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>Total Value</span> <span class="highlight">€153,654</span></div>
+                        </div>
+                        <div class="ab-card">
+                            <h3>Test Group</h3>
+                            <div class="ab-stat"><span>Agnostic 2 (AL)</span> <span>24</span></div>
+                            <div class="ab-stat"><span>M4 No KYC (KYC/FTD)</span> <span>29 / 9</span></div>
+                            <div class="ab-stat"><span>M6 No FTD (FTD)</span> <span>24</span></div>
+                            <div class="ab-stat"><span>M8 FTD (2nd Dep/Bet)</span> <span>69 / 35</span></div>
+                            <div style="margin: 1rem 0; border-top: 1px solid var(--border);"></div>
+                            <div class="ab-stat"><span>Total Value</span> <span>€4,845</span></div>
+                        </div>
+                    </div>
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <h3>Test Group Findings</h3>
+                        <p>Test groups received &lt;1% of traffic (e.g., Agnostic 2 had 24 AL vs Main's 4,621). Minimal sample size means no statistically significant conclusions can be drawn. Mission 9 (Whale) was not split — ran as single group with €29,981 value.</p>
+                    </div>
                 </div>
             </div>
             <div id="winline-tab-rewards" class="tab-content">
@@ -1717,12 +1704,12 @@
         <div id="whitemarket-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">db18537b-4172-4813-b089-36490c1553b7</code></div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')">📊 NSM Analysis</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')">🎯 Missions</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'experiments')">🧪 Experiments</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'rewards')">🎁 Rewards</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'audience')">👥 Audience</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')">📊 NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')">🎯 Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'experiments')">🧪 Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'rewards')">🎁 Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'audience')">👥 Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'funnel')">🔄 Funnel</button>
             </div>
 
             <!-- WHITEMARKET NSM TAB -->
@@ -2049,13 +2036,13 @@
         <div id="paysafe-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code>TBD — onboarding May 2026</code></div>
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchPartnerTab(event, 'paysafe', 'nsm')">📊 NSM Analysis</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'cdp')">🔗 CDP Data</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'missions')">🎯 Missions</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'experiments')">🧪 Experiments</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'rewards')">🎁 Rewards</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'audience')">👥 Audience</button>
-                <button class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'paysafe', 'nsm')">📊 NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'cdp')">🔗 CDP Data</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'missions')">🎯 Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'experiments')">🧪 Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'rewards')">🎁 Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'audience')">👥 Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'funnel')">🔄 Funnel</button>
             </div>
 
             <div id="paysafe-tab-nsm" class="tab-content active">
@@ -2459,7 +2446,7 @@
             missionCompletions: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18410","month":"2026-01","partner":"Tradeit","unique_users":"18410"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Play 1 game on FACEIT","completions":"18292","month":"2026-01","partner":"Tradeit","unique_users":"18292"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"221","month":"2026-01","partner":"Tradeit","unique_users":"221"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade any item with Tradeit","completions":"176","month":"2026-01","partner":"Tradeit","unique_users":"176"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"19","month":"2026-01","partner":"Tradeit","unique_users":"19"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","challenge_name":"Trade an item $250+","completions":"17","month":"2026-01","partner":"Tradeit","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"364668","month":"2026-02","partner":"Tradeit","unique_users":"364668"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"55082","month":"2026-02","partner":"Tradeit","unique_users":"55082"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"39972","month":"2026-02","partner":"Tradeit","unique_users":"39972"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"38724","month":"2026-02","partner":"Tradeit","unique_users":"38724"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Сыграй 1 матч","completions":"23649","month":"2026-02","partner":"Tradeit","unique_users":"23649"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"13180","month":"2026-02","partner":"Tradeit","unique_users":"13180"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"5133","month":"2026-02","partner":"Tradeit","unique_users":"5133"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"4036","month":"2026-02","partner":"Tradeit","unique_users":"4036"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"3595","month":"2026-02","partner":"Tradeit","unique_users":"3595"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2095","month":"2026-02","partner":"Tradeit","unique_users":"2095"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Play 1 game on FACEIT","completions":"2001","month":"2026-02","partner":"Tradeit","unique_users":"2001"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1826","month":"2026-02","partner":"Tradeit","unique_users":"1826"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Play 1 game on FACEIT","completions":"1513","month":"2026-02","partner":"Tradeit","unique_users":"1513"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"647","month":"2026-02","partner":"Tradeit","unique_users":"647"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"491","month":"2026-02","partner":"Tradeit","unique_users":"491"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"347","month":"2026-02","partner":"Tradeit","unique_users":"347"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"207","month":"2026-02","partner":"Tradeit","unique_users":"207"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"179","month":"2026-02","partner":"Tradeit","unique_users":"179"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"112","month":"2026-02","partner":"Tradeit","unique_users":"112"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade any item with Tradeit","completions":"93","month":"2026-02","partner":"Tradeit","unique_users":"93"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","challenge_name":"Trade an item $250+","completions":"71","month":"2026-02","partner":"Tradeit","unique_users":"71"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-02","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade any item with Tradeit","completions":"58","month":"2026-02","partner":"Tradeit","unique_users":"58"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","challenge_name":"Trade any item with Tradeit","completions":"55","month":"2026-02","partner":"Tradeit","unique_users":"55"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"41","month":"2026-02","partner":"Tradeit","unique_users":"41"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","challenge_name":"Trade an item $250+","completions":"21","month":"2026-02","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"18","month":"2026-02","partner":"Tradeit","unique_users":"18"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","challenge_name":"Trade an item $250+","completions":"11","month":"2026-02","partner":"Tradeit","unique_users":"11"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-02","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"452936","month":"2026-03","partner":"Tradeit","unique_users":"452936"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"268819","month":"2026-03","partner":"Tradeit","unique_users":"268819"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Сыграй 1 матч","completions":"141058","month":"2026-03","partner":"Tradeit","unique_users":"141058"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"43857","month":"2026-03","partner":"Tradeit","unique_users":"43857"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"33777","month":"2026-03","partner":"Tradeit","unique_users":"33777"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"24142","month":"2026-03","partner":"Tradeit","unique_users":"24142"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Сыграй 1 матч","completions":"19395","month":"2026-03","partner":"Tradeit","unique_users":"19395"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"18456","month":"2026-03","partner":"Tradeit","unique_users":"18456"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade any item with Tradeit","completions":"10949","month":"2026-03","partner":"Tradeit","unique_users":"10949"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"9264","month":"2026-03","partner":"Tradeit","unique_users":"9264"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"4236","month":"2026-03","partner":"Tradeit","unique_users":"4236"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"3664","month":"2026-03","partner":"Tradeit","unique_users":"3664"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2883","month":"2026-03","partner":"Tradeit","unique_users":"2883"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"2758","month":"2026-03","partner":"Tradeit","unique_users":"2758"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2018","month":"2026-03","partner":"Tradeit","unique_users":"2018"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1656","month":"2026-03","partner":"Tradeit","unique_users":"1656"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1632","month":"2026-03","partner":"Tradeit","unique_users":"1632"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Play 1 game on FACEIT","completions":"1305","month":"2026-03","partner":"Tradeit","unique_users":"1305"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1143","month":"2026-03","partner":"Tradeit","unique_users":"1143"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","challenge_name":"Trade an item $250+","completions":"826","month":"2026-03","partner":"Tradeit","unique_users":"826"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade any item with Tradeit","completions":"662","month":"2026-03","partner":"Tradeit","unique_users":"662"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"273","month":"2026-03","partner":"Tradeit","unique_users":"273"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"262","month":"2026-03","partner":"Tradeit","unique_users":"262"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"230","month":"2026-03","partner":"Tradeit","unique_users":"230"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"188","month":"2026-03","partner":"Tradeit","unique_users":"188"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"143","month":"2026-03","partner":"Tradeit","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade any item with Tradeit","completions":"85","month":"2026-03","partner":"Tradeit","unique_users":"85"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"80","month":"2026-03","partner":"Tradeit","unique_users":"80"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade any item with Tradeit","completions":"77","month":"2026-03","partner":"Tradeit","unique_users":"77"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"64","month":"2026-03","partner":"Tradeit","unique_users":"64"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","challenge_name":"Trade an item $250+","completions":"42","month":"2026-03","partner":"Tradeit","unique_users":"42"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","challenge_name":"Trade an item $250+","completions":"35","month":"2026-03","partner":"Tradeit","unique_users":"35"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"26","month":"2026-03","partner":"Tradeit","unique_users":"26"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","challenge_name":"Trade an item $250+","completions":"23","month":"2026-03","partner":"Tradeit","unique_users":"23"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"21","month":"2026-03","partner":"Tradeit","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"14","month":"2026-03","partner":"Tradeit","unique_users":"14"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"13","month":"2026-03","partner":"Tradeit","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","challenge_name":"Trade an item $250+","completions":"7","month":"2026-03","partner":"Tradeit","unique_users":"7"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"6","month":"2026-03","partner":"Tradeit","unique_users":"6"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","challenge_name":"Trade an item $250+","completions":"4","month":"2026-03","partner":"Tradeit","unique_users":"4"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","challenge_name":"Trade an item $250+","completions":"2","month":"2026-03","partner":"Tradeit","unique_users":"2"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"47987","month":"2026-02","partner":"WhiteMarket","unique_users":"47914"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Здобудь 2 перемоги","completions":"35292","month":"2026-02","partner":"WhiteMarket","unique_users":"35292"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"17584","month":"2026-02","partner":"WhiteMarket","unique_users":"17577"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зіграй 1 матч","completions":"2381","month":"2026-02","partner":"WhiteMarket","unique_users":"2381"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"345","month":"2026-02","partner":"WhiteMarket","unique_users":"345"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"98","month":"2026-02","partner":"WhiteMarket","unique_users":"98"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"68","month":"2026-02","partner":"WhiteMarket","unique_users":"68"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"34","month":"2026-02","partner":"WhiteMarket","unique_users":"34"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"12","month":"2026-02","partner":"WhiteMarket","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"11","month":"2026-02","partner":"WhiteMarket","unique_users":"11"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","month":"2026-02","partner":"WhiteMarket","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"41489","month":"2026-03","partner":"WhiteMarket","unique_users":"41442"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Здобудь 2 перемоги","completions":"29887","month":"2026-03","partner":"WhiteMarket","unique_users":"29887"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зіграй 1 матч","completions":"16125","month":"2026-03","partner":"WhiteMarket","unique_users":"16122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зіграй 1 матч","completions":"2339","month":"2026-03","partner":"WhiteMarket","unique_users":"2339"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"284","month":"2026-03","partner":"WhiteMarket","unique_users":"284"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"64","month":"2026-03","partner":"WhiteMarket","unique_users":"64"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"53","month":"2026-03","partner":"WhiteMarket","unique_users":"53"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"20","month":"2026-03","partner":"WhiteMarket","unique_users":"20"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"3","month":"2026-03","partner":"WhiteMarket","unique_users":"3"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","month":"2026-03","partner":"WhiteMarket","unique_users":"1"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"301839","month":"2026-02","partner":"Winline","unique_users":"301839"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"75881","month":"2026-02","partner":"Winline","unique_users":"75881"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"35121","month":"2026-02","partner":"Winline","unique_users":"35121"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"23896","month":"2026-02","partner":"Winline","unique_users":"23896"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"18604","month":"2026-02","partner":"Winline","unique_users":"18604"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9250","month":"2026-02","partner":"Winline","unique_users":"9250"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7071","month":"2026-02","partner":"Winline","unique_users":"7071"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"4621","month":"2026-02","partner":"Winline","unique_users":"4621"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4075","month":"2026-02","partner":"Winline","unique_users":"4075"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"3407","month":"2026-02","partner":"Winline","unique_users":"3407"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2849","month":"2026-02","partner":"Winline","unique_users":"2849"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1290","month":"2026-02","partner":"Winline","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матч","completions":"1261","month":"2026-02","partner":"Winline","unique_users":"1261"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"1203","month":"2026-02","partner":"Winline","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"1147","month":"2026-02","partner":"Winline","unique_users":"1147"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Сыграйте 1 матчей","completions":"872","month":"2026-02","partner":"Winline","unique_users":"872"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"344","month":"2026-02","partner":"Winline","unique_users":"344"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"315","month":"2026-02","partner":"Winline","unique_users":"315"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"189","month":"2026-02","partner":"Winline","unique_users":"189"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"69","month":"2026-02","partner":"Winline","unique_users":"69"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"63","month":"2026-02","partner":"Winline","unique_users":"63"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"58","month":"2026-02","partner":"Winline","unique_users":"58"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"35","month":"2026-02","partner":"Winline","unique_users":"35"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"29","month":"2026-02","partner":"Winline","unique_users":"29"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","challenge_name":"Подключите свой аккаунт Winline","completions":"24","month":"2026-02","partner":"Winline","unique_users":"24"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"21","month":"2026-02","partner":"Winline","unique_users":"21"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"19","month":"2026-02","partner":"Winline","unique_users":"19"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Внесите депозит от 500 рублей","completions":"9","month":"2026-02","partner":"Winline","unique_users":"9"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"6","month":"2026-02","partner":"Winline","unique_users":"6"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"4","month":"2026-02","partner":"Winline","unique_users":"4"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1","month":"2026-02","partner":"Winline","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"272411","month":"2026-03","partner":"Winline","unique_users":"272411"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"70336","month":"2026-03","partner":"Winline","unique_users":"70336"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сыграйте 1 матч","completions":"23116","month":"2026-03","partner":"Winline","unique_users":"23116"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сыграйте 1 матч","completions":"18147","month":"2026-03","partner":"Winline","unique_users":"18147"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"7856","month":"2026-03","partner":"Winline","unique_users":"7856"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"6024","month":"2026-03","partner":"Winline","unique_users":"6024"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Сыграйте 1 матчей","completions":"4918","month":"2026-03","partner":"Winline","unique_users":"4918"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","challenge_name":"Подключите свой аккаунт Winline","completions":"4274","month":"2026-03","partner":"Winline","unique_users":"4274"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"3293","month":"2026-03","partner":"Winline","unique_users":"3293"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2237","month":"2026-03","partner":"Winline","unique_users":"2237"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"234","month":"2026-03","partner":"Winline","unique_users":"234"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"125","month":"2026-03","partner":"Winline","unique_users":"125"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"51","month":"2026-03","partner":"Winline","unique_users":"51"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Внесите депозит от 500 рублей","completions":"47","month":"2026-03","partner":"Winline","unique_users":"47"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"13","month":"2026-03","partner":"Winline","unique_users":"13"}],
             weeklyMissionCompletions: [{"challenge_name":"Play 1 game on FACEIT","completions":"36702","partner":"Tradeit","unique_users":"36702","week_start":"2026-01-26"},{"challenge_name":"Trade any item with Tradeit","completions":"397","partner":"Tradeit","unique_users":"397","week_start":"2026-01-26"},{"challenge_name":"Trade an item $250+","completions":"36","partner":"Tradeit","unique_users":"36","week_start":"2026-01-26"},{"challenge_name":"Сыграй 1 матч","completions":"443399","partner":"Tradeit","unique_users":"443399","week_start":"2026-02-23"},{"challenge_name":"Play 1 game on FACEIT","completions":"110249","partner":"Tradeit","unique_users":"110249","week_start":"2026-02-23"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"2473","partner":"Tradeit","unique_users":"2473","week_start":"2026-02-23"},{"challenge_name":"Trade any item with Tradeit","completions":"1083","partner":"Tradeit","unique_users":"1083","week_start":"2026-02-23"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"477","partner":"Tradeit","unique_users":"477","week_start":"2026-02-23"},{"challenge_name":"Trade an item $250+","completions":"399","partner":"Tradeit","unique_users":"399","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"67952","partner":"WhiteMarket","unique_users":"67872","week_start":"2026-02-23"},{"challenge_name":"Здобудь 2 перемоги","completions":"35292","partner":"WhiteMarket","unique_users":"35292","week_start":"2026-02-23"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"511","partner":"WhiteMarket","unique_users":"511","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"57","partner":"WhiteMarket","unique_users":"57","week_start":"2026-02-23"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"5","partner":"WhiteMarket","unique_users":"5","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матчей","completions":"525909","partner":"Winline","unique_users":"383108","week_start":"2026-02-23"},{"challenge_name":"Сыграйте 1 матч","completions":"60223","partner":"Winline","unique_users":"45739","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"9720","partner":"Winline","unique_users":"9354","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"7324","partner":"Winline","unique_users":"7128","week_start":"2026-02-23"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"5374","partner":"Winline","unique_users":"5374","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"4105","partner":"Winline","unique_users":"4077","week_start":"2026-02-23"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"2865","partner":"Winline","unique_users":"2851","week_start":"2026-02-23"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"362","partner":"Winline","unique_users":"362","week_start":"2026-02-23"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"290","partner":"Winline","unique_users":"289","week_start":"2026-02-23"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"94","partner":"Winline","unique_users":"94","week_start":"2026-02-23"},{"challenge_name":"Зіграй 1 матч","completions":"42904","partner":"WhiteMarket","unique_users":"42888","week_start":"2026-03-02"},{"challenge_name":"Здобудь 2 перемоги","completions":"18395","partner":"WhiteMarket","unique_users":"18395","week_start":"2026-03-02"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"182","partner":"WhiteMarket","unique_users":"182","week_start":"2026-03-02"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"8","partner":"WhiteMarket","unique_users":"8","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матчей","completions":"151451","partner":"Winline","unique_users":"150181","week_start":"2026-03-02"},{"challenge_name":"Сыграйте 1 матч","completions":"17709","partner":"Winline","unique_users":"17709","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"3665","partner":"Winline","unique_users":"3665","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2727","partner":"Winline","unique_users":"2727","week_start":"2026-03-02"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1532","partner":"Winline","unique_users":"1532","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1177","partner":"Winline","unique_users":"1177","week_start":"2026-03-02"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"688","partner":"Winline","unique_users":"688","week_start":"2026-03-02"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"85","partner":"Winline","unique_users":"85","week_start":"2026-03-02"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"63","partner":"Winline","unique_users":"63","week_start":"2026-03-02"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"18","partner":"Winline","unique_users":"17","week_start":"2026-03-02"},{"challenge_name":"Play 1 game on FACEIT","completions":"444104","partner":"Tradeit","unique_users":"443285","week_start":"2026-03-09"},{"challenge_name":"Сыграй 1 матч","completions":"370667","partner":"Tradeit","unique_users":"370667","week_start":"2026-03-09"},{"challenge_name":"Trade any item with Tradeit","completions":"9536","partner":"Tradeit","unique_users":"9532","week_start":"2026-03-09"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"5413","partner":"Tradeit","unique_users":"5413","week_start":"2026-03-09"},{"challenge_name":"Trade an item $250+","completions":"569","partner":"Tradeit","unique_users":"568","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"149","partner":"Tradeit","unique_users":"149","week_start":"2026-03-09"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"13","partner":"Tradeit","unique_users":"13","week_start":"2026-03-09"},{"challenge_name":"Зіграй 1 матч","completions":"11331","partner":"WhiteMarket","unique_users":"11324","week_start":"2026-03-09"},{"challenge_name":"Здобудь 2 перемоги","completions":"7666","partner":"WhiteMarket","unique_users":"7666","week_start":"2026-03-09"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"128","partner":"WhiteMarket","unique_users":"128","week_start":"2026-03-09"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"14","partner":"WhiteMarket","unique_users":"14","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матчей","completions":"61432","partner":"Winline","unique_users":"61051","week_start":"2026-03-09"},{"challenge_name":"Сыграйте 1 матч","completions":"6364","partner":"Winline","unique_users":"6364","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"2530","partner":"Winline","unique_users":"2530","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"2113","partner":"Winline","unique_users":"2113","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"1376","partner":"Winline","unique_users":"1376","week_start":"2026-03-09"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"1350","partner":"Winline","unique_users":"1350","week_start":"2026-03-09"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"997","partner":"Winline","unique_users":"997","week_start":"2026-03-09"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"80","partner":"Winline","unique_users":"80","week_start":"2026-03-09"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"59","partner":"Winline","unique_users":"59","week_start":"2026-03-09"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"27","partner":"Winline","unique_users":"27","week_start":"2026-03-09"},{"challenge_name":"Play 1 game on FACEIT","completions":"108369","partner":"Tradeit","unique_users":"107564","week_start":"2026-03-16"},{"challenge_name":"Сыграй 1 матч","completions":"102462","partner":"Tradeit","unique_users":"102461","week_start":"2026-03-16"},{"challenge_name":"Trade any item with Tradeit","completions":"3145","partner":"Tradeit","unique_users":"3137","week_start":"2026-03-16"},{"challenge_name":"Обменяй любой предмет на tradeit.gg","completions":"1984","partner":"Tradeit","unique_users":"1984","week_start":"2026-03-16"},{"challenge_name":"Trade an item $250+","completions":"456","partner":"Tradeit","unique_users":"456","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более 20000 рублей","completions":"158","partner":"Tradeit","unique_users":"158","week_start":"2026-03-16"},{"challenge_name":"Обменяй предмет стоимостью более  $250 ","completions":"8","partner":"Tradeit","unique_users":"8","week_start":"2026-03-16"},{"challenge_name":"Зіграй 1 матч","completions":"5718","partner":"WhiteMarket","unique_users":"5716","week_start":"2026-03-16"},{"challenge_name":"Здобудь 2 перемоги","completions":"3826","partner":"WhiteMarket","unique_users":"3826","week_start":"2026-03-16"},{"challenge_name":"Зроби покупку на white.market (на будь-яку суму)","completions":"91","partner":"WhiteMarket","unique_users":"91","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $100+ (однією покупкою, декілька не накопичуються)","completions":"4","partner":"WhiteMarket","unique_users":"4","week_start":"2026-03-16"},{"challenge_name":"Купи скін за $300+ (однією покупкою, декілька не накопичуються)","completions":"1","partner":"WhiteMarket","unique_users":"1","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матчей","completions":"28343","partner":"Winline","unique_users":"28195","week_start":"2026-03-16"},{"challenge_name":"Сыграйте 1 матч","completions":"2677","partner":"Winline","unique_users":"2677","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 3000 рублей","completions":"1261","partner":"Winline","unique_users":"1261","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму в 5000 рублей с минимальным коэффициентом 1.3","completions":"966","partner":"Winline","unique_users":"966","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит на сумму 5000 рублей","completions":"710","partner":"Winline","unique_users":"710","week_start":"2026-03-16"},{"challenge_name":"Подключите свой аккаунт Winline","completions":"684","partner":"Winline","unique_users":"684","week_start":"2026-03-16"},{"challenge_name":"Совершите ставки на сумму 25 000 рублей с минимальным коэффициентом 1.3","completions":"536","partner":"Winline","unique_users":"536","week_start":"2026-03-16"},{"challenge_name":"Пройдите идентификацию в своем Winline аккаунте","completions":"51","partner":"Winline","unique_users":"51","week_start":"2026-03-16"},{"challenge_name":"Внесите депозит от 500 рублей","completions":"40","partner":"Winline","unique_users":"40","week_start":"2026-03-16"},{"challenge_name":"Сделайте ставку от 1000 рублей с минимальным коэффициентом от 1.3","completions":"17","partner":"Winline","unique_users":"17","week_start":"2026-03-16"}],
             rewardClaims: [{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"39049","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21651"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"38869","month":"2026-01","partner":"Tradeit","reward_status":"expired","unique_users":"21516"},{"campaign_technical_name":"TRADEIT GENERAL MISSION GROUP B NORTH AMERICA JAN26","cnt":"1193","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"963"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA JAN26","cnt":"1060","month":"2026-01","partner":"Tradeit","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"457460","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"364863"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"287838","month":"2026-02","partner":"Tradeit","reward_status":"in_progress","unique_users":"287838"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"85311","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"58042"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"84291","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"47021"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"81891","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"44494"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"35657","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"24599"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE CIS FEB26","cnt":"28448","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"27915"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"27155","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"14739"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS FEB26","cnt":"12880","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"12573"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"10979","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"9134"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"7459","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"5747"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"5893","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"4373"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3945","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"3896"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE  APAC FEB26","cnt":"3608","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3544"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE NORTH AMERICA FEB26","cnt":"3515","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"3424"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA FEB26","cnt":"2668","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2507"},{"campaign_technical_name":"TRADEIT GENERAL MISSION NORTH AMERICA FEB26","cnt":"2458","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1944"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2253","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2156","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"2109"},{"campaign_technical_name":"TRADEIT USERS AL & NO TRADE MENA FEB26","cnt":"2124","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"2069"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC FEB26","cnt":"2017","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1954"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1572","month":"2026-02","partner":"Tradeit","reward_status":"expired","unique_users":"1554"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA FEB26","cnt":"1564","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"1493"},{"campaign_technical_name":"TRADEIT GENERAL MISSION APAC FEB26","cnt":"1190","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"969"},{"campaign_technical_name":"TRADEIT GENERAL MISSION MENA FEB26","cnt":"794","month":"2026-02","partner":"Tradeit","reward_status":"completed","unique_users":"617"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS FEB26","cnt":"13","month":"2026-02","partner":"Tradeit","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"1024641","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"253783"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"908228","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"513925"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"629231","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"296065"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"283952","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"149591"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"214464","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"47465"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"88464","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"21979"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"73855","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"14775"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"71062","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"40092"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"70624","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"29373"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"68297","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"16956"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"65353","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"53850"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"53986","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"22473"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"34778","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"8575"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"26828","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"23814"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"24710","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"24681"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"23005","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"10610"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"21130","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"19566"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"20743","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"20728"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"18253","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"4228"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"13808","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3115"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"10740","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"2148"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9946","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"9934"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"9621","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"9446"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"8103","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1825"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"8074","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"2018"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"7717","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"6604"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"7400","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"1480"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"3483","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2818"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"3395","month":"2026-03","partner":"Tradeit","reward_status":"available","unique_users":"679"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"3313","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"3310"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"2793","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2714"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"2227","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"2101"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1795","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1792"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1718","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1633"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1638","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1584"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"1623","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1600"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1583","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1581"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"1499","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1299"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"1437","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1241"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1414","month":"2026-03","partner":"Tradeit","reward_status":"in_progress","unique_users":"1413"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"1392","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1229"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"1322","month":"2026-03","partner":"Tradeit","reward_status":"completed","unique_users":"1287"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"1306","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"1296"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"572","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"143"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"340","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"85"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"308","month":"2026-03","partner":"Tradeit","reward_status":"expired","unique_users":"77"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"290","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"290"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"263","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"223"},{"campaign_technical_name":"TRADEIT TRADEIT AL & NO TRADE - MISTERY BOX CIS MARCH26","cnt":"78","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"26"},{"campaign_technical_name":"TRADEIT GENERAL MISSION EU MARCH26","cnt":"46","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"46"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"44","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"44"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX -  APAC MARCH26","cnt":"43","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"43"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"29","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"29"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"22","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"22"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - CIS MARCH26","cnt":"21","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"21"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - NORTH AMERICA MARCH26","cnt":"18","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"10"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"17","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"17"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE CIS MARCH26","cnt":"16","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"16"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - MENA MARCH26","cnt":"8","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"4"},{"campaign_technical_name":"TRADEIT GENERAL MISSION CIS EXC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION - MISTERY BOX ALL AGE - APAC MARCH26","cnt":"6","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"6"},{"campaign_technical_name":"TRADEIT GENERAL MISSION LATAM MARCH26","cnt":"4","month":"2026-03","partner":"Tradeit","reward_status":"claimed","unique_users":"4"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE MENA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE APAC MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT USERS AL & TRADE NORTH AMERICA MARCH26","cnt":"2","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - NORTH AMERICA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"TRADEIT AL & NO TRADE - MISTERY BOX - MENA MARCH26","cnt":"1","month":"2026-03","partner":"Tradeit","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2921","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"2422"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"1382","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"1147"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"246","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"246"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"184","month":"2026-01","partner":"WhiteMarket","reward_status":"expired","unique_users":"158"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"79","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"67"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"50","month":"2026-01","partner":"WhiteMarket","reward_status":"completed","unique_users":"44"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"129285","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"52952"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"32490","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"18525"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"4469","month":"2026-02","partner":"WhiteMarket","reward_status":"expired","unique_users":"2497"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - FEBRUARY26","cnt":"2540","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"1341"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - FEBRUARY26","cnt":"2175","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"2122"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - FEBRUARY26","cnt":"557","month":"2026-02","partner":"WhiteMarket","reward_status":"completed","unique_users":"395"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"114702","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"46323"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"17297","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"17252"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13773","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"13747"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2464","month":"2026-03","partner":"WhiteMarket","reward_status":"in_progress","unique_users":"2459"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"2372","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"2330"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"2052","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"1907"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"1859","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"962"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"585","month":"2026-03","partner":"WhiteMarket","reward_status":"completed","unique_users":"430"},{"campaign_technical_name":"WHITEMARKET MISSION 2 - AL + NO BUY - UA - MARCH26","cnt":"13","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"13"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"12","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"12"},{"campaign_technical_name":"WHITEMARKET MISSION 1 - NO AL - UA - MARCH26","cnt":"6","month":"2026-03","partner":"WhiteMarket","reward_status":"claimed","unique_users":"5"},{"campaign_technical_name":"WHITEMARKET MISSION 3 - AL + BUY - UA  - MARCH26","cnt":"3","month":"2026-03","partner":"WhiteMarket","reward_status":"not_started","unique_users":"3"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"514700","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"306090"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"102443","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"102443"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"92122","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"75837"},{"campaign_technical_name":"MISSION 7 FTD MAIN GROUP FEBRUARY26","cnt":"71039","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"70993"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"42001","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"35094"},{"campaign_technical_name":"MISSION 9 WHALE FEBRUARY26","cnt":"37142","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"37116"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"25229","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"25216"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"24333","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"23883"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"19027","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"18588"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"18959","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"18945"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"18276","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"14991"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"17744","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17744"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"8575","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4673"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5133","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"4992"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"2380","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1203"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"1490","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1488"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1343","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1290"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1312","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1260"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1301","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1301"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"1290","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"1282"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1278","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"1277"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1233","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1233"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"1016","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"1016"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"976","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"872"},{"campaign_technical_name":"MISSION 8 FTD TEST GROUP FEBRUARY26","cnt":"847","month":"2026-02","partner":"Winline","reward_status":"expired","unique_users":"847"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"603","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"308"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"355"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"356","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"297"},{"campaign_technical_name":"MISSION 3 - NO KYC MAIN GROUP FEBRUARY26","cnt":"242","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"242"},{"campaign_technical_name":"AGNOSTIC MISSION 2 - TEST GROUP - FEBRUARY26","cnt":"44","month":"2026-02","partner":"Winline","reward_status":"completed","unique_users":"24"},{"campaign_technical_name":"MISSION 5 NO FTD MAIN GROUP FEBRUARY26","cnt":"24","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"24"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"17","month":"2026-02","partner":"Winline","reward_status":"in_progress","unique_users":"17"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":" AGNOSTIC MISSION 1 - MAIN GROUP -  FEBRUARY26","cnt":"5","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"5"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"2","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"2"},{"campaign_technical_name":"MISSION 4 - NO KYC TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"MISSION 6 NO FTD TEST GROUP FEBRUARY26","cnt":"1","month":"2026-02","partner":"Winline","reward_status":"not_started","unique_users":"1"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"547525","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"291757"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"80099","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"67045"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"66900","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"66846"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"35925","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"18567"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"24692","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"24497"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"22289","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"21967"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"17453","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"17174"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"10400","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4915"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"7638","month":"2026-03","partner":"Winline","reward_status":"completed","unique_users":"4242"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"3718","month":"2026-03","partner":"Winline","reward_status":"in_progress","unique_users":"3709"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"91","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"91"},{"campaign_technical_name":"Winline Mission - MISSION 3 - NO FTD MARCH26","cnt":"79","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"42"},{"campaign_technical_name":"Winline Mission - AGNOSTIC MISSION 1 - MARCH26","cnt":"57","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"57"},{"campaign_technical_name":"Winline Mission - MISSION 2 - NO KYC MARCH26","cnt":"41","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"41"},{"campaign_technical_name":"Winline Mission - MISSION 4 FTD MARCH26","cnt":"37","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"37"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"26","month":"2026-03","partner":"Winline","reward_status":"claimed","unique_users":"26"},{"campaign_technical_name":"Winline Mission - MISSION 5 WHALE MARCH26","cnt":"2","month":"2026-03","partner":"Winline","reward_status":"not_started","unique_users":"2"}],
-            buildTimestamp: "2026-03-22T12:20:56Z"
+            buildTimestamp: "2026-03-23T07:06:00Z"
         }; // %%BQ_DATA_PLACEHOLDER%%
 
         Chart.defaults.color = '#6b7280';
@@ -2556,6 +2543,20 @@
                 },
                 monthly: { jan: 784, feb: 1009, mar: 828, total: 2621 }
             }
+        };
+
+        // Tradeit NSM values by region — derived from BQ mission completions proportionally
+        // distributed to match VERIFIED_MONTHLY totals. Source: tradeit_missions_by_region_2026.csv
+        // New March regions: EU, LATAM, CIS EXC launched March 2026
+        const TRADEIT_REGION_DATA = {
+            all: { jan: 12255, feb: 13444, mar: 68719, total: 94418 },
+            na: { jan: 3971, feb: 3521, mar: 4220, total: 11712 },
+            cis: { jan: 5942, feb: 7357, mar: 15077, total: 28376 },
+            cis_exc: { jan: 0, feb: 0, mar: 1819, total: 1819 },
+            mena: { jan: 1044, feb: 1176, mar: 2231, total: 4451 },
+            apac: { jan: 1298, feb: 1390, mar: 1869, total: 4557 },
+            latam: { jan: 0, feb: 0, mar: 2075, total: 2075 },
+            eu: { jan: 0, feb: 0, mar: 41428, total: 41428 }
         };
 
         const WINLINE_GEO = {
@@ -2991,7 +2992,9 @@
             dash.portfolio.valueYtd = dash.portfolio.monthly.jan + dash.portfolio.monthly.feb + dash.portfolio.monthly.mar;
             dash.portfolio.eurPer1kEbu = dash.portfolio.ebu ? Math.round((dash.portfolio.valueYtd / dash.portfolio.ebu) * 1000) : 0;
 
-            ['portfolio', 'tradeit', 'winline', 'winline_by', 'winline_kz', 'winline_all', 'whitemarket'].forEach((partnerKey) => buildWoWMoM(dash[partnerKey]));
+            ['portfolio', 'tradeit', 'winline', 'winline_by', 'winline_kz', 'winline_all', 'whitemarket'].forEach((partnerKey) => {
+                buildWoWMoM(dash[partnerKey]);
+            });
 
             applyVerifiedOverrides(dash);
 
@@ -3076,7 +3079,9 @@
                 dash.tradeit.weeklyValues[idx] + dash.winline_all.weeklyValues[idx] + dash.whitemarket.weeklyValues[idx]
             ));
 
-            ['portfolio', 'tradeit', 'winline', 'winline_by', 'winline_kz', 'winline_all', 'whitemarket'].forEach((pk) => buildWoWMoM(dash[pk]));
+            ['portfolio', 'tradeit', 'winline', 'winline_by', 'winline_kz', 'winline_all', 'whitemarket'].forEach((pk) => {
+                buildWoWMoM(dash[pk]);
+            });
         }
 
         function renderWoWMoMHtml(wowValue, momValue) {
@@ -3444,7 +3449,9 @@
             currentPartner = partner;
             
             // Update buttons
-            document.querySelectorAll('.partner-selector .partner-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.partner-selector .partner-btn').forEach((btn) => {
+                btn.classList.remove('active');
+            });
             document.getElementById(`btn-${partner}`).classList.add('active');
 
             // Update UI
@@ -3555,9 +3562,13 @@
         }
 
         function switchPartnerTab(e, partner, tabId) {
-            document.querySelectorAll(`#${partner}-container .tab-btn`).forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll(`#${partner}-container .tab-btn`).forEach((btn) => {
+                btn.classList.remove('active');
+            });
             e.currentTarget.classList.add('active');
-            document.querySelectorAll(`#${partner}-container .tab-content`).forEach(content => content.classList.remove('active'));
+            document.querySelectorAll(`#${partner}-container .tab-content`).forEach((content) => {
+                content.classList.remove('active');
+            });
             document.getElementById(`${partner}-tab-${tabId}`).classList.add('active');
         }
 
@@ -4564,53 +4575,121 @@
             {month:'Mar', region:'APAC', segment:'AL&Trade', al:0, c1:0, c2:16, value:140}
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const filterBtns = document.querySelectorAll('#missionsRegionFilter .partner-btn');
-            
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    const region = e.target.dataset.region;
-                    const isAll = region === 'All Regions';
-                    
-                    const matchRegion = (cellText) => {
-                        if (isAll) return true;
-                        if (region === 'NA' && cellText === 'North America') return true;
-                        return cellText.startsWith(region);
-                    };
-
-                    // 1. Filter Section 3 (Region-Level Summary) table
-                    const s3Rows = document.querySelectorAll('#tradeit-tab-nsm #section-3 tbody tr');
-                    s3Rows.forEach(row => {
-                        const regionCell = row.cells[1].textContent.trim();
-                        row.style.display = matchRegion(regionCell) ? '' : 'none';
-                    });
-
-                    // 2. Filter Section 3 chart (regionChart)
-                    if (window.charts && charts.tradeit && charts.tradeit.region) {
-                        const chart = charts.tradeit.region;
-                        const regions = ['NA', 'CIS', 'MENA', 'APAC'];
-                        
-                        chart.data.labels = regions.filter(r => isAll || r === region);
-                        
-                        const janDataOrig = [63.13, 14.08, 53.46, 25.11];
-                        const febDataOrig = [52.65, 16.89, 54.98, 27.57];
-                        
-                        chart.data.datasets[0].data = chart.data.labels.map(l => janDataOrig[regions.indexOf(l)]);
-                        chart.data.datasets[1].data = chart.data.labels.map(l => febDataOrig[regions.indexOf(l)]);
-                        
-                        chart.update();
-                    }
-
-                    // 3. Filter Section 6 (Segment Performance) tables
-                    const s6Rows = document.querySelectorAll('#tradeit-tab-nsm #section-6 tbody tr');
-                    s6Rows.forEach(row => {
-                        const regionCell = row.cells[0].textContent.trim();
-                        row.style.display = matchRegion(regionCell) ? '' : 'none';
-                    });
-                });
+        function switchTradeitRegion(btn) {
+            // Update active state on pills (scoped to #nsmRegionFilter only)
+            document.querySelectorAll('#nsmRegionFilter .partner-btn').forEach((b) => {
+                b.classList.remove('active');
             });
+            btn.classList.add('active');
+
+            const region = btn.dataset.region;
+            const regionKey = region === 'All Regions' ? 'all' : region.toLowerCase().replace(' ', '_');
+            const data = TRADEIT_REGION_DATA[regionKey];
+            if (!data) return;
+
+            const isAll = region === 'All Regions';
+
+            // Format € value
+            const fmtEur = (v) => '€' + v.toLocaleString('en-US');
+
+            // 1. Update Hero KPI — Total Value
+            const heroVal = document.getElementById('kpi-tradeit-value');
+            if (heroVal) heroVal.textContent = fmtEur(data.total);
+
+            // 2. Update Monthly Summary table (Section 2)
+            // The table has rows: AL, C1, C2, Total
+            // For per-region view, we don't have AL/C1/C2 breakdown — so update the Total row only
+            // and hide the breakdown rows, OR show the totals per month in the Total row
+            const section2 = document.querySelector('#tradeit-tab-nsm #section-2');
+            if (section2) {
+                const tbody = section2.querySelector('tbody');
+                if (tbody) {
+                    const rows = tbody.querySelectorAll('tr');
+                    // Last row is the Total row
+                    const totalRow = rows[rows.length - 1];
+                    if (totalRow) {
+                        const cells = totalRow.querySelectorAll('td.number');
+                        if (cells.length >= 4) {
+                            cells[0].textContent = fmtEur(data.jan);
+                            cells[1].textContent = fmtEur(data.feb);
+                            cells[2].textContent = fmtEur(data.mar);
+                            cells[3].textContent = fmtEur(data.total);
+                        }
+                    }
+                    // For non-All regions, hide breakdown rows (AL, C1, C2) since we only have totals
+                    // For All, show them
+                    for (let i = 0; i < rows.length - 1; i++) {
+                        rows[i].style.display = isAll ? '' : 'none';
+                    }
+                }
+            }
+
+            // 3. Update section title with region name
+            const sectionTitle = section2 ? section2.querySelector('.section-title') : null;
+            if (sectionTitle) {
+                sectionTitle.textContent = isAll ? '2. Monthly NSM Summary' : '2. Monthly NSM Summary — ' + region;
+            }
+
+            // 4. Update hero subtitle with region label
+            const heroSub = document.getElementById('kpi-sub-tradeit-value');
+            if (heroSub && !isAll) {
+                // For regions with no Jan/Feb (EU, LATAM, CIS EXC), show appropriate text
+                if (data.jan === 0 && data.feb === 0) {
+                    heroSub.innerHTML = '<span style="color: var(--text-muted);">March 2026 only (new region)</span>';
+                } else {
+                    const mom = data.jan > 0 ? Math.round((data.feb - data.jan) / data.jan * 100) : 0;
+                    const momColor = mom >= 0 ? 'var(--green)' : 'var(--red)';
+                    const momSign = mom >= 0 ? '+' : '';
+                    heroSub.innerHTML = '<span style="color: ' + momColor + ';">MoM ' + momSign + mom + '%</span> <span class="info-tip">i<span class="info-tip-content">' + fmtEur(data.feb) + ' Feb vs ' + fmtEur(data.jan) + ' Jan</span></span>';
+                }
+            } else if (heroSub && isAll) {
+                // Restore original All Regions subtitle
+                heroSub.innerHTML = '<span style="color: var(--red);">WoW −83%</span> <span class="info-tip">i<span class="info-tip-content">€10.0K this week vs €58.9K prev</span></span> · <span style="color: var(--green);">MoM +10%</span> <span class="info-tip">i<span class="info-tip-content">€13.4K Feb vs €12.3K Jan</span></span>';
+            }
+
+            // 5. Also trigger the existing table row filtering logic
+            const matchRegion = (cellText) => {
+                if (isAll) return true;
+                if (region === 'NA' && cellText === 'North America') return true;
+                if (region === 'CIS EXC') return cellText.includes('CIS EXC') || cellText.includes('CIS Exc');
+                return cellText.startsWith(region);
+            };
+
+            // Filter Section 3 table rows (Region-Level Summary) — not weekly NSM, but if exists
+            const s3Rows = document.querySelectorAll('#tradeit-tab-nsm #section-3 tbody tr');
+            s3Rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const regionCell = cells[1] ? cells[1].textContent.trim() : (cells[0] ? cells[0].textContent.trim() : '');
+                    row.style.display = matchRegion(regionCell) ? '' : 'none';
+                }
+            });
+
+            // Filter Section 6 (Segment Performance) tables
+            const s6Rows = document.querySelectorAll('#tradeit-tab-nsm #section-6 tbody tr');
+            s6Rows.forEach(row => {
+                const regionCell = row.cells[0] ? row.cells[0].textContent.trim() : '';
+                row.style.display = matchRegion(regionCell) ? '' : 'none';
+            });
+
+            // Keep existing chart filter behavior from prior DOMContentLoaded logic
+            if (window.charts && charts.tradeit && charts.tradeit.region) {
+                const chart = charts.tradeit.region;
+                const regions = ['NA', 'CIS', 'MENA', 'APAC'];
+
+                chart.data.labels = regions.filter(r => isAll || r === region);
+
+                const janDataOrig = [63.13, 14.08, 53.46, 25.11];
+                const febDataOrig = [52.65, 16.89, 54.98, 27.57];
+
+                chart.data.datasets[0].data = chart.data.labels.map(l => janDataOrig[regions.indexOf(l)]);
+                chart.data.datasets[1].data = chart.data.labels.map(l => febDataOrig[regions.indexOf(l)]);
+
+                chart.update();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
 
             // Weekly Performance Chart Initialization
             const ctxWeekly = document.getElementById('weeklyPerformanceChart');
