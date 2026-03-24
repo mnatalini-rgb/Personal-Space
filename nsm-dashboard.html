@@ -1202,33 +1202,15 @@
 
                 <div class="section" data-exp-month="march">
                     <h2 class="section-title">2. Mystery Box Experiment (March)</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Comparing January/February Control against March Mystery Box Experiment for General missions. <em>AL Rate pending March EBU data. Downstream rates shown as % of AL.</em></p>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Region</th>
-                                    <th>Variant</th>
-                                    <th class="number">AL Count</th>
-                                    <th class="number">C1 Rate (of AL)</th>
-                                    <th class="number">C2 Rate (of AL)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>CIS</td><td>Control (Jan/Feb)</td><td class="number">17,191</td><td class="number">17.57%</td><td class="number">1.03%</td></tr>
-                                <tr><td>CIS</td><td>Mystery Box (Mar)</td><td class="number highlight">44,685</td><td class="number" style="color: var(--red);">9.00%</td><td class="number" style="color: var(--red);">0.16%</td></tr>
-                                
-                                <tr><td style="border-top: 1px solid var(--border);">NA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">4,889</td><td class="number" style="border-top: 1px solid var(--border);">18.16%</td><td class="number" style="border-top: 1px solid var(--border);">1.57%</td></tr>
-                                <tr><td>NA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,568</td><td class="number" style="color: var(--red);">9.58%</td><td class="number" style="color: var(--red);">0.55%</td></tr>
-
-                                <tr><td style="border-top: 1px solid var(--border);">MENA</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">1,708</td><td class="number" style="border-top: 1px solid var(--border);">20.08%</td><td class="number" style="border-top: 1px solid var(--border);">1.11%</td></tr>
-                                <tr><td>MENA</td><td>Mystery Box (Mar)</td><td class="number highlight">2,668</td><td class="number" style="color: var(--red);">9.03%</td><td class="number" style="color: var(--red);">0.19%</td></tr>
-
-                                <tr><td style="border-top: 1px solid var(--border);">APAC</td><td style="border-top: 1px solid var(--border);">Control (Jan/Feb)</td><td class="number" style="border-top: 1px solid var(--border);">3,027</td><td class="number" style="border-top: 1px solid var(--border);">13.64%</td><td class="number" style="border-top: 1px solid var(--border);">1.32%</td></tr>
-                                <tr><td>APAC</td><td>Mystery Box (Mar)</td><td class="number highlight">2,789</td><td class="number" style="color: var(--red);">7.49%</td><td class="number" style="color: var(--red);">0.22%</td></tr>
-                            </tbody>
-                        </table>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">Comparing January and February control periods against March Mystery Box experiment across General missions. March is partial (data through 24 Mar 2026).</p>
+                    <div class="partner-selector" id="mbRegionFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem;">
+                        <button type="button" class="partner-btn active" data-mb-region="All" onclick="renderMysteryBoxTable('All')">All</button>
+                        <button type="button" class="partner-btn" data-mb-region="CIS" onclick="renderMysteryBoxTable('CIS')">CIS</button>
+                        <button type="button" class="partner-btn" data-mb-region="NA" onclick="renderMysteryBoxTable('NA')">NA</button>
+                        <button type="button" class="partner-btn" data-mb-region="MENA" onclick="renderMysteryBoxTable('MENA')">MENA</button>
+                        <button type="button" class="partner-btn" data-mb-region="APAC" onclick="renderMysteryBoxTable('APAC')">APAC</button>
                     </div>
+                    <div class="table-wrapper" id="mysteryBoxTableContainer"></div>
                 </div>
 
                 <div class="section" data-exp-month="january">
@@ -4109,6 +4091,73 @@
             });
         }
 
+        const mysteryBoxData = [
+            {region:'CIS', month:'Jan', variant:'Control', ebu:390589, al:7371, c1:1195},
+            {region:'CIS', month:'Feb', variant:'Control', ebu:390909, al:9820, c1:1826},
+            {region:'CIS', month:'Mar', variant:'Mystery Box', ebu:328353, al:44685, c1:4841},
+            {region:'NA', month:'Jan', variant:'Control', ebu:43200, al:2318, c1:397},
+            {region:'NA', month:'Feb', variant:'Control', ebu:47078, al:2571, c1:491},
+            {region:'NA', month:'Mar', variant:'Mystery Box', ebu:33414, al:2568, c1:362},
+            {region:'MENA', month:'Jan', variant:'Control', ebu:15245, al:813, c1:164},
+            {region:'MENA', month:'Feb', variant:'Control', ebu:14746, al:895, c1:179},
+            {region:'MENA', month:'Mar', variant:'Mystery Box', ebu:11993, al:2668, c1:336},
+            {region:'APAC', month:'Jan', variant:'Control', ebu:49048, al:1479, c1:206},
+            {region:'APAC', month:'Feb', variant:'Control', ebu:44513, al:1548, c1:207},
+            {region:'APAC', month:'Mar', variant:'Mystery Box', ebu:26361, al:2789, c1:299},
+        ];
+
+        function renderMysteryBoxTable(filterRegion) {
+            // Filter data
+            const filtered = filterRegion === 'All' 
+                ? mysteryBoxData 
+                : mysteryBoxData.filter(d => d.region === filterRegion);
+            
+            // Update active pill
+            document.querySelectorAll('#mbRegionFilter .partner-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-mb-region') === filterRegion);
+            });
+            
+            // Build table
+            const fmt = n => n.toLocaleString('en-US');
+            const pct = (num, den) => den > 0 ? (100 * num / den).toFixed(2) + '%' : '—';
+            
+            let html = '<table><thead><tr>' +
+                '<th>Region</th><th>Month</th><th>Variant</th>' +
+                '<th class="number">EBU</th>' +
+                '<th class="number">AL (% of EBU)</th>' +
+                '<th class="number">C1 — First Trade (% of AL)</th>' +
+                '</tr></thead><tbody>';
+            
+            const regions = filterRegion === 'All' ? ['CIS', 'NA', 'MENA', 'APAC'] : [filterRegion];
+            
+            regions.forEach((region, ri) => {
+                const regionRows = filtered.filter(d => d.region === region);
+                regionRows.forEach((d, i) => {
+                    const borderTop = (ri > 0 && i === 0) ? ' style="border-top: 2px solid var(--border);"' : '';
+                    const variantClass = d.variant === 'Mystery Box' ? ' class="highlight"' : '';
+                    const alColor = d.variant === 'Mystery Box' && (100 * d.al / d.ebu) > (function() {
+                        // Compare to average control AL rate for this region
+                        const controls = mysteryBoxData.filter(x => x.region === region && x.variant === 'Control');
+                        const avgRate = controls.reduce((s, c) => s + c.al / c.ebu, 0) / controls.length;
+                        return 100 * avgRate;
+                    })() ? ' style="color: var(--green);"' : '';
+                    const c1Color = d.variant === 'Mystery Box' ? ' style="color: var(--red);"' : '';
+                    
+                    html += '<tr>' +
+                        '<td' + borderTop + '>' + d.region + '</td>' +
+                        '<td' + borderTop + '>' + d.month + '</td>' +
+                        '<td' + borderTop + variantClass + '>' + d.variant + (d.variant === 'Control' ? ' (' + d.month + ')' : ' (Mar)') + '</td>' +
+                        '<td class="number"' + borderTop + '>' + fmt(d.ebu) + '</td>' +
+                        '<td class="number"' + borderTop + alColor + '>' + fmt(d.al) + ' (' + pct(d.al, d.ebu) + ' of EBU)</td>' +
+                        '<td class="number"' + borderTop + c1Color + '>' + fmt(d.c1) + ' (' + pct(d.c1, d.al) + ' of AL)</td>' +
+                        '</tr>';
+                });
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('mysteryBoxTableContainer').innerHTML = html;
+        }
+
         function destroyCharts(partner) {
             if (!charts[partner]) return;
             Object.keys(charts[partner]).forEach(key => {
@@ -5064,6 +5113,7 @@
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             renderTables();
+            renderMysteryBoxTable('All');
             if (BQ_DATA) {
                 dashData = processData();
                 populateKPIs();
