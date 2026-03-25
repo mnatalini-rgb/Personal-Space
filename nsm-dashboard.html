@@ -1331,6 +1331,14 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; grid-column: 1 / -1;">
+                            <strong style="color: #334155;">Status Guide</strong><br>
+                            <span style="color: #8b5cf6;">●</span> <strong>Available</strong> — Challenge completed, reward ready to claim<br>
+                            <span style="color: #059669;">●</span> <strong>Completed</strong> — Fully paid and delivered<br>
+                            <span style="color: #f59e0b;">●</span> <strong>Claimed</strong> — Order created, pending delivery (shop items only)<br>
+                            <span style="color: #3b82f6;">●</span> <strong>In Progress</strong> — Challenge not yet completed<br>
+                            <span style="color: #ef4444;">●</span> <strong>Expired</strong> — Not claimed before deadline
+                        </div>
                     </div>
                 </div>
 
@@ -3278,7 +3286,7 @@
                         </div>
                     </div>
                     <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;">
-                        <strong>Data source:</strong> <code>CampaignService.UserRewards</code> — statuses: <code>completed</code>, <code>expired</code>, <code>in_progress</code>, <code>claimed</code>, <code>available</code>, <code>not_started</code><br>
+                        <strong>Data source:</strong> <code>CampaignService.UserRewards</code> — statuses: <code>completed</code>, <code>expired</code>, <code>in_progress</code>, <code>claimed</code>, <code>available</code><br>
                         <strong>BQ export:</strong> Already available in <code>data/bq_exports/reward_claims.json</code> (partner × campaign × month × status)<br>
                         <strong>Implementation:</strong> Build as a section within each partner's Missions tab + summary in Combined view.
                     </div>
@@ -4137,7 +4145,6 @@
                 in_progress: { cnt: 0, users: 0 },
                 claimed: { cnt: 0, users: 0 },
                 available: { cnt: 0, users: 0 },
-                not_started: { cnt: 0, users: 0 },
                 all: { cnt: 0, users: 0 }
             };
 
@@ -4146,6 +4153,7 @@
 
             claims.forEach(row => {
                 const status = normalize(row.reward_status);
+                if (status === 'not_started') return;
                 const cnt = toInt(row.cnt);
                 const users = toInt(row.unique_users);
                 const month = row.month;
@@ -4191,9 +4199,16 @@
             const crEl = document.getElementById('tradeit-rewards-claim-rate');
             if (crEl) crEl.textContent = claimRate.toFixed(1) + '%';
 
-            const statuses = ['completed', 'expired', 'in_progress', 'claimed', 'available', 'not_started'];
-            const statusLabels = { completed: 'Completed', expired: 'Expired', in_progress: 'In Progress', claimed: 'Claimed', available: 'Available', not_started: 'Not Started' };
-            const statusColors = { completed: '#059669', expired: '#ef4444', in_progress: '#3b82f6', claimed: '#f59e0b', available: '#8b5cf6', not_started: '#6b7280' };
+            const statuses = ['completed', 'expired', 'in_progress', 'claimed', 'available'];
+            const statusLabels = { completed: 'Completed', expired: 'Expired', in_progress: 'In Progress', claimed: 'Claimed', available: 'Available' };
+            const statusColors = { completed: '#059669', expired: '#ef4444', in_progress: '#3b82f6', claimed: '#f59e0b', available: '#8b5cf6' };
+            const statusDescriptions = {
+                available: 'Challenge completed but reward not yet claimed (e.g. user played 1 match but didn\\'t link account)',
+                completed: 'Fully paid — reward used, claimed, and delivered',
+                expired: 'User didn\\'t claim reward in time (e.g. didn\\'t complete the challenge before deadline)',
+                in_progress: 'Challenge not yet completed — reward cannot be claimed yet',
+                claimed: 'Shop items only — user claimed the reward, order created but not yet completed (e.g. trade URL missing)'
+            };
             
             const tbodyStatus = document.getElementById('tradeit-rewards-status-body');
             if (tbodyStatus) {
@@ -4202,7 +4217,7 @@
                     if (!t || t.cnt === 0) return '';
                     const pct = totals.all.cnt > 0 ? ((t.cnt / totals.all.cnt) * 100).toFixed(1) + '%' : '0%';
                     return `<tr>
-                        <td><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${statusColors[st]}; margin-right:5px;"></span>${statusLabels[st]}</td>
+                        <td><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${statusColors[st]}; margin-right:5px;"></span><span title="${statusDescriptions[st]}" style="cursor:help;">${statusLabels[st]}</span></td>
                         <td class="number">${formatInt(t.cnt)}</td>
                         <td class="number">${formatInt(t.users)}</td>
                         <td class="number">${pct}</td>
