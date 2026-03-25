@@ -87,7 +87,7 @@
         .kpi-sub { font-size: 0.9rem; color: var(--text); }
         .kpi-sub.positive { color: var(--green); }
 
-        .kpi-hero-wrapper { display: grid; grid-template-columns: 3fr 2fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-hero-wrapper { display: grid; grid-template-columns: 2fr 2fr 2fr; gap: 1.5rem; margin-bottom: 2rem; }
         .kpi-hero { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 2rem 2.5rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .kpi-hero .kpi-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.75rem; }
         .kpi-hero .kpi-title { font-size: 0.95rem; text-align: center; }
@@ -236,6 +236,12 @@
                         <div class="kpi-sub" id="kpi-sub-portfolio-value">
                             <span style="color: var(--red);">WoW −81%</span> <span class="info-tip">i<span class="info-tip-content">€15.9K this week vs €85.7K prev</span></span> · <span style="color: var(--green);">MoM +14%</span> <span class="info-tip">i<span class="info-tip-content">€174K Feb vs €152K Jan</span></span>
                         </div>
+                    </div>
+                    <div class="kpi-hero">
+                        <span class="kpi-badge">Advertiser KPI</span>
+                        <div class="kpi-title">Total Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Total Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                        <div class="kpi-value" id="kpi-portfolio-roi" data-kpi="portfolio-roi">—</div>
+                        <div class="kpi-sub" id="kpi-sub-portfolio-roi">Awaiting cost data</div>
                     </div>
                     <div class="kpi-secondary-stack">
                         <div class="kpi-card">
@@ -463,6 +469,12 @@
                             <div class="kpi-sub" id="kpi-sub-tradeit-value">
                                 <span style="color: var(--red);">WoW −83%</span> <span class="info-tip">i<span class="info-tip-content">€10.0K this week vs €58.9K prev</span></span> · <span style="color: var(--green);">MoM +10%</span> <span class="info-tip">i<span class="info-tip-content">€13.4K Feb vs €12.3K Jan</span></span>
                             </div>
+                        </div>
+                        <div class="kpi-hero">
+                            <span class="kpi-badge">Advertiser KPI</span>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward costs: €61,565 | Contract costs: awaiting Finance</span></span></div>
+                            <div class="kpi-value" id="kpi-tradeit-roi" data-kpi="tradeit-roi">—</div>
+                            <div class="kpi-sub" id="kpi-sub-tradeit-roi">Awaiting cost data</div>
                         </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
@@ -2031,6 +2043,12 @@
                                 <span style="color: var(--red);">WoW −78%</span> <span class="info-tip">i<span class="info-tip-content">€5.8K this week vs €26.4K prev</span></span> · <span style="color: var(--green);">MoM +15%</span> <span class="info-tip">i<span class="info-tip-content">€158K Feb vs €138K Jan</span></span>
                             </div>
                         </div>
+                        <div class="kpi-hero">
+                            <span class="kpi-badge">Advertiser KPI</span>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                            <div class="kpi-value" id="kpi-winline-roi" data-kpi="winline-roi">—</div>
+                            <div class="kpi-sub" id="kpi-sub-winline-roi">Awaiting cost data</div>
+                        </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
                                 <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Winline mission</span></span></div>
@@ -2844,6 +2862,12 @@
                             <div class="kpi-sub" id="kpi-sub-whitemarket-value">
                                 <span style="color: var(--red);">WoW −50%</span> <span class="info-tip">i<span class="info-tip-content">€162 this week vs €323 prev</span></span> · <span style="color: var(--green);">MoM +4%</span> <span class="info-tip">i<span class="info-tip-content">€1,606 Feb vs €1,542 Jan</span></span>
                             </div>
+                        </div>
+                        <div class="kpi-hero">
+                            <span class="kpi-badge">Advertiser KPI</span>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                            <div class="kpi-value" id="kpi-whitemarket-roi" data-kpi="whitemarket-roi">—</div>
+                            <div class="kpi-sub" id="kpi-sub-whitemarket-roi">Awaiting cost data</div>
                         </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
@@ -5522,6 +5546,16 @@
                 if (valueEl) valueEl.textContent = formatEuro(p.valueYtd);
                 if (ebuEl) ebuEl.textContent = formatEbu(p.ebu);
                 if (effEl) effEl.textContent = `€${Math.round(p.eurPer1kEbu).toLocaleString('en-US')}`;
+            });
+
+            // === Total Advertiser ROI placeholder ===
+            // ROI = (Total Value - Total Cost) / Total Cost
+            // Awaiting per-partner cost breakdown from Finance
+            ['portfolio', 'tradeit', 'winline', 'whitemarket'].forEach(key => {
+                const roiEl = document.getElementById(`kpi-${key}-roi`);
+                const roiSub = document.getElementById(`kpi-sub-${key}-roi`);
+                if (roiEl) roiEl.textContent = '—';
+                if (roiSub) roiSub.textContent = 'Awaiting cost data';
             });
         }
 
