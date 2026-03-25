@@ -1457,10 +1457,290 @@
                 </div>
             </div>
             <div id="tradeit-tab-funnel" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
+                <!-- Section A: Headline Funnel KPIs -->
+                <div class="section" id="tradeit-funnel-section-1">
+                    <h2 class="section-title">1. Funnel Overview (Feb 2026)</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total <span class="term" data-tip="Eligible Brand Users">EBU</span></div>
+                            <div class="kpi-value">600,527</div>
+                            <div class="kpi-sub">Top of Funnel Volume</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total <span class="term" data-tip="Account Linkages">AL</span></div>
+                            <div class="kpi-value">15,160</div>
+                            <div class="kpi-sub">AL Rate: 2.52%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total <span class="term" data-tip="First Conversion (Trade)">C1</span></div>
+                            <div class="kpi-value">3,288</div>
+                            <div class="kpi-sub">C1/AL Rate: 21.69%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total <span class="term" data-tip="Second Conversion (Value)">C2</span></div>
+                            <div class="kpi-value">1,300</div>
+                            <div class="kpi-sub">Estimated BOFU Conv.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: Visual Funnel Diagram -->
+                <div class="section" id="tradeit-funnel-section-2">
+                    <h2 class="section-title">2. Conversion Pipeline</h2>
+                    <div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem; position: relative;">
+                            
+                            <!-- EBU Bar -->
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 100px; text-align: right; font-weight: 600;">EBU</div>
+                                <div style="flex-grow: 1;">
+                                    <div style="width: 100%; background: var(--accent); color: white; padding: 0.75rem 1rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>600,527 Users</span>
+                                        <span style="opacity: 0.8; font-size: 0.85em;">100% of pipeline</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dropoff -->
+                            <div style="display: flex; align-items: center; gap: 1rem; height: 30px;">
+                                <div style="width: 100px;"></div>
+                                <div style="flex-grow: 1; padding-left: 2rem; border-left: 2px dashed var(--border); margin-left: 1rem; color: var(--text-muted); font-size: 0.85em; display: flex; align-items: center;">
+                                    <span style="background: var(--surface); padding: 0 0.5rem;">↓ 97.48% drop-off</span>
+                                </div>
+                            </div>
+
+                            <!-- AL Bar -->
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 100px; text-align: right; font-weight: 600;">AL</div>
+                                <div style="flex-grow: 1;">
+                                    <div style="width: 60%; background: rgba(37, 99, 235, 0.85); color: white; padding: 0.75rem 1rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>15,160 Users</span>
+                                        <span style="opacity: 0.9; font-size: 0.85em;">€0.38 per AL</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dropoff -->
+                            <div style="display: flex; align-items: center; gap: 1rem; height: 30px;">
+                                <div style="width: 100px;"></div>
+                                <div style="flex-grow: 1; padding-left: 2rem; border-left: 2px dashed var(--border); margin-left: 1rem; color: var(--text-muted); font-size: 0.85em; display: flex; align-items: center;">
+                                    <span style="background: var(--surface); padding: 0 0.5rem;">↓ 78.31% drop-off</span>
+                                </div>
+                            </div>
+
+                            <!-- C1 Bar -->
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 100px; text-align: right; font-weight: 600;">C1</div>
+                                <div style="flex-grow: 1;">
+                                    <div style="width: 35%; background: rgba(37, 99, 235, 0.7); color: white; padding: 0.75rem 1rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>3,288 Users</span>
+                                        <span style="opacity: 0.9; font-size: 0.85em;">€0.04 per C1</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dropoff -->
+                            <div style="display: flex; align-items: center; gap: 1rem; height: 30px;">
+                                <div style="width: 100px;"></div>
+                                <div style="flex-grow: 1; padding-left: 2rem; border-left: 2px dashed var(--border); margin-left: 1rem; color: var(--text-muted); font-size: 0.85em; display: flex; align-items: center;">
+                                    <span style="background: var(--surface); padding: 0 0.5rem;">↓ 60.46% drop-off</span>
+                                </div>
+                            </div>
+
+                            <!-- C2 Bar -->
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 100px; text-align: right; font-weight: 600;">C2</div>
+                                <div style="flex-grow: 1;">
+                                    <div style="width: 20%; background: rgba(37, 99, 235, 0.55); color: white; padding: 0.75rem 1rem; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>~1,300 Users</span>
+                                        <span style="opacity: 0.9; font-size: 0.85em;">€8.75 per C2</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Regional Funnel Breakdown Table -->
+                <div class="section" id="tradeit-funnel-section-3">
+                    <h2 class="section-title">3. Regional Funnel Breakdown</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Region</th>
+                                    <th class="number">EBU</th>
+                                    <th class="number">AL</th>
+                                    <th class="number">AL Rate</th>
+                                    <th class="number">C1</th>
+                                    <th class="number">C1/AL Rate</th>
+                                    <th class="number">C2</th>
+                                    <th class="number">C2 Est</th>
+                                    <th class="number">€ Value</th>
+                                    <th class="number">€/1K EBU</th>
+                                    <th class="number">MoM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Jan -->
+                                <tr>
+                                    <td>Jan</td>
+                                    <td>NA</td>
+                                    <td class="number">53,497</td>
+                                    <td class="number">2,258</td>
+                                    <td class="number">4.22%</td>
+                                    <td class="number">492</td>
+                                    <td class="number">21.79%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">2,723</td>
+                                    <td class="number">€3,377</td>
+                                    <td class="number highlight">€63.13</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Jan</td>
+                                    <td>CIS</td>
+                                    <td class="number">464,261</td>
+                                    <td class="number">7,567</td>
+                                    <td class="number">1.63%</td>
+                                    <td class="number">1,439</td>
+                                    <td class="number">19.02%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">6,546</td>
+                                    <td class="number">€6,535</td>
+                                    <td class="number">€14.08</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Jan</td>
+                                    <td>MENA</td>
+                                    <td class="number">18,057</td>
+                                    <td class="number">751</td>
+                                    <td class="number">4.16%</td>
+                                    <td class="number">202</td>
+                                    <td class="number">26.90%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">728</td>
+                                    <td class="number">€965</td>
+                                    <td class="number">€53.46</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <td>Jan</td>
+                                    <td>APAC</td>
+                                    <td class="number">54,899</td>
+                                    <td class="number">1,186</td>
+                                    <td class="number">2.16%</td>
+                                    <td class="number">231</td>
+                                    <td class="number">19.48%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">1,532</td>
+                                    <td class="number">€1,378</td>
+                                    <td class="number">€25.11</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <!-- Feb -->
+                                <tr>
+                                    <td>Feb</td>
+                                    <td>NA</td>
+                                    <td class="number">57,385</td>
+                                    <td class="number">2,347</td>
+                                    <td class="number">4.09%</td>
+                                    <td class="number">597</td>
+                                    <td class="number">25.44%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">2,261</td>
+                                    <td class="number">€3,022</td>
+                                    <td class="number">€52.65</td>
+                                    <td class="number" style="color: var(--red);">−16.6%</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb</td>
+                                    <td>CIS</td>
+                                    <td class="number">473,938</td>
+                                    <td class="number">10,948</td>
+                                    <td class="number">2.31%</td>
+                                    <td class="number">2,228</td>
+                                    <td class="number">20.35%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">6,588</td>
+                                    <td class="number">€8,004</td>
+                                    <td class="number">€16.89</td>
+                                    <td class="number" style="color: var(--green);">+19.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb</td>
+                                    <td>MENA</td>
+                                    <td class="number">18,611</td>
+                                    <td class="number">767</td>
+                                    <td class="number">4.12%</td>
+                                    <td class="number">225</td>
+                                    <td class="number">29.34%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">811</td>
+                                    <td class="number">€1,023</td>
+                                    <td class="number highlight">€54.98</td>
+                                    <td class="number" style="color: var(--green);">+2.8%</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb</td>
+                                    <td>APAC</td>
+                                    <td class="number">50,593</td>
+                                    <td class="number">1,098</td>
+                                    <td class="number">2.17%</td>
+                                    <td class="number">238</td>
+                                    <td class="number">21.68%</td>
+                                    <td class="number">—</td>
+                                    <td class="number">1,487</td>
+                                    <td class="number">€1,395</td>
+                                    <td class="number">€27.57</td>
+                                    <td class="number" style="color: var(--green);">+9.8%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Section D: Funnel Conversion Rates Heatmap -->
+                <div class="section" id="tradeit-funnel-section-4">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem;">
+                        <h2 class="section-title" style="margin-bottom: 0;">4. Conversion Rates Heatmap</h2>
+                        <div class="geo-filter" id="funnelHeatmapMonthFilter" style="display: flex; gap: 0.5rem; background: var(--surface); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border);">
+                            <button type="button" class="partner-btn geo-btn" data-heatmap-month="jan" onclick="switchFunnelHeatmap('jan')">Jan</button>
+                            <button type="button" class="partner-btn geo-btn active" data-heatmap-month="feb" onclick="switchFunnelHeatmap('feb')">Feb</button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="tradeit-funnel-heatmap-table">
+                            <thead>
+                                <tr>
+                                    <th>Region</th>
+                                    <th class="number"><span class="term" data-tip="Top of Funnel Account Linkage %">TOFU AL%</span></th>
+                                    <th class="number"><span class="term" data-tip="Top of Funnel First Conversion %">TOFU C1%</span></th>
+                                    <th class="number"><span class="term" data-tip="Middle of Funnel First Conversion %">MOFU C1%</span></th>
+                                    <th class="number"><span class="term" data-tip="Bottom of Funnel Second Conversion %">BOFU C2%</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tradeit-funnel-heatmap-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Section E: Insights Card -->
+                <div class="section" id="tradeit-funnel-section-5">
+                    <div class="insight-card">
+                        <strong>💡 Key Funnel Insights</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem; color: var(--text);">
+                            <li style="margin-bottom: 0.5rem;"><strong>CIS volume vs efficiency gap:</strong> 79% of total EBU but the lowest conversion rates across all stages. Improving CIS MOFU/BOFU could unlock massive value due to sheer scale.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>NA's C2 drop:</strong> BOFU C2 rate fell from 5.09% to 3.94% MoM (−22.6%). Need to investigate if this is a tracking issue or genuine drop in high-value users retaining.</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>MENA punches above weight:</strong> Highest AL rate (4.12-4.16%), strong C1, and growing C2. Extremely efficient region (€54.98/1K EBU).</li>
+                            <li><strong>BOFU is the C2 engine:</strong> Small user segment but generates 100x+ the €/1K EBU of TOFU. Expanding BOFU pool through better retention is the highest ROI lever.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3348,6 +3628,70 @@
             }
         }
 
+        const tradeitFunnelHeatmapData = {
+            jan: [
+                { region: 'NA', alRate: 4.22, tofuC1: 0.92, mofuC1: 21.79, bofuC2: 5.09 },
+                { region: 'CIS', alRate: 1.63, tofuC1: 0.31, mofuC1: 19.02, bofuC2: 1.41 },
+                { region: 'MENA', alRate: 4.16, tofuC1: 1.12, mofuC1: 26.90, bofuC2: 4.03 },
+                { region: 'APAC', alRate: 2.16, tofuC1: 0.42, mofuC1: 19.48, bofuC2: 2.79 }
+            ],
+            feb: [
+                { region: 'NA', alRate: 4.09, tofuC1: 1.04, mofuC1: 25.44, bofuC2: 3.94 },
+                { region: 'CIS', alRate: 2.31, tofuC1: 0.47, mofuC1: 20.35, bofuC2: 1.39 },
+                { region: 'MENA', alRate: 4.12, tofuC1: 1.21, mofuC1: 29.34, bofuC2: 4.36 },
+                { region: 'APAC', alRate: 2.17, tofuC1: 0.47, mofuC1: 21.68, bofuC2: 2.94 }
+            ]
+        };
+
+        function switchFunnelHeatmap(month) {
+            document.querySelectorAll('#funnelHeatmapMonthFilter .partner-btn').forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-heatmap-month') === month);
+            });
+            
+            const data = tradeitFunnelHeatmapData[month];
+            if (!data) return;
+
+            // Calculate min/max for color scaling
+            const getColValues = key => data.map(d => d[key]);
+            const cols = ['alRate', 'tofuC1', 'mofuC1', 'bofuC2'];
+            const scales = {};
+            cols.forEach(col => {
+                const vals = getColValues(col);
+                scales[col] = { min: Math.min(...vals), max: Math.max(...vals) };
+            });
+
+            // Green to red color scale helper
+            const getColor = (val, min, max) => {
+                const ratio = (val - min) / (max - min || 1); // 0 (min/red) to 1 (max/green)
+                // Interpolate from a light red to a light green
+                const r = Math.round(255 - (255 - 180) * ratio); // 255 to 180
+                const g = Math.round(180 + (255 - 180) * ratio); // 180 to 255
+                return `rgba(${r}, ${g}, 180, 0.4)`;
+            };
+
+            const tbody = document.getElementById('tradeit-funnel-heatmap-body');
+            if (tbody) {
+                let html = '';
+                data.forEach(row => {
+                    html += `<tr>
+                        <td>${row.region}</td>
+                        <td class="number" style="background-color: ${getColor(row.alRate, scales.alRate.min, scales.alRate.max)};">${row.alRate.toFixed(2)}%</td>
+                        <td class="number" style="background-color: ${getColor(row.tofuC1, scales.tofuC1.min, scales.tofuC1.max)};">${row.tofuC1.toFixed(2)}%</td>
+                        <td class="number" style="background-color: ${getColor(row.mofuC1, scales.mofuC1.min, scales.mofuC1.max)};">${row.mofuC1.toFixed(2)}%</td>
+                        <td class="number" style="background-color: ${getColor(row.bofuC2, scales.bofuC2.min, scales.bofuC2.max)};">${row.bofuC2.toFixed(2)}%</td>
+                    </tr>`;
+                });
+                tbody.innerHTML = html;
+            }
+        }
+
+        function renderTradeitFunnel() {
+            // Check active month filter and render
+            const activeBtn = document.querySelector('#funnelHeatmapMonthFilter .partner-btn.active');
+            const activeMonth = activeBtn ? activeBtn.getAttribute('data-heatmap-month') : 'feb';
+            switchFunnelHeatmap(activeMonth);
+        }
+
         function populateTradeitMissions() {
             const refreshDateEl = document.getElementById('tradeit-missions-refresh-date');
             const kpiEls = {
@@ -4568,6 +4912,9 @@
             // Re-render charts that were created while tab was hidden (zero dimensions)
             if (partner === 'tradeit' && tabId === 'rewards') {
                 renderTradeitRewards();
+            }
+            if (partner === 'tradeit' && tabId === 'funnel') {
+                renderTradeitFunnel();
             }
         }
 
