@@ -1282,17 +1282,24 @@
 
                 <div class="section">
                     <h2 class="section-title">A. Reward Status Overview</h2>
-                    <div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
-                        <div class="kpi-card">
-                            <div class="kpi-title">Total Rewards</div>
-                            <div class="kpi-value" id="tradeit-rewards-total">Run BQ refresh</div>
-                            <div class="kpi-sub" id="tradeit-rewards-total-sub"></div>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1rem;">
+                        <div class="kpi-card" style="border-left: 3px solid #059669;">
+                            <div class="kpi-title">💰 Total FACEIT Reward Costs</div>
+                            <div class="kpi-value" id="tradeit-reward-costs" style="color: #059669;">—</div>
+                            <div class="kpi-sub" id="tradeit-reward-costs-sub" style="color: var(--text-muted);">FP + Subscriptions invoiced to Tradeit</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Claimed</div>
-                            <div class="kpi-value" id="tradeit-rewards-claimed">Run BQ refresh</div>
-                            <div class="kpi-sub" id="tradeit-rewards-claimed-sub"></div>
+                            <div class="kpi-title">🎯 Total FP Completed</div>
+                            <div class="kpi-value" id="tradeit-fp-completed-total">—</div>
+                            <div class="kpi-sub" id="tradeit-fp-completed-total-sub"></div>
                         </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">⭐ Total Subscriptions Completed</div>
+                            <div class="kpi-value" id="tradeit-subs-completed-total">—</div>
+                            <div class="kpi-sub" id="tradeit-subs-completed-total-sub"></div>
+                        </div>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="kpi-card">
                             <div class="kpi-title">Completed</div>
                             <div class="kpi-value" id="tradeit-rewards-completed">Run BQ refresh</div>
@@ -3590,6 +3597,14 @@
                     2000: { events: 22621, users: 22620 },
                     5000: { events: 868792, users: 836993 }
                 },
+                byFpAmountCompleted: {
+                    500: { events: 54350 },
+                    1000: { events: 62358 },
+                    2000: { events: 956 },
+                    5000: { events: 654 }
+                },
+                subscriptionItemIds: ['69aae1442fd9bd4bb66e5381','680b66dbdf012ed65b92d13d','680b664cdf012ed65b92d13b','680b6989f4062dea0fb20daa','680b67f3df012ed65b92d140'],
+                subsCompleted: { events: 0, users: 0 },
                 totalEvents: 11094402
             }
         }; // %%BQ_DATA_PLACEHOLDER%%
@@ -4365,10 +4380,54 @@
                 if (sub) sub.textContent = formatInt(users) + ' users';
             };
 
-            setKpi('tradeit-rewards-total', totals.all.cnt, totals.all.users);
-            setKpi('tradeit-rewards-claimed', totals.claimed.cnt, totals.claimed.users);
             setKpi('tradeit-rewards-completed', totals.completed.cnt, totals.completed.users);
             setKpi('tradeit-rewards-expired', totals.expired.cnt, totals.expired.users);
+
+            // === FACEIT Reward Cost Calculation ===
+            // Pricing: £1 per 1,800 FP, £6.75 per subscription | GBP→EUR rate ~1.17
+            const GBP_TO_EUR = 1.17;
+            const FP_RATE_GBP = 1.0 / 1800; // £1 per 1800 FP
+            const SUB_RATE_GBP = 6.75;
+
+            if (BQ_DATA.rewardTypeBreakdown) {
+                const rt = BQ_DATA.rewardTypeBreakdown;
+
+                // Calculate total FP value from completed denominations
+                const fpComp = rt.byFpAmountCompleted || {};
+                let totalFpValue = 0;
+                let totalFpRewards = 0;
+                [500, 1000, 2000, 5000].forEach(amt => {
+                    const d = fpComp[amt];
+                    if (d) {
+                        totalFpValue += amt * d.events;
+                        totalFpRewards += d.events;
+                    }
+                });
+
+                const fpCostEur = Math.round(totalFpValue * FP_RATE_GBP * GBP_TO_EUR);
+
+                // Subscription completed count
+                const subsData = rt.subsCompleted || { events: 0, users: 0 };
+                const subsCostEur = Math.round(subsData.events * SUB_RATE_GBP * GBP_TO_EUR);
+
+                const totalCostEur = fpCostEur + subsCostEur;
+
+                // Populate cost KPIs
+                const costEl = document.getElementById('tradeit-reward-costs');
+                if (costEl) costEl.textContent = '€' + totalCostEur.toLocaleString('en-US');
+                const costSub = document.getElementById('tradeit-reward-costs-sub');
+                if (costSub) costSub.textContent = `FP: €${fpCostEur.toLocaleString('en-US')} | Subs: €${subsCostEur.toLocaleString('en-US')}`;
+
+                const fpEl = document.getElementById('tradeit-fp-completed-total');
+                if (fpEl) fpEl.textContent = totalFpValue.toLocaleString('en-US') + ' FP';
+                const fpSub = document.getElementById('tradeit-fp-completed-total-sub');
+                if (fpSub) fpSub.textContent = totalFpRewards.toLocaleString('en-US') + ' rewards (£1 per 1,800 FP)';
+
+                const subsEl = document.getElementById('tradeit-subs-completed-total');
+                if (subsEl) subsEl.textContent = subsData.events.toLocaleString('en-US');
+                const subsSub = document.getElementById('tradeit-subs-completed-total-sub');
+                if (subsSub) subsSub.textContent = subsData.events === 0 ? 'No subscriptions completed yet' : subsData.events.toLocaleString('en-US') + ' users (£6.75 each)';
+            }
 
             const claimRate = totals.claimed.cnt + totals.expired.cnt > 0 
                 ? (totals.claimed.cnt / (totals.claimed.cnt + totals.expired.cnt)) * 100 
