@@ -2186,6 +2186,33 @@
             const areaName = names[countryKey] || 'Total';
             document.getElementById('qd1').textContent = `${areaName}: ${data.totalRows.toLocaleString()} records`;
             document.getElementById('qd6').textContent = `Gaming Penetration: ${data.gamingPenetration}%`;
+
+            // === Section A: Dynamic fill rates ===
+            const emptyGeneric = data.topPeripherals
+                .filter(p => ['(Empty/Generic)', 'Standard System'].includes(p.name))
+                .reduce((sum, p) => sum + p.count, 0);
+            const brandFill = Math.round(100 * (1 - emptyGeneric / data.totalRows));
+            const brandFillClass = brandFill >= 90 ? 'high' : brandFill >= 70 ? 'med' : 'low';
+
+            document.getElementById('stat-brand').textContent = `${brandFill}% Fill Rate`;
+            const brandRow = document.getElementById('stat-brand').closest('.availability-row');
+            const brandBar = brandRow.querySelector('.progress-fill');
+            brandBar.style.width = `${brandFill}%`;
+            brandBar.className = `progress-fill ${brandFillClass}`;
+
+            // === Section C: Dynamic insight callout ===
+            const topBrand = data.topPeripherals.find(p => !['(Empty/Generic)', 'Standard System'].includes(p.name));
+            const topBrandPct = (topBrand.count / data.totalRows * 100).toFixed(1);
+
+            let insightText = `${topBrand.name} dominates (${topBrandPct}%).`;
+            if (countryKey === 'all' || countryKey === 'earlyRelease' || countryKey === 'tier3') {
+                const erGaming = datasets.earlyRelease.gamingPenetration;
+                const t3Gaming = datasets.tier3.gamingPenetration;
+                insightText += ` Gaming brand penetration: Early Release ${erGaming}% vs Tier 3 ${t3Gaming}%.`;
+            } else {
+                insightText += ` Gaming brand penetration in ${areaName}: ${data.gamingPenetration}%.`;
+            }
+            document.getElementById('callout-brand').textContent = insightText;
         }
 
         // Tab Event Listeners
