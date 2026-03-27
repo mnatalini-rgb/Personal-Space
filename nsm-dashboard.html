@@ -249,7 +249,7 @@
                             </div>
                         </div>
                         <div class="kpi-card" style="padding: 1rem 1.5rem;">
-                            <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-reported partner revenues (monthly)<br>Reward Costs: calculated reward payouts per partner<br><br>Total = Activation Costs + Reward Costs</span></span></div>
+                            <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-confirmed per-partner costs (Jan–Feb, Mar TBD)<br>Reward Costs: calculated reward payouts per partner<br><br>Total = Activation Costs + Reward Costs</span></span></div>
                             <div id="kpi-portfolio-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
                             <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
                                 <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
@@ -6049,15 +6049,19 @@
 
             // === Advertiser ROI ===
             // Portfolio ROI = Total Partner Value (from BQ) − Total Costs (Activation + Reward)
-            // Activation Costs: Finance-reported partner revenues (€464K, Jan-Mar)
+            // Activation Costs: Finance-confirmed per-partner costs (Jan-Feb only, Mar TBD)
+            //   Winline €360,142 (Jan €180,785 + Feb €179,357)
+            //   Tradeit €166,975 (Jan €83,670 + Feb €83,305)
+            //   WhiteMarket €20,000 (Jan €10,000 + Feb €10,000)
+            //   Portfolio total: €547,117
             // Reward Costs: Tradeit €61,565 + Winline €122,262 = €183,827
-            // Total Costs = Activation Costs + Reward Costs = €647,827
-            // Per-partner ROI blocked until Finance provides per-partner revenue split
+            // Total Costs = Activation Costs + Reward Costs = €730,944
+            // Per-partner ROI kept at portfolio level only for now
             const COST_DATA = {
-                portfolio: { activationCost: 464000, rewardCost: 183827 },
-                tradeit:   { rewardCost: 61565, activationCost: null },   // reward cost known, activation TBD
-                winline:   { rewardCost: 122262, activationCost: null },  // reward cost known, activation TBD
-                whitemarket: { rewardCost: null, activationCost: null }
+                portfolio: { activationCost: 547117, rewardCost: 183827 },
+                tradeit:   { activationCost: 166975, rewardCost: 61565 },
+                winline:   { activationCost: 360142, rewardCost: 122262 },
+                whitemarket: { activationCost: 20000, rewardCost: null }
             };
 
             // Portfolio Total Costs card (Activation Costs + Reward Costs)
