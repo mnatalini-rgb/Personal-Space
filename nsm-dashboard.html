@@ -236,7 +236,7 @@
                 <div class="kpi-hero-wrapper" style="grid-template-columns: 2fr 2fr;">
                     <div class="kpi-hero">
                         <span class="kpi-badge">North Star Metric</span>
-                        <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Total Revenues − Total Partner Costs<br>Measures net return on partner investment<br><br><strong>Formula:</strong> ROI = Revenue − Costs<br><strong>% Return:</strong> (Revenue − Costs) / Costs × 100</span></span></div>
+                        <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Total Partner Value − Total Costs<br>Measures net return after all partner costs<br><br><strong>Formula:</strong> ROI = Partner Value − (Activation Costs + Reward Costs)<br><strong>% Return:</strong> (Partner Value − Total Costs) / Total Costs × 100</span></span></div>
                         <div class="kpi-value" id="kpi-portfolio-roi" data-kpi="portfolio-roi">—</div>
                         <div class="kpi-sub" id="kpi-sub-portfolio-roi">Awaiting cost data</div>
                     </div>
@@ -249,13 +249,18 @@
                             </div>
                         </div>
                         <div class="kpi-card" style="padding: 1rem 1.5rem;">
-                            <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>How Advertiser ROI is calculated:</strong><br>Revenue (Finance-reported, monthly) − Costs (reward costs)<br><br>Revenue: €464K — total partner activation revenue, Jan–Mar 2026<br>Costs: €184K — Tradeit €62K + Winline €122K (manual calc.)<br>Net ROI: €280K (+152%)</span></span></div>
+                            <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-reported partner revenues (monthly)<br>Reward Costs: calculated reward payouts per partner<br><br>Total = Activation Costs + Reward Costs</span></span></div>
                             <div id="kpi-portfolio-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
-                            <div id="kpi-portfolio-roi-breakdown" style="font-size: 0.85rem; line-height: 1.8; margin-top: 0.5rem; opacity: 0.8;">
-                                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Revenue</span> <span id="kpi-portfolio-revenue" style="font-weight: 600;">€464,000</span></div>
-                                <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 0.25rem;"><span style="color: var(--text-muted);">= Net ROI</span> <span id="kpi-portfolio-roi-net" style="font-weight: 700;">—</span></div>
+                            <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
+                                <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                    <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Activation Costs</div>
+                                    <div id="kpi-portfolio-activation-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                </div>
+                                <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                    <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Reward Costs</div>
+                                    <div id="kpi-portfolio-reward-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                </div>
                             </div>
-                            <div class="kpi-sub" id="kpi-sub-portfolio-cost" style="margin-top: 0.4rem; opacity: 0.6; font-size: 0.75rem;">Awaiting cost data</div>
                         </div>
                     </div>
                 </div>
@@ -6043,36 +6048,32 @@
             });
 
             // === Advertiser ROI ===
-            // Portfolio ROI: Finance confirmed €464K aggregated activation revenue (Jan-Feb-Mar)
-            // Costs: Tradeit €61,565 + Winline €122,262 = €183,827
-            // Formula: Total Partner Value - Total Partner Costs (€ net value + % return)
+            // Portfolio ROI = Total Partner Value (from BQ) − Total Costs (Activation + Reward)
+            // Activation Costs: Finance-reported partner revenues (€464K, Jan-Mar)
+            // Reward Costs: Tradeit €61,565 + Winline €122,262 = €183,827
+            // Total Costs = Activation Costs + Reward Costs = €647,827
             // Per-partner ROI blocked until Finance provides per-partner revenue split
             const COST_DATA = {
-                portfolio: { revenue: 464000, cost: 183827 },
-                tradeit:   { cost: 61565, revenue: null },   // reward cost known, revenue TBD
-                winline:   { cost: 122262, revenue: null },  // reward cost known, revenue TBD
-                whitemarket: { cost: null, revenue: null }
+                portfolio: { activationCost: 464000, rewardCost: 183827 },
+                tradeit:   { rewardCost: 61565, activationCost: null },   // reward cost known, activation TBD
+                winline:   { rewardCost: 122262, activationCost: null },  // reward cost known, activation TBD
+                whitemarket: { rewardCost: null, activationCost: null }
             };
 
-            // Portfolio ROI breakdown card (combined revenue + cost)
-            const revEl = document.getElementById('kpi-portfolio-revenue');
-            const costEl = document.getElementById('kpi-portfolio-cost');
-            const costSub = document.getElementById('kpi-sub-portfolio-cost');
-            const roiNetEl = document.getElementById('kpi-portfolio-roi-net');
-            if (revEl && COST_DATA.portfolio.revenue !== null) {
-                revEl.textContent = `€${Math.round(COST_DATA.portfolio.revenue).toLocaleString('en-US')}`;
+            // Portfolio Total Costs card (Activation Costs + Reward Costs)
+            const totalCostEl = document.getElementById('kpi-portfolio-cost');
+            const activationCostEl = document.getElementById('kpi-portfolio-activation-cost');
+            const rewardCostEl = document.getElementById('kpi-portfolio-reward-cost');
+            const portfolioData = COST_DATA.portfolio;
+            const totalCosts = (portfolioData.activationCost || 0) + (portfolioData.rewardCost || 0);
+            if (totalCostEl && portfolioData.activationCost !== null && portfolioData.rewardCost !== null) {
+                totalCostEl.textContent = `€${Math.round(totalCosts).toLocaleString('en-US')}`;
             }
-            if (costEl && COST_DATA.portfolio.cost !== null) {
-                costEl.textContent = `€${Math.round(COST_DATA.portfolio.cost).toLocaleString('en-US')}`;
-                costSub.textContent = `Tradeit €${COST_DATA.tradeit.cost.toLocaleString('en-US')} + Winline €${COST_DATA.winline.cost.toLocaleString('en-US')}`;
+            if (activationCostEl && portfolioData.activationCost !== null) {
+                activationCostEl.textContent = `€${Math.round(portfolioData.activationCost).toLocaleString('en-US')}`;
             }
-            if (roiNetEl && COST_DATA.portfolio.revenue !== null && COST_DATA.portfolio.cost !== null) {
-                const net = COST_DATA.portfolio.revenue - COST_DATA.portfolio.cost;
-                const pct = Math.round(net / COST_DATA.portfolio.cost * 100);
-                const isPos = net >= 0;
-                const color = isPos ? 'var(--green)' : 'var(--red)';
-                const sign = isPos ? '+' : '';
-                roiNetEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(net)).toLocaleString('en-US')}</span> <span style="color: ${color}; font-size: 0.8rem;">(${sign}${pct}%)</span>`;
+            if (rewardCostEl && portfolioData.rewardCost !== null) {
+                rewardCostEl.textContent = `€${Math.round(portfolioData.rewardCost).toLocaleString('en-US')}`;
             }
 
             // ROI cards
@@ -6080,17 +6081,41 @@
                 const roiEl = document.getElementById(`kpi-${key}-roi`);
                 const roiSub = document.getElementById(`kpi-sub-${key}-roi`);
                 if (!roiEl) return;
-                if (data.revenue !== null && data.cost !== null && data.cost > 0) {
-                    const netValue = data.revenue - data.cost;
-                    const roiPct = (netValue / data.cost * 100);
-                    const isPositive = netValue >= 0;
-                    const color = isPositive ? 'var(--green)' : 'var(--red)';
-                    const sign = isPositive ? '+' : '';
-                    roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
-                    roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(data.revenue/1000)}K revenue − €${Math.round(data.cost/1000)}K costs</span>`;
-                } else if (data.cost !== null) {
+
+                if (key === 'portfolio') {
+                    // Portfolio ROI = Total Partner Value − Total Costs
+                    const partnerValue = dashData ? dashData.portfolio.valueYtd : null;
+                    if (partnerValue !== null && data.activationCost !== null && data.rewardCost !== null) {
+                        const netValue = partnerValue - totalCosts;
+                        const roiPct = totalCosts > 0 ? (netValue / totalCosts * 100) : 0;
+                        const isPositive = netValue >= 0;
+                        const color = isPositive ? 'var(--green)' : 'var(--red)';
+                        const sign = isPositive ? '+' : '';
+                        roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
+                        roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(totalCosts/1000)}K costs</span>`;
+                    } else {
+                        roiEl.textContent = '—';
+                        roiSub.textContent = 'Awaiting data';
+                    }
+                } else if (data.activationCost !== null && data.rewardCost !== null && (data.activationCost + data.rewardCost) > 0) {
+                    // Per-partner ROI (when both cost components are available)
+                    const partnerValue = dashData ? dashData[key].valueYtd : null;
+                    const partnerTotalCost = data.activationCost + data.rewardCost;
+                    if (partnerValue !== null) {
+                        const netValue = partnerValue - partnerTotalCost;
+                        const roiPct = (netValue / partnerTotalCost * 100);
+                        const isPositive = netValue >= 0;
+                        const color = isPositive ? 'var(--green)' : 'var(--red)';
+                        const sign = isPositive ? '+' : '';
+                        roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
+                        roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(partnerTotalCost/1000)}K costs</span>`;
+                    } else {
+                        roiEl.textContent = '—';
+                        roiSub.textContent = `Total cost: €${(data.activationCost + data.rewardCost).toLocaleString('en-US')}`;
+                    }
+                } else if (data.rewardCost !== null) {
                     roiEl.textContent = '—';
-                    roiSub.textContent = `Reward cost: €${data.cost.toLocaleString('en-US')}`;
+                    roiSub.textContent = `Reward cost: €${data.rewardCost.toLocaleString('en-US')}`;
                 } else {
                     roiEl.textContent = '—';
                     roiSub.textContent = 'Awaiting cost data';
