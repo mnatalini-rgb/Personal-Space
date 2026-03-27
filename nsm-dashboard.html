@@ -469,38 +469,56 @@
                 </div>
 
                 <div class="section" id="section-1">
-                    <div class="kpi-hero-wrapper">
+                    <div class="kpi-hero-wrapper" style="grid-template-columns: 2fr 2fr;">
                         <div class="kpi-hero">
                             <span class="kpi-badge">North Star Metric</span>
-                            <div class="kpi-title">Total Value <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
-                            <div class="kpi-value" id="kpi-tradeit-value" data-kpi="tradeit-value">€94,418</div>
-                            <div class="kpi-sub" id="kpi-sub-tradeit-value">
-                                <span style="color: var(--red);">WoW −83%</span> <span class="info-tip">i<span class="info-tip-content">€10.0K this week vs €58.9K prev</span></span> · <span style="color: var(--green);">MoM +10%</span> <span class="info-tip">i<span class="info-tip-content">€13.4K Feb vs €12.3K Jan</span></span>
-                            </div>
-                        </div>
-                        <div class="kpi-hero">
-                            <span class="kpi-badge">Advertiser KPI</span>
-                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward cost: €61,565 | Per-partner revenue awaiting Finance</span></span></div>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Partner Value − Total Costs<br>Measures net return after all partner costs<br><br><strong>Formula:</strong> ROI = Partner Value − (Activation Costs + Reward Costs)<br><strong>% Return:</strong> (Partner Value − Total Costs) / Total Costs × 100</span></span></div>
                             <div class="kpi-value" id="kpi-tradeit-roi" data-kpi="tradeit-roi">—</div>
                             <div class="kpi-sub" id="kpi-sub-tradeit-roi">Awaiting cost data</div>
                         </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
-                                <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Tradeit mission</span></span></div>
-                                <div class="kpi-value" id="kpi-tradeit-ebu" data-kpi="tradeit-ebu">1.53M</div>
-                                <div class="kpi-sub" id="kpi-sub-tradeit-ebu">
-                                    <span style="color: var(--red);">WoW −77%</span> <span class="info-tip">i<span class="info-tip-content">216K this week vs 923K prev</span></span> · <span style="color: var(--red);">MoM −1%</span> <span class="info-tip">i<span class="info-tip-content">641K Feb vs 648K Jan</span></span>
+                                <div class="kpi-title">Total Partner Value <span class="info-tip">i<span class="info-tip-content">Calculated value of Tradeit conversions (account links, KYC, deposits, deeper milestones)<br>Uses NSM conversion weights<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                                <div class="kpi-value" id="kpi-tradeit-value" data-kpi="tradeit-value">€94,418</div>
+                                <div class="kpi-sub" id="kpi-sub-tradeit-value">
+                                    <span style="color: var(--red);">WoW −83%</span> <span class="info-tip">i<span class="info-tip-content">€10.0K this week vs €58.9K prev</span></span> · <span style="color: var(--green);">MoM +10%</span> <span class="info-tip">i<span class="info-tip-content">€13.4K Feb vs €12.3K Jan</span></span>
                                 </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€94,418 / 1,534,990 EBU × 1,000 = €62 per 1K EBU</span></span></div>
-                                <div class="kpi-value" id="kpi-tradeit-efficiency" data-kpi="tradeit-efficiency">€62</div>
-                                <div class="kpi-sub" id="kpi-sub-tradeit-efficiency">
-                                    <span style="color: var(--red);">WoW −27%</span> <span class="info-tip">i<span class="info-tip-content">€46/1K this week vs €64/1K prev</span></span> · <span style="color: var(--green);">MoM +11%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €19/1K Jan</span></span>
+                            <div class="kpi-card" style="padding: 1rem 1.5rem;">
+                                <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-confirmed (Jan–Feb, Mar TBD)<br>Reward Costs: calculated reward payouts<br><br>Total = Activation Costs + Reward Costs</span></span></div>
+                                <div id="kpi-tradeit-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
+                                <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Activation Costs</div>
+                                        <div id="kpi-tradeit-activation-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Reward Costs</div>
+                                        <div id="kpi-tradeit-reward-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.6rem;">
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Tradeit mission</span></span></div>
+                                    <div class="kpi-value" id="kpi-tradeit-ebu" data-kpi="tradeit-ebu">1.53M</div>
+                                    <div class="kpi-sub" id="kpi-sub-tradeit-ebu">
+                                        <span style="color: var(--red);">WoW −77%</span> <span class="info-tip">i<span class="info-tip-content">216K this week vs 923K prev</span></span> · <span style="color: var(--red);">MoM −1%</span> <span class="info-tip">i<span class="info-tip-content">641K Feb vs 648K Jan</span></span>
+                                    </div>
+                                </div>
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€94,418 / 1,534,990 EBU × 1,000 = €62 per 1K EBU</span></span></div>
+                                    <div class="kpi-value" id="kpi-tradeit-efficiency" data-kpi="tradeit-efficiency">€62</div>
+                                    <div class="kpi-sub" id="kpi-sub-tradeit-efficiency">
+                                        <span style="color: var(--red);">WoW −27%</span> <span class="info-tip">i<span class="info-tip-content">€46/1K this week vs €64/1K prev</span></span> · <span style="color: var(--green);">MoM +11%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €19/1K Jan</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1rem;">⚠️</span>
+                        <span>Costs are manually calculated from cross-referenced data tables. Expect ~20% margin of error until Finance validates.</span></div>
                 </div>
 
                 <!-- === CANONICAL SECTION 2: Monthly NSM Summary === -->
@@ -2042,38 +2060,56 @@
                         <button type="button" class="partner-btn geo-btn" data-wl-geo="by" onclick="switchWinlineGeo('by')">Belarus</button>
                         <button type="button" class="partner-btn geo-btn" data-wl-geo="kz" onclick="switchWinlineGeo('kz')">Kazakhstan</button>
                     </div>
-                    <div class="kpi-hero-wrapper">
+                    <div class="kpi-hero-wrapper" style="grid-template-columns: 2fr 2fr;">
                         <div class="kpi-hero">
                             <span class="kpi-badge">North Star Metric</span>
-                            <div class="kpi-title">Total Value <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
-                            <div class="kpi-value" id="kpi-winline-value" data-kpi="winline-value">€539,848</div>
-                            <div class="kpi-sub" id="kpi-sub-winline-value">
-                                <span style="color: var(--red);">WoW −78%</span> <span class="info-tip">i<span class="info-tip-content">€5.8K this week vs €26.4K prev</span></span> · <span style="color: var(--green);">MoM +15%</span> <span class="info-tip">i<span class="info-tip-content">€158K Feb vs €138K Jan</span></span>
-                            </div>
-                        </div>
-                        <div class="kpi-hero">
-                            <span class="kpi-badge">Advertiser KPI</span>
-                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward cost: €122,262 | Per-partner revenue awaiting Finance</span></span></div>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Partner Value − Total Costs<br>Measures net return after all partner costs<br><br><strong>Formula:</strong> ROI = Partner Value − (Activation Costs + Reward Costs)<br><strong>% Return:</strong> (Partner Value − Total Costs) / Total Costs × 100</span></span></div>
                             <div class="kpi-value" id="kpi-winline-roi" data-kpi="winline-roi">—</div>
                             <div class="kpi-sub" id="kpi-sub-winline-roi">Awaiting cost data</div>
                         </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
-                                <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Winline mission</span></span></div>
-                                <div class="kpi-value" id="kpi-winline-ebu" data-kpi="winline-ebu">682K</div>
-                                <div class="kpi-sub" id="kpi-sub-winline-ebu">
-                                    <span style="color: var(--red);">WoW −62%</span> <span class="info-tip">i<span class="info-tip-content">31K this week vs 82K prev</span></span> · <span style="color: var(--green);">MoM +31%</span> <span class="info-tip">i<span class="info-tip-content">636K Feb vs 488K Jan</span></span>
+                                <div class="kpi-title">Total Partner Value <span class="info-tip">i<span class="info-tip-content">Calculated value of Winline conversions (account links, KYC, deposits, deeper milestones)<br>Uses NSM conversion weights<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                                <div class="kpi-value" id="kpi-winline-value" data-kpi="winline-value">€539,848</div>
+                                <div class="kpi-sub" id="kpi-sub-winline-value">
+                                    <span style="color: var(--red);">WoW −78%</span> <span class="info-tip">i<span class="info-tip-content">€5.8K this week vs €26.4K prev</span></span> · <span style="color: var(--green);">MoM +15%</span> <span class="info-tip">i<span class="info-tip-content">€158K Feb vs €138K Jan</span></span>
                                 </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€539,848 / 682,324 EBU × 1,000 = €791 per 1K EBU</span></span></div>
-                                <div class="kpi-value" id="kpi-winline-efficiency" data-kpi="winline-efficiency">€791</div>
-                                <div class="kpi-sub" id="kpi-sub-winline-efficiency">
-                                    <span style="color: var(--red);">WoW −42%</span> <span class="info-tip">i<span class="info-tip-content">€186/1K this week vs €322/1K prev</span></span> · <span style="color: var(--red);">MoM −12%</span> <span class="info-tip">i<span class="info-tip-content">€249/1K Feb vs €284/1K Jan</span></span>
+                            <div class="kpi-card" style="padding: 1rem 1.5rem;">
+                                <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-confirmed (Jan–Feb, Mar TBD)<br>Reward Costs: calculated reward payouts<br><br>Total = Activation Costs + Reward Costs</span></span></div>
+                                <div id="kpi-winline-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
+                                <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Activation Costs</div>
+                                        <div id="kpi-winline-activation-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Reward Costs</div>
+                                        <div id="kpi-winline-reward-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.6rem;">
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a Winline mission</span></span></div>
+                                    <div class="kpi-value" id="kpi-winline-ebu" data-kpi="winline-ebu">682K</div>
+                                    <div class="kpi-sub" id="kpi-sub-winline-ebu">
+                                        <span style="color: var(--red);">WoW −62%</span> <span class="info-tip">i<span class="info-tip-content">31K this week vs 82K prev</span></span> · <span style="color: var(--green);">MoM +31%</span> <span class="info-tip">i<span class="info-tip-content">636K Feb vs 488K Jan</span></span>
+                                    </div>
+                                </div>
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€539,848 / 682,324 EBU × 1,000 = €791 per 1K EBU</span></span></div>
+                                    <div class="kpi-value" id="kpi-winline-efficiency" data-kpi="winline-efficiency">€791</div>
+                                    <div class="kpi-sub" id="kpi-sub-winline-efficiency">
+                                        <span style="color: var(--red);">WoW −42%</span> <span class="info-tip">i<span class="info-tip-content">€186/1K this week vs €322/1K prev</span></span> · <span style="color: var(--red);">MoM −12%</span> <span class="info-tip">i<span class="info-tip-content">€249/1K Feb vs €284/1K Jan</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1rem;">⚠️</span>
+                        <span>Costs are manually calculated from cross-referenced data tables. Expect ~20% margin of error until Finance validates.</span></div>
                 </div>
 
                 <!-- === CANONICAL SECTION 2: Monthly NSM Summary === -->
@@ -3037,38 +3073,56 @@
             <!-- WHITEMARKET NSM TAB -->
             <div id="whitemarket-tab-nsm" class="tab-content active">
                 <div class="section" id="wm-section-1">
-                    <div class="kpi-hero-wrapper">
+                    <div class="kpi-hero-wrapper" style="grid-template-columns: 2fr 2fr;">
                         <div class="kpi-hero">
                             <span class="kpi-badge">North Star Metric</span>
-                            <div class="kpi-title">Total Value <span class="info-tip">i<span class="info-tip-content">Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
-                            <div class="kpi-value" id="kpi-whitemarket-value" data-kpi="whitemarket-value">€4,261</div>
-                            <div class="kpi-sub" id="kpi-sub-whitemarket-value">
-                                <span style="color: var(--red);">WoW −50%</span> <span class="info-tip">i<span class="info-tip-content">€162 this week vs €323 prev</span></span> · <span style="color: var(--green);">MoM +4%</span> <span class="info-tip">i<span class="info-tip-content">€1,606 Feb vs €1,542 Jan</span></span>
-                            </div>
-                        </div>
-                        <div class="kpi-hero">
-                            <span class="kpi-badge">Advertiser KPI</span>
-                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Partner Value − Total Costs<br>Measures net return after all partner costs<br><br><strong>Formula:</strong> ROI = Partner Value − (Activation Costs + Reward Costs)<br><strong>% Return:</strong> (Partner Value − Total Costs) / Total Costs × 100</span></span></div>
                             <div class="kpi-value" id="kpi-whitemarket-roi" data-kpi="whitemarket-roi">—</div>
                             <div class="kpi-sub" id="kpi-sub-whitemarket-roi">Awaiting cost data</div>
                         </div>
                         <div class="kpi-secondary-stack">
                             <div class="kpi-card">
-                                <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a WhiteMarket mission</span></span></div>
-                                <div class="kpi-value" id="kpi-whitemarket-ebu" data-kpi="whitemarket-ebu">100K</div>
-                                <div class="kpi-sub" id="kpi-sub-whitemarket-ebu">
-                                    <span style="color: var(--red);">WoW −58%</span> <span class="info-tip">i<span class="info-tip-content">7.8K this week vs 18.6K prev</span></span> · <span style="color: var(--red);">MoM −28%</span> <span class="info-tip">i<span class="info-tip-content">77K Feb vs 107K Jan</span></span>
+                                <div class="kpi-title">Total Partner Value <span class="info-tip">i<span class="info-tip-content">Calculated value of WhiteMarket conversions (account links, KYC, deposits, deeper milestones)<br>Uses NSM conversion weights<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                                <div class="kpi-value" id="kpi-whitemarket-value" data-kpi="whitemarket-value">€4,261</div>
+                                <div class="kpi-sub" id="kpi-sub-whitemarket-value">
+                                    <span style="color: var(--red);">WoW −50%</span> <span class="info-tip">i<span class="info-tip-content">€162 this week vs €323 prev</span></span> · <span style="color: var(--green);">MoM +4%</span> <span class="info-tip">i<span class="info-tip-content">€1,606 Feb vs €1,542 Jan</span></span>
                                 </div>
                             </div>
-                            <div class="kpi-card">
-                                <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€4,261 / 99,745 EBU × 1,000 = €43 per 1K EBU</span></span></div>
-                                <div class="kpi-value" id="kpi-whitemarket-efficiency" data-kpi="whitemarket-efficiency">€43</div>
-                                <div class="kpi-sub" id="kpi-sub-whitemarket-efficiency">
-                                    <span style="color: var(--green);">WoW +20%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K this week vs €17/1K prev</span></span> · <span style="color: var(--green);">MoM +45%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €14/1K Jan</span></span>
+                            <div class="kpi-card" style="padding: 1rem 1.5rem;">
+                                <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>Total Costs breakdown:</strong><br>Activation Costs: Finance-confirmed (Jan–Feb, Mar TBD)<br>Reward Costs: not yet available for WhiteMarket<br><br>Total = Activation Costs + Reward Costs</span></span></div>
+                                <div id="kpi-whitemarket-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
+                                <div style="display: flex; gap: 0.6rem; margin-top: 0.6rem;">
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Activation Costs</div>
+                                        <div id="kpi-whitemarket-activation-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                    <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm, 6px); padding: 0.6rem 0.8rem; text-align: center;">
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.2rem;">Reward Costs</div>
+                                        <div id="kpi-whitemarket-reward-cost" style="font-size: 1.1rem; font-weight: 700;">—</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.6rem;">
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated a WhiteMarket mission</span></span></div>
+                                    <div class="kpi-value" id="kpi-whitemarket-ebu" data-kpi="whitemarket-ebu">100K</div>
+                                    <div class="kpi-sub" id="kpi-sub-whitemarket-ebu">
+                                        <span style="color: var(--red);">WoW −58%</span> <span class="info-tip">i<span class="info-tip-content">7.8K this week vs 18.6K prev</span></span> · <span style="color: var(--red);">MoM −28%</span> <span class="info-tip">i<span class="info-tip-content">77K Feb vs 107K Jan</span></span>
+                                    </div>
+                                </div>
+                                <div class="kpi-card" style="flex: 1;">
+                                    <div class="kpi-title">Efficiency <span class="info-tip">i<span class="info-tip-content">€4,261 / 99,745 EBU × 1,000 = €43 per 1K EBU</span></span></div>
+                                    <div class="kpi-value" id="kpi-whitemarket-efficiency" data-kpi="whitemarket-efficiency">€43</div>
+                                    <div class="kpi-sub" id="kpi-sub-whitemarket-efficiency">
+                                        <span style="color: var(--green);">WoW +20%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K this week vs €17/1K prev</span></span> · <span style="color: var(--green);">MoM +45%</span> <span class="info-tip">i<span class="info-tip-content">€21/1K Feb vs €14/1K Jan</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 1rem;">⚠️</span>
+                        <span>Costs are manually calculated from cross-referenced data tables. Expect ~20% margin of error until Finance validates.</span></div>
                 </div>
 
                 <!-- 2. Monthly NSM Summary (Strategic — team success metric) -->
@@ -6065,48 +6119,76 @@
                 whitemarket: { activationCost: 20000, rewardCost: null }
             };
 
-            // Portfolio Total Costs card (Activation Costs + Reward Costs)
-            const totalCostEl = document.getElementById('kpi-portfolio-cost');
-            const activationCostEl = document.getElementById('kpi-portfolio-activation-cost');
-            const rewardCostEl = document.getElementById('kpi-portfolio-reward-cost');
-            const portfolioData = COST_DATA.portfolio;
-            const totalCosts = (portfolioData.activationCost || 0) + (portfolioData.rewardCost || 0);
-            if (totalCostEl && portfolioData.activationCost !== null && portfolioData.rewardCost !== null) {
-                totalCostEl.textContent = `€${Math.round(totalCosts).toLocaleString('en-US')}`;
-            }
-            if (activationCostEl && portfolioData.activationCost !== null) {
-                activationCostEl.textContent = `€${Math.round(portfolioData.activationCost).toLocaleString('en-US')}`;
-            }
-            if (rewardCostEl && portfolioData.rewardCost !== null) {
-                rewardCostEl.textContent = `€${Math.round(portfolioData.rewardCost).toLocaleString('en-US')}`;
-            }
+            // COST_DATA key → dashData key mapping (winline COST_DATA → winline_all dashData)
+            const COST_DATA_KEY_MAP = {
+                portfolio: 'portfolio',
+                tradeit: 'tradeit',
+                winline: 'winline_all',
+                whitemarket: 'whitemarket'
+            };
+
+            // Total Costs cards (portfolio + per-partner)
+            Object.entries(COST_DATA).forEach(([key, data]) => {
+                const totalCostEl = document.getElementById(`kpi-${key}-cost`);
+                const activationCostEl = document.getElementById(`kpi-${key}-activation-cost`);
+                const rewardCostEl = document.getElementById(`kpi-${key}-reward-cost`);
+
+                const partnerTotalCost = (data.activationCost || 0) + (data.rewardCost || 0);
+
+                if (totalCostEl) {
+                    if (data.activationCost !== null && data.rewardCost !== null) {
+                        totalCostEl.textContent = `€${Math.round(partnerTotalCost).toLocaleString('en-US')}`;
+                    } else if (data.activationCost !== null) {
+                        // Only activation cost available (e.g. WhiteMarket)
+                        totalCostEl.textContent = `€${Math.round(data.activationCost).toLocaleString('en-US')}`;
+                    } else {
+                        totalCostEl.textContent = '—';
+                    }
+                }
+                if (activationCostEl) {
+                    activationCostEl.textContent = data.activationCost !== null
+                        ? `€${Math.round(data.activationCost).toLocaleString('en-US')}`
+                        : '—';
+                }
+                if (rewardCostEl) {
+                    rewardCostEl.textContent = data.rewardCost !== null
+                        ? `€${Math.round(data.rewardCost).toLocaleString('en-US')}`
+                        : 'N/A';
+                }
+            });
 
             // ROI cards
+            const portfolioTotalCosts = (COST_DATA.portfolio.activationCost || 0) + (COST_DATA.portfolio.rewardCost || 0);
             Object.entries(COST_DATA).forEach(([key, data]) => {
                 const roiEl = document.getElementById(`kpi-${key}-roi`);
                 const roiSub = document.getElementById(`kpi-sub-${key}-roi`);
                 if (!roiEl) return;
 
+                const dashKey = COST_DATA_KEY_MAP[key] || key;
+
                 if (key === 'portfolio') {
                     // Portfolio ROI = Total Partner Value − Total Costs
                     const partnerValue = dashData ? dashData.portfolio.valueYtd : null;
                     if (partnerValue !== null && data.activationCost !== null && data.rewardCost !== null) {
-                        const netValue = partnerValue - totalCosts;
-                        const roiPct = totalCosts > 0 ? (netValue / totalCosts * 100) : 0;
+                        const netValue = partnerValue - portfolioTotalCosts;
+                        const roiPct = portfolioTotalCosts > 0 ? (netValue / portfolioTotalCosts * 100) : 0;
                         const isPositive = netValue >= 0;
                         const color = isPositive ? 'var(--green)' : 'var(--red)';
                         const sign = isPositive ? '+' : '';
                         roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
-                        roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(totalCosts/1000)}K costs</span>`;
+                        roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(portfolioTotalCosts/1000)}K costs</span>`;
                     } else {
                         roiEl.textContent = '—';
                         roiSub.textContent = 'Awaiting data';
                     }
-                } else if (data.activationCost !== null && data.rewardCost !== null && (data.activationCost + data.rewardCost) > 0) {
-                    // Per-partner ROI (when both cost components are available)
-                    const partnerValue = dashData ? dashData[key].valueYtd : null;
-                    const partnerTotalCost = data.activationCost + data.rewardCost;
-                    if (partnerValue !== null) {
+                } else {
+                    // Per-partner ROI
+                    const partnerValue = dashData ? dashData[dashKey].valueYtd : null;
+                    const partnerTotalCost = (data.activationCost || 0) + (data.rewardCost || 0);
+                    const hasBothCosts = data.activationCost !== null && data.rewardCost !== null;
+                    const hasActivationOnly = data.activationCost !== null && data.rewardCost === null;
+
+                    if (hasBothCosts && partnerTotalCost > 0 && partnerValue !== null) {
                         const netValue = partnerValue - partnerTotalCost;
                         const roiPct = (netValue / partnerTotalCost * 100);
                         const isPositive = netValue >= 0;
@@ -6114,16 +6196,19 @@
                         const sign = isPositive ? '+' : '';
                         roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
                         roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(partnerTotalCost/1000)}K costs</span>`;
+                    } else if (hasActivationOnly && partnerValue !== null) {
+                        // Partial ROI — only activation costs available (e.g. WhiteMarket)
+                        const netValue = partnerValue - data.activationCost;
+                        const roiPct = data.activationCost > 0 ? (netValue / data.activationCost * 100) : 0;
+                        const isPositive = netValue >= 0;
+                        const color = isPositive ? 'var(--green)' : 'var(--red)';
+                        const sign = isPositive ? '+' : '';
+                        roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
+                        roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(partnerValue/1000)}K value − €${Math.round(data.activationCost/1000)}K costs</span> <span style="opacity: 0.5; font-size: 0.75em;">(activation only)</span>`;
                     } else {
                         roiEl.textContent = '—';
-                        roiSub.textContent = `Total cost: €${(data.activationCost + data.rewardCost).toLocaleString('en-US')}`;
+                        roiSub.textContent = 'Awaiting cost data';
                     }
-                } else if (data.rewardCost !== null) {
-                    roiEl.textContent = '—';
-                    roiSub.textContent = `Reward cost: €${data.rewardCost.toLocaleString('en-US')}`;
-                } else {
-                    roiEl.textContent = '—';
-                    roiSub.textContent = 'Awaiting cost data';
                 }
             });
         }
