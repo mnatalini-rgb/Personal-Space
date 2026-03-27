@@ -2581,10 +2581,185 @@
                 </div>
             </div>
             <div id="winline-tab-rewards" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #059669; display: inline-block;"></span>
+                    Data source: CSV export (27 Mar 2026)
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">A. Reward Cost Overview</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 1rem;">
+                        <div class="kpi-card" style="border-left: 3px solid #059669;">
+                            <div class="kpi-title">💰 Total FACEIT Reward Costs</div>
+                            <div class="kpi-value" id="winline-reward-costs" style="color: #059669;">—</div>
+                            <div class="kpi-sub" id="winline-reward-costs-sub" style="color: var(--text-muted);">FP + Free Bets cost to FACEIT</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">🎯 Total FP Completed</div>
+                            <div class="kpi-value" id="winline-fp-completed-total">—</div>
+                            <div class="kpi-sub" id="winline-fp-completed-total-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">🎰 Free Bets Completed</div>
+                            <div class="kpi-value" id="winline-freebets-completed-total">—</div>
+                            <div class="kpi-sub" id="winline-freebets-completed-total-sub"></div>
+                        </div>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Completed</div>
+                            <div class="kpi-value" id="winline-rewards-completed">—</div>
+                            <div class="kpi-sub" id="winline-rewards-completed-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Expired</div>
+                            <div class="kpi-value" id="winline-rewards-expired" style="color: var(--red);">—</div>
+                            <div class="kpi-sub" id="winline-rewards-expired-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Claim Rate</div>
+                            <div class="kpi-value" id="winline-rewards-claim-rate" style="font-size: 1.5rem;">—</div>
+                            <div class="kpi-sub" id="winline-rewards-claim-rate-sub" style="color: var(--text-muted);">completed+claimed / (completed+claimed+expired)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">B. Reward Status Breakdown</h2>
+                    <div class="grid-2">
+                        <div class="chart-container" style="position: relative; height: 300px; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                            <canvas id="winlineRewardsStatusChart"></canvas>
+                        </div>
+                        <div class="table-wrapper" style="margin-top: 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th class="number">Rewards Count</th>
+                                        <th class="number">Unique Users</th>
+                                        <th class="number">% of Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="winline-rewards-status-body"></tbody>
+                            </table>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; grid-column: 1 / -1;">
+                            <strong style="color: #334155;">Status Guide</strong><br>
+                            <span style="color: #8b5cf6;">●</span> <strong>Available</strong> — Challenge completed, reward ready to claim<br>
+                            <span style="color: #059669;">●</span> <strong>Completed</strong> — Fully paid and delivered<br>
+                            <span style="color: #f59e0b;">●</span> <strong>Claimed</strong> — Order created, pending delivery (free bets only)<br>
+                            <span style="color: #3b82f6;">●</span> <strong>In Progress</strong> — Challenge not yet completed<br>
+                            <span style="color: #ef4444;">●</span> <strong>Expired</strong> — Not claimed before deadline
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">C. Monthly Distribution</h2>
+                    <div class="grid-2">
+                        <div class="table-wrapper" style="margin-top: 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th class="number">Expired</th>
+                                        <th class="number">Completed</th>
+                                        <th class="number">Claimed</th>
+                                        <th class="number">In Progress</th>
+                                        <th class="number">Available</th>
+                                        <th class="number">Total</th>
+                                        <th class="number">Claim Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="winline-rewards-monthly-body"></tbody>
+                            </table>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 300px; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                            <canvas id="winlineRewardsMonthlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">D. Campaign Detail</h2>
+                    <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
+                        <table style="width: 100%;">
+                            <thead style="position: sticky; top: 0; background: var(--bg); z-index: 1;">
+                                <tr>
+                                    <th>Campaign</th>
+                                    <th>Month</th>
+                                    <th>Status</th>
+                                    <th class="number">Count</th>
+                                    <th class="number">Users</th>
+                                </tr>
+                            </thead>
+                            <tbody id="winline-rewards-campaign-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">E. Reward Type Distribution</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 1rem;">
+                        <div class="kpi-card">
+                            <div class="kpi-title">🛒 Shop Items</div>
+                            <div class="kpi-value" id="winline-rt-shop-item">—</div>
+                            <div class="kpi-sub" id="winline-rt-shop-item-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">🎯 FACEIT Points</div>
+                            <div class="kpi-value" id="winline-rt-faceit-points">—</div>
+                            <div class="kpi-sub" id="winline-rt-faceit-points-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">🏆 Competition Entry</div>
+                            <div class="kpi-value" id="winline-rt-competition-entry">—</div>
+                            <div class="kpi-sub" id="winline-rt-competition-entry-sub"></div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">❓ Unknown</div>
+                            <div class="kpi-value" id="winline-rt-unknown">—</div>
+                            <div class="kpi-sub" id="winline-rt-unknown-sub"></div>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="chart-container" style="position: relative; height: 300px; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                            <canvas id="winlineRewardsTypeChart"></canvas>
+                        </div>
+                        <div class="table-wrapper" style="margin-top: 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th class="number">Count</th>
+                                        <th class="number">Users</th>
+                                        <th class="number">% of Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="winline-rt-breakdown-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">F. FACEIT Points Tier Distribution</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0.5rem;">
+                        <div class="kpi-card"><div class="kpi-title">100 FP</div><div class="kpi-value" id="winline-fp-100">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">250 FP</div><div class="kpi-value" id="winline-fp-250">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">400 FP</div><div class="kpi-value" id="winline-fp-400">—</div></div>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 0.5rem;">
+                        <div class="kpi-card"><div class="kpi-title">500 FP</div><div class="kpi-value" id="winline-fp-500">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">1,000 FP</div><div class="kpi-value" id="winline-fp-1000">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">2,000 FP</div><div class="kpi-value" id="winline-fp-2000">—</div></div>
+                    </div>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="kpi-card"><div class="kpi-title">5,000 FP</div><div class="kpi-value" id="winline-fp-5000">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">5,500 FP</div><div class="kpi-value" id="winline-fp-5500">—</div></div>
+                        <div class="kpi-card"><div class="kpi-title">6,000 FP</div><div class="kpi-value" id="winline-fp-6000">—</div></div>
+                    </div>
                 </div>
             </div>
             <div id="winline-tab-audience" class="tab-content">
@@ -4708,6 +4883,291 @@
             }
         }
 
+        // ========== WINLINE REWARDS DATA & RENDERER ==========
+        const WINLINE_CAMPAIGN_MAP = {
+            '694009049b4d58f8c47e6fd0': { name: 'Agnostic Mission 1', month: 'Jan' },
+            '6940093e9b4d58f8c47e6fd1': { name: 'Agnostic Mission 2 - Mystery Box', month: 'Jan' },
+            '69400986ffb11e2ea751ffe0': { name: 'Mission 3 - No KYC', month: 'Jan' },
+            '694009c2dbf0df69e43028c4': { name: 'Mission 4 - No FTD', month: 'Jan' },
+            '69400a01b2e493c0c53761cf': { name: 'Mission 5 - FTD', month: 'Jan' },
+            '69400a482964d22091879528': { name: 'Mission 6 - FTD', month: 'Jan' },
+            '697c80a14ef62f0511b6201a': { name: 'Agnostic Mission 1 - Main', month: 'Feb' },
+            '697c80dc4ef62f0511b6201b': { name: 'Agnostic Mission 2 - Test', month: 'Feb' },
+            '697c81294ef62f0511b6201c': { name: 'Mission 3 - No KYC Main', month: 'Feb' },
+            '697c8168bd76a0de45398a1e': { name: 'Mission 4 - No KYC Test', month: 'Feb' },
+            '697c81a24ef62f0511b6201d': { name: 'Mission 5 - No FTD Main', month: 'Feb' },
+            '697c81cf0433758c70d5a1b9': { name: 'Mission 6 - No FTD Test', month: 'Feb' },
+            '697c8202bd76a0de45398a1f': { name: 'Mission 7 - FTD Main', month: 'Feb' },
+            '697c82314ef62f0511b6201e': { name: 'Mission 8 - FTD Test', month: 'Feb' },
+            '697c8265bd76a0de45398a20': { name: 'Mission 9 - Whale', month: 'Feb' },
+            '69a1880766558055210b36c4': { name: 'Agnostic Mission 1', month: 'Mar' },
+            '69a18861cc9158b68606c727': { name: 'Mission 2 - No KYC', month: 'Mar' },
+            '69a1889766558055210b36c5': { name: 'Mission 3 - No FTD', month: 'Mar' },
+            '69a188d30c8565913339434c': { name: 'Mission 4 - FTD', month: 'Mar' },
+            '69a18900ebef5d0656e82d6b': { name: 'Mission 5 - Whale', month: 'Mar' }
+        };
+
+        const WINLINE_SHOP_ITEM_MAP = {
+            '67c1953b36a0b59af8bf622d': '500₽ Free Bet',
+            '67c195ae36a0b59af8bf622f': '2500₽ Free Bet',
+            '66697fded0fd28eac68abd2f': 'Mystery Box Item 1',
+            '6915f6593cf1ba1ff1eed504': 'Mystery Box Item 2'
+        };
+
+        const WINLINE_REWARD_DATA = [{"c":"694009049b4d58f8c47e6fd0","fp":100,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"694009049b4d58f8c47e6fd0","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":147104,"us":147097},{"c":"694009049b4d58f8c47e6fd0","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":1852,"us":1852},{"c":"694009049b4d58f8c47e6fd0","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":135974,"us":135951},{"c":"694009049b4d58f8c47e6fd0","fp":0,"rt":"unknown","st":"EXPIRED","ev":279611,"us":145521},{"c":"694009049b4d58f8c47e6fd0","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":1592,"us":1591},{"c":"6940093e9b4d58f8c47e6fd1","fp":250,"rt":"faceit_points","st":"EXPIRED","ev":2065,"us":2049},{"c":"6940093e9b4d58f8c47e6fd1","fp":250,"rt":"faceit_points","st":"COMPLETED","ev":486,"us":486},{"c":"6940093e9b4d58f8c47e6fd1","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":516,"us":516},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":2878,"us":2872,"si":"66697fded0fd28eac68abd2f"},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"unknown","st":"EXPIRED","ev":277219,"us":143612},{"c":"6940093e9b4d58f8c47e6fd1","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":2878,"us":2872},{"c":"6940093e9b4d58f8c47e6fd1","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":2878,"us":2872},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"EXPIRED","ev":2023,"us":2007,"si":"6915f6593cf1ba1ff1eed504"},{"c":"6940093e9b4d58f8c47e6fd1","fp":500,"rt":"faceit_points","st":"EXPIRED","ev":2050,"us":2034},{"c":"6940093e9b4d58f8c47e6fd1","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":146132,"us":146125},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"FAILED","ev":14,"us":14,"si":"66697fded0fd28eac68abd2f"},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"COMPLETED","ev":487,"us":487,"si":"66697fded0fd28eac68abd2f"},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"COMPLETED","ev":528,"us":528,"si":"6915f6593cf1ba1ff1eed504"},{"c":"6940093e9b4d58f8c47e6fd1","fp":400,"rt":"faceit_points","st":"COMPLETED","ev":2954,"us":2954},{"c":"6940093e9b4d58f8c47e6fd1","fp":1000,"rt":"faceit_points","st":"EXPIRED","ev":2037,"us":2018},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":2878,"us":2872,"si":"6915f6593cf1ba1ff1eed504"},{"c":"6940093e9b4d58f8c47e6fd1","fp":400,"rt":"faceit_points","st":"IN_PROGRESS","ev":135113,"us":135077},{"c":"6940093e9b4d58f8c47e6fd1","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":2753,"us":2752},{"c":"6940093e9b4d58f8c47e6fd1","fp":250,"rt":"faceit_points","st":"IN_PROGRESS","ev":2878,"us":2872},{"c":"6940093e9b4d58f8c47e6fd1","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":501,"us":501},{"c":"6940093e9b4d58f8c47e6fd1","fp":0,"rt":"shop_item","st":"EXPIRED","ev":2053,"us":2049,"si":"66697fded0fd28eac68abd2f"},{"c":"69400986ffb11e2ea751ffe0","fp":0,"rt":"unknown","st":"EXPIRED","ev":26636,"us":26625},{"c":"69400986ffb11e2ea751ffe0","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":394,"us":322},{"c":"69400986ffb11e2ea751ffe0","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":306,"us":304},{"c":"69400986ffb11e2ea751ffe0","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":72,"us":72},{"c":"69400986ffb11e2ea751ffe0","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":25307,"us":25307},{"c":"69400986ffb11e2ea751ffe0","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":25754,"us":25272},{"c":"69400986ffb11e2ea751ffe0","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":26704,"us":26688},{"c":"694009c2dbf0df69e43028c4","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":19305,"us":19102},{"c":"694009c2dbf0df69e43028c4","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":19789,"us":19789},{"c":"694009c2dbf0df69e43028c4","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":19138,"us":19102},{"c":"694009c2dbf0df69e43028c4","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":169,"us":169},{"c":"694009c2dbf0df69e43028c4","fp":0,"rt":"unknown","st":"EXPIRED","ev":20164,"us":20161},{"c":"694009c2dbf0df69e43028c4","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":169,"us":169},{"c":"694009c2dbf0df69e43028c4","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":20860,"us":20854},{"c":"69400a01b2e493c0c53761cf","fp":1000,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"69400a01b2e493c0c53761cf","fp":0,"rt":"shop_item","st":"FAILED","ev":26,"us":26,"si":"67c1953b36a0b59af8bf622d"},{"c":"69400a01b2e493c0c53761cf","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":8016,"us":8016,"si":"67c1953b36a0b59af8bf622d"},{"c":"69400a01b2e493c0c53761cf","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":74416,"us":74320},{"c":"69400a01b2e493c0c53761cf","fp":0,"rt":"unknown","st":"EXPIRED","ev":71867,"us":71837},{"c":"69400a01b2e493c0c53761cf","fp":0,"rt":"shop_item","st":"CLAIMED","ev":6030,"us":6030,"si":"67c1953b36a0b59af8bf622d"},{"c":"69400a01b2e493c0c53761cf","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":75721,"us":75721},{"c":"69400a01b2e493c0c53761cf","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":79427,"us":79391},{"c":"69400a01b2e493c0c53761cf","fp":100,"rt":"faceit_points","st":"FAILED","ev":2,"us":2},{"c":"69400a01b2e493c0c53761cf","fp":0,"rt":"unknown","st":"COMPLETED","ev":6029,"us":6029},{"c":"69400a01b2e493c0c53761cf","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":8109,"us":8109},{"c":"69400a01b2e493c0c53761cf","fp":100,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"69400a482964d22091879528","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":32485,"us":32485},{"c":"69400a482964d22091879528","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":3288,"us":3288,"si":"67c195ae36a0b59af8bf622f"},{"c":"69400a482964d22091879528","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":37514,"us":37510},{"c":"69400a482964d22091879528","fp":0,"rt":"unknown","st":"EXPIRED","ev":34551,"us":34528},{"c":"69400a482964d22091879528","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":31852,"us":31846},{"c":"69400a482964d22091879528","fp":0,"rt":"shop_item","st":"CLAIMED","ev":2292,"us":2292,"si":"67c195ae36a0b59af8bf622f"},{"c":"69400a482964d22091879528","fp":0,"rt":"shop_item","st":"FAILED","ev":8,"us":8,"si":"67c195ae36a0b59af8bf622f"},{"c":"69400a482964d22091879528","fp":1000,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"69400a482964d22091879528","fp":0,"rt":"unknown","st":"COMPLETED","ev":2291,"us":2291},{"c":"69400a482964d22091879528","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":3318,"us":3318},{"c":"697c80a14ef62f0511b6201a","fp":100,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"697c80a14ef62f0511b6201a","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":3956,"us":3955},{"c":"697c80a14ef62f0511b6201a","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":325027,"us":325021},{"c":"697c80a14ef62f0511b6201a","fp":0,"rt":"unknown","st":"EXPIRED","ev":617275,"us":321113},{"c":"697c80a14ef62f0511b6201a","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":300714,"us":300701},{"c":"697c80a14ef62f0511b6201a","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":4620,"us":4620},{"c":"697c80dc4ef62f0511b6201b","fp":2000,"rt":"faceit_points","st":"COMPLETED","ev":24,"us":24},{"c":"697c80dc4ef62f0511b6201b","fp":2000,"rt":"faceit_points","st":"IN_PROGRESS","ev":1201,"us":1201},{"c":"697c80dc4ef62f0511b6201b","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":1223,"us":1223},{"c":"697c80dc4ef62f0511b6201b","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":20,"us":20},{"c":"697c80dc4ef62f0511b6201b","fp":0,"rt":"unknown","st":"EXPIRED","ev":2380,"us":1203},{"c":"697c81294ef62f0511b6201c","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":23883,"us":23883},{"c":"697c81294ef62f0511b6201c","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":24231,"us":23854},{"c":"697c81294ef62f0511b6201c","fp":0,"rt":"unknown","st":"EXPIRED","ev":25229,"us":25216},{"c":"697c81294ef62f0511b6201c","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":392,"us":315},{"c":"697c81294ef62f0511b6201c","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":25295,"us":25292},{"c":"697c81294ef62f0511b6201c","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":58,"us":58},{"c":"697c81294ef62f0511b6201c","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":301,"us":300},{"c":"697c8168bd76a0de45398a1e","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":6,"us":6},{"c":"697c8168bd76a0de45398a1e","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":9,"us":9},{"c":"697c8168bd76a0de45398a1e","fp":6000,"rt":"faceit_points","st":"IN_PROGRESS","ev":27,"us":27},{"c":"697c8168bd76a0de45398a1e","fp":5500,"rt":"faceit_points","st":"IN_PROGRESS","ev":1291,"us":1288},{"c":"697c8168bd76a0de45398a1e","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":1312,"us":1311},{"c":"697c8168bd76a0de45398a1e","fp":6000,"rt":"faceit_points","st":"COMPLETED","ev":9,"us":9},{"c":"697c8168bd76a0de45398a1e","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":9,"us":9},{"c":"697c8168bd76a0de45398a1e","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":1290,"us":1290},{"c":"697c8168bd76a0de45398a1e","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":27,"us":27},{"c":"697c8168bd76a0de45398a1e","fp":0,"rt":"unknown","st":"EXPIRED","ev":1301,"us":1301},{"c":"697c8168bd76a0de45398a1e","fp":5500,"rt":"faceit_points","st":"COMPLETED","ev":29,"us":29},{"c":"697c81a24ef62f0511b6201d","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":18148,"us":17956},{"c":"697c81a24ef62f0511b6201d","fp":0,"rt":"unknown","st":"EXPIRED","ev":18959,"us":18945},{"c":"697c81a24ef62f0511b6201d","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":188,"us":188},{"c":"697c81a24ef62f0511b6201d","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":17962,"us":17956},{"c":"697c81a24ef62f0511b6201d","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":18588,"us":18588},{"c":"697c81a24ef62f0511b6201d","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":251,"us":188},{"c":"697c81a24ef62f0511b6201d","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":19656,"us":19656},{"c":"697c81cf0433758c70d5a1b9","fp":0,"rt":"unknown","st":"EXPIRED","ev":1278,"us":1277},{"c":"697c81cf0433758c70d5a1b9","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":1260,"us":1260},{"c":"697c81cf0433758c70d5a1b9","fp":6000,"rt":"faceit_points","st":"IN_PROGRESS","ev":1258,"us":1258},{"c":"697c81cf0433758c70d5a1b9","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":1258,"us":1258},{"c":"697c81cf0433758c70d5a1b9","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":24,"us":24},{"c":"697c81cf0433758c70d5a1b9","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":4,"us":4},{"c":"697c81cf0433758c70d5a1b9","fp":6000,"rt":"faceit_points","st":"COMPLETED","ev":24,"us":24},{"c":"697c81cf0433758c70d5a1b9","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":1284,"us":1284},{"c":"697c81cf0433758c70d5a1b9","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":24,"us":24},{"c":"697c8202bd76a0de45398a1f","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":9231,"us":9231},{"c":"697c8202bd76a0de45398a1f","fp":1000,"rt":"faceit_points","st":"AVAILABLE","ev":3,"us":3},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":9158,"us":9157,"si":"67c1953b36a0b59af8bf622d"},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"unknown","st":"CLAIMED","ev":7060,"us":7060},{"c":"697c8202bd76a0de45398a1f","fp":100,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"697c8202bd76a0de45398a1f","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":75832,"us":75832},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"shop_item","st":"AVAILABLE","ev":2,"us":2,"si":"67c1953b36a0b59af8bf622d"},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"shop_item","st":"FAILED","ev":75,"us":75,"si":"67c1953b36a0b59af8bf622d"},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"unknown","st":"COMPLETED","ev":7059,"us":7059},{"c":"697c8202bd76a0de45398a1f","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":74464,"us":74438},{"c":"697c8202bd76a0de45398a1f","fp":0,"rt":"unknown","st":"EXPIRED","ev":71040,"us":70974},{"c":"697c8202bd76a0de45398a1f","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":79564,"us":79559},{"c":"697c82314ef62f0511b6201e","fp":5000,"rt":"faceit_points","st":"IN_PROGRESS","ev":872,"us":872},{"c":"697c82314ef62f0511b6201e","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":872,"us":872},{"c":"697c82314ef62f0511b6201e","fp":5000,"rt":"faceit_points","st":"COMPLETED","ev":69,"us":69},{"c":"697c82314ef62f0511b6201e","fp":0,"rt":"unknown","st":"COMPLETED","ev":35,"us":35},{"c":"697c82314ef62f0511b6201e","fp":0,"rt":"unknown","st":"CLAIMED","ev":35,"us":35},{"c":"697c82314ef62f0511b6201e","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":884,"us":884},{"c":"697c82314ef62f0511b6201e","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":67,"us":67,"si":"67c1953b36a0b59af8bf622d"},{"c":"697c82314ef62f0511b6201e","fp":0,"rt":"unknown","st":"EXPIRED","ev":847,"us":847},{"c":"697c8265bd76a0de45398a20","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":35093,"us":35093},{"c":"697c8265bd76a0de45398a20","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":40652,"us":40651},{"c":"697c8265bd76a0de45398a20","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":4066,"us":4066},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"unknown","st":"COMPLETED","ev":2842,"us":2842},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"unknown","st":"EXPIRED","ev":37142,"us":37116},{"c":"697c8265bd76a0de45398a20","fp":1000,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"shop_item","st":"FAILED","ev":17,"us":17,"si":"67c195ae36a0b59af8bf622f"},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":4048,"us":4045,"si":"67c195ae36a0b59af8bf622f"},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"unknown","st":"CLAIMED","ev":2845,"us":2845},{"c":"697c8265bd76a0de45398a20","fp":0,"rt":"shop_item","st":"AVAILABLE","ev":1,"us":1,"si":"67c195ae36a0b59af8bf622f"},{"c":"697c8265bd76a0de45398a20","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":34447,"us":34443},{"c":"69a1880766558055210b36c4","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":5167,"us":5167},{"c":"69a1880766558055210b36c4","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":4398,"us":4395},{"c":"69a1880766558055210b36c4","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":326069,"us":326063},{"c":"69a1880766558055210b36c4","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":300389,"us":300385},{"c":"69a18861cc9158b68606c727","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":392,"us":309},{"c":"69a18861cc9158b68606c727","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":25477,"us":25095},{"c":"69a18861cc9158b68606c727","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":26667,"us":26663},{"c":"69a18861cc9158b68606c727","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":25111,"us":25111},{"c":"69a18861cc9158b68606c727","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":295,"us":295},{"c":"69a18861cc9158b68606c727","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":63,"us":63},{"c":"69a1889766558055210b36c5","fp":0,"rt":"competition_entry","st":"COMPLETED","ev":173,"us":173},{"c":"69a1889766558055210b36c5","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":19691,"us":19691},{"c":"69a1889766558055210b36c5","fp":500,"rt":"faceit_points","st":"COMPLETED","ev":238,"us":173},{"c":"69a1889766558055210b36c5","fp":0,"rt":"competition_entry","st":"AVAILABLE","ev":1,"us":1},{"c":"69a1889766558055210b36c5","fp":0,"rt":"competition_entry","st":"IN_PROGRESS","ev":19023,"us":19018},{"c":"69a1889766558055210b36c5","fp":500,"rt":"faceit_points","st":"IN_PROGRESS","ev":19193,"us":19019},{"c":"69a1889766558055210b36c5","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":20871,"us":20865},{"c":"69a1889766558055210b36c5","fp":500,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"69a188d30c8565913339434c","fp":1000,"rt":"faceit_points","st":"AVAILABLE","ev":1,"us":1},{"c":"69a188d30c8565913339434c","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":8946,"us":8946,"si":"67c1953b36a0b59af8bf622d"},{"c":"69a188d30c8565913339434c","fp":0,"rt":"unknown","st":"COMPLETED","ev":7003,"us":7003},{"c":"69a188d30c8565913339434c","fp":0,"rt":"unknown","st":"CLAIMED","ev":7005,"us":7005},{"c":"69a188d30c8565913339434c","fp":0,"rt":"shop_item","st":"AVAILABLE","ev":1,"us":1,"si":"67c1953b36a0b59af8bf622d"},{"c":"69a188d30c8565913339434c","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":74651,"us":74626},{"c":"69a188d30c8565913339434c","fp":0,"rt":"shop_item","st":"FAILED","ev":39,"us":38,"si":"67c1953b36a0b59af8bf622d"},{"c":"69a188d30c8565913339434c","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":76069,"us":76069},{"c":"69a188d30c8565913339434c","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":9022,"us":9022},{"c":"69a188d30c8565913339434c","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":80105,"us":80102},{"c":"69a18900ebef5d0656e82d6b","fp":1000,"rt":"faceit_points","st":"IN_PROGRESS","ev":5933,"us":5932},{"c":"69a18900ebef5d0656e82d6b","fp":100,"rt":"faceit_points","st":"COMPLETED","ev":5942,"us":5942},{"c":"69a18900ebef5d0656e82d6b","fp":0,"rt":"shop_item","st":"FAILED","ev":13,"us":13,"si":"67c195ae36a0b59af8bf622f"},{"c":"69a18900ebef5d0656e82d6b","fp":0,"rt":"unknown","st":"CLAIMED","ev":2825,"us":2825},{"c":"69a18900ebef5d0656e82d6b","fp":0,"rt":"unknown","st":"COMPLETED","ev":2824,"us":2824},{"c":"69a18900ebef5d0656e82d6b","fp":100,"rt":"faceit_points","st":"IN_PROGRESS","ev":6985,"us":6985},{"c":"69a18900ebef5d0656e82d6b","fp":1000,"rt":"faceit_points","st":"COMPLETED","ev":3998,"us":3998},{"c":"69a18900ebef5d0656e82d6b","fp":0,"rt":"shop_item","st":"IN_PROGRESS","ev":3973,"us":3972,"si":"67c195ae36a0b59af8bf622f"}];
+
+        function renderWinlineRewards() {
+            const data = WINLINE_REWARD_DATA;
+            if (!data || data.length === 0) return;
+
+            // === Pricing constants ===
+            const FP_RATE_USD = 1 / 2178; // $1 = 2,178 FP
+            const USD_TO_EUR = 0.92;
+            const RUB_TO_EUR = 1 / 105;
+            const FREE_BET_500_RUB = 500;
+            const FREE_BET_2500_RUB = 2500;
+
+            // === Status tracking ===
+            const statusColors = { completed: '#059669', expired: '#ef4444', in_progress: '#3b82f6', claimed: '#f59e0b', available: '#8b5cf6', failed: '#ef4444' };
+            const statusLabels = { completed: 'Completed', expired: 'Expired', in_progress: 'In Progress', claimed: 'Claimed', available: 'Available', failed: 'Failed' };
+
+            const totals = { completed: { cnt: 0, us: 0 }, expired: { cnt: 0, us: 0 }, in_progress: { cnt: 0, us: 0 }, claimed: { cnt: 0, us: 0 }, available: { cnt: 0, us: 0 }, failed: { cnt: 0, us: 0 }, all: { cnt: 0, us: 0 } };
+            const monthMap = { Jan: { completed: 0, expired: 0, in_progress: 0, claimed: 0, available: 0, failed: 0, total: 0 }, Feb: { completed: 0, expired: 0, in_progress: 0, claimed: 0, available: 0, failed: 0, total: 0 }, Mar: { completed: 0, expired: 0, in_progress: 0, claimed: 0, available: 0, failed: 0, total: 0 } };
+            const campaignAgg = {};
+            const rewardTypeAgg = { faceit_points: { ev: 0, us: 0 }, shop_item: { ev: 0, us: 0 }, competition_entry: { ev: 0, us: 0 }, unknown: { ev: 0, us: 0 } };
+            const fpTierAgg = {};
+            [100, 250, 400, 500, 1000, 2000, 5000, 5500, 6000].forEach(t => { fpTierAgg[t] = { ev: 0, us: 0 }; });
+
+            // FP cost accumulators (completed only)
+            let totalFpValueCompleted = 0;
+            let totalFpRewardsCompleted = 0;
+            // Free bet accumulators (completed + claimed for shop_item free bets)
+            let freeBet500Completed = 0;
+            let freeBet2500Completed = 0;
+
+            data.forEach(row => {
+                const st = row.st.toLowerCase();
+                if (st === 'not_started') return;
+                const ev = row.ev;
+                const us = row.us;
+                const camp = WINLINE_CAMPAIGN_MAP[row.c];
+                const month = camp ? camp.month : 'Unknown';
+
+                if (!totals[st]) totals[st] = { cnt: 0, us: 0 };
+                totals[st].cnt += ev;
+                totals[st].us += us;
+                totals.all.cnt += ev;
+                totals.all.us += us;
+
+                // Monthly
+                if (monthMap[month]) {
+                    monthMap[month][st] = (monthMap[month][st] || 0) + ev;
+                    monthMap[month].total += ev;
+                }
+
+                // Campaign aggregation
+                const campName = camp ? camp.name : row.c;
+                const cKey = `${campName}|${month}|${st}`;
+                if (!campaignAgg[cKey]) campaignAgg[cKey] = { campaign: campName, month, status: st, cnt: 0, users: 0 };
+                campaignAgg[cKey].cnt += ev;
+                campaignAgg[cKey].users += us;
+
+                // Reward type
+                const rt = row.rt;
+                if (rewardTypeAgg[rt]) {
+                    rewardTypeAgg[rt].ev += ev;
+                    rewardTypeAgg[rt].us += us;
+                }
+
+                // FP tier (only for faceit_points with fp > 0)
+                if (rt === 'faceit_points' && row.fp > 0 && fpTierAgg[row.fp]) {
+                    fpTierAgg[row.fp].ev += ev;
+                    fpTierAgg[row.fp].us += us;
+                }
+
+                // Cost calculation: FP completed rewards
+                if (rt === 'faceit_points' && row.fp > 0 && st === 'completed') {
+                    totalFpValueCompleted += row.fp * ev;
+                    totalFpRewardsCompleted += ev;
+                }
+
+                // Free bet cost: shop_item completed or claimed (500₽ and 2500₽ free bets)
+                if (rt === 'shop_item' && (st === 'completed' || st === 'claimed')) {
+                    if (row.si === '67c1953b36a0b59af8bf622d') freeBet500Completed += ev;
+                    if (row.si === '67c195ae36a0b59af8bf622f') freeBet2500Completed += ev;
+                }
+            });
+
+            // === Cost calculations ===
+            const fpCostEur = Math.round(totalFpValueCompleted * FP_RATE_USD * USD_TO_EUR);
+            const freeBetCostEur = Math.round((freeBet500Completed * FREE_BET_500_RUB + freeBet2500Completed * FREE_BET_2500_RUB) * RUB_TO_EUR);
+            const totalCostEur = fpCostEur + freeBetCostEur;
+
+            // === Section A: Cost KPIs ===
+            const setEl = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+            setEl('winline-reward-costs', '\u20AC' + totalCostEur.toLocaleString('en-US'));
+            setEl('winline-reward-costs-sub', 'FP: \u20AC' + fpCostEur.toLocaleString('en-US') + ' | Free Bets: \u20AC' + freeBetCostEur.toLocaleString('en-US'));
+            setEl('winline-fp-completed-total', totalFpValueCompleted.toLocaleString('en-US') + ' FP');
+            setEl('winline-fp-completed-total-sub', totalFpRewardsCompleted.toLocaleString('en-US') + ' rewards ($1 per 2,178 FP)');
+            setEl('winline-freebets-completed-total', (freeBet500Completed + freeBet2500Completed).toLocaleString('en-US'));
+            setEl('winline-freebets-completed-total-sub', freeBet500Completed.toLocaleString('en-US') + ' x 500\u20BD + ' + freeBet2500Completed.toLocaleString('en-US') + ' x 2500\u20BD');
+            setEl('winline-rewards-completed', formatInt(totals.completed.cnt));
+            setEl('winline-rewards-completed-sub', formatInt(totals.completed.us) + ' users');
+            setEl('winline-rewards-expired', formatInt(totals.expired.cnt));
+            setEl('winline-rewards-expired-sub', formatInt(totals.expired.us) + ' users');
+
+            const claimDenom = totals.completed.cnt + totals.claimed.cnt + totals.expired.cnt;
+            const claimRate = claimDenom > 0 ? ((totals.completed.cnt + totals.claimed.cnt) / claimDenom * 100) : 0;
+            setEl('winline-rewards-claim-rate', claimRate.toFixed(1) + '%');
+            setEl('winline-rewards-claim-rate-sub', 'completed+claimed / (completed+claimed+expired)');
+
+            // === Section B: Status Breakdown ===
+            const statuses = ['completed', 'expired', 'in_progress', 'claimed', 'available', 'failed'];
+            const tbodyStatus = document.getElementById('winline-rewards-status-body');
+            if (tbodyStatus) {
+                tbodyStatus.innerHTML = statuses.filter(s => totals[s] && totals[s].cnt > 0).sort((a, b) => totals[b].cnt - totals[a].cnt).map(st => {
+                    const t = totals[st];
+                    const pct = totals.all.cnt > 0 ? ((t.cnt / totals.all.cnt) * 100).toFixed(1) + '%' : '0%';
+                    return '<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + statusColors[st] + ';margin-right:5px;"></span>' + statusLabels[st] + '</td><td class="number">' + formatInt(t.cnt) + '</td><td class="number">' + formatInt(t.us) + '</td><td class="number">' + pct + '</td></tr>';
+                }).join('');
+            }
+
+            // Status doughnut chart
+            const chartStatuses = statuses.filter(s => totals[s] && totals[s].cnt > 0);
+            if (charts && charts.winline) {
+                if (charts.winline.rewardsStatusChart) charts.winline.rewardsStatusChart.destroy();
+                const ctxStatus = document.getElementById('winlineRewardsStatusChart');
+                if (ctxStatus) {
+                    charts.winline.rewardsStatusChart = new Chart(ctxStatus, {
+                        type: 'doughnut',
+                        data: {
+                            labels: chartStatuses.map(s => statusLabels[s]),
+                            datasets: [{ data: chartStatuses.map(s => totals[s].cnt), backgroundColor: chartStatuses.map(s => statusColors[s]), borderWidth: 0 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#1a1a2e' } } } }
+                    });
+                }
+            }
+
+            // === Section C: Monthly Distribution ===
+            const monthKeys = ['Jan', 'Feb', 'Mar'];
+            const monthLabels = { Jan: "Jan '26", Feb: "Feb '26", Mar: "Mar '26" };
+            const tbodyMonthly = document.getElementById('winline-rewards-monthly-body');
+            if (tbodyMonthly) {
+                tbodyMonthly.innerHTML = monthKeys.map(mk => {
+                    const d = monthMap[mk];
+                    const mCr = (d.completed + d.claimed + d.expired) > 0 ? (((d.completed + d.claimed) / (d.completed + d.claimed + d.expired)) * 100).toFixed(1) + '%' : '0%';
+                    return '<tr><td>' + monthLabels[mk] + '</td><td class="number">' + formatInt(d.expired) + '</td><td class="number">' + formatInt(d.completed) + '</td><td class="number">' + formatInt(d.claimed) + '</td><td class="number">' + formatInt(d.in_progress) + '</td><td class="number">' + formatInt(d.available) + '</td><td class="number" style="font-weight:600;">' + formatInt(d.total) + '</td><td class="number" style="color:var(--accent);font-weight:600;">' + mCr + '</td></tr>';
+                }).join('');
+            }
+
+            // Monthly bar chart
+            if (charts && charts.winline) {
+                if (charts.winline.rewardsMonthlyChart) charts.winline.rewardsMonthlyChart.destroy();
+                const ctxMonthly = document.getElementById('winlineRewardsMonthlyChart');
+                if (ctxMonthly) {
+                    charts.winline.rewardsMonthlyChart = new Chart(ctxMonthly, {
+                        type: 'bar',
+                        data: {
+                            labels: monthKeys.map(mk => monthLabels[mk]),
+                            datasets: [
+                                { label: 'Completed', data: monthKeys.map(mk => monthMap[mk].completed), backgroundColor: statusColors.completed },
+                                { label: 'Claimed', data: monthKeys.map(mk => monthMap[mk].claimed), backgroundColor: statusColors.claimed },
+                                { label: 'Expired', data: monthKeys.map(mk => monthMap[mk].expired), backgroundColor: statusColors.expired }
+                            ]
+                        },
+                        options: {
+                            responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { position: 'top', labels: { color: '#1a1a2e' } } },
+                            scales: {
+                                x: { stacked: true, grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                                y: { stacked: true, grid: { color: 'rgba(200,200,200,0.2)' }, ticks: { color: '#1a1a2e', callback: v => v.toLocaleString() } }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // === Section D: Campaign Detail ===
+            const tbodyCamp = document.getElementById('winline-rewards-campaign-body');
+            if (tbodyCamp) {
+                const campArr = Object.values(campaignAgg).sort((a, b) => b.cnt - a.cnt);
+                tbodyCamp.innerHTML = campArr.map(c => '<tr><td>' + c.campaign + '</td><td>' + c.month + '</td><td><span style="display:inline-block;padding:2px 6px;border-radius:4px;font-size:0.75rem;background:color-mix(in srgb,' + (statusColors[c.status] || '#ccc') + ' 15%,transparent);color:' + (statusColors[c.status] || '#333') + ';">' + (statusLabels[c.status] || c.status) + '</span></td><td class="number">' + formatInt(c.cnt) + '</td><td class="number">' + formatInt(c.users) + '</td></tr>').join('');
+            }
+
+            // === Section E: Reward Type Distribution ===
+            const totalRtEv = rewardTypeAgg.faceit_points.ev + rewardTypeAgg.shop_item.ev + rewardTypeAgg.competition_entry.ev + rewardTypeAgg.unknown.ev;
+            const setRtKpi = (id, ev, us, pct) => {
+                setEl(id, formatInt(ev));
+                setEl(id + '-sub', formatInt(us) + ' users | ' + pct + '%');
+            };
+            setRtKpi('winline-rt-shop-item', rewardTypeAgg.shop_item.ev, rewardTypeAgg.shop_item.us, totalRtEv > 0 ? ((rewardTypeAgg.shop_item.ev / totalRtEv) * 100).toFixed(1) : '0');
+            setRtKpi('winline-rt-faceit-points', rewardTypeAgg.faceit_points.ev, rewardTypeAgg.faceit_points.us, totalRtEv > 0 ? ((rewardTypeAgg.faceit_points.ev / totalRtEv) * 100).toFixed(1) : '0');
+            setRtKpi('winline-rt-competition-entry', rewardTypeAgg.competition_entry.ev, rewardTypeAgg.competition_entry.us, totalRtEv > 0 ? ((rewardTypeAgg.competition_entry.ev / totalRtEv) * 100).toFixed(1) : '0');
+            setRtKpi('winline-rt-unknown', rewardTypeAgg.unknown.ev, rewardTypeAgg.unknown.us, totalRtEv > 0 ? ((rewardTypeAgg.unknown.ev / totalRtEv) * 100).toFixed(1) : '0');
+
+            // Reward type doughnut
+            if (charts && charts.winline) {
+                if (charts.winline.rewardsTypeChart) charts.winline.rewardsTypeChart.destroy();
+                const ctxRt = document.getElementById('winlineRewardsTypeChart');
+                if (ctxRt) {
+                    charts.winline.rewardsTypeChart = new Chart(ctxRt, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Shop Items', 'FACEIT Points', 'Competition Entry', 'Unknown'],
+                            datasets: [{ data: [rewardTypeAgg.shop_item.ev, rewardTypeAgg.faceit_points.ev, rewardTypeAgg.competition_entry.ev, rewardTypeAgg.unknown.ev], backgroundColor: ['#3b82f6', '#f59e0b', '#8b5cf6', '#6b7280'], borderWidth: 0 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#1a1a2e' } } } }
+                    });
+                }
+            }
+
+            // Reward type breakdown table
+            const tbodyRt = document.getElementById('winline-rt-breakdown-body');
+            if (tbodyRt) {
+                const types = [
+                    { key: 'shop_item', label: 'Shop Items', color: '#3b82f6' },
+                    { key: 'faceit_points', label: 'FACEIT Points', color: '#f59e0b' },
+                    { key: 'competition_entry', label: 'Competition Entry', color: '#8b5cf6' },
+                    { key: 'unknown', label: 'Unknown', color: '#6b7280' }
+                ];
+                // Build per-type status breakdown from raw data
+                const typeStatusMap = {};
+                data.forEach(row => {
+                    const st = row.st.toLowerCase();
+                    if (st === 'not_started') return;
+                    const k = row.rt + '|' + st;
+                    if (!typeStatusMap[k]) typeStatusMap[k] = { ev: 0, us: 0 };
+                    typeStatusMap[k].ev += row.ev;
+                    typeStatusMap[k].us += row.us;
+                });
+                let tableHtml = '';
+                types.forEach(t => {
+                    const typeTot = rewardTypeAgg[t.key] ? rewardTypeAgg[t.key].ev : 0;
+                    if (typeTot === 0) return;
+                    const rows = [];
+                    statuses.forEach(ts => {
+                        const d = typeStatusMap[t.key + '|' + ts];
+                        if (d && d.ev > 0) rows.push({ status: ts, events: d.ev, users: d.us, pct: ((d.ev / typeTot) * 100).toFixed(1) + '%' });
+                    });
+                    rows.sort((a, b) => b.events - a.events);
+                    rows.forEach((r, idx) => {
+                        const stColor = statusColors[r.status] || '#6b7280';
+                        const stLabel = statusLabels[r.status] || r.status;
+                        const typeCell = idx === 0 ? '<td rowspan="' + rows.length + '" style="font-weight:600;vertical-align:middle;">' + t.label + '</td>' : '';
+                        tableHtml += '<tr>' + typeCell + '<td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + stColor + ';margin-right:5px;"></span>' + stLabel + '</td><td class="number">' + formatInt(r.events) + '</td><td class="number">' + formatInt(r.users) + '</td><td class="number">' + r.pct + '</td></tr>';
+                    });
+                });
+                tbodyRt.innerHTML = tableHtml;
+            }
+
+            // === Section F: FP Tier Distribution ===
+            [100, 250, 400, 500, 1000, 2000, 5000, 5500, 6000].forEach(tier => {
+                const el = document.getElementById('winline-fp-' + tier);
+                if (el) el.textContent = formatInt(fpTierAgg[tier].ev);
+            });
+        }
+
         const tradeitFunnelHeatmapData = {
             jan: [
                 { region: 'NA', alRate: 4.22, tofuC1: 0.92, mofuC1: 21.79, bofuC2: 5.09 },
@@ -6061,6 +6521,9 @@
             if (partner === 'winline' && tabId === 'funnel') {
                 renderWinlineFunnel();
             }
+            if (partner === 'winline' && tabId === 'rewards') {
+                renderWinlineRewards();
+            }
         }
 
         function filterExperimentsByMonth(btn) {
@@ -7115,7 +7578,9 @@
                 populateTables();
             }
             populateTradeitMissions();
-            renderTradeitRewards();
+            // Note: renderTradeitRewards() and renderWinlineRewards() are NOT called here.
+            // Chart.js needs visible canvases to render correctly. These are called in
+            // switchPartnerTab() when the user navigates to the respective Rewards tabs.
 
             switchWinlineGeo('all');
             switchPartner('combined'); // Load default
