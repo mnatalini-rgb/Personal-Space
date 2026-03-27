@@ -3539,6 +3539,37 @@
                     </div>
                 </div>
 
+                <!-- 10. CDP PARTNER PERFORMANCE -->
+                <div style="margin-bottom: 2.5rem;">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.75rem;">10. CDP Partner Performance — User Behaviour on Partner Sites</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.75rem;">Track how FACEIT-acquired users perform on partner websites post-conversion. CDP signals tell us what users actually do after linking — are they active, spending, retaining? This closes the loop on partner ROI.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                        <div style="flex: 1; min-width: 220px; background: #f0f4ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 1rem;">
+                            <div style="font-weight: 700; color: var(--accent); font-size: 0.95rem; margin-bottom: 0.5rem;">What to Measure</div>
+                            <ul style="font-size: 0.85rem; margin: 0 0 0 1.25rem; color: var(--text-secondary);">
+                                <li>Post-AL activity rate — % of linked users active on partner site within 7/30/90 days</li>
+                                <li>Conversion depth — progression through C1 → C2 → C3 per cohort</li>
+                                <li>Partner-side LTV signals — deposit frequency, trade volume, bet count (from CDP CRM sync)</li>
+                                <li>Retention curve — how long FACEIT-acquired users remain active on the partner platform</li>
+                            </ul>
+                        </div>
+                        <div style="flex: 1; min-width: 220px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 1rem;">
+                            <div style="font-weight: 700; color: #059669; font-size: 0.95rem; margin-bottom: 0.5rem;">Why This Matters</div>
+                            <ul style="font-size: 0.85rem; margin: 0 0 0 1.25rem; color: var(--text-secondary);">
+                                <li>Proves the 2–3x ROI story to partners with their own data</li>
+                                <li>Identifies which campaign types drive highest-quality users (not just volume)</li>
+                                <li>Enables partner-side segmentation for re-targeting and upsell campaigns</li>
+                                <li>Differentiates FACEIT from generic media buys — we deliver verified outcomes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;">
+                        <strong>Data source:</strong> CDP integration — partner CRM signals synced back to FACEIT's data warehouse. Currently available for Tradeit (trade events) and Winline (deposit/bet events via CRM sync).<br>
+                        <strong>Blockers:</strong> Need to confirm which CDP signals are already flowing to BQ, map partner event taxonomy, and define standardised metrics across verticals.<br>
+                        <strong>Implementation:</strong> New "Partner Performance" section per partner tab showing post-conversion behaviour. April 2026 target.
+                    </div>
+                </div>
+
                 <!-- KEY IDENTIFIERS REFERENCE -->
                 <div style="margin-bottom: 1.5rem;">
                     <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.75rem;">Reference: Key Identifiers</h3>
