@@ -97,6 +97,11 @@
         .kpi-secondary-stack .kpi-card { flex: 1; padding: 1.25rem 1.5rem; }
         .kpi-secondary-stack .kpi-value { font-size: 1.75rem; }
         .kpi-secondary-stack .kpi-title { font-size: 0.85rem; }
+.kpi-tertiary-stack { display: flex; flex-direction: column; gap: 1rem; justify-content: center; }
+.kpi-tertiary-stack .kpi-card { padding: 1.25rem 1.5rem; }
+.kpi-tertiary-stack .kpi-value { font-size: 1.4rem; }
+.kpi-tertiary-stack .kpi-title { font-size: 0.8rem; }
+.kpi-tertiary-stack .kpi-sub { font-size: 0.7rem; }
         @media (max-width: 900px) { .kpi-hero-wrapper { grid-template-columns: 1fr; } }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
@@ -228,37 +233,36 @@
             <div id="combined-tab-nsm" class="tab-content active">
                 <div class="section" id="combined-section-1">
 
-                <div class="kpi-hero-wrapper">
+                <div class="kpi-hero-wrapper" style="grid-template-columns: 2fr 2fr;">
                     <div class="kpi-hero">
                         <span class="kpi-badge">North Star Metric</span>
-                        <div class="kpi-title">Total Partners Value <span class="info-tip">i<span class="info-tip-content">Winline + Tradeit + WhiteMarket<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
-                        <div class="kpi-value" id="kpi-portfolio-value" data-kpi="portfolio-value">€638,527</div>
-                        <div class="kpi-sub" id="kpi-sub-portfolio-value">
-                            <span style="color: var(--red);">WoW −81%</span> <span class="info-tip">i<span class="info-tip-content">€15.9K this week vs €85.7K prev</span></span> · <span style="color: var(--green);">MoM +14%</span> <span class="info-tip">i<span class="info-tip-content">€174K Feb vs €152K Jan</span></span>
-                        </div>
-                    </div>
-                    <div class="kpi-hero">
-                        <span class="kpi-badge">Advertiser KPI</span>
-                        <div class="kpi-title">Total Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Total Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                        <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Total Revenues − Total Partner Costs<br>Measures net return on partner investment<br><br><strong>Formula:</strong> ROI = Revenue − Costs<br><strong>% Return:</strong> (Revenue − Costs) / Costs × 100</span></span></div>
                         <div class="kpi-value" id="kpi-portfolio-roi" data-kpi="portfolio-roi">—</div>
                         <div class="kpi-sub" id="kpi-sub-portfolio-roi">Awaiting cost data</div>
                     </div>
                     <div class="kpi-secondary-stack">
                         <div class="kpi-card">
-                            <div class="kpi-title">Unique EBU <span class="info-tip">i<span class="info-tip-content">YTD unique users who activated any mission (deduplicated)<br>Users overlap across partners — not a sum of per-partner EBU</span></span></div>
-                            <div class="kpi-value" id="kpi-portfolio-ebu" data-kpi="portfolio-ebu">1.68M</div>
-                            <div class="kpi-sub" id="kpi-sub-portfolio-ebu">
-                                <span style="color: var(--red);">WoW −77%</span> <span class="info-tip">i<span class="info-tip-content">226K this week vs 961K prev</span></span> · <span style="color: var(--green);">MoM +11%</span> <span class="info-tip">i<span class="info-tip-content">888K Feb vs 798K Jan</span></span>
-                            </div>
+                            <div class="kpi-title">Total Revenues <span class="info-tip">i<span class="info-tip-content">Reported by Finance (monthly, aggregated across all partners)<br>Includes all partner activation revenues<br>Jan–Mar 2026 · Updated monthly</span></span></div>
+                            <div class="kpi-value" id="kpi-portfolio-revenue" data-kpi="portfolio-revenue">€464,000</div>
+                            <div class="kpi-sub" id="kpi-sub-portfolio-revenue" style="opacity: 0.7;">Finance-reported · Jan–Mar 2026</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">Partner Efficiency <span class="info-tip">i<span class="info-tip-content">€638,527 / 1,677,937 EBU × 1,000 = €380 per 1K EBU</span></span></div>
-                            <div class="kpi-value" id="kpi-portfolio-efficiency" data-kpi="portfolio-efficiency">€380</div>
-                            <div class="kpi-sub" id="kpi-sub-portfolio-efficiency">
-                                <span style="color: var(--red);">WoW −21%</span> <span class="info-tip">i<span class="info-tip-content">€71/1K this week vs €89/1K prev</span></span> · <span style="color: var(--green);">MoM +3%</span> <span class="info-tip">i<span class="info-tip-content">€196/1K Feb vs €191/1K Jan</span></span>
+                            <div class="kpi-title">Total Partner Costs <span class="info-tip">i<span class="info-tip-content">Reward costs only (contract costs awaiting Finance)<br>Tradeit: €61,565 | Winline: €122,262</span></span></div>
+                            <div class="kpi-value" id="kpi-portfolio-cost" data-kpi="portfolio-cost">—</div>
+                            <div class="kpi-sub" id="kpi-sub-portfolio-cost">Awaiting cost data</div>
+                        </div>
+                        <div class="kpi-card kpi-card-tertiary">
+                            <div class="kpi-title">Total Partner Value <span class="info-tip">i<span class="info-tip-content">Calculated value of all partner conversions (account links, KYC, deposits, deeper milestones)<br>Uses NSM conversion weights · Winline + Tradeit + WhiteMarket<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
+                            <div class="kpi-value" id="kpi-portfolio-value" data-kpi="portfolio-value" style="font-size: 1.4rem;">€638,527</div>
+                            <div class="kpi-sub" id="kpi-sub-portfolio-value">
+                                <span style="color: var(--red);">WoW −81%</span> <span class="info-tip">i<span class="info-tip-content">€15.9K this week vs €85.7K prev</span></span> · <span style="color: var(--green);">MoM +14%</span> <span class="info-tip">i<span class="info-tip-content">€174K Feb vs €152K Jan</span></span>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: #92400e; display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1rem;">⚠️</span>
+                    <span>Costs are manually calculated from cross-referenced data tables. Expect ~20% margin of error until Finance validates.</span></div>
                 </div>
             </div>
 
@@ -472,7 +476,7 @@
                         </div>
                         <div class="kpi-hero">
                             <span class="kpi-badge">Advertiser KPI</span>
-                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward costs: €61,565 | Contract costs: awaiting Finance</span></span></div>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward cost: €61,565 | Per-partner revenue awaiting Finance</span></span></div>
                             <div class="kpi-value" id="kpi-tradeit-roi" data-kpi="tradeit-roi">—</div>
                             <div class="kpi-sub" id="kpi-sub-tradeit-roi">Awaiting cost data</div>
                         </div>
@@ -2045,7 +2049,7 @@
                         </div>
                         <div class="kpi-hero">
                             <span class="kpi-badge">Advertiser KPI</span>
-                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Awaiting per-partner cost breakdown from Finance</span></span></div>
+                            <div class="kpi-title">Advertiser ROI <span class="info-tip">i<span class="info-tip-content">Classic ROI: (Partner Value − Total Cost) / Total Cost<br>Reward cost: €122,262 | Per-partner revenue awaiting Finance</span></span></div>
                             <div class="kpi-value" id="kpi-winline-roi" data-kpi="winline-roi">—</div>
                             <div class="kpi-sub" id="kpi-sub-winline-roi">Awaiting cost data</div>
                         </div>
@@ -6039,14 +6043,52 @@
                 if (effEl) effEl.textContent = `€${Math.round(p.eurPer1kEbu).toLocaleString('en-US')}`;
             });
 
-            // === Total Advertiser ROI placeholder ===
-            // ROI = (Total Value - Total Cost) / Total Cost
-            // Awaiting per-partner cost breakdown from Finance
-            ['portfolio', 'tradeit', 'winline', 'whitemarket'].forEach(key => {
+            // === Advertiser ROI ===
+            // Portfolio ROI: Finance confirmed €464K aggregated activation revenue (Jan-Feb-Mar)
+            // Costs: Tradeit €61,565 + Winline €122,262 = €183,827
+            // Formula: Total Partner Value - Total Partner Costs (€ net value + % return)
+            // Per-partner ROI blocked until Finance provides per-partner revenue split
+            const COST_DATA = {
+                portfolio: { revenue: 464000, cost: 183827 },
+                tradeit:   { cost: 61565, revenue: null },   // reward cost known, revenue TBD
+                winline:   { cost: 122262, revenue: null },  // reward cost known, revenue TBD
+                whitemarket: { cost: null, revenue: null }
+            };
+
+            // Portfolio revenue card (Finance-reported, hardcoded)
+            const revEl = document.getElementById('kpi-portfolio-revenue');
+            if (revEl) {
+                revEl.textContent = `€${Math.round(COST_DATA.portfolio.revenue).toLocaleString('en-US')}`;
+            }
+
+            // Portfolio cost card
+            const costEl = document.getElementById('kpi-portfolio-cost');
+            const costSub = document.getElementById('kpi-sub-portfolio-cost');
+            if (costEl && COST_DATA.portfolio.cost !== null) {
+                costEl.textContent = `€${Math.round(COST_DATA.portfolio.cost).toLocaleString('en-US')}`;
+                costSub.textContent = `Tradeit €${COST_DATA.tradeit.cost.toLocaleString('en-US')} + Winline €${COST_DATA.winline.cost.toLocaleString('en-US')}`;
+            }
+
+            // ROI cards
+            Object.entries(COST_DATA).forEach(([key, data]) => {
                 const roiEl = document.getElementById(`kpi-${key}-roi`);
                 const roiSub = document.getElementById(`kpi-sub-${key}-roi`);
-                if (roiEl) roiEl.textContent = '—';
-                if (roiSub) roiSub.textContent = 'Awaiting cost data';
+                if (!roiEl) return;
+                if (data.revenue !== null && data.cost !== null && data.cost > 0) {
+                    const netValue = data.revenue - data.cost;
+                    const roiPct = (netValue / data.cost * 100);
+                    const isPositive = netValue >= 0;
+                    const color = isPositive ? 'var(--green)' : 'var(--red)';
+                    const sign = isPositive ? '+' : '';
+                    roiEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(netValue)).toLocaleString('en-US')}</span>`;
+                    roiSub.innerHTML = `<span style="color: ${color}; font-weight: 600;">${sign}${Math.round(roiPct)}%</span> <span style="opacity: 0.7;">€${Math.round(data.revenue/1000)}K revenue − €${Math.round(data.cost/1000)}K costs</span>`;
+                } else if (data.cost !== null) {
+                    roiEl.textContent = '—';
+                    roiSub.textContent = `Reward cost: €${data.cost.toLocaleString('en-US')}`;
+                } else {
+                    roiEl.textContent = '—';
+                    roiSub.textContent = 'Awaiting cost data';
+                }
             });
         }
 
