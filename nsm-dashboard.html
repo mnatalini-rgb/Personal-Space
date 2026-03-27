@@ -242,21 +242,20 @@
                     </div>
                     <div class="kpi-secondary-stack">
                         <div class="kpi-card">
-                            <div class="kpi-title">Total Revenues <span class="info-tip">i<span class="info-tip-content">Reported by Finance (monthly, aggregated across all partners)<br>Includes all partner activation revenues<br>Jan–Mar 2026 · Updated monthly</span></span></div>
-                            <div class="kpi-value" id="kpi-portfolio-revenue" data-kpi="portfolio-revenue">€464,000</div>
-                            <div class="kpi-sub" id="kpi-sub-portfolio-revenue" style="opacity: 0.7;">Finance-reported · Jan–Mar 2026</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-title">Total Partner Costs <span class="info-tip">i<span class="info-tip-content">Reward costs only (contract costs awaiting Finance)<br>Tradeit: €61,565 | Winline: €122,262</span></span></div>
-                            <div class="kpi-value" id="kpi-portfolio-cost" data-kpi="portfolio-cost">—</div>
-                            <div class="kpi-sub" id="kpi-sub-portfolio-cost">Awaiting cost data</div>
-                        </div>
-                        <div class="kpi-card kpi-card-tertiary">
                             <div class="kpi-title">Total Partner Value <span class="info-tip">i<span class="info-tip-content">Calculated value of all partner conversions (account links, KYC, deposits, deeper milestones)<br>Uses NSM conversion weights · Winline + Tradeit + WhiteMarket<br>Jan–Mar 2026 (*Mar partial, through Mar 20)</span></span></div>
-                            <div class="kpi-value" id="kpi-portfolio-value" data-kpi="portfolio-value" style="font-size: 1.4rem;">€638,527</div>
+                            <div class="kpi-value" id="kpi-portfolio-value" data-kpi="portfolio-value">€638,527</div>
                             <div class="kpi-sub" id="kpi-sub-portfolio-value">
                                 <span style="color: var(--red);">WoW −81%</span> <span class="info-tip">i<span class="info-tip-content">€15.9K this week vs €85.7K prev</span></span> · <span style="color: var(--green);">MoM +14%</span> <span class="info-tip">i<span class="info-tip-content">€174K Feb vs €152K Jan</span></span>
                             </div>
+                        </div>
+                        <div class="kpi-card" style="padding: 1rem 1.5rem;">
+                            <div class="kpi-title">Total Costs <span class="info-tip">i<span class="info-tip-content"><strong>How Advertiser ROI is calculated:</strong><br>Revenue (Finance-reported, monthly) − Costs (reward costs)<br><br>Revenue: €464K — total partner activation revenue, Jan–Mar 2026<br>Costs: €184K — Tradeit €62K + Winline €122K (manual calc.)<br>Net ROI: €280K (+152%)</span></span></div>
+                            <div id="kpi-portfolio-cost" class="kpi-value" style="margin-top: 0.3rem; font-size: 1.6rem;">—</div>
+                            <div id="kpi-portfolio-roi-breakdown" style="font-size: 0.85rem; line-height: 1.8; margin-top: 0.5rem; opacity: 0.8;">
+                                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Revenue</span> <span id="kpi-portfolio-revenue" style="font-weight: 600;">€464,000</span></div>
+                                <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 0.25rem;"><span style="color: var(--text-muted);">= Net ROI</span> <span id="kpi-portfolio-roi-net" style="font-weight: 700;">—</span></div>
+                            </div>
+                            <div class="kpi-sub" id="kpi-sub-portfolio-cost" style="margin-top: 0.4rem; opacity: 0.6; font-size: 0.75rem;">Awaiting cost data</div>
                         </div>
                     </div>
                 </div>
@@ -6055,18 +6054,25 @@
                 whitemarket: { cost: null, revenue: null }
             };
 
-            // Portfolio revenue card (Finance-reported, hardcoded)
+            // Portfolio ROI breakdown card (combined revenue + cost)
             const revEl = document.getElementById('kpi-portfolio-revenue');
-            if (revEl) {
-                revEl.textContent = `€${Math.round(COST_DATA.portfolio.revenue).toLocaleString('en-US')}`;
-            }
-
-            // Portfolio cost card
             const costEl = document.getElementById('kpi-portfolio-cost');
             const costSub = document.getElementById('kpi-sub-portfolio-cost');
+            const roiNetEl = document.getElementById('kpi-portfolio-roi-net');
+            if (revEl && COST_DATA.portfolio.revenue !== null) {
+                revEl.textContent = `€${Math.round(COST_DATA.portfolio.revenue).toLocaleString('en-US')}`;
+            }
             if (costEl && COST_DATA.portfolio.cost !== null) {
                 costEl.textContent = `€${Math.round(COST_DATA.portfolio.cost).toLocaleString('en-US')}`;
                 costSub.textContent = `Tradeit €${COST_DATA.tradeit.cost.toLocaleString('en-US')} + Winline €${COST_DATA.winline.cost.toLocaleString('en-US')}`;
+            }
+            if (roiNetEl && COST_DATA.portfolio.revenue !== null && COST_DATA.portfolio.cost !== null) {
+                const net = COST_DATA.portfolio.revenue - COST_DATA.portfolio.cost;
+                const pct = Math.round(net / COST_DATA.portfolio.cost * 100);
+                const isPos = net >= 0;
+                const color = isPos ? 'var(--green)' : 'var(--red)';
+                const sign = isPos ? '+' : '';
+                roiNetEl.innerHTML = `<span style="color: ${color};">€${Math.round(Math.abs(net)).toLocaleString('en-US')}</span> <span style="color: ${color}; font-size: 0.8rem;">(${sign}${pct}%)</span>`;
             }
 
             // ROI cards
