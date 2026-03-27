@@ -6054,11 +6054,12 @@
             //   Tradeit €166,975 (Jan €83,670 + Feb €83,305)
             //   WhiteMarket €20,000 (Jan €10,000 + Feb €10,000)
             //   Portfolio total: €547,117
-            // Reward Costs: Tradeit €61,565 + Winline €122,262 = €183,827
-            // Total Costs = Activation Costs + Reward Costs = €730,944
+            // Reward Costs: €83,827 (Jan-Feb only, aligned with activation cost period)
+            //   Full YTD reward costs: Tradeit €61,565 + Winline €122,262 = €183,827
+            // Total Costs = Activation Costs + Reward Costs = €630,944
             // Per-partner ROI kept at portfolio level only for now
             const COST_DATA = {
-                portfolio: { activationCost: 547117, rewardCost: 183827 },
+                portfolio: { activationCost: 547117, rewardCost: 83827 },
                 tradeit:   { activationCost: 166975, rewardCost: 61565 },
                 winline:   { activationCost: 360142, rewardCost: 122262 },
                 whitemarket: { activationCost: 20000, rewardCost: null }
