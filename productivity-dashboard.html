@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productivity Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --p0: #dc2626; /* Red */
+      --p1: #ea580c; /* Orange */
+      --p2: #3b82f6; /* Blue */
+      --success: #16a34a; /* Green */
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius: 8px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    h1 { font-size: 24px; font-weight: 600; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 16px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .tab-btn:hover { background-color: var(--border); color: var(--text); }
+    .tab-btn.active { background-color: var(--accent); color: white; }
+
+    .settings-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    /* Views */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    /* Forms */
+    .form-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .form-group.full { flex-basis: 100%; }
+
+    label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    input, select {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+
+    .priority-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .priority-pill {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    .priority-pill[data-val="P0"].selected { background: var(--p0); color: white; border-color: var(--p0); }
+    .priority-pill[data-val="P1"].selected { background: var(--p1); color: white; border-color: var(--p1); }
+    .priority-pill[data-val="P2"].selected { background: var(--p2); color: white; border-color: var(--p2); }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background-color: var(--accent-hover); }
+
+    /* Filters */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .filter-btn.active { background: var(--border); font-weight: 600; }
+
+    /* Task List */
+    .day-group { margin-bottom: 24px; }
+    .day-header { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      transition: opacity 0.2s;
+    }
+    .task-item.completed { opacity: 0.6; }
+    .task-item.completed .task-name { text-decoration: line-through; color: var(--text-muted); }
+
+    .task-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .task-name { flex: 1; font-size: 14px; font-weight: 500; }
+    
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+    }
+    .tag-category { background: #f3f4f6; color: var(--text-muted); }
+    .tag-p0 { background: #fee2e2; color: var(--p0); }
+    .tag-p1 { background: #ffedd5; color: var(--p1); }
+    .tag-p2 { background: #dbeafe; color: var(--p2); }
+
+    .task-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .action-btn { background: none; border: none; font-size: 12px; color: var(--text-muted); cursor: pointer; }
+    .action-btn:hover { color: var(--text); text-decoration: underline; }
+
+    /* Layout Grids */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+
+    /* Cards */
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .stat-card h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+    .stat-card .value { font-size: 28px; font-weight: 700; color: var(--text); }
+    .stat-card.good .value { color: var(--success); }
+    .stat-card.warn .value { color: var(--p1); }
+    .stat-card.bad .value { color: var(--p0); }
+
+    .chart-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      position: relative;
+      min-height: 260px;
+    }
+    .chart-container canvas {
+      max-height: 280px;
+    }
+    .chart-container h3 { font-size: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+    .insight-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 16px;
+      color: #1e3a8a;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* Period Selector */
+    .period-selector {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      background: var(--surface);
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      width: fit-content;
+    }
+    .period-selector button { background: none; border: 1px solid var(--border); padding: 4px 12px; border-radius: 4px; cursor: pointer; }
+    .period-selector span { font-weight: 600; min-width: 150px; text-align: center; }
+
+    /* Goals */
+    .goal-item { margin-bottom: 16px; }
+    .goal-header { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
+    .goal-title { font-weight: 500; }
+    .goal-stats { font-size: 12px; color: var(--text-muted); }
+    .progress-track { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer; }
+    .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.3s; pointer-events: none; }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: var(--radius); padding: 24px; width: 400px;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .modal h2 { margin-bottom: 16px; font-size: 18px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: var(--radius); cursor: pointer; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Productivity Dashboard</h1>
+      <div class="nav-tabs" id="navTabs">
+        <button class="tab-btn active" data-target="tasks">Tasks</button>
+        <button class="tab-btn" data-target="weekly">Weekly Review</button>
+        <button class="tab-btn" data-target="monthly">Monthly Review</button>
+      </div>
+      <button class="settings-btn" onclick="openSettings()">⚙️ Settings</button>
+    </header>
+
+    <!-- Tasks View -->
+    <div id="tasks" class="view-section active">
+      <div class="form-card">
+        <form id="taskForm" onsubmit="handleAddTask(event)">
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Task Name</label>
+              <input type="text" id="taskName" placeholder="What needs to be done?" required>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top: 16px;">
+            <div class="form-group">
+              <label>Priority</label>
+              <div class="priority-selector" id="formPriority">
+                <div class="priority-pill selected" data-val="P0">P0 (Must do)</div>
+                <div class="priority-pill" data-val="P1">P1 (Should do)</div>
+                <div class="priority-pill" data-val="P2">P2 (If time)</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="taskCategory">
+                <option value="Brand Integrations">Brand Integrations</option>
+                <option value="Advertising">Advertising</option>
+                <option value="Stakeholders">Stakeholders</option>
+                <option value="Internal/Ops">Internal/Ops</option>
+                <option value="Data & Analytics">Data & Analytics</option>
+                <option value="Strategy">Strategy</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Planned Date</label>
+              <input type="date" id="taskDate" required>
+            </div>
+            <div class="form-group" style="flex: 0 0 auto;">
+              <button type="submit" class="btn-primary">Add Task</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="filter-bar" id="taskFilters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="P0">P0 Only</button>
+        <button class="filter-btn" data-filter="P1">P1 Only</button>
+        <button class="filter-btn" data-filter="P2">P2 Only</button>
+      </div>
+
+      <div id="taskListContainer"></div>
+    </div>
+
+    <!-- Weekly Review View -->
+    <div id="weekly" class="view-section">
+      <div class="period-selector">
+        <button onclick="changeWeek(-1)">←</button>
+        <span id="weekLabel">Current Week</span>
+        <button onclick="changeWeek(1)">→</button>
+      </div>
+
+      <div class="insight-box" id="weeklyInsight">Generating insights...</div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <h3>Tasks Planned</h3>
+          <div class="value" id="w-planned">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Tasks Completed</h3>
+          <div class="value" id="w-completed">0</div>
+        </div>
+        <div class="stat-card" id="w-rate-card">
+          <h3>Completion Rate</h3>
+          <div class="value" id="w-rate">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Avg Priority Score</h3>
+          <div class="value" id="w-avg-pri">0.0</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-container">
+          <h3>Completion by Priority</h3>
+          <canvas id="wPriorityChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Completions per Day</h3>
+          <canvas id="wDayChart"></canvas>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-container">
+          <h3 style="color: var(--p0)">Slipped Tasks</h3>
+          <div id="wSlippedList"></div>
+        </div>
+        <div class="chart-container">
+          <h3 style="color: var(--success)">Completed Tasks</h3>
+          <div id="wCompletedList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monthly Review View -->
+    <div id="monthly" class="view-section">
+      <div class="period-selector">
+        <button onclick="changeMonth(-1)">←</button>
+        <span id="monthLabel">Current Month</span>
+        <button onclick="changeMonth(1)">→</button>
+      </div>
+
+      <div class="insight-box" id="monthlyInsight">Generating insights...</div>
+
+      <div class="grid-4" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="stat-card">
+          <h3>Total Tasks</h3>
+          <div class="value" id="m-planned">0</div>
+        </div>
+        <div class="stat-card">
+          <h3>Completed</h3>
+          <div class="value" id="m-completed">0</div>
+        </div>
+        <div class="stat-card" id="m-rate-card">
+          <h3>Completion Rate</h3>
+          <div class="value" id="m-rate">0%</div>
+        </div>
+        <div class="stat-card">
+          <h3>Top Category</h3>
+          <div class="value" id="m-top-cat" style="font-size: 18px;">-</div>
+        </div>
+        <div class="stat-card">
+          <h3>Priority Health</h3>
+          <div class="value" id="m-pri-health" style="font-size: 18px;">-</div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="chart-container" style="grid-column: span 2;">
+          <h3>Monthly Trend (Completion %)</h3>
+          <canvas id="mTrendChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Priority Distribution</h3>
+          <canvas id="mPriorityChart"></canvas>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-container">
+          <h3>Category Breakdown</h3>
+          <canvas id="mCategoryChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Q2 Goal Alignment</h3>
+          <div id="q2GoalsList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+      <h2>Settings / Data Management</h2>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">All data is stored locally in your browser.</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <button class="btn-primary" onclick="exportData()" style="width: 100%;">Export Data (JSON)</button>
+        
+        <div style="border: 1px solid var(--border); padding: 12px; border-radius: var(--radius);">
+          <label style="display: block; margin-bottom: 8px;">Import Data</label>
+          <input type="file" id="importFile" accept=".json" style="width: 100%; margin-bottom: 8px;">
+          <button class="btn-secondary" onclick="importData()" style="width: 100%;">Import</button>
+        </div>
+        
+        <button class="btn-secondary" onclick="clearData()" style="width: 100%; color: var(--p0); border-color: var(--p0);">Clear All Data</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeSettings()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Data Management ---
+    const SEED_TASKS = [{"id":"c787c5ee-8973-404f-836e-f4a2d034d146","task":"Prebid analysis: uploaded CSVs, built full RPV-by-tier analysis, slide deck created","priority":"P0","category":"Advertising","plannedDate":"2026-03-16","status":"completed","completedDate":"2026-03-16","createdAt":"2026-03-16T09:00:00Z"},{"id":"6beaee89-5fc3-4328-a9e8-fec65924e3f2","task":"Book Flo meeting for 28 March (Play Interstitial)","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-16","status":"completed","completedDate":"2026-03-16","createdAt":"2026-03-16T09:00:00Z"},{"id":"69a605b6-12c9-4cea-9bd3-cd289711156e","task":"Sync with Teodor on Video Interstitial A/B split status","priority":"P1","category":"Advertising","plannedDate":"2026-03-16","status":"active","completedDate":null,"createdAt":"2026-03-16T09:00:00Z"},{"id":"c625d382-5964-4edc-8feb-8440a7f60166","task":"Review Prebid slide deck, check numbers, prep for Wed delivery","priority":"P0","category":"Advertising","plannedDate":"2026-03-17","status":"active","completedDate":null,"createdAt":"2026-03-17T09:00:00Z"},{"id":"524bf945-4798-45cb-af3d-fd3cedfcae29","task":"Play Interstitial one-pager rewritten (3 ad slots, $5.8M potential)","priority":"P0","category":"Advertising","plannedDate":"2026-03-17","status":"completed","completedDate":"2026-03-17","createdAt":"2026-03-17T09:00:00Z"},{"id":"f7c45f8e-8b62-4c52-b8f1-0ac668f89588","task":"Turkey peripheral confirmed live at 100%","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-17","status":"completed","completedDate":"2026-03-17","createdAt":"2026-03-17T09:00:00Z"},{"id":"f1e45f91-11ed-4d2d-88e7-821522f45507","task":"NSM Combined view built and pushed to GitHub Pages","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-17","status":"completed","completedDate":"2026-03-17","createdAt":"2026-03-17T09:00:00Z"},{"id":"81760e0c-0935-43f6-8081-6bb0698e04b9","task":"Play Interstitial doc synced to Google Drive","priority":"P1","category":"Advertising","plannedDate":"2026-03-17","status":"completed","completedDate":"2026-03-17","createdAt":"2026-03-17T09:00:00Z"},{"id":"24c3e747-4da9-4c20-8e99-32af393ae77b","task":"Schedule Video Interstitial creative in GAM","priority":"P1","category":"Advertising","plannedDate":"2026-03-17","status":"active","completedDate":null,"createdAt":"2026-03-17T09:00:00Z"},{"id":"e0f8f2c6-4520-4418-8bbc-053b91e4a04f","task":"Deliver the Prebid presentation to stakeholders","priority":"P0","category":"Advertising","plannedDate":"2026-03-18","status":"completed","completedDate":"2026-03-18","createdAt":"2026-03-18T09:00:00Z"},{"id":"9b9596a8-c473-446a-b0c4-ed1dc62166d6","task":"Check Peripheral data is flowing","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-18","status":"active","completedDate":null,"createdAt":"2026-03-18T09:00:00Z"},{"id":"04251f6e-a6c1-47c7-9ef9-f588b6fafd90","task":"Validate first Turkey peripheral data (compare vs India baseline)","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-18","status":"active","completedDate":null,"createdAt":"2026-03-18T09:00:00Z"},{"id":"e341661a-af46-4601-a1f6-e9a2de18b49c","task":"Skin Vault experiment check-in with Teo + Isabel","priority":"P1","category":"Brand Integrations","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-19T09:00:00Z"},{"id":"f0a6a8fe-c7ed-43f5-b37e-89a511d7fb31","task":"Built Skin Vault experiment dashboard","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-19T09:00:00Z"},{"id":"ed26b6ab-5c3a-4482-9aea-52e9cdfd4f5e","task":"Deployed Skin Vault dashboard to GitHub Pages","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-19T09:00:00Z"},{"id":"08e67208-9df8-4670-8eee-624c4127039e","task":"Play Interstitial one-pager sent to Will for review","priority":"P0","category":"Advertising","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-19T09:00:00Z"},{"id":"402b7a44-125f-482e-ba2a-ddf2f426d9ec","task":"Confirmed Brand Product session time with Isaure/Archil","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-19T09:00:00Z"},{"id":"1bbf6518-2441-4c8a-a41b-b8089651c30d","task":"Update team slide (Slide 19) — include Prebid results","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-20","status":"active","completedDate":null,"createdAt":"2026-03-20T09:00:00Z"},{"id":"a4aff2e4-429c-40af-aba4-c9b8cb2832ef","task":"Pull AL flow + Mystery Box experiment data","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-20","status":"active","completedDate":null,"createdAt":"2026-03-20T09:00:00Z"},{"id":"b56728ae-dfe4-48ad-adad-0b795edb33d4","task":"Build experiment dashboards for AL flow + Mystery Box","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-20","status":"active","completedDate":null,"createdAt":"2026-03-20T09:00:00Z"},{"id":"234b6d1d-742a-4ff4-a548-b77697e6228b","task":"Get more context on Ads Alerts V2","priority":"P2","category":"Advertising","plannedDate":"2026-03-20","status":"active","completedDate":null,"createdAt":"2026-03-20T09:00:00Z"},{"id":"ae4d4801-5b90-42c3-8a8a-05764f8c4329","task":"Review Skin Vault weekend traffic baseline","priority":"P2","category":"Brand Integrations","plannedDate":"2026-03-20","status":"active","completedDate":null,"createdAt":"2026-03-20T09:00:00Z"},{"id":"eb75c720-2bf8-45a5-975a-1710377a025f","task":"Skippable Video Interstitial — Test Setup (needs GAM + MixPanel)","priority":"P1","category":"Advertising","plannedDate":"2026-03-18","status":"active","completedDate":null,"createdAt":"2026-03-16T08:00:00Z"},{"id":"0dc02b5a-9a95-45b1-ba2e-26d90c279f20","task":"Skin Vault — Experiment monitoring on 300 profiles","priority":"P2","category":"Brand Integrations","plannedDate":"2026-03-19","status":"active","completedDate":null,"createdAt":"2026-03-16T08:00:00Z"},{"id":"cd03ad46-acfc-491d-83a7-355107972501","task":"Weekly Mission Data + NSM Tracking — maintain dashboard","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-16","status":"active","completedDate":null,"createdAt":"2026-03-16T08:00:00Z"},{"id":"b0779b0b-3074-49f5-9ce5-9592f2eda5f9","task":"Brand Product Session — prep for Inventory Team","priority":"P2","category":"Stakeholders","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-16T08:00:00Z"},{"id":"b713bb22-6bf4-4780-824d-3f282f1315f2","task":"NSM Dashboard — BQ Pipeline + Data Fixes (date filter bug)","priority":"P0","category":"Data & Analytics","plannedDate":"2026-03-20","status":"completed","completedDate":"2026-03-20","createdAt":"2026-03-16T08:00:00Z"},{"id":"8bb92111-02c1-4d98-b4bc-2e4180533ab3","task":"AL Flow Trust Modal A/B Test — Analysis complete","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-20","status":"completed","completedDate":"2026-03-20","createdAt":"2026-03-16T08:00:00Z"},{"id":"c03d8a5b-86db-4a39-b2a2-908468b6bd76","task":"Experiments Tab — Month filter added","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-20","status":"completed","completedDate":"2026-03-20","createdAt":"2026-03-16T08:00:00Z"},{"id":"299cc1cf-4a82-499b-8dbe-c30a106e6bd4","task":"Skin Vault Dashboard — Built and deployed to GitHub Pages","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-19","status":"completed","completedDate":"2026-03-19","createdAt":"2026-03-17T08:00:00Z"},{"id":"7fcd8f4a-abcb-4bdb-84f2-a14ebc43d880","task":"Review Skin Vault weekend traffic data (pull CSVs)","priority":"P1","category":"Brand Integrations","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-23T09:00:00Z"},{"id":"2c57ac4f-e337-4131-a28e-eda913d2ed42","task":"Sync with Teodor on Video Interstitial A/B — plan GAM creative","priority":"P1","category":"Advertising","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-23T09:00:00Z"},{"id":"aa8a1873-47e8-4698-818f-1b618972aeae","task":"Check Turkey peripheral data flowing — pull initial export","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-23T09:00:00Z"},{"id":"5f72bc20-aa2c-4de0-823c-bf144316cdf4","task":"Deploy Apps Script for NSM automation","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-23T09:00:00Z"},{"id":"f39877b6-44b8-46a2-abca-6e0f3448d7c2","task":"Fix Play Interstitial spreadsheet — replace hardcoded numbers with formulas","priority":"P0","category":"Advertising","plannedDate":"2026-03-24","status":"active","completedDate":null,"createdAt":"2026-03-24T09:00:00Z"},{"id":"f7022236-b657-49a3-9590-f79b0f436bfd","task":"Prep Brand Product Session agenda — product lineup + brief cheat sheet","priority":"P0","category":"Stakeholders","plannedDate":"2026-03-24","status":"active","completedDate":null,"createdAt":"2026-03-24T09:00:00Z"},{"id":"8fb085e5-9d0e-45e2-a02a-94a0dc5a7720","task":"Schedule Video Interstitial creative in GAM (if Teodor confirms)","priority":"P1","category":"Advertising","plannedDate":"2026-03-24","status":"active","completedDate":null,"createdAt":"2026-03-24T09:00:00Z"},{"id":"c284be0a-9424-445a-8011-d694db794ebb","task":"Update Skin Vault dashboard with fresh weekend data","priority":"P2","category":"Brand Integrations","plannedDate":"2026-03-24","status":"active","completedDate":null,"createdAt":"2026-03-24T09:00:00Z"},{"id":"6eda6753-f243-406b-96ef-02e8261cf3dc","task":"Final prep for Brand Product Session (materials, agenda, one-pager)","priority":"P0","category":"Stakeholders","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-25T09:00:00Z"},{"id":"8660e20a-245c-4994-86b1-1c07c8dc9d1c","task":"Turkey vs India peripheral data comparative analysis","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-25T09:00:00Z"},{"id":"3b44ff1f-8ce9-445b-97e7-c7d957efc72e","task":"Prep Play Interstitial meeting materials (5-slide summary)","priority":"P2","category":"Advertising","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-25T09:00:00Z"},{"id":"f3d61a73-e919-4b1b-8fc6-1c8eb86d059c","task":"Gather context on Ads Alerts V2 for scoping","priority":"P2","category":"Advertising","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-25T09:00:00Z"},{"id":"a761e711-aa7e-4aab-9286-6a808d934511","task":"Brand Product Session — 1hr with Inventory team (London office)","priority":"P0","category":"Stakeholders","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-26T09:00:00Z"},{"id":"dd08a871-6b5f-4d5a-a5cf-d8e2d1384388","task":"Debrief Brand Product Session — capture action items","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-26T09:00:00Z"},{"id":"a0d4303b-b167-4494-a8d7-81faa38f2cee","task":"NSM dashboard — funnel and audience data first draft","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-26T09:00:00Z"},{"id":"5799b421-b2ef-4393-9574-0913b6839184","task":"Finalize Play Interstitial meeting deck for Friday","priority":"P2","category":"Advertising","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-26T09:00:00Z"},{"id":"8eacfad3-f95e-4cc7-9a79-2f99beea5e86","task":"Play Interstitial meeting with Flo + stakeholders","priority":"P0","category":"Advertising","plannedDate":"2026-03-28","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"f9db3658-7834-47e1-b93d-7a1f0d5f0cf4","task":"Update team slide (Slide 19) — Brand Product Session outcomes","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-28","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"fa61ef1b-6498-4fd6-b3e5-04e1d9e14356","task":"Post weekly update to #bet-ads-partnerships","priority":"P1","category":"Stakeholders","plannedDate":"2026-03-28","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"d2251617-879c-406e-8280-ca8bce634771","task":"Skin Vault experiment — week 2 go/no-go checkpoint","priority":"P2","category":"Brand Integrations","plannedDate":"2026-03-28","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"ca468ec7-8be5-4388-955c-c09c48182aeb","task":"Skippable Video Interstitial — GAM Creative + MixPanel","priority":"P1","category":"Advertising","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"60aee812-c748-4dad-a2c2-ca9be1f9592c","task":"Skin Vault — Weekend Traffic Review","priority":"P1","category":"Brand Integrations","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"d87b5917-c975-479f-bb00-746de011eb1a","task":"Peripheral — Turkey Data Review","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"c289d60d-ec46-4dcb-a1ae-24ffcf3ad4a9","task":"NSM Dashboard — Funnel and Audience Data","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-26","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"5fcae23a-2124-4293-b099-5a434b6bdbf1","task":"NSM Dashboard — Automation deploy Apps Script","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-23","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"ca3f3725-b58e-4728-a62d-7ddba7ff037a","task":"Ads Alerts V2 — Scoping carried","priority":"P2","category":"Advertising","plannedDate":"2026-03-25","status":"active","completedDate":null,"createdAt":"2026-03-27T11:09:44.398Z"},{"id":"a9261633-0776-4e80-93da-0db89aea056c","task":"Winline Rewards Tab — Build from Tradeit template","priority":"P0","category":"Brand Integrations","plannedDate":"2026-03-31","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"94fc6b49-d080-4643-a4a1-ed5150d5e890","task":"Friday Slide (Slide 19) — Weekly update","priority":"P0","category":"Stakeholders","plannedDate":"2026-04-04","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"d7f27bb4-cd32-4a52-9f18-89ef1dd44099","task":"CDP Partner Performance — Scope and data discovery in BQ","priority":"P1","category":"Data & Analytics","plannedDate":"2026-03-31","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"1dc70e86-817f-4ba5-99ca-f514b6a4b8a4","task":"Ads Alerts V2 — Context gathering","priority":"P1","category":"Advertising","plannedDate":"2026-04-02","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"f1e1cfad-73e2-4ec6-a482-1511c23b7773","task":"Tradeit Funnel — Active/Inactive layer blocked on BQ","priority":"P2","category":"Brand Integrations","plannedDate":"2026-03-31","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"27310863-8fe6-4c7e-9dc1-3945f3ccb83a","task":"ROI Calculation — Per-partner cost blocked on Finance","priority":"P2","category":"Data & Analytics","plannedDate":"2026-03-31","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"},{"id":"38308c92-01bf-498a-9697-186e0751ef4e","task":"Quarterly Review 2-Pager — Draft Q1 review","priority":"P2","category":"Strategy","plannedDate":"2026-04-04","status":"active","completedDate":null,"createdAt":"2026-03-27T11:10:06.097Z"}];
+    let tasks = JSON.parse(localStorage.getItem('productivity_tasks')) || SEED_TASKS;
+    // Persist seed data to localStorage on first load so subsequent edits are saved
+    if (!localStorage.getItem('productivity_tasks')) { localStorage.setItem('productivity_tasks', JSON.stringify(tasks)); }
+    let q2Goals = JSON.parse(localStorage.getItem('productivity_q2_goals')) || [
+      { id: 'g1', text: 'Unlock 2 new brand verticals', keywords: ['brand', 'vertical', 'pitch'], progress: 0 },
+      { id: 'g2', text: 'Prove 2-3x partner ROI with CDP data', keywords: ['cdp', 'roi', 'data', 'conversion'], progress: 0 },
+      { id: 'g3', text: 'Ship NSM dashboard with full partner coverage', keywords: ['nsm', 'dashboard', 'coverage'], progress: 0 },
+      { id: 'g4', text: 'Launch Play Interstitial', keywords: ['play', 'interstitial', 'launch'], progress: 0 },
+      { id: 'g5', text: 'Complete Prebid migration', keywords: ['prebid', 'migration', 'header'], progress: 0 }
+    ];
+
+    function saveTasks() { localStorage.setItem('productivity_tasks', JSON.stringify(tasks)); }
+    function saveGoals() { localStorage.setItem('productivity_q2_goals', JSON.stringify(q2Goals)); }
+
+    // --- State ---
+    let currentFilter = 'all';
+    let selectedPriority = 'P0';
+    let activeWeekOffset = 0; // 0 = current week
+    let activeMonthOffset = 0; // 0 = current month
+    let charts = {};
+
+    // --- Initialization ---
+    document.getElementById('taskDate').value = new Date().toISOString().split('T')[0];
+    
+    // Priority Selector Logic
+    document.querySelectorAll('#formPriority .priority-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        document.querySelectorAll('#formPriority .priority-pill').forEach(p => p.classList.remove('selected'));
+        e.target.classList.add('selected');
+        selectedPriority = e.target.getAttribute('data-val');
+      });
+    });
+
+    // Tab Logic
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+        const target = e.target.getAttribute('data-target');
+        document.getElementById(target).classList.add('active');
+
+        if(target === 'tasks') renderTasks();
+        if(target === 'weekly') renderWeekly();
+        if(target === 'monthly') renderMonthly();
+      });
+    });
+
+    // Filter Logic
+    document.querySelectorAll('#taskFilters .filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('#taskFilters .filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentFilter = e.target.getAttribute('data-filter');
+        renderTasks();
+      });
+    });
+
+    // --- Task CRUD ---
+    function handleAddTask(e) {
+      e.preventDefault();
+      const taskName = document.getElementById('taskName').value;
+      const category = document.getElementById('taskCategory').value;
+      const date = document.getElementById('taskDate').value;
+
+      const newTask = {
+        id: crypto.randomUUID(),
+        task: taskName,
+        priority: selectedPriority,
+        category: category,
+        plannedDate: date,
+        status: 'active',
+        completedDate: null,
+        createdAt: new Date().toISOString()
+      };
+
+      tasks.push(newTask);
+      saveTasks();
+      
+      document.getElementById('taskName').value = '';
+      renderTasks();
+    }
+
+    function toggleTaskStatus(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        if (task.status === 'active') {
+          task.status = 'completed';
+          task.completedDate = new Date().toISOString().split('T')[0];
+        } else {
+          task.status = 'active';
+          task.completedDate = null;
+        }
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function deleteTask(id) {
+      if (confirm('Delete this task?')) {
+        tasks = tasks.filter(t => t.id !== id);
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function cyclePriority(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        const next = { 'P0': 'P1', 'P1': 'P2', 'P2': 'P0' };
+        task.priority = next[task.priority];
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    // --- Rendering Tasks ---
+    function renderTasks() {
+      const container = document.getElementById('taskListContainer');
+      container.innerHTML = '';
+
+      let filteredTasks = tasks.filter(t => {
+        if (currentFilter === 'active') return t.status === 'active';
+        if (currentFilter === 'completed') return t.status === 'completed';
+        if (['P0', 'P1', 'P2'].includes(currentFilter)) return t.priority === currentFilter;
+        return true;
+      });
+
+      // Group by date
+      const groups = {};
+      filteredTasks.forEach(t => {
+        if (!groups[t.plannedDate]) groups[t.plannedDate] = [];
+        groups[t.plannedDate].push(t);
+      });
+
+      // Sort dates
+      const dates = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+
+      if (dates.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 40px;">No tasks found.</p>';
+        return;
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+
+      dates.forEach(date => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'day-group';
+        
+        let dateLabel = date;
+        if (date === today) dateLabel = 'Today';
+        else if (date === new Date(Date.now() - 86400000).toISOString().split('T')[0]) dateLabel = 'Yesterday';
+        else if (date === new Date(Date.now() + 86400000).toISOString().split('T')[0]) dateLabel = 'Tomorrow';
+
+        let html = `<div class="day-header">${dateLabel} <span style="font-size:12px; font-weight:normal; color:var(--text-muted)">(${date})</span></div>`;
+        
+        // Sort tasks within group: active first, then by priority
+        groups[date].sort((a, b) => {
+          if (a.status !== b.status) return a.status === 'active' ? -1 : 1;
+          return a.priority.localeCompare(b.priority);
+        });
+
+        groups[date].forEach(t => {
+          const isComp = t.status === 'completed';
+          html += `
+            <div class="task-item ${isComp ? 'completed' : ''}">
+              <input type="checkbox" class="task-checkbox" ${isComp ? 'checked' : ''} onchange="toggleTaskStatus('${t.id}')">
+              <div class="task-name">${t.task}</div>
+              <span class="tag tag-${t.priority.toLowerCase()}">${t.priority}</span>
+              <span class="tag tag-category">${t.category}</span>
+              <div class="task-actions">
+                <button class="action-btn" onclick="cyclePriority('${t.id}')">Priority</button>
+                <button class="action-btn" onclick="deleteTask('${t.id}')">Delete</button>
+              </div>
+            </div>
+          `;
+        });
+        
+        groupDiv.innerHTML = html;
+        container.appendChild(groupDiv);
+      });
+    }
+
+    // --- Analytics Helpers ---
+    function getWeekBounds(offset) {
+      const d = new Date();
+      d.setDate(d.getDate() + (offset * 7));
+      const day = d.getDay();
+      const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday start
+      const monday = new Date(d.setDate(diff));
+      const friday = new Date(d.setDate(diff + 4));
+      const sunday = new Date(d.setDate(diff + 6));
+      return { 
+        start: monday.toISOString().split('T')[0], 
+        friday: friday.toISOString().split('T')[0],
+        end: sunday.toISOString().split('T')[0]
+      };
+    }
+
+    function getMonthBounds(offset) {
+      const d = new Date();
+      d.setMonth(d.getMonth() + offset);
+      const first = new Date(d.getFullYear(), d.getMonth(), 1);
+      const last = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+      return { start: first.toISOString().split('T')[0], end: last.toISOString().split('T')[0] };
+    }
+
+    function safeDestroyChart(id) {
+      if (charts[id]) {
+        charts[id].destroy();
+        delete charts[id];
+      }
+    }
+
+    // --- Weekly Review ---
+    function changeWeek(delta) {
+      activeWeekOffset += delta;
+      renderWeekly();
+    }
+
+    function renderWeekly() {
+      const bounds = getWeekBounds(activeWeekOffset);
+      document.getElementById('weekLabel').textContent = activeWeekOffset === 0 ? 'Current Week' : `${bounds.start} to ${bounds.end}`;
+
+      const wTasks = tasks.filter(t => t.plannedDate >= bounds.start && t.plannedDate <= bounds.end);
+      const wComp = wTasks.filter(t => t.status === 'completed');
+      const wSlipped = wTasks.filter(t => t.status === 'active' && t.plannedDate < new Date().toISOString().split('T')[0]);
+
+      // Stats
+      const plannedCount = wTasks.length;
+      const compCount = wComp.length;
+      const rate = plannedCount ? Math.round((compCount / plannedCount) * 100) : 0;
+      
+      document.getElementById('w-planned').textContent = plannedCount;
+      document.getElementById('w-completed').textContent = compCount;
+      document.getElementById('w-rate').textContent = `${rate}%`;
+      
+      const rateCard = document.getElementById('w-rate-card');
+      rateCard.className = 'stat-card';
+      if(rate >= 80) rateCard.classList.add('good');
+      else if(rate >= 50) rateCard.classList.add('warn');
+      else if(plannedCount > 0) rateCard.classList.add('bad');
+
+      let priSum = 0;
+      wComp.forEach(t => {
+        if(t.priority === 'P0') priSum += 3;
+        if(t.priority === 'P1') priSum += 2;
+        if(t.priority === 'P2') priSum += 1;
+      });
+      document.getElementById('w-avg-pri').textContent = wComp.length ? (priSum / wComp.length).toFixed(1) : '0.0';
+
+      // Chart: Priority
+      safeDestroyChart('wPriorityChart');
+      const priData = { P0: { p:0, c:0 }, P1: { p:0, c:0 }, P2: { p:0, c:0 } };
+      wTasks.forEach(t => priData[t.priority].p++);
+      wComp.forEach(t => priData[t.priority].c++);
+
+      charts['wPriorityChart'] = new Chart(document.getElementById('wPriorityChart'), {
+        type: 'bar',
+        data: {
+          labels: ['P0', 'P1', 'P2'],
+          datasets: [
+            { label: 'Planned', data: [priData.P0.p, priData.P1.p, priData.P2.p], backgroundColor: '#e5e7eb' },
+            { label: 'Completed', data: [priData.P0.c, priData.P1.c, priData.P2.c], backgroundColor: '#2563eb' }
+          ]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+      });
+
+      // Chart: Day of Week
+      safeDestroyChart('wDayChart');
+      const dayCounts = { 1:0, 2:0, 3:0, 4:0, 5:0 }; // Mon-Fri
+      wComp.forEach(t => {
+        if(t.completedDate) {
+          const day = new Date(t.completedDate).getDay();
+          if(day >= 1 && day <= 5) dayCounts[day]++;
+        }
+      });
+      charts['wDayChart'] = new Chart(document.getElementById('wDayChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          datasets: [{ label: 'Completed', data: Object.values(dayCounts), backgroundColor: '#16a34a' }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+      });
+
+      // Lists
+      const slist = document.getElementById('wSlippedList');
+      slist.innerHTML = wSlipped.sort((a,b) => a.priority.localeCompare(b.priority))
+        .map(t => `<div style="font-size:13px; margin-bottom:8px; border-bottom:1px solid var(--border); padding-bottom:4px;">
+          <span class="tag tag-${t.priority.toLowerCase()}">${t.priority}</span> ${t.task}
+        </div>`).join('') || '<div style="font-size:13px; color:var(--text-muted)">No slipped tasks. Great job!</div>';
+
+      const clist = document.getElementById('wCompletedList');
+      clist.innerHTML = wComp.map(t => `<div style="font-size:13px; margin-bottom:8px; border-bottom:1px solid var(--border); padding-bottom:4px;">
+          <span class="tag tag-${t.priority.toLowerCase()}">${t.priority}</span> ${t.task}
+        </div>`).join('') || '<div style="font-size:13px; color:var(--text-muted)">No tasks completed.</div>';
+
+      // Insight
+      const p0Rate = priData.P0.p ? Math.round((priData.P0.c / priData.P0.p)*100) : 100;
+      let text = `You completed ${rate}% of tasks this week. `;
+      if(p0Rate >= 80) text += `P0 completion was strong at ${p0Rate}%. `;
+      else text += `P0 completion needs attention (${p0Rate}%). `;
+      if(wSlipped.length > 0) text += `${wSlipped.length} tasks slipped. `;
+      
+      const bestDayIdx = Object.keys(dayCounts).reduce((a, b) => dayCounts[a] > dayCounts[b] ? a : b);
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      if(dayCounts[bestDayIdx] > 0) text += `Most productive day was ${days[bestDayIdx]}. `;
+      
+      document.getElementById('weeklyInsight').textContent = text;
+    }
+
+    // --- Monthly Review ---
+    function changeMonth(delta) {
+      activeMonthOffset += delta;
+      renderMonthly();
+    }
+
+    function renderMonthly() {
+      const bounds = getMonthBounds(activeMonthOffset);
+      const d = new Date(); d.setMonth(d.getMonth() + activeMonthOffset);
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      document.getElementById('monthLabel').textContent = `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+
+      const mTasks = tasks.filter(t => t.plannedDate >= bounds.start && t.plannedDate <= bounds.end);
+      const mComp = mTasks.filter(t => t.status === 'completed');
+
+      // Stats
+      const plannedCount = mTasks.length;
+      const compCount = mComp.length;
+      const rate = plannedCount ? Math.round((compCount / plannedCount) * 100) : 0;
+      
+      document.getElementById('m-planned').textContent = plannedCount;
+      document.getElementById('m-completed').textContent = compCount;
+      document.getElementById('m-rate').textContent = `${rate}%`;
+
+      const rateCard = document.getElementById('m-rate-card');
+      rateCard.className = 'stat-card';
+      if(rate >= 80) rateCard.classList.add('good');
+      else if(rate >= 50) rateCard.classList.add('warn');
+      else if(plannedCount > 0) rateCard.classList.add('bad');
+
+      // Category breakdown
+      const cats = {};
+      mTasks.forEach(t => {
+        if(!cats[t.category]) cats[t.category] = {p:0, c:0};
+        cats[t.category].p++;
+        if(t.status === 'completed') cats[t.category].c++;
+      });
+      let topCat = '-';
+      let maxCat = 0;
+      for(const [c, v] of Object.entries(cats)) {
+        if(v.p > maxCat) { maxCat = v.p; topCat = c; }
+      }
+      document.getElementById('m-top-cat').textContent = topCat;
+
+      // Priority Health
+      let p0=0, p1=0, p2=0;
+      mTasks.forEach(t => {
+        if(t.priority==='P0') p0++;
+        if(t.priority==='P1') p1++;
+        if(t.priority==='P2') p2++;
+      });
+      const totalP = p0+p1+p2;
+      let health = 'Balanced';
+      if(totalP > 0) {
+        if(p0/totalP > 0.5) health = 'P0 Heavy';
+        if(p2/totalP > 0.5) health = 'P2 Heavy';
+      }
+      document.getElementById('m-pri-health').textContent = health;
+
+      // Charts
+      safeDestroyChart('mTrendChart');
+      safeDestroyChart('mPriorityChart');
+      safeDestroyChart('mCategoryChart');
+
+      if(compCount > 0 || plannedCount > 0) {
+        charts['mPriorityChart'] = new Chart(document.getElementById('mPriorityChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['P0', 'P1', 'P2'],
+            datasets: [{ data: [p0, p1, p2], backgroundColor: ['#dc2626', '#ea580c', '#3b82f6'] }]
+          },
+          options: { responsive: true, maintainAspectRatio: true }
+        });
+
+        // Monthly Trend — last 6 months completion %
+        const trendLabels = [];
+        const trendData = [];
+        for(let i = 5; i >= 0; i--) {
+          const td = new Date(d.getFullYear(), d.getMonth() - i, 1);
+          const tStart = `${td.getFullYear()}-${String(td.getMonth()+1).padStart(2,'0')}-01`;
+          const tEnd = `${td.getFullYear()}-${String(td.getMonth()+1).padStart(2,'0')}-${String(new Date(td.getFullYear(), td.getMonth()+1, 0).getDate()).padStart(2,'0')}`;
+          const tMonthTasks = tasks.filter(t => t.plannedDate >= tStart && t.plannedDate <= tEnd);
+          const tMonthComp = tMonthTasks.filter(t => t.status === 'completed');
+          trendLabels.push(monthNames[td.getMonth()].substring(0, 3));
+          trendData.push(tMonthTasks.length ? Math.round((tMonthComp.length / tMonthTasks.length) * 100) : 0);
+        }
+        charts['mTrendChart'] = new Chart(document.getElementById('mTrendChart'), {
+          type: 'line',
+          data: {
+            labels: trendLabels,
+            datasets: [{ label: 'Completion %', data: trendData, borderColor: '#2563eb', backgroundColor: 'rgba(37,99,235,0.1)', fill: true, tension: 0.3 }]
+          },
+          options: { responsive: true, maintainAspectRatio: true, scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } } }, plugins: { legend: { display: false } } }
+        });
+
+        const catLabels = Object.keys(cats);
+        charts['mCategoryChart'] = new Chart(document.getElementById('mCategoryChart'), {
+          type: 'bar',
+          data: {
+            labels: catLabels,
+            datasets: [
+              { label: 'Planned', data: catLabels.map(l => cats[l].p), backgroundColor: '#e5e7eb' },
+              { label: 'Completed', data: catLabels.map(l => cats[l].c), backgroundColor: '#2563eb' }
+            ]
+          },
+          options: { indexAxis: 'y', responsive: true }
+        });
+      }
+
+      // Q2 Goals
+      renderGoals();
+
+      // Insight
+      const text = `${monthNames[d.getMonth()]} had ${rate}% completion rate. ${topCat !== '-' ? `Largest category was ${topCat} (${maxCat} tasks).` : ''} Health profile: ${health}. Check goal alignment to ensure you are focusing on Q2 OKRs.`;
+      document.getElementById('monthlyInsight').textContent = text;
+    }
+
+    function renderGoals() {
+      const container = document.getElementById('q2GoalsList');
+      container.innerHTML = '';
+      
+      q2Goals.forEach(g => {
+        // Find matching tasks (crude keyword match)
+        let linkedCount = 0;
+        tasks.forEach(t => {
+          const txt = t.task.toLowerCase();
+          if(g.keywords.some(k => txt.includes(k))) linkedCount++;
+        });
+
+        const div = document.createElement('div');
+        div.className = 'goal-item';
+        div.innerHTML = `
+          <div class="goal-header">
+            <span class="goal-title">${g.text}</span>
+            <span class="goal-stats">${linkedCount} linked tasks | ${g.progress}%</span>
+          </div>
+          <div class="progress-track" onclick="updateGoalProgress('${g.id}', event)">
+            <div class="progress-fill" style="width: ${g.progress}%"></div>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function updateGoalProgress(id, e) {
+      const track = e.currentTarget;
+      const rect = track.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      let pct = Math.round((clickX / rect.width) * 100);
+      if(pct < 0) pct = 0; if(pct > 100) pct = 100;
+      
+      const g = q2Goals.find(x => x.id === id);
+      if(g) {
+        g.progress = pct;
+        saveGoals();
+        renderGoals();
+      }
+    }
+
+    // --- Settings / Modal ---
+    function openSettings() { document.getElementById('settingsModal').classList.add('active'); }
+    function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
+
+    function exportData() {
+      const data = { tasks, q2Goals };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `productivity_export_${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    function importData() {
+      const file = document.getElementById('importFile').files[0];
+      if(!file) return alert('Select a file first');
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if(data.tasks) {
+            tasks = data.tasks;
+            saveTasks();
+          }
+          if(data.q2Goals) {
+            q2Goals = data.q2Goals;
+            saveGoals();
+          }
+          alert('Import successful');
+          location.reload();
+        } catch(err) { alert('Invalid JSON file'); }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearData() {
+      if(confirm('Are you sure? This deletes ALL data from localStorage.')) {
+        localStorage.removeItem('productivity_tasks');
+        localStorage.removeItem('productivity_q2_goals');
+        location.reload();
+      }
+    }
+
+    // Init
+    renderTasks();
+  </script>
+</body>
+</html>
