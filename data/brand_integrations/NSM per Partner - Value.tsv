@@ -1,0 +1,27 @@
+Conversion Point	Winline	Tradeit 	WhiteMarket 	PaySafe
+Account Linkage	€4.33	€0.38	€0.38	€2.5
+KYC	€8.66			€5.0
+First Time Deposit 	€121.10			€17.5
+Trade 1		€0.04	€0.05	
+Trade 5 		€0.18	€0.25	
+Trade 250		€8.75	€12.50	
+Trade 1000		€35.00	€50.00	
+Second Deposit	€4.33			
+Buy 				
+Sell				
+Custom Task 				
+				
+				
+				
+	889	task_dep_5000		
+	876	task_bet_25000		
+	875	task_bet_5000		
+	874	task_dep_3000		
+	869	task_bet_1000		
+	867	task_first_dep_500		
+	857			
+	1148	task_bet_3333 amount 3333		
+	1121	task_bet_5555 amout 5555		
+	1120	task_bet_4444 amout 4444		
+	1119	task_dep_2222 amount 2222		
+	1118	task_dep_1111 amount 1111		

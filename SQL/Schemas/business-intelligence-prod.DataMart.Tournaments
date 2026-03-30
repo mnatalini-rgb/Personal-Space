@@ -1,0 +1,322 @@
+[
+  {
+    "name": "id",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "name",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "type",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "match_type",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "team_slots",
+    "mode": "NULLABLE",
+    "type": "INTEGER",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "published",
+    "mode": "NULLABLE",
+    "type": "BOOLEAN",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "game",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "region",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "organizer_id",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "status",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "started_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "checkin_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "prizes",
+    "mode": "NULLABLE",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "type",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "amount",
+        "mode": "NULLABLE",
+        "type": "FLOAT",
+        "description": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "anticheat_required",
+    "mode": "NULLABLE",
+    "type": "BOOLEAN",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "created_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "created_by",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "updated_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "updated_by",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "screening",
+    "mode": "NULLABLE",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "_id",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "enabled",
+        "mode": "NULLABLE",
+        "type": "BOOLEAN",
+        "description": "",
+        "fields": []
+      }
+    ]
+  },
+  {
+    "name": "source",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "teams",
+    "mode": "REPEATED",
+    "type": "RECORD",
+    "description": "",
+    "fields": [
+      {
+        "name": "team_id",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "name",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "team_type",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "status",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "has_joined",
+        "mode": "NULLABLE",
+        "type": "BOOLEAN",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "has_checked_in",
+        "mode": "NULLABLE",
+        "type": "BOOLEAN",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "has_played",
+        "mode": "NULLABLE",
+        "type": "BOOLEAN",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "joined_at",
+        "mode": "NULLABLE",
+        "type": "TIMESTAMP",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "leader",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "coleader",
+        "mode": "NULLABLE",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "coaches",
+        "mode": "REPEATED",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "substitutes",
+        "mode": "REPEATED",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "roster",
+        "mode": "REPEATED",
+        "type": "STRING",
+        "description": "",
+        "fields": []
+      },
+      {
+        "name": "members",
+        "mode": "REPEATED",
+        "type": "RECORD",
+        "description": "",
+        "fields": [
+          {
+            "name": "user_id",
+            "mode": "NULLABLE",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "nickname",
+            "mode": "NULLABLE",
+            "type": "STRING",
+            "description": "",
+            "fields": []
+          },
+          {
+            "name": "tournament_history",
+            "mode": "REPEATED",
+            "type": "RECORD",
+            "description": "",
+            "fields": [
+              {
+                "name": "organizer_id",
+                "mode": "NULLABLE",
+                "type": "STRING",
+                "description": "",
+                "fields": []
+              },
+              {
+                "name": "previous_tournament_played_count",
+                "mode": "NULLABLE",
+                "type": "INTEGER",
+                "description": "",
+                "fields": []
+              },
+              {
+                "name": "previous_tournament_checkin_count",
+                "mode": "NULLABLE",
+                "type": "INTEGER",
+                "description": "",
+                "fields": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

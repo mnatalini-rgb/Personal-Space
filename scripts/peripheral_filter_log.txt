@@ -1,0 +1,118 @@
+Reading CSV: /Users/moritznatalini/Desktop/Master_Product_Folder/data/brand_integrations/faceit-events user_client_hardware_details_v2 2026-03-25T2056.csv
+Header: ['Client Hardware Details V2 Manufacturer', 'Client Hardware Details V2 Manufacturer', 'Client Hardware Details V2 Cores', 'Client Hardware Details V2 Manufacturer', 'Client Hardware Details V2 Device Name', 'Client Hardware Details V2  Date', 'Client Hardware Details V2 User ID', 'New Tracking Session V1 Country']
+  Processed 200,000 rows...
+  Processed 400,000 rows...
+  Processed 600,000 rows...
+  Processed 800,000 rows...
+  Processed 1,000,000 rows...
+  Processed 1,200,000 rows...
+Total rows processed: 1,351,384
+Countries included: 89
+Skipped 89,767 rows from 63 non-released countries:
+  PL: 15,018
+  DE: 13,277
+  RU: 9,134
+  US: 9,105
+  GB: 5,238
+  NL: 4,250
+  RO: 2,742
+  CZ: 2,324
+  FR: 2,274
+  CA: 2,048
+
+--- Country Summary ---
+Country Tier             Rows   Unique Users
+--------------------------------------------
+TR     Early Release      836,735         60,369
+UA     Tier 3         80,730         20,531
+BR     Tier 3         50,806         12,733
+KZ     Tier 3         49,089         11,923
+AR     Tier 3         34,749          9,003
+IT     Early Release       30,332          2,224
+IN     Early Release       29,954          2,019
+BY     Tier 3         26,653          6,772
+MN     Tier 3         26,412          6,881
+UZ     Tier 3         24,939          5,666
+BG     Tier 3         14,297          3,460
+GE     Tier 3         10,286          2,714
+VN     Tier 3          9,903          2,262
+IL     Tier 3          8,946          1,955
+CN     Tier 3          8,260          1,676
+MY     Tier 3          7,351          1,727
+MK     Tier 3          7,163          1,821
+TH     Tier 3          6,830          1,522
+TW     Tier 3          6,429          1,625
+HK     Tier 3          6,266          1,423
+XK     Tier 3          6,164          1,638
+PH     Tier 3          5,674          1,390
+MD     Tier 3          5,222          1,337
+CL     Tier 3          4,906          1,227
+KG     Tier 3          4,457          1,078
+ID     Tier 3          4,061            951
+BA     Tier 3          3,607          1,023
+PK     Tier 3          3,240            826
+PE     Tier 3          3,208            813
+AZ     Tier 3          3,029            616
+PS     Tier 3          2,726            645
+DZ     Tier 3          2,489            653
+IQ     Tier 3          2,252            493
+TJ     Tier 3          2,153            541
+UY     Tier 3          1,938            502
+LB     Tier 3          1,801            472
+ME     Tier 3          1,776            448
+MX     Tier 3          1,765            431
+AL     Tier 3          1,492            389
+AM     Tier 3          1,244            320
+CO     Tier 3          1,001            248
+VE     Tier 3            932            255
+EG     Tier 3            751            181
+TN     Tier 3            716            177
+MA     Tier 3            705            169
+PY     Tier 3            681            165
+KW     Tier 3            643            145
+ZA     Tier 3            610            147
+KH     Tier 3            561            135
+LU     Tier 3            497            111
+BD     Tier 3            433            102
+MO     Tier 3            424             97
+QA     Tier 3            424             93
+SY     Tier 3            383             85
+BN     Tier 3            343             82
+EC     Tier 3            297             70
+BO     Tier 3            289             74
+MT     Tier 3            268             63
+PA     Tier 3            206             44
+CR     Tier 3            206             53
+DO     Tier 3            188             43
+GT     Tier 3            170             39
+NP     Tier 3            142             32
+LY     Tier 3            126             33
+OM     Tier 3            125             27
+BH     Tier 3            112             28
+LK     Tier 3             89             20
+PR     Tier 3             88             20
+JE     Tier 3             85             22
+LA     Tier 3             83             18
+MM     Tier 3             63             17
+HN     Tier 3             58             13
+IM     Tier 3             56             13
+GL     Tier 3             54             13
+SV     Tier 3             43             11
+NG     Tier 3             31              8
+GG     Tier 3             28              5
+MU     Tier 3             22              6
+NC     Tier 3             20              4
+KY     Tier 3             15              3
+TZ     Tier 3             13              2
+JM     Tier 3             13              3
+MQ     Tier 3             11              3
+NI     Tier 3              9              2
+GH     Tier 3              9              3
+MC     Tier 3              8              2
+MZ     Tier 3              8              2
+GU     Tier 3              6              1
+PF     Tier 3              5              1
+
+--- Tier Summary ---
+Early Release:      897,021 rows,     64,608 unique users
+Tier 3:      454,363 rows,    112,363 unique users

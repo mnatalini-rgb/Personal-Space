@@ -1,0 +1,599 @@
+Date: Thu, 19 Mar 2026 10:38:45 +0000 (UTC)
+Message-ID: <1620701848.21.1773916725611@c67b8b69d0aa>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_20_1800271627.1773916725611"
+
+------=_Part_20_1800271627.1773916725611
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>Skin Initiative Tracking Events</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font: var(--ds-font-body-small, Arial, Helvetica, FreeSans, sans-se=
+rif);
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: var(--ds-surface, #fff) !important;
+        color: var(--ds-text, #000) !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: var(--ds-text, #000);
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        page-break-after: avoid;
+    }
+
+    pre {
+        font: var(--ds-font-code, Monaco, "Courier New", monospace);
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>Skin Initiative Tracking Events</h1>
+    <div class=3D"Section1">
+        <p local-id=3D"7e304a1eba32"></p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"760" data-layout=3D"default" data-local-id=3D"22=
+25de0f-6b41-49a4-8fc3-db059b1534d4" class=3D"confluenceTable">
+<tbody>
+<tr data-local-id=3D"2233d484-e3e9-4a71-83b8-4d604f8337b1">
+<th data-local-id=3D"eaab2903-42f0-47c5-83f0-a8e8b9f92596" class=3D"conflue=
+nceTh">
+<p local-id=3D"435247b6ca40">Used Tracking Event</p></th>
+<th data-local-id=3D"2e39f073-2f61-4d69-99e6-0f413b22c9eb" class=3D"conflue=
+nceTh">
+<p local-id=3D"d5e7a1c05d8d">What</p></th>
+<th data-local-id=3D"447ce26d-2c94-488d-b823-a4a9f295b1b8" class=3D"conflue=
+nceTh">
+<p local-id=3D"ac3679167fdb">KPI</p></th>
+<th data-local-id=3D"a2998f03-b633-4b69-9dac-6adffac9d39a" class=3D"conflue=
+nceTh">
+<p local-id=3D"7f855f3532e1">Events Required To Track Metric</p></th>
+</tr>
+<tr data-local-id=3D"5aa8b8ea-f74f-408e-a172-4c83d3f183ac">
+<td data-local-id=3D"cfe3f562-e970-4d9a-939b-2a82c8ea686c" class=3D"conflue=
+nceTd">
+<p local-id=3D"5c17fbd724f8"><strong>skin_vault_interaction_v1</strong></p>=
+</td>
+<td data-local-id=3D"054f1024-c66f-489f-ba08-a44bee47dd15" class=3D"conflue=
+nceTd">
+<p local-id=3D"725c6f149e92">Skin Vault Interactions</p></td>
+<td data-local-id=3D"d21beb19-346e-4404-9fa7-2ee186ca9122" class=3D"conflue=
+nceTd">
+<p local-id=3D"32f744ebe5cb">User interacted with Skin Vault page component=
+s</p></td>
+<td data-local-id=3D"e1c69cd5-45a0-4b60-9426-80c31555d675" class=3D"conflue=
+nceTd">
+<p local-id=3D"21a75becf232"></p></td>
+</tr>
+<tr data-local-id=3D"c24323ab-567f-4ccc-a0b0-1751f19a3841">
+<td data-local-id=3D"0035ed72-cbf1-4c31-b451-3d755e143e0f" class=3D"conflue=
+nceTd">
+<p local-id=3D"d9a20648f941">action: <code>stat_widget_click</code></p></td=
+>
+<td data-local-id=3D"7a582d7e-6531-4e62-9e75-6fc4f166be36" class=3D"conflue=
+nceTd">
+<p local-id=3D"de1da5f4505f">Stat Widget clicked</p></td>
+<td data-local-id=3D"c82e50fd-5a18-47ce-a55f-9b6f367db7d8" class=3D"conflue=
+nceTd">
+<p local-id=3D"e5e90ebfc763">User clicked on a stat widget (Most Valuable, =
+Lowest Float, Top StatTrak)</p></td>
+<td data-local-id=3D"3cec8420-ac0c-4f3b-beff-e942f37c7468" class=3D"conflue=
+nceTd">
+<ul local-id=3D"adbdf2036e5b">
+<li local-id=3D"70947a024947">
+<p local-id=3D"6365c24cad84">Stat widget is clicked</p></li>
+<li local-id=3D"271529aeb07c">
+<p local-id=3D"848a12569286">Item detail modal opens</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"375c9e7f-2f16-4d0f-824a-a4c829a87055">
+<td data-local-id=3D"d341158f-c757-47a2-9d76-d08b5629cf98" class=3D"conflue=
+nceTd">
+<p local-id=3D"62968a2138a2">action: <code>inventory_card_click</code></p><=
+/td>
+<td data-local-id=3D"f0cff4ff-a6b1-4894-9f2c-6e054e1d934d" class=3D"conflue=
+nceTd">
+<p local-id=3D"73eb80d177f0">Inventory Card clicked</p></td>
+<td data-local-id=3D"1ad0a150-9214-42e4-8a29-667c361dad88" class=3D"conflue=
+nceTd">
+<p local-id=3D"5ddc45d031e0">User clicked on an inventory card in the grid<=
+/p></td>
+<td data-local-id=3D"56594f54-096d-4915-b6cc-19171cd4af1c" class=3D"conflue=
+nceTd">
+<ul local-id=3D"0f7e228631fc">
+<li local-id=3D"7c22ee4364b4">
+<p local-id=3D"285c3aaa24e2">Inventory card is clicked</p></li>
+<li local-id=3D"25af4d94a71c">
+<p local-id=3D"8d85b0feede6">Item detail modal opens</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"d09c3624-c257-4d02-aedd-cf58f2849469">
+<td data-local-id=3D"49c3ffcb-381f-44be-8525-16e25f0383d2" class=3D"conflue=
+nceTd">
+<p local-id=3D"ed25a0e3066e">action: <code>inspect_in_steam_click</code></p=
+></td>
+<td data-local-id=3D"b46200da-a266-44da-b2a4-0b5479b51459" class=3D"conflue=
+nceTd">
+<p local-id=3D"c77dffd9ecb8">Inspect in Steam clicked</p></td>
+<td data-local-id=3D"8622d007-9665-41bd-98d7-5418e22d50f3" class=3D"conflue=
+nceTd">
+<p local-id=3D"b886714ba008">User clicked the Steam button in item detail m=
+odal to inspect the skin in Steam</p></td>
+<td data-local-id=3D"c2d5eac5-634f-4a88-89f3-ca0c88d19143" class=3D"conflue=
+nceTd">
+<ul local-id=3D"12e98f92b135">
+<li local-id=3D"8b7589213e97">
+<p local-id=3D"dd2beff790f8">User clicked Steam button</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"0bd71781-21c6-4199-aefc-187638409a55">
+<td data-local-id=3D"b1e05820-7a54-4bd7-9f4b-f4ddfd0fd0c9" class=3D"conflue=
+nceTd">
+<p local-id=3D"ff45f0d8304a">action: <code>skin_vault_tab_click</code></p><=
+/td>
+<td data-local-id=3D"c1348793-3717-412a-9ba0-da09c1ace15a" class=3D"conflue=
+nceTd">
+<p local-id=3D"8e38b2d15d7c">Skin Vault Tab clicked</p></td>
+<td data-local-id=3D"70093803-e214-44ab-89e3-01d3de1b4be1" class=3D"conflue=
+nceTd">
+<p local-id=3D"26267a27b72e">User clicked on the Skin Vault tab in user pro=
+file</p></td>
+<td data-local-id=3D"920b3ce7-66bd-48c3-8e34-7a5b4e4f916c" class=3D"conflue=
+nceTd">
+<ul local-id=3D"8335fb75f93e">
+<li local-id=3D"3b0d285c6000">
+<p local-id=3D"2e6eba8d9fbd">Skin Vault Tab is clicked on profile page</p><=
+/li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"f935632b-5d6c-407e-8c9d-7f103648d4ab">
+<td data-local-id=3D"b272bc81-1bee-409e-8035-f69838a65259" class=3D"conflue=
+nceTd">
+<p local-id=3D"f58fb767a55b"><strong>inventory_settings_updated_v1</strong>=
+</p></td>
+<td data-local-id=3D"fb2ac9a0-46cf-4279-9ec2-7e41def2e79f" class=3D"conflue=
+nceTd">
+<p local-id=3D"797103d19101">Inventory Settings Updated</p></td>
+<td data-local-id=3D"b833e5ea-1681-4cac-8e2d-c5f4a6cd541a" class=3D"conflue=
+nceTd">
+<p local-id=3D"b5a8cec3e00d">User updated their inventory privacy settings =
+from Account Settings page</p></td>
+<td data-local-id=3D"589c9e73-7926-41d1-94ef-0227f317dd17" class=3D"conflue=
+nceTd">
+<ul local-id=3D"7cbfeba01b5d">
+<li local-id=3D"c876d61843f6">
+<p local-id=3D"3ec50dc3ff11">User changed privacy setting</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"efbcb59e-ae04-47ca-acd8-dabf72502f70">
+<td data-local-id=3D"0bd10ef0-5941-4133-9a7b-3432c56cbd65" class=3D"conflue=
+nceTd">
+<p local-id=3D"b6905c98314a">action: is_private: true</p></td>
+<td data-local-id=3D"9ea09fe0-6f30-49cf-a630-9a02456218c1" class=3D"conflue=
+nceTd">
+<p local-id=3D"0905a02849b8">Set to Private</p></td>
+<td data-local-id=3D"dbca6044-8002-4db2-8608-d6f60106302b" class=3D"conflue=
+nceTd">
+<p local-id=3D"b22546886e19">User set their inventory to private</p></td>
+<td data-local-id=3D"d98ac06c-4936-49d9-8a33-55e28ff8269e" class=3D"conflue=
+nceTd">
+<ul local-id=3D"de63f55160d1">
+<li local-id=3D"d0f3416bffb7">
+<p local-id=3D"63392a0487d0">Privacy toggle changed to private</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"13affd84-69ce-4738-b600-e721a624c796">
+<td data-local-id=3D"d4d38e31-2620-46e2-989d-99f0421f9326" class=3D"conflue=
+nceTd">
+<p local-id=3D"85d834991b26">action: is_private: false</p></td>
+<td data-local-id=3D"97567e84-a027-4d94-be5a-0a41f47b5a4e" class=3D"conflue=
+nceTd">
+<p local-id=3D"33ab23418318">Set to Public</p></td>
+<td data-local-id=3D"4ef305e5-eeac-4a9d-8be2-70a81ca1c0da" class=3D"conflue=
+nceTd">
+<p local-id=3D"dbe37251de8c">User set their inventory to public</p></td>
+<td data-local-id=3D"dfa3b08d-3a48-49b2-b0eb-c6676e018fb4" class=3D"conflue=
+nceTd">
+<ul local-id=3D"58dc74dfa8a0">
+<li local-id=3D"5304f1c320e5">
+<p local-id=3D"68d698270834">Privacy toggle changed to public</p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p local-id=3D"72154f9502b8"><strong>Event Fields:</strong></p>
+<p local-id=3D"819922d1ace0"><strong>SkinVaultInteraction:</strong></p>
+<ul local-id=3D"493ed7c7-25d5-4115-9241-1a7b4a501851">
+<li local-id=3D"43da412d-df0f-4abb-bc9e-18fd92d4b371">
+<p local-id=3D"550dfde4bb0a"><code>is_profile_owner</code> (bool) - Whether=
+ the user is viewing their own profile</p></li>
+<li local-id=3D"f2828a49-71f4-4ecb-9071-4dfa9f407aa6">
+<p local-id=3D"592660a42f80">action (string) - The interaction type (stat_w=
+idget_click, inventory_card_click, inspect_in_steam_click, skin_vault_tab_c=
+lick)</p></li>
+<li local-id=3D"dc1e7365-0de6-44d3-86b1-c8e39a1b9cd1">
+<p local-id=3D"d65752052e27"><code>inventory_item_id</code> (string) - The =
+ID of the inventory item interacted with</p></li>
+<li local-id=3D"e7a01d6c-3ab1-4211-b1b8-ea7aa74940cf">
+<p local-id=3D"428daeea92fa"><code>inventory_item_type</code> (string) - Th=
+e type of item (e.g., INVENTORY_ITEM_TYPE_RIFLE, INVENTORY_ITEM_TYPE_KNIFE)=
+</p></li>
+</ul>
+<p local-id=3D"4ba56a23ffb6"><strong>InventorySettingsUpdated:</strong></p>
+<ul local-id=3D"a3507c84-0282-416a-84ef-9c72a7a76b7a">
+<li local-id=3D"b457311b-466c-4500-b3c3-1630b01f1662">
+<p local-id=3D"ae90760726e5">is_private (bool) - Whether the user's invento=
+ry has been set to private</p></li>
+</ul>
+<p local-id=3D"6343057a5219"></p>
+<p local-id=3D"72a48e404f4c"><strong>Feedback collector tracking</strong></=
+p>
+<div class=3D"table-wrap">
+<table data-table-width=3D"760" data-layout=3D"default" data-local-id=3D"c5=
+46eade-d1ee-4c17-b424-686191742eb5" class=3D"confluenceTable">
+<tbody>
+<tr data-local-id=3D"18cd232a-dacb-4b43-948c-83c9290f1b77">
+<th data-local-id=3D"0eb0c982-1b3d-4445-bae6-e52a865a2de2" class=3D"conflue=
+nceTh">
+<p local-id=3D"8cf2b3b9ebae">Used Tracking Event</p></th>
+<th data-local-id=3D"06d26092-9e16-4212-848d-a0bd3d21d04d" class=3D"conflue=
+nceTh">
+<p local-id=3D"dcf1bff32c1c">What</p></th>
+<th data-local-id=3D"4ad235ae-e49e-42d2-a6a9-dd524a3e0539" class=3D"conflue=
+nceTh">
+<p local-id=3D"081558e4447e">KPI</p></th>
+<th data-local-id=3D"43c36343-7720-4a3d-8464-0f198580f582" class=3D"conflue=
+nceTh">
+<p local-id=3D"040dab21de0f">Events Required To Track Metric</p></th>
+</tr>
+<tr data-local-id=3D"f29594b8-a4a1-405b-ae36-aa22329753cd">
+<td data-local-id=3D"3abd7a1b-ce1b-4d5a-9bd8-3385ca52e3e6" class=3D"conflue=
+nceTd">
+<p local-id=3D"e46dbfee4ee9"><strong>feedback_collector</strong></p></td>
+<td data-local-id=3D"7c9239ab-248a-4637-af7a-22035b1846db" class=3D"conflue=
+nceTd">
+<p local-id=3D"f554c442c13d">Skin Vault Feedback Submitted</p></td>
+<td data-local-id=3D"165fb605-3c14-4724-b128-825457722403" class=3D"conflue=
+nceTd">
+<p local-id=3D"d292a28cf789">User submitted feedback on the Skin Vault feat=
+ure</p></td>
+<td data-local-id=3D"9fa5debd-5e02-426b-90b5-cd3c7489a0f7" class=3D"conflue=
+nceTd">
+<ul local-id=3D"088b136f6653">
+<li local-id=3D"e1d51eadec60">
+<p local-id=3D"f4bcd27411b6">Feedback option selected - Free text submitted=
+</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"bf6e57c2-1a9f-41d2-ad3e-ba6afd647c87">
+<td data-local-id=3D"7ee853d5-2771-4547-957a-83196234933d" class=3D"conflue=
+nceTd">
+<p local-id=3D"980616962bad">feedbackType: loveIt</p></td>
+<td data-local-id=3D"6af965fe-b47b-4f18-9130-dd007d4a0a6e" class=3D"conflue=
+nceTd">
+<p local-id=3D"0760c5125694">"Love it" selected</p></td>
+<td data-local-id=3D"ad161cb6-61ba-4a56-8460-286c965b04e2" class=3D"conflue=
+nceTd">
+<p local-id=3D"5d01bffecede">User selected the "Love it" feedback option</p=
+></td>
+<td data-local-id=3D"448fe7ca-afdc-418a-b2f7-1646628f1e73" class=3D"conflue=
+nceTd">
+<ul local-id=3D"05de00c967a1">
+<li local-id=3D"bed9efa1fabb">
+<p local-id=3D"8822d3a1955d">Chip click tracked</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"3c6c1b67-8762-4245-badf-bbe16d081359">
+<td data-local-id=3D"b68681c4-46a7-4a44-b816-1cde6b072769" class=3D"conflue=
+nceTd">
+<p local-id=3D"0bca50d7115b">feedbackType: curious</p></td>
+<td data-local-id=3D"b1d08da0-4640-4ead-9065-95359d503cbd" class=3D"conflue=
+nceTd">
+<p local-id=3D"b25932560b57">"Curious" selected</p></td>
+<td data-local-id=3D"d1a8ad5e-6029-476d-b0d1-c1cab75620c2" class=3D"conflue=
+nceTd">
+<p local-id=3D"5fdac4ea8e3d">User selected the "Curious" feedback option</p=
+></td>
+<td data-local-id=3D"9722ab6c-fee2-4357-904d-f91e724a0087" class=3D"conflue=
+nceTd">
+<ul local-id=3D"248defab4144">
+<li local-id=3D"81e5872ed853">
+<p local-id=3D"ca34ee933fba">Chip click tracked</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"9bbe2028-f51b-4902-9562-8393866e6c93">
+<td data-local-id=3D"e663b438-e522-43a9-9241-8b59f66ac804" class=3D"conflue=
+nceTd">
+<p local-id=3D"414c4b0b04e7">feedbackType: stillFiguringItOut</p></td>
+<td data-local-id=3D"24b62209-a6d4-46f9-8bfb-bec94844ce43" class=3D"conflue=
+nceTd">
+<p local-id=3D"e7e72d8a59ab">"Still figuring it out" selected</p></td>
+<td data-local-id=3D"b1a6b25e-147a-4da4-a2b5-7dee04995524" class=3D"conflue=
+nceTd">
+<p local-id=3D"921ac2689c4f">User selected the "Still figuring it out" feed=
+back option</p></td>
+<td data-local-id=3D"48639502-d17d-4310-bec7-30e4f8d92df2" class=3D"conflue=
+nceTd">
+<ul local-id=3D"070bd1071e24">
+<li local-id=3D"9508cde73326">
+<p local-id=3D"82aaf8a21e74">Chip click tracked</p></li>
+</ul></td>
+</tr>
+<tr data-local-id=3D"bede1972-6324-417a-865e-7822400979fa">
+<td data-local-id=3D"db8fa2c8-c729-46a8-9b60-236912970358" class=3D"conflue=
+nceTd">
+<p local-id=3D"b906e639b218">feedbackType: notMyThing</p></td>
+<td data-local-id=3D"1c105805-81a1-4c7b-8a70-0957f3f6d091" class=3D"conflue=
+nceTd">
+<p local-id=3D"ba03ac049d51">"Not my thing" selected</p></td>
+<td data-local-id=3D"36a3b706-6c2e-4639-8d0b-b639b179ee80" class=3D"conflue=
+nceTd">
+<p local-id=3D"51bf64284684">User selected the "Not my thing" feedback opti=
+on</p></td>
+<td data-local-id=3D"2beaf60a-f622-41c7-b0e9-b0023948e787" class=3D"conflue=
+nceTd">
+<ul local-id=3D"c54d403fc219">
+<li local-id=3D"b110cd467640">
+<p local-id=3D"47b46f0481b6">Chip click tracked</p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p local-id=3D"ad70148dc921"><strong>Event Fields:</strong></p>
+<p local-id=3D"732aedc00958"><strong>feedback_collector_v1:</strong></p>
+<ul local-id=3D"c2d0214a-a4ad-4aed-a85c-9d9adb71627c">
+<li local-id=3D"40accb7f-2d89-4058-983f-be10c4ebc21c">
+<p local-id=3D"1c99fb2e13f5"><strong>name</strong> (string) - Analytics ide=
+ntifier: <code>skin_vault_owner</code> or <code>skin_vault_visitor</code></=
+p></li>
+<li local-id=3D"429f815a-02ca-4b3d-8646-b545b9c51665">
+<p local-id=3D"25548a9f2aa8"><strong>game</strong> (string) - Empty string<=
+/p></li>
+<li local-id=3D"0b60317f-638d-4d0e-b7fb-22184a83451d">
+<p local-id=3D"1fee5621ab95"><strong>entity_id</strong> (string) - The user=
+ ID of the profile being viewed</p></li>
+<li local-id=3D"3e632496-b5b8-4a91-988b-85f2fcbe7e74">
+<p local-id=3D"6422d4e8622b"><strong>entity_type</strong> (string) - <code>=
+skins</code></p></li>
+<li local-id=3D"dff8fb48-8e58-4a17-a956-7b6e23d269f2">
+<p local-id=3D"b4041e606d7d"><strong>feedback_type</strong> (string) - The =
+selected option (<code>loveIt</code>, <code>curious</code>, <code>stillFigu=
+ringItOut</code>, <code>notMyThing</code>)</p></li>
+<li local-id=3D"36758931-a198-4d4c-8bec-504107158062">
+<p local-id=3D"977f32da1981"><strong>feedback_text</strong> (string) - Free=
+ text input from the user</p></li>
+</ul>
+<p local-id=3D"b6edf1073079"><strong>clicks_v1 (on feedback option select):=
+</strong></p>
+<ul local-id=3D"393ad20b-c39f-4818-8c97-d7a751d48296">
+<li local-id=3D"6ec9b523-7acc-415c-8e52-4bcc62cd6c79">
+<p local-id=3D"5b91ccbfa3a2"><strong>name</strong> (string) - Analytics ide=
+ntifier: <code>skin_vault_owner</code> or <code>skin_vault_visitor</code></=
+p></li>
+<li local-id=3D"176be391-8197-4915-8ec1-bbb9e82b8d0a">
+<p local-id=3D"e37afe9eae70"><strong>position</strong> (string) - <code>ski=
+n vault feedback</code> (default)</p></li>
+</ul>
+<p local-id=3D"769f64e06a38"><strong>Owner vs Visitor differentiation:</str=
+ong></p>
+<p local-id=3D"8c3b7ec66f1d">The <code>name</code> field contains <code>ski=
+n_vault_owner</code> when the logged-in user is viewing their own profile, =
+and <code>skin_vault_visitor</code> when viewing someone else's profile.</p=
+>
+<p local-id=3D"e1899495a370"></p>
+<p local-id=3D"f41bf0236ca9">How many users saw the page?</p>
+<p local-id=3D"a406edc68aa1">page_view_v1<br><a class=3D"external-link" hre=
+f=3D"https://efgdata.cloud.looker.com/explore/faceit-events/user_page_view_=
+v1?toggle=3Dfil&amp;qid=3DioWJ6R4V53TcqdbFygN0Yw" rel=3D"nofollow">https://=
+efgdata.cloud.looker.com/explore/faceit-events/user_page_view_v1?toggle=3Df=
+il&amp;qid=3DioWJ6R4V53TcqdbFygN0Yw</a><br><br>
+FF name: <br>
+PROFILE_SKIN_VAULT</p>
+<p local-id=3D"b3b4844a1f18"></p>
+<p local-id=3D"8c8e5343d7aa"></p>
+    </div>
+</body>
+</html>
+------=_Part_20_1800271627.1773916725611--

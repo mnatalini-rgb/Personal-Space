@@ -1,0 +1,16 @@
+Skin Vault Interaction V1 Action,Skin Vault Interaction V1 Inventory Item Type,Skin Vault Interaction V1 Total Unique Users,Skin Vault Interaction V1 Total Events
+tab_click,,512,"7,236"
+inventory_card_click,INVENTORY_ITEM_TYPE_KNIFE,35,531
+inventory_card_click,INVENTORY_ITEM_TYPE_RIFLE,29,585
+stat_widget_click,INVENTORY_ITEM_TYPE_KNIFE,21,273
+inventory_card_click,INVENTORY_ITEM_TYPE_PISTOL,17,220
+stat_widget_click,INVENTORY_ITEM_TYPE_RIFLE,7,48
+stat_widget_click,INVENTORY_ITEM_TYPE_STICKER,4,64
+stat_widget_click,INVENTORY_ITEM_TYPE_PISTOL,4,211
+stat_widget_click,INVENTORY_ITEM_TYPE_SMG,3,71
+inventory_card_click,INVENTORY_ITEM_TYPE_SMG,3,25
+inventory_card_click,INVENTORY_ITEM_TYPE_STICKER,3,20
+stat_widget_click,INVENTORY_ITEM_TYPE_HEAVY,1,11
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_PISTOL,1,3
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_KNIFE,1,23
+inventory_card_click,INVENTORY_ITEM_TYPE_HEAVY,1,10

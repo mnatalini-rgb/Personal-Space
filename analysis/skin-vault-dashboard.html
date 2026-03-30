@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Vault Experiment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --border: #e2e4e9;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-weight: 600; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #f1f3f5; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* Highlights & Insights */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        /* Funnel specifics */
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+
+        /* Decision Panel */
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        @media (max-width: 900px) { 
+            .kpi-grid, .grid-2, .grid-3, .grid-4, .decision-grid { grid-template-columns: 1fr; } 
+            .funnel-wrapper { flex-direction: column; }
+            .funnel-arrow { transform: rotate(90deg); }
+        }
+
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; }
+        
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        
+        h3 { font-weight: 600; color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <header class="header">
+            <span class="badge">Experiment · Phase 1</span>
+            <h1>Skin Vault Experiment Dashboard</h1>
+            <h2>300 Top-Viewed Player Profiles · Launched Mar 17, 2026 · Updated Mar 30</h2>
+            <p>Moritz Natalini · Ads &amp; Partnerships · EFG</p>
+        </header>
+
+        <div class="section" id="overview">
+            <h2 class="section-title">1. Overview</h2>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Total Page Views</div>
+                    <div class="kpi-value">6,927</div>
+                    <div class="kpi-sub">All-time tab clicks</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Unique Profiles Viewed</div>
+                    <div class="kpi-value" style="font-size: 2rem;">305 <span style="font-size: 1.25rem; color: var(--text-muted);">/ 300</span></div>
+                    <div class="kpi-sub">102% of cohort — users navigating beyond experiment profiles</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Unique Tab Clickers</div>
+                    <div class="kpi-value">4,734</div>
+                    <div class="kpi-sub">Unique users engaging with tab</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Feedback Submissions</div>
+                            <div class="kpi-value">28</div>
+                    <div class="kpi-sub">Via sentiment widget</div>
+                </div>
+            </div>
+
+            <div class="insight-card" style="padding: 2rem; border-left-color: var(--accent);">
+                <h3 style="margin-bottom: 1rem;">Engagement Funnel</h3>
+                <div class="funnel-wrapper">
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Tab Click</div>
+                        <div class="funnel-value">4,734</div>
+                        <div class="funnel-sub">100%</div>
+                    </div>
+                    <div class="funnel-arrow">→</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Inventory Card Click</div>
+                        <div class="funnel-value">492</div>
+                        <div class="funnel-sub">10.4% of total</div>
+                    </div>
+                    <div class="funnel-arrow">→</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Stat Widget Click</div>
+                        <div class="funnel-value">350</div>
+                        <div class="funnel-sub">7.4% of total</div>
+                    </div>
+                    <div class="funnel-arrow">→</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Inspect in Steam</div>
+                        <div class="funnel-value">17</div>
+                        <div class="funnel-sub">0.4% conversion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="traffic">
+            <h2 class="section-title">2. Profile Traffic</h2>
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Daily Page Views</h3>
+                <div class="chart-container">
+                    <canvas id="dailyViewsChart"></canvas>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">Mar 30 is partial day (data as of query time)</p>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top 20 Profiles by Views</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th class="number">Total Views</th>
+                                    <th class="number">Unique Users</th>
+                                    <th class="number">Views/User</th>
+                                    <th class="number">Locale Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>CEMEN_BAKIN</td><td class="number highlight">695</td><td class="number">513</td><td class="number">1.4</td><td class="number">11</td></tr>
+                                <tr><td>StRoGo</td><td class="number highlight">465</td><td class="number">311</td><td class="number">1.5</td><td class="number">6</td></tr>
+                                <tr><td>s-chilla</td><td class="number highlight">327</td><td class="number">234</td><td class="number">1.4</td><td class="number">7</td></tr>
+                                <tr><td>b1st-</td><td class="number">295</td><td class="number">236</td><td class="number">1.3</td><td class="number">11</td></tr>
+                                <tr><td>nocries</td><td class="number">254</td><td class="number">165</td><td class="number">1.5</td><td class="number">12</td></tr>
+                                <tr><td>m3wsu</td><td class="number">217</td><td class="number">146</td><td class="number">1.5</td><td class="number">4</td></tr>
+                                <tr><td>SzeliS</td><td class="number">214</td><td class="number">156</td><td class="number">1.4</td><td class="number">3</td></tr>
+                                <tr><td>zibert1715</td><td class="number">208</td><td class="number">163</td><td class="number">1.3</td><td class="number">3</td></tr>
+                                <tr><td>h4RN1zanami</td><td class="number">181</td><td class="number">130</td><td class="number">1.4</td><td class="number">8</td></tr>
+                                <tr><td>auraeater</td><td class="number">160</td><td class="number">110</td><td class="number">1.5</td><td class="number">9</td></tr>
+                                <tr><td>gwizdakk</td><td class="number">140</td><td class="number">100</td><td class="number">1.4</td><td class="number">6</td></tr>
+                                <tr><td>ct0m</td><td class="number">136</td><td class="number">97</td><td class="number">1.4</td><td class="number">4</td></tr>
+                                <tr><td>baz</td><td class="number">103</td><td class="number">79</td><td class="number">1.3</td><td class="number">5</td></tr>
+                                <tr><td>Recrent</td><td class="number">96</td><td class="number">77</td><td class="number">1.2</td><td class="number">3</td></tr>
+                                <tr><td>-SYPH0</td><td class="number">87</td><td class="number">68</td><td class="number">1.3</td><td class="number">7</td></tr>
+                                <tr><td>Magnojezzz</td><td class="number">86</td><td class="number">72</td><td class="number">1.2</td><td class="number">7</td></tr>
+                                <tr><td>t3ns1on</td><td class="number">74</td><td class="number">55</td><td class="number">1.3</td><td class="number">4</td></tr>
+                                <tr><td>hhakuu</td><td class="number">73</td><td class="number">48</td><td class="number">1.5</td><td class="number">3</td></tr>
+                                <tr><td>jresy</td><td class="number">72</td><td class="number">52</td><td class="number">1.4</td><td class="number">3</td></tr>
+                                <tr><td>Murzofix</td><td class="number">72</td><td class="number">55</td><td class="number">1.3</td><td class="number">4</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">Note: 305 unique profiles viewed — exceeds 300 cohort, meaning users are navigating to non-experiment profiles</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top 15 Profiles (Views)</h3>
+                    <div class="chart-container">
+                        <canvas id="profileChart"></canvas>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Views by Locale</h3>
+                        <div class="chart-container small">
+                            <canvas id="localeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="interactions">
+            <h2 class="section-title">3. Interactions</h2>
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Interaction by Action</h3>
+                    <div class="chart-container">
+                        <canvas id="actionChart"></canvas>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 1.5rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th class="number">Unique Users</th>
+                                    <th class="number">Events</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>tab_click</td><td class="number highlight">4,734</td><td class="number">6,927</td></tr>
+                                <tr><td>inventory_card_click</td><td class="number">492</td><td class="number">918</td></tr>
+                                <tr><td>stat_widget_click</td><td class="number">350</td><td class="number">546</td></tr>
+                                <tr><td>inspect_in_steam_click</td><td class="number">17</td><td class="number">37</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Item Type Breakdown (Unique Users)</h3>
+                    <div class="chart-container">
+                        <canvas id="itemTypeChart"></canvas>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 1.5rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item Type</th>
+                                    <th class="number">Card Clicks (Users)</th>
+                                    <th class="number">Stat Clicks (Users)</th>
+                                    <th class="number">Inspect (Users)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>KNIFE</td><td class="number">253</td><td class="number">206</td><td class="number">7</td></tr>
+                                <tr><td>RIFLE</td><td class="number">187</td><td class="number">102</td><td class="number">3</td></tr>
+                                <tr><td>PISTOL</td><td class="number">113</td><td class="number">55</td><td class="number">4</td></tr>
+                                <tr><td>STICKER</td><td class="number">31</td><td class="number">21</td><td class="number">0</td></tr>
+                                <tr><td>SMG</td><td class="number">18</td><td class="number">24</td><td class="number">1</td></tr>
+                                <tr><td>HEAVY</td><td class="number">6</td><td class="number">7</td><td class="number">2</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="feedback">
+            <h2 class="section-title">4. Feedback &amp; Sentiment</h2>
+            <div class="grid-2">
+                <div>
+                    <div class="kpi-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1rem;">
+                        <div class="kpi-card">
+                            <div class="kpi-title">Total Submissions</div>
+                    <div class="kpi-value">28</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-title">Viewer Breakdown</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">Owner (5) <br> Visitor (23)</div>
+                        </div>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Sentiment Breakdown</h3>
+                    <div class="chart-container small">
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Free Text Responses</h3>
+                    <div class="insight-card">
+                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"LOWEST FLOAT Sticker | biguzera | Budapest 2025 High Grade, how sticker may had float?"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"What exactly it is"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"The UI"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"i just love to browse other ppl's skins, please make it official!"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"idk"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">5. Experiment Decision Framework</h2>
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is organic traffic sufficient?</strong></p>
+                        <p>Current: 6,927 views in 18 days (~385/day, ~780/day since Mar 24)</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Do users engage beyond the tab click?</strong></p>
+                        <p>10.4% click inventory items (492 of 4,734).</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is sentiment positive?</strong></p>
+                        <p>100% non-negative so far (n=28).</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Weekend traffic spike?</strong></p>
+                        <p>Weekend traffic strong — Mar 29 (Sat): 812 views. Mar 24+ spike (~3x) suggests organic growth or external referral.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item">Investigate Mar 24 traffic spike — 3x increase (253→782/day), identify source</li>
+                        <li class="list-item">Talk to Karen about promotion options</li>
+                        <li class="list-item">Feedback target exceeded (28/20 — 140%). Analyse qualitative themes.</li>
+                        <li class="list-item">Monitor Steam API rate limiting (Isabel's dashboard)</li>
+                        <li class="list-item">Decide: expand to more profiles or iterate on UX</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN</strong></p>
+                        <p>&gt;2,000 views/week organic<br>&gt;20% item click rate<br>&gt;50% positive feedback</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>YELLOW</strong></p>
+                        <p>1,000-2,000 views/week<br>10-20% click rate</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>RED</strong></p>
+                        <p>&lt;1,000 views/week<br>&lt;10% click rate<br>Negative feedback dominant</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic (~2.7k/week, 780/day since Mar 24)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Click Rate (10.4%)</p>
+                        <p><span class="status-indicator status-green"></span> Sentiment (100% non-neg, n=28)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="backlog">
+            <h2 class="section-title">6. Backlog & Ideas</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Feature requests and improvement ideas collected from user feedback and team review. Prioritise during next sprint planning.</p>
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">UX Improvements</h3>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3>Rarity Filter</h3>
+                        <p>Add a new filter by item rarity so users can quickly narrow inventory to the tier they care about (e.g., Mil-Spec, Restricted, Classified, Covert, Contraband).</p>
+                        <p style="margin-top: 0.5rem;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Filter</span></p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3>Skin Name Search</h3>
+                        <p>Add a text search/filter by skin name so users can find specific items instantly instead of scrolling through the full inventory.</p>
+                        <p style="margin-top: 0.5rem;"><span style="background: var(--accent-light); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Filter</span></p>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Functionality</h3>
+                    <div class="insight-card" style="border-left-color: var(--green);">
+                        <h3>Skin Image Links &rarr; Public URL</h3>
+                        <p>Clicking a skin image should redirect the user to the public Steam market listing or inspect link, rather than being a dead-end.</p>
+                        <p style="margin-top: 0.5rem;"><span style="background: #ecfdf5; color: var(--green); padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Link</span></p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--green);">
+                        <h3>Pin / Group Skins</h3>
+                        <p>Let users pin or select a custom group of skins (e.g., "my trade list", "favourites") for quick access and comparison — similar to wishlisting.</p>
+                        <p style="margin-top: 0.5rem;"><span style="background: #ecfdf5; color: var(--green); padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Feature</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data source: FACEIT Skin Vault Experiment · Data: Mar 13-30, 2026 | Internal PM Tool
+        </div>
+    </div>
+
+    <script>
+        // Common Chart Defaults
+        Chart.defaults.color = '#6b7280';
+        Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+        const gridColor = '#e2e4e9';
+        const tooltipBg = '#ffffff';
+        const tooltipBorder = '#e2e4e9';
+        const tooltipTitleColor = '#1a1a2e';
+        const tooltipBodyColor = '#6b7280';
+
+        // 0. Daily Page Views (Line Chart)
+        const dailyCtx = document.getElementById('dailyViewsChart').getContext('2d');
+        new Chart(dailyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mar 13', 'Mar 14', 'Mar 16', 'Mar 17', 'Mar 18', 'Mar 19', 'Mar 20', 'Mar 21', 'Mar 22', 'Mar 23', 'Mar 24', 'Mar 25', 'Mar 26', 'Mar 27', 'Mar 28', 'Mar 29', 'Mar 30*'],
+                datasets: [
+                    {
+                        label: 'Total Page Views',
+                        data: [16, 1, 253, 320, 255, 253, 241, 198, 227, 203, 782, 883, 803, 759, 674, 812, 247],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Unique Users',
+                        data: [7, 1, 197, 247, 186, 198, 180, 155, 170, 168, 649, 685, 645, 638, 548, 657, 179],
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#6b7280' } },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                scales: {
+                    x: { grid: { color: gridColor } },
+                    y: { grid: { color: gridColor }, beginAtZero: true }
+                }
+            }
+        });
+
+        // 1. Profile Chart (Horizontal Bar)
+        const profileCtx = document.getElementById('profileChart').getContext('2d');
+        new Chart(profileCtx, {
+            type: 'bar',
+            data: {
+                labels: ['CEMEN_BAKIN', 'StRoGo', 's-chilla', 'b1st-', 'nocries', 'm3wsu', 'SzeliS', 'zibert1715', 'h4RN1zanami', 'auraeater', 'gwizdakk', 'ct0m', 'baz', 'Recrent', '-SYPH0'],
+                datasets: [{
+                    label: 'Total Views',
+                    data: [695, 465, 327, 295, 254, 217, 214, 208, 181, 160, 140, 136, 103, 96, 87],
+                    backgroundColor: '#2563eb',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                scales: {
+                    x: { grid: { color: gridColor } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Locale Chart (Doughnut)
+        const localeCtx = document.getElementById('localeChart').getContext('2d');
+        new Chart(localeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['RU', 'EN', 'PL', 'TR', 'UK', 'FR', 'ZH', 'FI', 'Other'],
+                datasets: [{
+                    data: [4605, 2212, 553, 260, 144, 85, 70, 44, 158],
+                    backgroundColor: ['#2563eb', '#059669', '#dc2626', '#d97706', '#8b5cf6', '#64748b', '#0ea5e9', '#f59e0b', '#94a3b8'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#6b7280', boxWidth: 12 } },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // 3. Interaction by Action (Doughnut)
+        const actionCtx = document.getElementById('actionChart').getContext('2d');
+        new Chart(actionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['tab_click', 'inventory_card_click', 'stat_widget_click', 'inspect_in_steam_click'],
+                datasets: [{
+                    data: [4734, 492, 350, 17],
+                    backgroundColor: ['#2563eb', '#059669', '#d97706', '#dc2626'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#6b7280', boxWidth: 12 } },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // 4. Item Type Chart (Grouped Bar)
+        const itemTypeCtx = document.getElementById('itemTypeChart').getContext('2d');
+        new Chart(itemTypeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['KNIFE', 'RIFLE', 'PISTOL', 'STICKER', 'SMG', 'HEAVY'],
+                datasets: [
+                    { label: 'Card Clicks', data: [253, 187, 113, 31, 18, 6], backgroundColor: '#2563eb', borderRadius: 4 },
+                    { label: 'Stat Clicks', data: [206, 102, 55, 21, 24, 7], backgroundColor: '#059669', borderRadius: 4 },
+                    { label: 'Inspect', data: [7, 3, 4, 0, 1, 2], backgroundColor: '#dc2626', borderRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#6b7280' } },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor }, beginAtZero: true }
+                }
+            }
+        });
+
+        // 5. Sentiment Chart (Bar)
+        const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+        new Chart(sentimentCtx, {
+            type: 'bar',
+            data: {
+                labels: ['loveIt', 'curious', 'stillFiguringItOut', 'notMyThing'],
+                datasets: [{
+                    label: 'Submissions',
+                    data: [22, 2, 4, 0],
+                    backgroundColor: ['#059669', '#2563eb', '#d97706', '#dc2626'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { grid: { color: gridColor }, beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

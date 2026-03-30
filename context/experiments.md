@@ -1,0 +1,531 @@
+# Experiments Log
+
+Monthly experiment cadence. Each experiment targets a specific funnel stage (TOFU / MOFU / BOFU) or advertising metric.
+
+---
+
+## Engagement Engine — First Test (Winline BOFU)
+
+**Type**: Multi-variant notification experiment
+**Partner**: Winline
+**Funnel stage**: BOFU
+**Status**: Completed — results available
+
+### Hypothesis
+
+Sending AI-generated, psychologically-framed activity notifications to users stuck on a specific mission challenge will increase task completion rates among already-engaged (BOFU) users.
+
+### How It Works
+
+- Monitors user progress through mission tasks
+- Identifies users stuck on a specific challenge
+- Sends a personalised notification with AI-generated copy (unique per send to avoid repetition)
+- Four psychological frameworks tested as notification hooks
+
+### Test Design
+
+| Framework | Hook Type |
+|-----------|-----------|
+| Progress Completion | Near-miss framing — "you're almost there" |
+| Live Reward Rush | Urgency — limited time, act now |
+| Reward Motivation | Focus on what the user stands to gain |
+| Competitive Pressure | Social comparison — others are completing this |
+
+Target: Winline BOFU users completing medium-barrier deposit/bet challenges (e.g. deposit ≥3,000 RUB, bet ≥1,000 RUB)
+
+### Results
+
+| Framework | CTR |
+|-----------|-----|
+| Progress Completion | 10.6% |
+| Urgency / Live Reward Rush | 9.4% |
+| Skill | 7.8% |
+| Competitive Pressure | 7.4% |
+
+**Overall task completion uplift**: ~+0.2 percentage points
+
+### Conclusions
+
+- Reminders work — but modestly on average. Small uplift but meaningful at scale.
+- **Psychological framing matters significantly** — Progress and Urgency outperform Skill and Competitive Pressure by a meaningful margin
+- Most effective for **medium-barrier BOFU actions** (deposit/bet tasks) where users are already engaged with the brand
+- **Not effective for TOFU** — cannot move cold or unlinked users
+- Declining reach in Day 7 / Day 10 reminders is driven by **user attrition** (inactivity), not completions
+
+### Strategic Implications
+
+- EE is a **BOFU retention tool**, not an acquisition tool
+- Prioritise **Progress** and **Urgency/Reward Rush** frameworks in all future deployments
+- Value scales with the size of the engaged user base — most applicable to partners with meaningful BOFU depth (currently: Winline)
+
+---
+
+## January / February 2026 — Brand Integrations (TOFU)
+
+### Experiment: Mystery Box — Account Linkage Uplift
+
+**Type**: A/B test (50/50 split)
+**Partner**: Winline (first test of this mechanic — Winline only)
+**Funnel stage**: TOFU
+**Status**: Completed — results available
+**Note**: Mystery Box applied as a **mission-end bonus for account linkage**. See March 2026 experiments for the follow-up with Tradeit using a different logic (per-challenge, not mission-end).
+
+#### Problem
+
+In long-term partnerships, account linkage rates decline over time, limiting partner value and reducing the number of users entering the funnel.
+
+#### Hypothesis
+
+Applying a "mystery reward" framework will use curiosity and variable-reward psychology to increase motivation for account linking. Users perceive it as a free, low-effort opportunity with potential upside — increasing activation relative to a known fixed reward.
+
+#### Test Design
+
+| Group | Description | Reward |
+|-------|-------------|--------|
+| Control | Standard linkage mission | Fixed reward: 500 FP |
+| Variant | Mystery Box linkage mission | Random reward from 5 tiers (see below) |
+
+**Variant reward tiers (equal distribution — uncapped due to time constraints):**
+
+| Tier | Reward | Share |
+|------|--------|-------|
+| 1 | Premium Monthly Sub | 24% |
+| 2 | 1,000 FP | 26% |
+| 3 | 250 FP | 25% |
+| 4 | 500 FP | 25% |
+
+#### Results
+
+| Group | Activated | Completed | Completion Rate |
+|-------|-----------|-----------|----------------|
+| Control | 147,105 | 1,854 | 1.36% |
+| Variant | 146,131 | 2,955 | 2.19% |
+
+**Uplift: +61% relative lift (+0.83pp absolute) in account linkage rate.**
+
+User quality and volume were comparable between groups — positive signal is clean.
+
+#### Costs
+
+| Mission | Completions Paid | Cost |
+|---------|-----------------|------|
+| Variant (Mystery Box) | 2,028 | $616.08 + $5K (prize pool) |
+| Control | 1,864 | $739 |
+
+Note: Equal reward distribution across all tiers (including highest-value) inflated costs. This was due to time constraints preventing calibrated weighting.
+
+#### Compliance Note
+
+From a privacy and compliance standpoint: account linking does not involve any payment or monetary consideration from users. As there is no cost to participate, this activity does not constitute gambling.
+
+#### Next Steps / Backlog
+
+- Calibrate number of rewards per mission to reduce costs (weight lower tiers more heavily)
+- Decide whether to enable Mystery Box as the **default mechanic for all linkage missions**
+- Test Mystery Box concept vs. Drops to compare gamification approaches
+- Backlog ideas: mystery value tiers, limited-time mystery bonuses, "rare drop" probabilities
+
+---
+
+## March 2026 — Three Experiments Running in Parallel
+
+---
+
+### Experiment 1: Account Linkage Flow Simplification (Tradeit)
+
+**Type**: A/B test
+**Partner**: Tradeit (global)
+**Funnel stage**: TOFU
+**Status**: Launched 12 March 2026 — results pending
+
+#### Problem
+
+The account linkage flow hasn't been updated in ~2 years. The trust modal was introduced when users were unfamiliar with account linking, but user familiarity has likely increased significantly since then.
+
+#### Hypothesis
+
+Removing the trust modal and sending users directly to the partner login/details screen will increase the account linkage rate.
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Current flow — trust modal shown before partner login |
+| Variant | Trust modal removed — user goes directly to partner login details |
+
+#### Results
+
+— Results pending (launched 12 March 2026)
+
+#### Next Steps
+
+— To be updated once results are available.
+
+---
+
+### Experiment 2: Mystery Box for Conversions (Tradeit)
+
+**Type**: A/B test
+**Partner**: Tradeit (global)
+**Funnel stage**: MOFU / BOFU
+**Status**: Launched 12 March 2026 — results pending
+
+#### Context & Lineage
+
+The original Mystery Box test (Jan/Feb 2026) was run **with Winline only**, applied as a **mission-end bonus for account linkage**. This new test is the first time the mechanic is applied:
+- With **Tradeit** (not Winline)
+- At a **specific challenge level** (not mission-end bonus)
+- Across **two KPIs**: Account Linkage AND Trade any item
+
+#### Problem
+
+The Mystery Box mechanic tested with Winline was applied as a bonus reward at mission completion — awarded only after the user completed the entire Mission (all KPIs). The question is whether applying it at a specific challenge/KPI level drives deeper funnel conversions.
+
+#### Design Changes from Previous Test
+
+Tradeit raised specific concerns that shaped the experiment design:
+
+- **Account Linkage stays as a prerequisite** — AL is not a separate rewarded step; it remains a pre-condition to enter the mission, as per current setup. No Mystery Box on AL.
+- **No reward splitting** — giving the user too many prizes across multiple steps would confuse them and inflate advertiser budget. Mystery Box is attached to **one specific challenge only**.
+- **Apples-to-apples comparison** — the test isolates a single challenge: does step X convert better with a fixed FP reward vs. a Mystery Box reward? All other steps remain unchanged.
+
+#### Hypothesis
+
+Attaching the Mystery Box to a specific single challenge rather than as a mission-end bonus will increase the completion rate of that challenge, while keeping the rest of the mission flow unchanged.
+
+#### Challenges Under Test
+
+| Challenge | Description |
+|-----------|-------------|
+| Account Linkage | Link FACEIT account to Tradeit |
+| Trade any item | Complete a trade on Tradeit |
+
+#### Setup
+
+New BE feature developed to **fix reward probabilities per tier** — solving the cost control issue from the first Mystery Box experiment (previously equal distribution inflated costs).
+
+**Reward tiers by region:**
+
+| Tier | NA | MENA | CIS |
+|------|----|------|-----|
+| 1% | 1 month Premium | 1 month Premium | 1 month Premium |
+| 5% | 5,000 FP | 5,000 FP | 5,000 FP |
+| 80% | 1,000 FP | 500 FP | 500 FP |
+| 2% | $20 | $20 | 1,550 RUB (~$20) |
+| 12% | $5 | $2 | 150 RUB (~$2) |
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Specific challenge rewarded with fixed FP |
+| Variant | Same specific challenge rewarded with Mystery Box (same budget envelope) |
+
+#### Results
+
+— Results pending (launched 12 March 2026)
+
+#### Next Steps
+
+— To be updated once results are available.
+
+---
+
+### Experiment 3: Skippable Video Interstitial (Advertising)
+
+**Type**: A/B test
+**Funnel stage**: Advertising — AVU / CPM
+**Status**: Launched 16 March 2026 — results pending
+**Reference PRD**: `docs/product_briefs/PRD — Video Interstitials.md`
+
+#### Problem
+
+Interstitial ads deliver the highest CPMs due to strong visibility and CTR. However, they are also highly intrusive — increasing inventory volume risks user frustration and long-term CPM degradation. Revenue cannot safely grow by adding more interstitials.
+
+#### Hypothesis
+
+Adding a skippable video format inside the interstitial placement will increase CPM without negatively impacting user retention (measured by games played).
+
+#### Setup
+
+- A/B test using **games played** as the primary guardrail KPI
+- The video interstitial (house ad) only shows if **no display interstitial fills** — avoids cannibalising existing paid impression delivery
+- Triggered when a user **returns to the platform after a period of inactivity** (high-attention moment)
+
+#### Format Details
+
+| Characteristic | Detail |
+|----------------|--------|
+| Trigger | User return after inactivity |
+| Autoplay | Sound-off |
+| Skip | After 3 seconds |
+| Placement | Guaranteed in-view |
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Standard display interstitial |
+| Variant | Skippable video interstitial (3s unskippable, then skip available) |
+
+#### Success Metrics
+
+- **Primary**: CPM uplift vs static interstitial baseline, Viewability, CTR
+- **Guardrail**: Games played per session (must show no negative impact)
+
+#### Results
+
+— Results pending (launched 16 March 2026)
+
+#### Next Steps
+
+— To be updated once results are available.
+
+---
+
+## December 2025 — Brand Integrations
+
+### Experiment 1: TOFU — Increasing Account Linkage Among Unresponsive Users
+
+**Partners**: Winline (RU), Tradeit (global)
+**Funnel stage**: TOFU
+**Status**: Proposed / in test
+
+#### Background
+
+Unresponsive users show consistently low engagement. Neither brand propositions nor standard incentives have driven meaningful action from this segment so far.
+
+#### Problem Statement
+
+How can we encourage unresponsive, non-linked users to link their accounts with Winline or Tradeit?
+
+#### Eligible User Pool
+
+| Region | Active Players | WL Linked | Tradeit Linked |
+|--------|---------------|-----------|---------------|
+| Russia | 450K (23K premium) | 355K | — |
+| Rest of World (US, CA, MENA, APAC) | 169K (152K non-subscribers) | — | 58K |
+
+#### Hypothesis
+
+Providing premium tokens as free rewards to non-subscribed, unresponsive users will increase account linkage rates with Winline and Tradeit and improve overall engagement in this low-activity segment.
+
+#### Test Design
+
+**Winline**
+
+| Group | Description | Incentive |
+|-------|-------------|-----------|
+| Control | No change | None |
+| Variant 1 | Incentivised with token rewards | Premium Tokens |
+| Variant 2 | "Drops Case" with mixed rewards | Tokens + 3,000 FP + Cosmetic Item |
+
+**Tradeit**
+
+| Group | Description | Incentive |
+|-------|-------------|-----------|
+| Control | No change | None |
+| Variant 1 | Incentivised with token rewards | Premium Tokens |
+| Variant 2 | "Drops Case" with mixed rewards | TBC |
+
+---
+
+### Experiment 2: MOFU — Mission Chain UX Improvement
+
+**Partner**: Winline
+**Funnel stage**: MOFU
+**Status**: Follow-up to POC
+
+#### Background
+
+A prior POC validated that the **Mission Chain** feature (chaining one mission to another via a ticket reward) has a positive impact on mission completion rates.
+
+Current UX friction: when a user completes a mission and receives a ticket to the next, they must manually navigate to a new page to continue. This introduces unnecessary drop-off.
+
+#### Goal
+
+Reduce friction in the Mission Chain flow and measure the impact on engagement and conversion rates.
+
+#### Test Design
+
+Eligible segment: users who have already linked their accounts (linked users only)
+
+| Group | Description |
+|-------|-------------|
+| Control | Users access the second Mission via the "ticket" bonus reward (current flow) |
+| Variant 1 | Users see Chapters + Rewards displayed inline (reduced friction) |
+
+---
+
+## Moba vs. Publift — Advertising (Date TBC)
+
+**Type**: A/B test — header bidding provider comparison
+**Inventory**: FACEIT web display + video
+
+### Hypothesis
+
+Integrating Publift (header bidding wrapper) would outperform the existing Mobalitics managed service in yield (eCPM) and revenue by increasing competition for ad inventory.
+
+### Results
+
+| Metric | Mobalitics | Publift |
+|--------|-----------|---------|
+| eCPM | ~$0.80–0.90 | ~$1.40–1.60 |
+| RPM uplift | baseline | ~+30–40% |
+| Fill rate | Slightly higher | Slightly lower (offset by eCPM gain) |
+| Page latency | baseline | +~150ms (negligible) |
+
+### Conclusion
+
+**Winner: Publift.** The managed service model (Mobalitics) was less efficient than Publift's transparent, multi-bidder environment. Publift also provided superior technical support and reporting.
+
+### Outcome
+
+- Full migration to Publift across all FACEIT web properties
+- Further inventory segmentation within Publift dashboard recommended (sticking vs. non-sticking ad units)
+- Explore Publift outstream video capabilities to replace/augment existing video providers
+- Leverage Publift for Private Marketplace (PMP) deals with premium partners
+
+---
+
+## September 2025 — Brand Integrations
+
+### Experiment: Mission Carousel vs. Traditional List View
+
+**Type**: A/B test (50/50 split)
+**Duration**: 14 days (1–14 September 2025)
+**Audience**: Global FACEIT users, desktop web only
+**Funnel stage**: TOFU / MOFU (mission discovery → activation)
+
+#### Hypothesis
+
+A horizontal carousel layout for missions will increase engagement (CTR) compared to a traditional list view by reducing cognitive load and highlighting featured partner content more effectively.
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Standard vertical list of active missions |
+| Variant | Horizontal "Featured Missions" carousel at top of Missions page, followed by condensed list |
+
+#### Results
+
+| Metric | Result |
+|--------|--------|
+| CTR (first 3 cards vs. top 3 list items) | +12.5% uplift |
+| Mission Activation Rate (branded missions) | +8.2% uplift |
+| Account Linkage (Winline) | +4% uplift |
+| Engagement beyond card 4 in carousel | -60% drop-off vs. list view |
+
+#### Conclusions
+
+- The carousel is highly effective for "hero" content and driving immediate action — but only for the first few slots
+- Engagement is strongly front-loaded; users rarely scroll past the first 3–4 items in a horizontal format
+- Visual prominence successfully drives users toward high-value BI actions (account linkage)
+
+#### Strategic Recommendations
+
+- **Adopt carousel** for the "Featured" section; maintain list view for "All Missions" to preserve discoverability
+- **Cap at 5 items** maximum to avoid choice paralysis and support mobile-responsive behaviour
+- **Sell first 3 slots as Premium Placements** for advertisers seeking high OVU and TAVI impact
+- **Next iteration**: test auto-scroll vs. manual navigation to improve deep-card engagement
+
+---
+
+## November / December 2025 — Brand Integrations
+
+### Experiment: Multi-Step Conversion Ladder Mission (Winline)
+
+**Type**: Conversion funnel experiment
+**Duration**: November – December 2025
+**Audience**: Active CS2 players on FACEIT, unlinked to Winline
+**Funnel stage**: TOFU → MOFU → BOFU (full funnel)
+
+#### Hypothesis
+
+Implementing a multi-step "Conversion Ladder" mission structure (aligned to TAVI framework) will increase high-value user actions (deposits) compared to simple account-linking rewards.
+
+#### Mission Structure
+
+| Tier | Action | Reward |
+|------|--------|--------|
+| Tier 1 (AL) | Link FACEIT account to Winline | 500 FACEIT Points |
+| Tier 2 (C1/C2) | Complete KYC + first deposit ≥ $10 | Exclusive Weapon Skin |
+| Tier 3 (C3) | Wager $50 on specific matches | 5,000 FACEIT Points |
+
+Promoted via platform banners and Mission tab highlights.
+
+#### Results
+
+| Metric | Volume | Conversion Rate |
+|--------|--------|----------------|
+| Total Reached | 145,000 | — |
+| Account Linkage (AL) | 12,400 | 8.5% of reach |
+| KYC Completion (C1) | 4,100 | 33% of AL |
+| First Deposit (C2) | 2,850 | 23% of AL / 69.5% of C1 |
+| Deep Conversion (C3) | 940 | 7.5% of AL |
+
+**TAVI / OVU Impact**
+
+| Metric | Value |
+|--------|-------|
+| OVU (Outcome Value Units) | $78,450 |
+| OVU per 1,000 EBU | $541.03 |
+
+#### Conclusions
+
+- Drop-off from Linkage to Deposit is significant (77%) — but users who do convert show high retention on the partner platform
+- **Tangible digital rewards** (weapon skin at Tier 2) outperformed platform currency (FACEIT Points) for mid-funnel completion — stronger driver for C1/C2 actions
+- **Biggest friction point**: AL → KYC transition (67% drop-off) — KYC is the primary bottleneck in the funnel
+
+#### Strategic Recommendations
+
+1. **In-app KYC status** — integrate real-time partner API signal to show "KYC Pending" status on the FACEIT mission UI, reducing anxiety and drop-off
+2. **Retargeting segment** — create audience of users who linked but did not deposit; run a follow-up "Recovered Mission" with a time-limited bonus
+3. **Reward mix** — favour tangible digital assets (skins, cosmetics) over FACEIT Points for mid-funnel tiers
+4. **Mission landing page** — shorten copy; users averaged only 4 seconds reading before clicking "Join Mission"
+
+---
+
+## January / February 2026 — Advertising
+
+### Experiment: Outstream Video on Matchmaking Queue
+
+**Type**: A/B test (50/50 split)
+**Duration**: 4 weeks (15 January – 12 February 2026)
+**Audience**: Free users, EU and CIS regions
+**Funnel stage**: Advertising — AVU (Attention Value Units)
+
+#### Hypothesis
+
+Showing a 15-second outstream video ad immediately after a user joins a matchmaking queue will increase AVU by 25% with less than 2% negative impact on Queue-to-Match conversion — because user attention is highest while waiting for a game.
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Standard display banners only |
+| Variant | 15s outstream video unit in bottom-right of client/browser upon clicking "Play" |
+
+#### Results
+
+| Metric | Control | Treatment | Delta |
+|--------|---------|-----------|-------|
+| AVU (Attention Value Units) | baseline | +32% | ✅ Exceeded 25% target |
+| Viewability Rate | 64% | 88% | +24pp |
+| Video Completion Rate (VTR) | — | 72% | — |
+| Queue-to-Match Conversion | baseline | -0.8% | ✅ Within <2% guardrail |
+| CTR | 0.4% | 1.4% | +1pp |
+
+#### Conclusions
+
+- Hypothesis validated — "wait-time" video placement significantly drives AVU without harming the core matchmaking funnel
+- High VTR (72%) confirms users are captive during the initial seconds of queuing
+- The -0.8% conversion dip was concentrated in low-end PC users — likely resource contention when the video player initialises
+
+#### Strategic Recommendations
+
+- **Full rollout** to free users globally
+- **Low-spec mode detection** — serve static display instead of video for low-end devices to eliminate the conversion dip
+- **Test 30s units** for premium/high-value brand partners to increase eCPM (15s had strong completion, suggesting headroom)
+- **Frequency cap** this placement at 3 impressions per user per day to avoid long-term fatigue

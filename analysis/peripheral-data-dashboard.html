@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peripheral Initiative — UX Research Brief</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --accent: #5e6ad2;
+            --bg: #0e0f11;
+            --surface: #151618;
+            --border: #232529;
+            --text: #eeeeee;
+            --text-muted: #8b8d91;
+            --green: #2ecc71;
+            --red: #e74c3c;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(94, 106, 210, 0.15);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header h2 {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 800px;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Rollout Progress Cards */
+        .rollout-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rollout-card {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rollout-card.live {
+            border-top: 4px solid var(--green);
+        }
+        
+        .rollout-card.next {
+            border-top: 4px solid var(--accent);
+        }
+        
+        .r-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .r-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .r-status {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .r-status.live {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--green);
+        }
+        
+        .r-status.next {
+            background: rgba(94, 106, 210, 0.15);
+            color: var(--accent);
+        }
+        
+        .r-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 0.25rem;
+        }
+
+        .r-stat-label {
+            color: var(--text-muted);
+        }
+        
+        .tracking-note {
+            background: rgba(94, 106, 210, 0.05);
+            border: 1px solid rgba(94, 106, 210, 0.2);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Country Selector Tabs */
+        .tabs-wrapper {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            padding: 0.5rem;
+        }
+
+        .tabs-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tabs-divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 0.5rem 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .tab-btn.tier-tab {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        
+        .tab-btn.country-tab {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Progress bars */
+        .availability-row {
+            margin-bottom: 1.25rem;
+        }
+        
+        .availability-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .progress-track {
+            height: 12px;
+            background-color: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            background-color: var(--accent);
+        }
+        
+        .progress-fill.high { background-color: var(--green); }
+        .progress-fill.med { background-color: #f39c12; }
+        .progress-fill.low { background-color: var(--red); }
+
+        .note {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        /* Profile Cards */
+        .profiles-container {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .profile-card {
+            min-width: 280px;
+            flex-shrink: 0;
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            flex: 1;
+        }
+
+        .profile-archetype {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--surface);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-muted);
+        }
+
+        .profile-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .setup-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .setup-icon {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .setup-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .setup-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        
+        .setup-value {
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .setup-value.unknown {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Brand Landscape */
+        .brand-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .brand-tiers {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+        
+        .tier {
+            margin-bottom: 1.5rem;
+        }
+        .tier:last-child {
+            margin-bottom: 0;
+        }
+        
+        .tier h4 {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .tier-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tier-list {
+            font-size: 0.9rem;
+            color: var(--accent);
+            line-height: 1.4;
+        }
+        
+        .callout {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: rgba(94, 106, 210, 0.1);
+            border-left: 4px solid var(--accent);
+            color: var(--text);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Design Questions */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .question-card {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+
+        .question-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .q-data-point {
+            display: inline-block;
+            background-color: var(--surface);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .q-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+        
+        .wireframe-box {
+            margin-top: 1rem;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(21, 22, 24, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .wf-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .wf-item {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        /* Deep Dive */
+        details {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        summary {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        summary::before {
+            content: '▶';
+            display: inline-block;
+            margin-right: 0.75rem;
+            transition: transform 0.2s;
+        }
+        
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .deep-card {
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .brand-layout, .questions-grid, .charts-grid, .rollout-grid { grid-template-columns: 1fr; }
+            .profiles-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <span class="badge">FOR DESIGN TEAM</span>
+            <h1>Peripheral Initiative — UX Research Brief</h1>
+            <h2>Multi-country hardware data for profile design decisions</h2>
+            <p>Full global rollout complete — 91 countries, 177K unique users. Data from FACEIT Client hardware telemetry.</p>
+        </header>
+
+        <div class="section" id="section-rollout">
+            <h2 class="section-title">Rollout Progress</h2>
+            <div class="rollout-grid">
+                <div class="rollout-card live">
+                    <div class="r-header">
+                        <span class="r-title">Global Expansion 🌍</span>
+                        <span class="r-status live">Live</span>
+                    </div>
+                    <div class="r-stat"><span class="r-stat-label">Countries</span><span>91</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Date Range</span><span>Mar 12-26 2026</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Records</span><span>1,351,384</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Unique Users</span><span>176,951</span></div>
+                </div>
+                <div class="rollout-card live">
+                    <div class="r-header">
+                        <span class="r-title">Tier 3 Expansion 📈</span>
+                        <span class="r-status live">Live</span>
+                    </div>
+                    <div class="r-stat"><span class="r-stat-label">Countries</span><span>88</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Status</span><span>100% Complete</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Records</span><span>454,363</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Unique Users</span><span>112,377</span></div>
+                </div>
+                <div class="rollout-card live">
+                    <div class="r-header">
+                        <span class="r-title">Early Release 🚀</span>
+                        <span class="r-status live">Live</span>
+                    </div>
+                    <div class="r-stat"><span class="r-stat-label">Countries</span><span>3</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Markets</span><span>IT, TR, IN</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Records</span><span>897,021</span></div>
+                    <div class="r-stat"><span class="r-stat-label">Unique Users</span><span>64,612</span></div>
+                </div>
+            </div>
+            <div class="tracking-note">
+                <strong>Tracking Note:</strong> Collection live across 91 countries. Frequency: 1x/week. Data period: Mar 12–26, 2026.
+            </div>
+        </div>
+
+        <div class="tabs-wrapper">
+            <div class="tabs-row">
+                <button class="tab-btn tier-tab active" data-tab="all">All Countries</button>
+                <button class="tab-btn tier-tab" data-tab="earlyRelease">Early Release (3)</button>
+                <button class="tab-btn tier-tab" data-tab="tier3">Tier 3 (88)</button>
+            </div>
+            <div class="tabs-divider"></div>
+            <div class="tabs-row">
+                <button class="tab-btn country-tab" data-tab="tr">🇹🇷 TR</button>
+                <button class="tab-btn country-tab" data-tab="ua">🇺🇦 UA</button>
+                <button class="tab-btn country-tab" data-tab="br">🇧🇷 BR</button>
+                <button class="tab-btn country-tab" data-tab="kz">🇰🇿 KZ</button>
+                <button class="tab-btn country-tab" data-tab="ar">🇦🇷 AR</button>
+                <button class="tab-btn country-tab" data-tab="it">🇮🇹 IT</button>
+                <button class="tab-btn country-tab" data-tab="in">🇮🇳 IN</button>
+            </div>
+        </div>
+
+        <div class="section" id="section-a">
+            <h2 class="section-title">Section A: The Data We Collect</h2>
+            <div id="availability-content">
+                <div class="availability-row">
+                    <div class="availability-label"><span>CPU Make & Model</span><span id="stat-cpu">100% Fill Rate</span></div>
+                    <div class="progress-track"><div class="progress-fill high" style="width: 100%"></div></div>
+                </div>
+                <div class="availability-row">
+                    <div class="availability-label"><span>Motherboard / OEM</span><span id="stat-mobo">100% Fill Rate</span></div>
+                    <div class="progress-track"><div class="progress-fill high" style="width: 100%"></div></div>
+                </div>
+                <div class="availability-row">
+                    <div class="availability-label"><span>Peripheral Device Type (Mouse/KB)</span><span id="stat-type">100% Fill Rate</span></div>
+                    <div class="progress-track"><div class="progress-fill high" style="width: 100%"></div></div>
+                </div>
+                <div class="availability-row">
+                    <div class="availability-label"><span>Peripheral Brand Detection</span><span id="stat-brand">~85% Fill Rate</span></div>
+                    <div class="progress-track"><div class="progress-fill med" style="width: 85%"></div></div>
+                </div>
+            </div>
+            <p class="note">Note: This is what the FACEIT Client captures per device. Each user has ~2 records (keyboard + mouse).</p>
+        </div>
+
+        <div class="section" id="section-b">
+            <h2 class="section-title">Section B: What a User's Setup Looks Like</h2>
+            <p class="note" style="margin-top:0; margin-bottom:1.5rem;">Sample mockups representing typical setups based on actual localized data.</p>
+            <div class="profiles-container">
+                <div class="profile-card">
+                    <div class="profile-archetype">Turkish Local Gamer <span>🇹🇷</span></div>
+                    <div class="profile-header">
+                        <div class="avatar">TR</div>
+                        <div>
+                            <div class="profile-name">xXKralXx</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted)">FACEIT Level 8</div>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">🖥️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">System</span>
+                            <span class="setup-value">Monster (OEM)</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">⚙️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Processor</span>
+                            <span class="setup-value">Intel Core i5-12500H</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">⌨️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Keyboard</span>
+                            <span class="setup-value">SteelSeries</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">🖱️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Mouse</span>
+                            <span class="setup-value">Logitech</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-archetype">Brazilian Budget Gamer <span>🇧🇷</span></div>
+                    <div class="profile-header">
+                        <div class="avatar">BR</div>
+                        <div>
+                            <div class="profile-name">FalleN_Fan</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted)">FACEIT Level 5</div>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">🖥️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Motherboard</span>
+                            <span class="setup-value">Gigabyte A320M</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">⚙️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Processor</span>
+                            <span class="setup-value">AMD Ryzen 5 5600G</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">⌨️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Keyboard</span>
+                            <span class="setup-value">By Tech</span>
+                        </div>
+                    </div>
+                    <div class="setup-item">
+                        <div class="setup-icon">🖱️</div>
+                        <div class="setup-details">
+                            <span class="setup-label">Mouse</span>
+                            <span class="setup-value">Logitech</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section-c">
+            <h2 class="section-title">Section C: Brand Landscape</h2>
+            <div class="brand-layout">
+                <div class="chart-container">
+                    <canvas id="brandsChart"></canvas>
+                </div>
+                <div class="brand-tiers">
+                    <div class="tier">
+                        <h4>Tier 1 (Premium)</h4>
+                        <div class="tier-desc">Mainstream globally recognized gaming brands.</div>
+                        <div class="tier-list">Logitech, Razer, SteelSeries, Corsair</div>
+                    </div>
+                    <div class="tier">
+                        <h4>Tier 2 (Budget/Value)</h4>
+                        <div class="tier-desc">Budget gaming and generic hardware.</div>
+                        <div class="tier-list">Microsoft, HyperX, Redragon, Bloody, A4Tech</div>
+                    </div>
+                    <div class="tier">
+                        <h4>OEM & System Defaults</h4>
+                        <div class="tier-desc">Laptops and generic unbranded peripherals.</div>
+                        <div class="tier-list">"Standard System Devices", "(Empty)", Compx, By Tech</div>
+                    </div>
+                    <div class="callout">
+                        <strong>Insight:</strong> <span id="callout-brand">Logitech dominates globally (16.2%). SteelSeries strong in TR (14.7%). Gaming brand penetration highest in Early Release markets (43.7%) vs Tier 3 (30.7%).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section-d">
+            <h2 class="section-title">Section D: Design Questions to Resolve</h2>
+            <div class="questions-grid">
+                <div class="question-card">
+                    <h3>1. Setup Volume & Priority</h3>
+                    <div class="q-data-point" id="qd1">91 countries | 1.4M records | 177K users</div>
+                    <p class="q-desc">Turkey has the most volume globally. Should we design the hardware display to cater primarily to desktop custom-builds or account for large volumes of gaming laptops (Monster/Casper)?</p>
+                </div>
+                <div class="question-card">
+                    <h3>2. Handling Missing Data</h3>
+                    <div class="q-data-point" id="qd2">~15% Generic / Empty</div>
+                    <p class="q-desc">Users often have "(standart sistem aygıtları)" or empty fields. We should collapse generic inputs to simply "Keyboard" / "Mouse" without a brand rather than exposing the raw OS string.</p>
+                </div>
+                <div class="question-card">
+                    <h3>3. Displaying OEMs</h3>
+                    <div class="q-data-point">8.2% TR Local OEMs</div>
+                    <p class="q-desc">When a user has a laptop (e.g., Monster), showing "Motherboard: Monster" might be confusing. Better mapping: if System Manufacturer = Motherboard brand, display as "System" instead of "Motherboard".</p>
+                </div>
+                <div class="question-card">
+                    <h3>4. Do we need brand logos?</h3>
+                    <div class="q-data-point" id="qd4">Top 4 Brands = ~46% volume</div>
+                    <p class="q-desc">It is highly feasible to create logo assets for top gaming brands (Logitech, Razer, SteelSeries, MSI, ASUS), and fallback to clean typography for the long tail.</p>
+                </div>
+                <div class="question-card">
+                    <h3>5. Placement on Profile</h3>
+                    <p class="q-desc">Where should this live? Main profile card, dedicated tab, or sidebar widget?</p>
+                    <div class="wireframe-box">
+                        <div>Profile Page Ideas</div>
+                        <div class="wf-row">
+                            <div class="wf-item">Main Card (Top)</div>
+                            <div class="wf-item">Sidebar (Left)</div>
+                        </div>
+                        <div class="wf-item">New "Setup" Tab</div>
+                    </div>
+                </div>
+                <div class="question-card">
+                    <h3>6. Gaming Brand Verification?</h3>
+                    <div class="q-data-point" id="qd6">Gaming Penetration: ~39.8%</div>
+                    <p class="q-desc">Gaming brand concentration varies by region. We could issue a "Verified Setup" badge for recognized gaming combinations.</p>
+                </div>
+            </div>
+        </div>
+
+        <details>
+            <summary>Section E: Data Deep Dive (Dynamic Breakdowns)</summary>
+            <div class="charts-grid">
+                <div class="deep-card">
+                    <div class="card-title">
+                        <span>Gaming vs Non-Gaming Brands</span>
+                        <span id="stat-gaming-pct" style="color: var(--accent)">26.1% Gaming</span>
+                    </div>
+                    <div class="chart-container" style="height:250px;">
+                        <canvas id="gamingChart"></canvas>
+                    </div>
+                </div>
+                <div class="deep-card">
+                    <div class="card-title">
+                        <span>Device Type Split</span>
+                        <span id="stat-total-rows" style="color: var(--accent)">35,395 rows</span>
+                    </div>
+                    <div class="chart-container" style="height:250px;">
+                        <canvas id="deviceChart"></canvas>
+                    </div>
+                </div>
+                <div class="deep-card">
+                    <div class="card-title">CPU Brand Split</div>
+                    <div class="chart-container" style="height:250px;">
+                        <canvas id="cpuBrandChart"></canvas>
+                    </div>
+                </div>
+                <div class="deep-card">
+                    <div class="card-title">Top Core Counts</div>
+                    <div class="chart-container" style="height:250px;">
+                        <canvas id="coresChart"></canvas>
+                    </div>
+                </div>
+                <div class="deep-card full-width">
+                    <div class="card-title">Top System Manufacturers (OEM/Motherboard)</div>
+                    <div class="chart-container" style="height:300px;">
+                        <canvas id="sysMfgChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </div>
+
+    <script>
+        // Pre-computed Dataset
+        const allData = {
+                  "totalRows": 1351384,
+                  "uniqueSystems": 176951,
+                  "dau": 0,
+                  "cpuAmd": 53.4,
+                  "cpuIntel": 46.6,
+                  "gamingPenetration": 39.4,
+                  "keyboardPct": 56.7,
+                  "mousePct": 43.3,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 218297
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 141466
+                            },
+                            {
+                                      "name": "SteelSeries",
+                                      "count": 134128
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 118762
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 69139
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 67896
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 60453
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 33921
+                            },
+                            {
+                                      "name": "Sonix",
+                                      "count": 32991
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 32413
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 359072
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 307962
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 257093
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 97631
+                            },
+                            {
+                                      "name": "Monster (TR)",
+                                      "count": 62171
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 47495
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 44424
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 29548
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 656160
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 367815
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 88577
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 86779
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 41883
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 37558
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": ""
+        };
+
+        const trData = {
+                  "totalRows": 836735,
+                  "uniqueSystems": 60369,
+                  "dau": 0,
+                  "cpuAmd": 57.1,
+                  "cpuIntel": 42.9,
+                  "gamingPenetration": 43.7,
+                  "keyboardPct": 57.2,
+                  "mousePct": 42.8,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 128405
+                            },
+                            {
+                                      "name": "SteelSeries",
+                                      "count": 123364
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 86589
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 78461
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 49720
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 45865
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 35638
+                            },
+                            {
+                                      "name": "Instant",
+                                      "count": 24386
+                            },
+                            {
+                                      "name": "Sonix",
+                                      "count": 22418
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 20812
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 228248
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 216548
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 135252
+                            },
+                            {
+                                      "name": "Monster (TR)",
+                                      "count": 61817
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 45039
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 32741
+                            },
+                            {
+                                      "name": "Casper (TR)",
+                                      "count": 26293
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 20807
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 430067
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 215768
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 53075
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 52930
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 24553
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 22055
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": "Early Release",
+                  "countryCode": "TR"
+        };
+
+        const uaData = {
+                  "totalRows": 80730,
+                  "uniqueSystems": 20531,
+                  "dau": 0,
+                  "cpuAmd": 54.6,
+                  "cpuIntel": 45.4,
+                  "gamingPenetration": 25.9,
+                  "keyboardPct": 53.1,
+                  "mousePct": 46.9,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 10990
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 7596
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 5616
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 5483
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 5469
+                            },
+                            {
+                                      "name": "(Стандартные Системные Устройства)",
+                                      "count": 4943
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 4197
+                            },
+                            {
+                                      "name": "Company",
+                                      "count": 2971
+                            },
+                            {
+                                      "name": "Evision",
+                                      "count": 1778
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 1676
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 25690
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 14165
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 12200
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 8994
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 6753
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 4819
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 1678
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 1599
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 44015
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 17936
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 7649
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 3084
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 2152
+                            },
+                            {
+                                      "cores": "4 Cores",
+                                      "count": 2035
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": "Tier 3",
+                  "countryCode": "UA"
+        };
+
+        const brData = {
+                  "totalRows": 50806,
+                  "uniqueSystems": 12733,
+                  "dau": 0,
+                  "cpuAmd": 68.4,
+                  "cpuIntel": 31.6,
+                  "gamingPenetration": 29,
+                  "keyboardPct": 56.8,
+                  "mousePct": 43.2,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 9545
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 6293
+                            },
+                            {
+                                      "name": "(Dispositivos Padrão Do Sistema)",
+                                      "count": 5246
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 3325
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 2967
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 2896
+                            },
+                            {
+                                      "name": "Sino Wealth",
+                                      "count": 2494
+                            },
+                            {
+                                      "name": "Beken",
+                                      "count": 1464
+                            },
+                            {
+                                      "name": "Hp, Inc",
+                                      "count": 1247
+                            },
+                            {
+                                      "name": "Evision",
+                                      "count": 1244
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 14495
+                            },
+                            {
+                                      "name": "ASUS",
+                                      "count": 11229
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 7977
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 5878
+                            },
+                            {
+                                      "name": "Biostar Group",
+                                      "count": 1662
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 1571
+                            },
+                            {
+                                      "name": "Mancer",
+                                      "count": 960
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 803
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 22469
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 17739
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 2949
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 1948
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 1828
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 1544
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-17",
+                            "2026-03-26"
+                  ],
+                  "tier": "Tier 3",
+                  "countryCode": "BR"
+        };
+
+        const kzData = {
+                  "totalRows": 49089,
+                  "uniqueSystems": 11923,
+                  "dau": 0,
+                  "cpuAmd": 26.7,
+                  "cpuIntel": 73.3,
+                  "gamingPenetration": 21.7,
+                  "keyboardPct": 53.8,
+                  "mousePct": 46.2,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 7085
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 4164
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 4045
+                            },
+                            {
+                                      "name": "(Стандартные Системные Устройства)",
+                                      "count": 3497
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 2759
+                            },
+                            {
+                                      "name": "Company",
+                                      "count": 2597
+                            },
+                            {
+                                      "name": "Hp, Inc",
+                                      "count": 1799
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 1594
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 1431
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 1288
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 16192
+                            },
+                            {
+                                      "name": "ASUS",
+                                      "count": 7792
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 6228
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 4282
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 3132
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 2937
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 2590
+                            },
+                            {
+                                      "name": "Onda Technology Corporation",
+                                      "count": 1168
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 25934
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 11586
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 3898
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 3260
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 1445
+                            },
+                            {
+                                      "cores": "4 Cores",
+                                      "count": 1074
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-17",
+                            "2026-03-26"
+                  ],
+                  "tier": "Tier 3",
+                  "countryCode": "KZ"
+        };
+
+        const arData = {
+                  "totalRows": 34749,
+                  "uniqueSystems": 9003,
+                  "dau": 0,
+                  "cpuAmd": 74,
+                  "cpuIntel": 26,
+                  "gamingPenetration": 34.9,
+                  "keyboardPct": 58.6,
+                  "mousePct": 41.4,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 8874
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 3644
+                            },
+                            {
+                                      "name": "(Dispositivos De Sistema Estándar)",
+                                      "count": 2980
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 2037
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 1854
+                            },
+                            {
+                                      "name": "Sonix",
+                                      "count": 1749
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 1586
+                            },
+                            {
+                                      "name": "Sino Wealth",
+                                      "count": 1566
+                            },
+                            {
+                                      "name": "Evision",
+                                      "count": 1525
+                            },
+                            {
+                                      "name": "Kingston",
+                                      "count": 1163
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 9987
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 9192
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 6545
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 5782
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 950
+                            },
+                            {
+                                      "name": "Biostar Group",
+                                      "count": 584
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 513
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 352
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 17234
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 10088
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 2708
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 1313
+                            },
+                            {
+                                      "cores": "4 Cores",
+                                      "count": 1090
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 778
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-19",
+                            "2026-03-26"
+                  ],
+                  "tier": "Tier 3",
+                  "countryCode": "AR"
+        };
+
+        const itData = {
+                  "totalRows": 30332,
+                  "uniqueSystems": 2224,
+                  "dau": 0,
+                  "cpuAmd": 52.4,
+                  "cpuIntel": 47.6,
+                  "gamingPenetration": 47.7,
+                  "keyboardPct": 56.8,
+                  "mousePct": 43.2,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 7152
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 4374
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 2982
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 1590
+                            },
+                            {
+                                      "name": "SteelSeries",
+                                      "count": 1480
+                            },
+                            {
+                                      "name": "(Periferiche Standard Di Sistema)",
+                                      "count": 759
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 711
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 613
+                            },
+                            {
+                                      "name": "Sonix",
+                                      "count": 549
+                            },
+                            {
+                                      "name": "Corsair",
+                                      "count": 527
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "MSI",
+                                      "count": 8822
+                            },
+                            {
+                                      "name": "ASUS",
+                                      "count": 8403
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 4384
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 1863
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 1733
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 1655
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 1091
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 710
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 12156
+                            },
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 7808
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 2401
+                            },
+                            {
+                                      "cores": "32 Cores",
+                                      "count": 2275
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 1833
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 1798
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-17",
+                            "2026-03-26"
+                  ],
+                  "tier": "Early Release",
+                  "countryCode": "IT"
+        };
+
+        const inData = {
+                  "totalRows": 29954,
+                  "uniqueSystems": 2019,
+                  "dau": 0,
+                  "cpuAmd": 55.2,
+                  "cpuIntel": 44.8,
+                  "gamingPenetration": 39.5,
+                  "keyboardPct": 55.9,
+                  "mousePct": 44.1,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 5679
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 4677
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 3058
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 2112
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 1802
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 1096
+                            },
+                            {
+                                      "name": "Sino Wealth",
+                                      "count": 965
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 829
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 789
+                            },
+                            {
+                                      "name": "Evision",
+                                      "count": 763
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "MSI",
+                                      "count": 9622
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 7578
+                            },
+                            {
+                                      "name": "ASUS",
+                                      "count": 4497
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 2557
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 1709
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 1613
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 1037
+                            },
+                            {
+                                      "name": "Dell",
+                                      "count": 481
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 12178
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 9634
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 2354
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 1605
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 1181
+                            },
+                            {
+                                      "cores": "32 Cores",
+                                      "count": 973
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": "Early Release",
+                  "countryCode": "IN"
+        };
+
+        const earlyReleaseData = {
+                  "totalRows": 897021,
+                  "uniqueSystems": 64612,
+                  "dau": 0,
+                  "cpuAmd": 56.9,
+                  "cpuIntel": 43.1,
+                  "gamingPenetration": 43.7,
+                  "keyboardPct": 57.1,
+                  "mousePct": 42.9,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 141236
+                            },
+                            {
+                                      "name": "SteelSeries",
+                                      "count": 124844
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 94021
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 86120
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 51522
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 49567
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 37178
+                            },
+                            {
+                                      "name": "Instant",
+                                      "count": 24386
+                            },
+                            {
+                                      "name": "Sonix",
+                                      "count": 22967
+                            },
+                            {
+                                      "name": "Semico",
+                                      "count": 22214
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 241148
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 234992
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 147214
+                            },
+                            {
+                                      "name": "Monster (TR)",
+                                      "count": 61817
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 47939
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 36009
+                            },
+                            {
+                                      "name": "Casper (TR)",
+                                      "count": 26293
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 25097
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 450053
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 237558
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 57830
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 55909
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 27991
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 22055
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": "Early Release"
+        };
+
+        const tier3Data = {
+                  "totalRows": 454363,
+                  "uniqueSystems": 112377,
+                  "dau": 0,
+                  "cpuAmd": 46.5,
+                  "cpuIntel": 53.5,
+                  "gamingPenetration": 30.7,
+                  "keyboardPct": 55.8,
+                  "mousePct": 44.2,
+                  "topPeripherals": [
+                            {
+                                      "name": "Logitech",
+                                      "count": 77061
+                            },
+                            {
+                                      "name": "(Empty/Generic)",
+                                      "count": 47445
+                            },
+                            {
+                                      "name": "Razer",
+                                      "count": 32642
+                            },
+                            {
+                                      "name": "Compx",
+                                      "count": 22319
+                            },
+                            {
+                                      "name": "Microsoft",
+                                      "count": 17406
+                            },
+                            {
+                                      "name": "Standard System",
+                                      "count": 15584
+                            },
+                            {
+                                      "name": "(Стандартные Системные Устройства)",
+                                      "count": 13664
+                            },
+                            {
+                                      "name": "By Tech",
+                                      "count": 12589
+                            },
+                            {
+                                      "name": "Sino Wealth",
+                                      "count": 9748
+                            },
+                            {
+                                      "name": "Company",
+                                      "count": 8674
+                            }
+                  ],
+                  "topMobo": [
+                            {
+                                      "name": "ASUS",
+                                      "count": 117924
+                            },
+                            {
+                                      "name": "Gigabyte",
+                                      "count": 109879
+                            },
+                            {
+                                      "name": "MSI",
+                                      "count": 72970
+                            },
+                            {
+                                      "name": "Sys Mfg/OEM",
+                                      "count": 49441
+                            },
+                            {
+                                      "name": "Lenovo",
+                                      "count": 21235
+                            },
+                            {
+                                      "name": "ASRock",
+                                      "count": 19705
+                            },
+                            {
+                                      "name": "Acer",
+                                      "count": 13557
+                            },
+                            {
+                                      "name": "HP",
+                                      "count": 6432
+                            }
+                  ],
+                  "coreCounts": [
+                            {
+                                      "cores": "12 Cores",
+                                      "count": 206107
+                            },
+                            {
+                                      "cores": "16 Cores",
+                                      "count": 130257
+                            },
+                            {
+                                      "cores": "8 Cores",
+                                      "count": 32604
+                            },
+                            {
+                                      "cores": "20 Cores",
+                                      "count": 28912
+                            },
+                            {
+                                      "cores": "6 Cores",
+                                      "count": 11461
+                            },
+                            {
+                                      "cores": "24 Cores",
+                                      "count": 8749
+                            }
+                  ],
+                  "dateRange": [
+                            "2026-03-16",
+                            "2026-03-26"
+                  ],
+                  "tier": "Tier 3"
+        };
+
+        const datasets = {
+            'all': allData,
+            'earlyRelease': earlyReleaseData,
+            'tier3': tier3Data,
+            'tr': trData,
+            'ua': uaData,
+            'br': brData,
+            'kz': kzData,
+            'ar': arData,
+            'it': itData,
+            'in': inData
+        };
+
+        // Theme colors for charts
+        const colors = {
+            accent: '#5e6ad2',
+            bg: '#0e0f11',
+            surface: '#151618',
+            border: '#232529',
+            text: '#eeeeee',
+            textMuted: '#8b8d91',
+            green: '#2ecc71',
+            red: '#e74c3c'
+        };
+
+        Chart.defaults.color = colors.textMuted;
+        Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif";
+        Chart.defaults.scale.grid.color = colors.border;
+        Chart.defaults.plugins.tooltip.backgroundColor = colors.surface;
+        Chart.defaults.plugins.tooltip.titleColor = colors.text;
+        Chart.defaults.plugins.tooltip.bodyColor = colors.textMuted;
+        Chart.defaults.plugins.tooltip.borderColor = colors.border;
+        Chart.defaults.plugins.tooltip.borderWidth = 1;
+
+        // Chart instances
+        let charts = {};
+
+        function renderCharts(countryKey) {
+            const data = datasets[countryKey];
+            
+            // Destroy existing charts
+            Object.values(charts).forEach(c => c.destroy());
+            
+            // 1. Brand Bar Chart
+            charts.brands = new Chart(document.getElementById('brandsChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data.topPeripherals.map(d => d.name),
+                    datasets: [{
+                        label: 'Device Count',
+                        data: data.topPeripherals.map(d => d.count),
+                        backgroundColor: colors.accent,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: colors.border } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // 2. Gaming Donut
+            charts.gaming = new Chart(document.getElementById('gamingChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gaming Brand', 'Generic/Office'],
+                    datasets: [{
+                        data: [data.gamingPenetration, 100 - data.gamingPenetration],
+                        backgroundColor: [colors.green, colors.border],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+            });
+
+            // 3. Device Donut
+            charts.device = new Chart(document.getElementById('deviceChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Keyboard', 'Mouse', 'Other'],
+                    datasets: [{
+                        data: [data.keyboardPct, data.mousePct, 100 - (data.keyboardPct + data.mousePct)],
+                        backgroundColor: [colors.accent, '#8b8d91', colors.border],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+            });
+
+            // 4. CPU Brand Donut
+            charts.cpu = new Chart(document.getElementById('cpuBrandChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['AMD', 'Intel'],
+                    datasets: [{
+                        data: [data.cpuAmd, data.cpuIntel],
+                        backgroundColor: ['#e74c3c', '#3498db'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+            });
+
+            // 5. Cores Bar Chart
+            charts.cores = new Chart(document.getElementById('coresChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data.coreCounts.map(d => d.cores),
+                    datasets: [{
+                        label: 'Systems',
+                        data: data.coreCounts.map(d => d.count),
+                        backgroundColor: '#95a5a6',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+                }
+            });
+
+            // 6. Sys Mfg Bar Chart
+            charts.sysMfg = new Chart(document.getElementById('sysMfgChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: data.topMobo.map(d => d.name),
+                    datasets: [{
+                        label: 'Systems',
+                        data: data.topMobo.map(d => d.count),
+                        backgroundColor: '#8e44ad',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true }, x: { grid: { display: false } } }
+                }
+            });
+
+            // Update text stats
+            document.getElementById('stat-gaming-pct').textContent = `${data.gamingPenetration}% Gaming`;
+            document.getElementById('stat-total-rows').textContent = `${data.totalRows.toLocaleString()} rows`;
+            
+            // Update DQs context
+            const names = {
+                'all': 'Total',
+                'earlyRelease': 'Early Release',
+                'tier3': 'Tier 3',
+                'tr': 'Turkey',
+                'ua': 'Ukraine',
+                'br': 'Brazil',
+                'kz': 'Kazakhstan',
+                'ar': 'Argentina',
+                'it': 'Italy',
+                'in': 'India'
+            };
+            
+            const areaName = names[countryKey] || 'Total';
+            document.getElementById('qd1').textContent = `${areaName}: ${data.totalRows.toLocaleString()} records`;
+            document.getElementById('qd6').textContent = `Gaming Penetration: ${data.gamingPenetration}%`;
+
+            // === Section A: Dynamic fill rates ===
+            const emptyGeneric = data.topPeripherals
+                .filter(p => ['(Empty/Generic)', 'Standard System'].includes(p.name))
+                .reduce((sum, p) => sum + p.count, 0);
+            const brandFill = Math.round(100 * (1 - emptyGeneric / data.totalRows));
+            const brandFillClass = brandFill >= 90 ? 'high' : brandFill >= 70 ? 'med' : 'low';
+
+            document.getElementById('stat-brand').textContent = `${brandFill}% Fill Rate`;
+            const brandRow = document.getElementById('stat-brand').closest('.availability-row');
+            const brandBar = brandRow.querySelector('.progress-fill');
+            brandBar.style.width = `${brandFill}%`;
+            brandBar.className = `progress-fill ${brandFillClass}`;
+
+            // === Section C: Dynamic insight callout ===
+            const topBrand = data.topPeripherals.find(p => !['(Empty/Generic)', 'Standard System'].includes(p.name));
+            const topBrandPct = (topBrand.count / data.totalRows * 100).toFixed(1);
+
+            let insightText = `${topBrand.name} dominates (${topBrandPct}%).`;
+            if (countryKey === 'all' || countryKey === 'earlyRelease' || countryKey === 'tier3') {
+                const erGaming = datasets.earlyRelease.gamingPenetration;
+                const t3Gaming = datasets.tier3.gamingPenetration;
+                insightText += ` Gaming brand penetration: Early Release ${erGaming}% vs Tier 3 ${t3Gaming}%.`;
+            } else {
+                insightText += ` Gaming brand penetration in ${areaName}: ${data.gamingPenetration}%.`;
+            }
+            document.getElementById('callout-brand').textContent = insightText;
+        }
+
+        // Tab Event Listeners
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderCharts(e.target.dataset.tab);
+            });
+        });
+
+        // Init
+        renderCharts('all');
+    </script>
+</body>
+</html>

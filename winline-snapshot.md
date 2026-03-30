@@ -1,0 +1,16 @@
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - button "Combined" [ref=e5] [cursor=pointer]
+    - button "Tradeit" [ref=e6] [cursor=pointer]
+    - button "Winline" [active] [ref=e7] [cursor=pointer]
+    - button "WhiteMarket" [ref=e8] [cursor=pointer]
+    - button "PaySafe" [ref=e9] [cursor=pointer]
+    - button "Roadmap" [ref=e10] [cursor=pointer]
+  - banner [ref=e11]:
+    - generic [ref=e12]: FOR INTERNAL USE
+    - generic [ref=e13]:
+      - img "Winline logo" [ref=e305]
+      - heading "Winline" [level=1] [ref=e306]
+    - heading "NSM Analysis | Jan–Mar 2026" [level=2] [ref=e307]
+    - paragraph [ref=e16]: "North Star Metric: Total Partners Value"
+    - paragraph [ref=e17]: EBU = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "event_id",
+    "mode": "",
+    "type": "STRING",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "event_timestamp",
+    "mode": "",
+    "type": "TIMESTAMP",
+    "description": "",
+    "fields": []
+  },
+  {
+    "name": "client_source",
+    "mode": "",
+    "type": "STRING",
+    "description": "Source URL of the client that determined the result of the account operation",
+    "fields": []
+  },
+  {
+    "name": "entity_type",
+    "mode": "",
+    "type": "STRING",
+    "description": "The type of the entity (i.e. game or platform)",
+    "fields": []
+  },
+  {
+    "name": "game",
+    "mode": "",
+    "type": "STRING",
+    "description": "Identifier of the game (i.e. csgo)",
+    "fields": []
+  },
+  {
+    "name": "guid",
+    "mode": "",
+    "type": "STRING",
+    "description": "ID of the user",
+    "fields": []
+  },
+  {
+    "name": "operation",
+    "mode": "",
+    "type": "STRING",
+    "description": "Name of the account operation",
+    "fields": []
+  },
+  {
+    "name": "platform",
+    "mode": "",
+    "type": "STRING",
+    "description": "Name of the platform that is related to the account operation (i.e. steam)",
+    "fields": []
+  }
+]

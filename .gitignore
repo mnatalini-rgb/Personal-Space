@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# OpenCode session data
+.opencode/
+
+# Screenshots (verification artifacts, not source files)
+*.png
+
+# Temporary/scratch scripts
+test.py
+test2.py
+test3.py
+trace.py

@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Plan</title>
+  <style>
+    :root {
+      --bg: #0e0f11;
+      --surface: #151618;
+      --surface-hover: #1c1d21;
+      --border: #232529;
+      --text: #eeeeee;
+      --text-muted: #8b8d91;
+      --accent: #5e6ad2;
+      --accent-dim: rgba(94, 106, 210, 0.12);
+      --p0: #ff4d4d;
+      --p0-bg: rgba(255, 77, 77, 0.08);
+      --p1: #ffb020;
+      --p1-bg: rgba(255, 176, 32, 0.08);
+      --p2: #3b82f6;
+      --p2-bg: rgba(59, 130, 246, 0.08);
+      --p3: #8b5cf6;
+      --p3-bg: rgba(139, 92, 246, 0.08);
+      --green: #22c55e;
+      --green-bg: rgba(34, 197, 94, 0.08);
+      --done-bg: rgba(34, 197, 94, 0.06);
+      --done-border: rgba(34, 197, 94, 0.15);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; }
+
+    header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+    }
+
+    header .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    header .faceit-badge {
+      display: inline-block;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .dash-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .dash-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .dash-card-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .dash-card-fraction {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .dash-card-fraction .done-count { color: var(--green); }
+    .dash-card-fraction .total-count { color: var(--text-muted); font-weight: 400; }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .progress-fill.green { background: var(--green); }
+    .progress-fill.accent { background: var(--accent); }
+
+    .progress-segments {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-segment {
+      flex: 1;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .progress-segment.done {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .progress-segment.in-progress {
+      background: var(--accent);
+      color: #fff;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .progress-segment.pending {
+      background: var(--border);
+      color: var(--text-muted);
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(94, 106, 210, 0); }
+      50% { box-shadow: 0 0 8px 2px rgba(94, 106, 210, 0.3); }
+    }
+
+    .segment-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text);
+      white-space: nowrap;
+      z-index: 10;
+      letter-spacing: 0;
+      text-transform: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .segment-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--border);
+    }
+
+    .progress-segment:hover .segment-tooltip {
+      display: block;
+    }
+
+    .dash-legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.done { background: var(--green); }
+    .legend-dot.in-progress { background: var(--accent); }
+    .legend-dot.pending { background: var(--border); }
+
+    .daily-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .daily-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .daily-row-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 36px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .daily-row-bar {
+      flex: 1;
+      height: 14px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .daily-row-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .daily-row-fill.green { background: var(--green); }
+    .daily-row-fill.empty { background: transparent; }
+
+    .daily-row-count {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      width: 28px;
+      flex-shrink: 0;
+    }
+
+    .daily-row.today .daily-row-label {
+      color: var(--accent);
+    }
+
+    .daily-row.today .daily-row-bar {
+      border: 1px solid rgba(94, 106, 210, 0.3);
+    }
+
+    .last-updated {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.03);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .last-updated strong { color: var(--green); }
+
+    .priority-section { margin-bottom: 2rem; }
+
+    .priority-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .priority-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+
+    .priority-tag.p0 { background: var(--p0-bg); color: var(--p0); border: 1px solid rgba(255,77,77,0.2); }
+    .priority-tag.p1 { background: var(--p1-bg); color: var(--p1); border: 1px solid rgba(255,176,32,0.2); }
+    .priority-tag.p2 { background: var(--p2-bg); color: var(--p2); border: 1px solid rgba(59,130,246,0.2); }
+    .priority-tag.p3 { background: var(--p3-bg); color: var(--p3); border: 1px solid rgba(139,92,246,0.2); }
+
+    .priority-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      transition: background 0.15s ease;
+    }
+
+    .card:hover { background: var(--surface-hover); }
+
+    .card.done {
+      background: var(--done-bg);
+      border-color: var(--done-border);
+      opacity: 0.75;
+    }
+
+    .card.done:hover { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .card.done .card-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .card-deadline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 0.15rem 0.5rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .done-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      background: var(--green-bg);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-body p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-body p:last-child { margin-bottom: 0; }
+
+    .what-i-do, .what-you-do, .what-delivered {
+      font-size: 0.82rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+    }
+
+    .what-i-do {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      color: var(--text);
+    }
+
+    .what-you-do {
+      background: var(--accent-dim);
+      border-left: 3px solid var(--accent);
+      color: var(--text);
+    }
+
+    .what-delivered {
+      background: var(--green-bg);
+      border-left: 3px solid var(--green);
+      color: var(--text);
+    }
+
+    .label {
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .what-i-do .label { color: var(--green); }
+    .what-you-do .label { color: var(--accent); }
+    .what-delivered .label { color: var(--green); }
+
+    .file-link {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-top: 0.35rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    .daily-schedule {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .daily-schedule h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .day-row-list {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .day-row-list:last-child { border-bottom: none; }
+
+    .day-label {
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding-top: 0.1rem;
+    }
+
+    .day-label .day-date {
+      display: block;
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+
+    .day-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .day-task {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .day-task input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .day-task input[type="checkbox"]:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .day-task input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 4px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .day-task input[type="checkbox"]:checked + .task-tag + span,
+    .day-task input[type="checkbox"]:checked + span {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .day-task.completed span:last-child {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .day-task .task-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .task-tag.p0 { background: var(--p0-bg); color: var(--p0); }
+    .task-tag.p1 { background: var(--p1-bg); color: var(--p1); }
+    .task-tag.p2 { background: var(--p2-bg); color: var(--p2); }
+    .task-tag.p3 { background: var(--p3-bg); color: var(--p3); }
+    .task-tag.done { background: var(--green-bg); color: var(--green); }
+
+    .today-focus {
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px var(--accent-dim);
+    }
+    
+    .today-focus h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .today-focus h2 span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+    
+    .today-focus .day-tasks {
+      gap: 0.75rem;
+    }
+    
+    .today-focus .day-task {
+      font-size: 0.95rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      align-items: center;
+    }
+    
+    .today-focus .day-task.completed {
+      opacity: 0.5;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
+      .dashboard { grid-template-columns: 1fr; }
+      .day-row-list { grid-template-columns: 1fr; gap: 0.5rem; }
+      .card-header { flex-direction: column; gap: 0.5rem; }
+      .card-deadline { margin-left: 0; }
+    }
+  
+    .week-selector { display: inline-flex; background-color: var(--surface); border: 1px solid var(--border); border-radius: 9999px; padding: 0.25rem; gap: 0.25rem; margin-bottom: 1.5rem; }
+    .week-btn { background: transparent; color: var(--text-muted); border: none; padding: 0.5rem 1.5rem; border-radius: 9999px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; }
+    .week-btn:hover { color: var(--text); }
+    .week-btn.active { background-color: var(--accent); color: #fff; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <h1>Weekly Plan</h1>
+      <div class="subtitle" id="weekSubtitle">Mon 23 &ndash; Fri 28 March 2026 &middot; Monetisation (Ads &amp; Partnerships)</div>
+      <span class="faceit-badge">FACEIT</span>
+    </header>
+
+    <div class="week-selector">
+      <button class="week-btn" data-target="week-16-21" data-subtitle="Mon 16 &ndash; Fri 21 March 2026 &middot; Monetisation (Ads &amp; Partnerships)">Mar 16–21</button>
+      <button class="week-btn" data-target="week-23-28" data-subtitle="Mon 23 &ndash; Fri 28 March 2026 &middot; Monetisation (Ads &amp; Partnerships)">Mar 23–28</button>
+      <button class="week-btn active" data-target="week-31-04" data-subtitle="Mon 31 Mar &ndash; Fri 4 April 2026 &middot; Monetisation (Ads &amp; Partnerships)">Mar 31–Apr 4</button>
+    </div>
+
+    <section class="today-focus" id="todayFocusSection">
+      <h2>Today's Focus <span id="todayFocusDate"></span></h2>
+      <div class="today-focus-content" id="todayFocusContent"></div>
+    </section>
+    <div class="week-content" id="week-16-21" style="display: none;">
+<section class="dashboard">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span class="dash-card-title">This Week &mdash; Daily Tasks</span>
+          <span class="dash-card-fraction"><span class="done-count">11</span><span class="total-count"> / 21</span></span>
+        </div>
+        <div class="daily-progress">
+          <div class="daily-row">
+            <span class="daily-row-label">Mon</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill green" style="width: 67%"></div>
+            </div>
+            <span class="daily-row-count">2/3</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Tue</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill green" style="width: 83%"></div>
+            </div>
+            <span class="daily-row-count">5/6</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Wed</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill green" style="width: 33%"></div>
+            </div>
+            <span class="daily-row-count">1/3</span>
+          </div>
+          <div class="daily-row today">
+            <span class="daily-row-label">Thu</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill green" style="width: 100%"></div>
+            </div>
+            <span class="daily-row-count">5/5</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Fri</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span class="dash-card-title">Monthly Initiatives</span>
+          <span class="dash-card-fraction"><span class="done-count">3</span><span class="total-count"> / 7</span></span>
+        </div>
+        <div class="progress-segments">
+          <div class="progress-segment done">
+            <span class="segment-tooltip">1. Prebid Analysis</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">2. Play Interstitial — One-pager complete ($8.1M model), sent to Will for review, meeting 28 Mar</span>
+          </div>
+          <div class="progress-segment pending">
+            <span class="segment-tooltip">3. Skippable Video</span>
+          </div>
+          <div class="progress-segment in-progress">
+            <span class="segment-tooltip">4. Skin Vault — Experiment live, dashboard deployed to GitHub Pages, monitoring traffic &amp; engagement</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">5. Peripheral — India validated, Turkey live at 100%, monitoring until Fri</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">6. NSM Tracking — Multi-partner dashboard with Combined view deployed to GitHub Pages</span>
+          </div>
+          <div class="progress-segment pending">
+            <span class="segment-tooltip">7. Brand Product Session (26 Mar)</span>
+          </div>
+        </div>
+        <div class="dash-legend">
+          <span class="legend-item"><span class="legend-dot done"></span>Done</span>
+          <span class="legend-item"><span class="legend-dot in-progress"></span>In Progress</span>
+          <span class="legend-item"><span class="legend-dot pending"></span>Pending</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="last-updated">
+      Last updated: <strong>Thu 19 March 2026</strong> &mdash; Skin Vault dashboard built &amp; deployed to GitHub Pages. Play Interstitial one-pager sent to Will for review.
+    </div>
+
+    <!-- P0 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p0">P0</span>
+        <h2>Must do Mon&ndash;Tue &mdash; hard deadlines</h2>
+      </div>
+      
+      <div class="card" style="background: var(--done-bg); border-color: var(--done-border);">
+        <div class="card-body" style="padding: 0.75rem 1.5rem; text-align: center;">
+          <p style="margin: 0; color: var(--green); font-weight: 600;">All P0 items completed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- P1 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p1">P1</span>
+        <h2>Do by Wednesday</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">3. Skippable Video Interstitial &mdash; Test Setup</div>
+          <span class="card-deadline">Launched Mon 16</span>
+        </div>
+        <div class="card-body">
+          <p>Blocked on MixPanel, but can run the internal test with Teodor + schedule the creative on GAM. The A/B experiment is live on the frontend &mdash; now needs the ad creative scheduled.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft the GAM line item spec (targeting, creative format, frequency, flight dates) so you copy-paste. Help define the MixPanel events you actually need (skip rate, completion rate, games played post-exposure).
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Sync with Teodor to confirm the A/B split is live on the frontend, then schedule the house ad creative in GAM using the spec I prepare.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P2 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p2">P2</span>
+        <h2>Do by Thu&ndash;Fri</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">4. Skin Vault &mdash; Experiment Live, Dashboard Deployed</div>
+          <span class="card-deadline">Launched 17 Mar</span>
+        </div>
+        <div class="card-body">
+          <p>Experiment live on top 300 CS2 player profiles since 17 March. Dashboard built with traffic analysis (626 page views, 110/300 profiles visited), engagement funnel (tab click &rarr; inventory card &rarr; stat widget &rarr; inspect in Steam), feedback tracking (5 submissions, 100% non-negative), and go/no-go decision framework.</p>
+          <div class="what-delivered">
+            <div class="label">Delivered</div>
+            Experiment monitoring dashboard with 5 sections. Rethemed to clean light professional palette. Deployed to GitHub Pages. Data verified against all 3 source CSVs.
+            <br>
+            <span class="file-link">analysis/skin-vault-dashboard.html</span>
+            <span class="file-link">https://mnatalini-rgb.github.io/Personal-Space/skin-vault-dashboard.html</span>
+          </div>
+          <div class="what-you-do">
+            <div class="label">Next steps</div>
+            Wait for weekend traffic data (Mar 22-23) to validate traffic hypothesis. Talk to Karen about promotion options. Update CSVs regularly &mdash; dashboard numbers are hardcoded and need manual refresh.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P3 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p3">P3</span>
+        <h2>Set up this week, ongoing weekly</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">6. Weekly Mission Data + NSM Tracking</div>
+          <span class="card-deadline">Ongoing</span>
+        </div>
+        <div class="card-body">
+          <p>Multi-partner NSM dashboard live on GitHub Pages with Combined view (default) + partner selector (Tradeit | Winline). Combined view shows portfolio KPIs, stacked bar, grouped bar, comparison table, value breakdown doughnuts. Tradeit: Jan-Feb 2026, &euro;11,343 &rarr; &euro;12,566 (+10.8% MoM). Winline: Jan 2026, &euro;110,430 (&euro;819/1K EBU). Both partners have NSM Analysis + CDP Data tabs.</p>
+          <div class="what-delivered">
+            <div class="label">Delivered — Multi-Partner NSM Dashboard</div>
+            Partner selector pill bar (Combined | Tradeit | Winline). Combined view: portfolio KPIs, monthly &euro; value stacked bar, &euro;/1K EBU grouped bar, partner comparison table, value breakdown doughnut pair, weekly placeholder. Each partner has NSM Analysis + CDP Data tabs. Deployed to GitHub Pages.
+            <br>
+            <span class="file-link">analysis/nsm-dashboard.html</span>
+            <span class="file-link">https://mnatalini-rgb.github.io/Personal-Space/nsm-dashboard.html</span>
+          </div>
+          <div class="what-i-do">
+            <div class="label">What I can do next</div>
+            Add WhiteMarket and PaySafe when mission data is available. Design a reusable per-partner KPI tracking template.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Share mission data for WhiteMarket and PaySafe when ready. Provide Winline Feb 2026 data to complete MoM comparison. Clarify DEP/BET task classification with Winline partner.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">7. Brand Product Session &mdash; Inventory Team</div>
+          <span class="card-deadline">Wed 26 Mar (London office)</span>
+        </div>
+        <div class="card-body">
+          <p>1-hour in-person session with the Inventory team to align on product lineup, brief-to-product matching, and new capabilities pipeline. In office: Kilian, Joanna, Pol, Giang. Remote: Archil, Isaure.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft a product lineup one-pager covering current offerings + what's new (Prebid migration, Skin Vault, Peripherals data, Play Interstitial). Build a brief-matching cheat sheet so the Inventory team knows what to pitch for each advertiser type.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Confirm the time slot with Isaure/Archil. Prep any specific pain points you've heard from them about brief responses. Tell me if you want prep materials drafted.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Completed -->
+    <details class="priority-section completed-section" style="opacity: 0.6; cursor: pointer;">
+      <summary class="priority-header" style="outline: none;">
+        <span class="priority-tag done" style="background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2);">DONE</span>
+        <h2>Completed (3)</h2>
+      </summary>
+      
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">1. Prebid Presentation &mdash; Data Updated</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>Full analysis built from 4 data files (25 Feb &ndash; 16 Mar). Moba vs Publift RPV by tier, eCPM comparison, phased rollout recommendation included.</p>
+          <div class="what-delivered">
+            <div class="label">Delivered</div>
+            8-slide presentation deck (16:9, keyboard navigation). Full scrolling reference doc. Python analysis script with all data joined and normalized.
+            <br>
+            <span class="file-link">analysis/prebid-slides.html</span>
+            <span class="file-link">analysis/prebid-experiment-results.html</span>
+            <span class="file-link">analysis/prebid_analysis.py</span>
+          </div>
+          <div class="what-you-do">
+            <div class="label">Remaining for you</div>
+            Review the slide deck before Wed. Convert to Google Slides if needed.
+          </div>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">2. Play Interstitial &mdash; One-Pager Complete</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>One-pager fully rewritten with new commercial narrative: 3 &times; 20s avg creatives within 60s pod, $8.1M inventory potential at 100% fill, Conservative Year 1 ~$1.3M ad revenue + ~$702K subs = ~$2.0M combined. Doc synced to Google Drive.</p>
+          <div class="what-delivered">
+            <div class="label">Delivered</div>
+            275-line product one-pager: Problem Statement (Watch gap), Solution (3-slot ad pod at half Watch density), Inventory Value ($8.1M inventory potential / ~$2.0M Year 1 combined (Conservative)), Commercial Budget Shift section, Competitive Landscape, Technical Requirements (VAST 4.2), Rollout Plan (4 phases).
+            <br>
+            <span class="file-link">docs/product_documentation/onePager_ Play Interstitial.md</span>
+            <span class="file-link">Google Drive &rarr; Product Work</span>
+          </div>
+          <div class="what-you-do">
+            <div class="label">Next steps</div>
+            One-pager sent to Will for final review (19 Mar). Send to Warren after Will's sign-off. Meeting with Flo + stakeholders booked for 28 March.
+          </div>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">5. Peripheral Initiative &mdash; Turkey Live at 100%</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>India (Phase 1) validated &mdash; 2,853 records, 33.7% gaming brands detected, data quality good. Turkey (Phase 2) released at 100% &mdash; monitoring data collection until Friday.</p>
+          <div class="what-delivered">
+            <div class="label">Delivered</div>
+            India data dashboard (2,853 records). Turkey country selection analysis. PRD updated with Phase 2 = Turkey (80.5K DAU). Turkey deployed at 100%.
+            <br>
+            <span class="file-link">analysis/peripheral-data-dashboard.html</span>
+            <span class="file-link">docs/product_briefs/Peripherals Initiatives.md</span>
+          </div>
+          <div class="what-i-do">
+            <div class="label">Friday check</div>
+            Once Turkey data is available, run comparative analysis (India vs Turkey): brand distribution, gaming brand %, device types, data quality.
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- Daily Schedule -->
+    <section class="daily-schedule">
+      <h2>Daily Punch List</h2>
+
+      <div class="day-row-list">
+        <div class="day-label">Monday<span class="day-date">16 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Prebid analysis: uploaded CSVs, built full RPV-by-tier analysis, slide deck created</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Book Flo meeting for 28 March (Play Interstitial)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Sync with Teodor on Video Interstitial A/B split status</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Tuesday<span class="day-date">17 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Review Prebid slide deck, check numbers, prep for Wed delivery</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Play Interstitial one-pager rewritten (3 ad slots, $5.8M potential, budget shift, competitive landscape)</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Turkey peripheral confirmed live at 100% &mdash; monitoring until Friday</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>NSM Combined view built and pushed to GitHub Pages</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Play Interstitial doc synced to Google Drive (Product Work folder)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Schedule Video Interstitial creative in GAM</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Wednesday<span class="day-date">18 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Deliver the Prebid presentation to stakeholders</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Check Peripheral data is flowing (query will be ready)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Validate first Turkey peripheral data (compare vs India baseline)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Thursday<span class="day-date">19 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Skin Vault experiment check-in with Teo + Isabel (meeting notes analyzed)</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Built Skin Vault experiment dashboard (traffic, funnel, feedback, decision framework)</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Deployed Skin Vault dashboard to GitHub Pages</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Play Interstitial one-pager synced to Google Drive, sent to Will for review</span>
+          </label>
+          <label class="day-task completed">
+            <input type="checkbox" checked disabled>
+            <span class="task-tag done">Done</span>
+            <span>Confirmed Brand Product session time with Isaure/Archil (Wed 26 Mar)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Friday<span class="day-date">20 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Update team slide (Slide 19) for weekly product review &mdash; include Prebid results</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Pull AL flow + Mystery Box experiment data (same source as NSM)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Build experiment dashboards for AL flow + Mystery Box (with AI)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Get more context on Ads Alerts V2 &mdash; share with AI</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p3">P3</span>
+            <span>Review Skin Vault weekend traffic baseline (if data available)</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Generated by your AI PM assistant &middot; Last updated: Thu 19 March 2026 (Skin Vault dashboard built &amp; deployed to GitHub Pages. Play Interstitial one-pager sent to Will for review.)
+    </footer>
+    </div>
+
+    <div class="week-content" id="week-23-28" style="display: none;">
+<section class="dashboard">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span class="dash-card-title">This Week &mdash; Daily Tasks</span>
+          <span class="dash-card-fraction"><span class="done-count">0</span><span class="total-count"> / 20</span></span>
+        </div>
+        <div class="daily-progress">
+          <div class="daily-row today">
+            <span class="daily-row-label">Mon</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/4</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Tue</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/4</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Wed</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/4</span>
+          </div>
+          <div class="daily-row">
+             <span class="daily-row-label">Thu</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/4</span>
+          </div>
+          <div class="daily-row">
+            <span class="daily-row-label">Fri</span>
+            <div class="daily-row-bar">
+              <div class="daily-row-fill empty" style="width: 0%"></div>
+            </div>
+            <span class="daily-row-count">0/4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span class="dash-card-title">Monthly Initiatives</span>
+          <span class="dash-card-fraction"><span class="done-count">4</span><span class="total-count"> / 7</span></span>
+        </div>
+        <div class="progress-segments">
+          <div class="progress-segment done">
+            <span class="segment-tooltip">1. Prebid Analysis &mdash; Presented to stakeholders, Moba recommended</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">2. Play Interstitial &mdash; One-pager sent to Will, meeting with Flo 28 Mar</span>
+          </div>
+          <div class="progress-segment in-progress">
+            <span class="segment-tooltip">3. Skippable Video &mdash; A/B live on frontend, needs GAM creative scheduled</span>
+          </div>
+          <div class="progress-segment in-progress">
+            <span class="segment-tooltip">4. Skin Vault &mdash; Experiment live on 300 profiles, monitoring traffic &amp; engagement</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">5. Peripheral &mdash; India validated, Turkey live at 100%, data collecting</span>
+          </div>
+          <div class="progress-segment done">
+            <span class="segment-tooltip">6. NSM Tracking &mdash; Dashboard live with BQ pipeline, 5 partners, experiments tab with month filter, AL flow analysis</span>
+          </div>
+          <div class="progress-segment in-progress">
+            <span class="segment-tooltip">7. Brand Product Session &mdash; Wed 26 Mar in London office</span>
+          </div>
+        </div>
+        <div class="dash-legend">
+          <span class="legend-item"><span class="legend-dot done"></span>Done</span>
+          <span class="legend-item"><span class="legend-dot in-progress"></span>In Progress</span>
+          <span class="legend-item"><span class="legend-dot pending"></span>Pending</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="last-updated">
+      Last updated: <strong>Mon 23 March 2026</strong> &mdash; New week. Last week: NSM dashboard shipped with BQ pipeline, AL flow experiment analysis, month filter on Experiments tab. Play Interstitial meeting Fri 28 Mar.
+    </div>
+
+    <!-- P0 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p0">P0</span>
+        <h2>Must do &mdash; hard deadlines this week</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">1. Play Interstitial Spreadsheet &mdash; Fix Formulas</div>
+          <span class="card-deadline">Tue 24 Mar</span>
+        </div>
+        <div class="card-body">
+          <p>Warren flagged that the Play Interstitial one-pager spreadsheet has hardcoded copy-pasted numbers instead of proper formulas. Need to rebuild with formulas so assumptions are transparent and numbers update when inputs change.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Help rebuild the spreadsheet model with linked formulas if you share it with me. Verify the financial model logic ($8.1M inventory, ~$2.0M Year 1 combined) traces correctly through the formulas.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Fix the spreadsheet formulas. Share with AI if you want help verifying the model. Send back to Warren when done.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">2. Brand Product Session &mdash; Inventory Team</div>
+          <span class="card-deadline">Wed 26 Mar (London office)</span>
+        </div>
+        <div class="card-body">
+          <p>1-hour in-person session with the Inventory team to align on product lineup, brief-to-product matching, and new capabilities pipeline. In office: Kilian, Joanna, Pol, Giang. Remote: Archil, Isaure.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft a product lineup one-pager covering current offerings + what's new (Prebid migration, Skin Vault, Peripherals data, Play Interstitial). Build a brief-matching cheat sheet so the Inventory team knows what to pitch for each advertiser type.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Finalize the session agenda. Prep any specific pain points you've heard from the team about brief responses. Tell me if you want prep materials drafted.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">3. Play Interstitial &mdash; Meeting with Flo + Stakeholders</div>
+          <span class="card-deadline">Fri 28 Mar</span>
+        </div>
+        <div class="card-body">
+          <p>Design review meeting for Play Interstitial. One-pager already sent to Will (reviewed). Need to align on creative format, ad pod structure (3 x 20s within 60s), and technical requirements (VAST 4.2).</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Update one-pager with any feedback from Will. Prep a 5-slide summary for the meeting covering: problem (Watch gap), solution (ad pod), inventory value ($8.1M potential), rollout phases, and open design questions.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Confirm Will's feedback is incorporated. Prep design questions for Flo. Confirm attendee list.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P1 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p1">P1</span>
+        <h2>Do by mid-week</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">4. Skippable Video Interstitial &mdash; GAM Creative + MixPanel</div>
+          <span class="card-deadline">Carried from last week</span>
+        </div>
+        <div class="card-body">
+          <p>A/B experiment live on the frontend. Still needs the ad creative scheduled in GAM and MixPanel events defined (skip rate, completion rate, games played post-exposure). Blocked on MixPanel but can run internal test with Teodor.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft GAM line item spec (targeting, creative format, frequency, flight dates). Define the MixPanel events you need.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Sync with Teodor to confirm A/B split is live. Schedule house ad creative in GAM. Push on MixPanel access.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">5. Skin Vault &mdash; Weekend Traffic Review</div>
+          <span class="card-deadline">Mon&ndash;Tue</span>
+        </div>
+        <div class="card-body">
+          <p>Experiment live on top 300 CS2 player profiles since 17 March. Need to check weekend traffic data (Mar 22-23) to validate traffic hypothesis. Dashboard deployed to GitHub Pages.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Update the Skin Vault dashboard with fresh weekend data once CSVs are provided. Run comparative analysis (weekday vs weekend traffic, engagement rates).
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Pull fresh CSVs from source. Talk to Karen about promotion options. Decision: continue experiment or expand?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P2 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p2">P2</span>
+        <h2>Do by Thu&ndash;Fri</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">6. Peripheral &mdash; Turkey Data Review</div>
+          <span class="card-deadline">Mid-week</span>
+        </div>
+        <div class="card-body">
+          <p>Turkey live at 100% since last week. Time to pull first meaningful dataset and compare vs India baseline (2,853 records, 33.7% gaming brands).</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Run comparative analysis (India vs Turkey): brand distribution, gaming brand %, device types, data quality. Update peripheral dashboard with Turkey data.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Confirm Turkey data is flowing. Pull data export or share access.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">7. NSM Dashboard &mdash; Funnel &amp; Audience Data (First Draft)</div>
+          <span class="card-deadline">Thu&ndash;Fri</span>
+        </div>
+        <div class="card-body">
+          <p>Add a first draft of funnel and audience data to the NSM dashboard. This gives visibility into the user journey (impressions &rarr; clicks &rarr; AL &rarr; conversions) and audience composition (geo, platform, engagement segments) per partner.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Design the funnel visualization and audience breakdown sections. Build the HTML/JS once we agree on data shape. Pull from BQ if tables/columns are confirmed.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Confirm what funnel stages and audience dimensions to include. Share any existing data or point me to the right BQ tables.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">8. NSM Dashboard &mdash; Automation + Maintenance</div>
+          <span class="card-deadline">Ongoing</span>
+        </div>
+        <div class="card-body">
+          <p>Dashboard live with 5 partners, BQ pipeline, dynamic Missions tab, Experiments tab with month filter, and AL flow trust modal analysis. Apps Script automation ready but needs deployment.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Help with Apps Script deployment (Web App URL setup). Add WhiteMarket/PaySafe data when available. Any dashboard improvements.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Deploy Apps Script in Google Apps Script editor (Code.gs + SETUP.md are ready). Test the Web App endpoint. Share WhiteMarket/PaySafe mission data when ready.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P3 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p3">P3</span>
+        <h2>If time allows</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">9. Ads Alerts V2 &mdash; Scoping</div>
+          <span class="card-deadline">Carried from last week</span>
+        </div>
+        <div class="card-body">
+          <p>Need more context on what Ads Alerts V2 entails. Low priority until scoped.</p>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Gather context on Ads Alerts V2 requirements. Share brief with AI when ready.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Completed (from previous weeks) -->
+    <details class="priority-section completed-section" style="opacity: 0.6; cursor: pointer;">
+      <summary class="priority-header" style="outline: none;">
+        <span class="priority-tag done" style="background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2);">DONE</span>
+        <h2>Completed &mdash; Last Week (7)</h2>
+      </summary>
+      
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">NSM Dashboard &mdash; BQ Pipeline + Data Fixes</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>Fixed BQ date filter bug (campaigns starting Dec 31 UTC were silently dropped). Refreshed all 6 BQ queries. Mission completions went from 176 &rarr; 328 rows. Added weekly trend cutoff filter.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">AL Flow Trust Modal A/B Test &mdash; Analysis Complete</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>Control (trust modal): 5.34% AL rate. Variant (no modal): 2.75% AL rate. Trust modal doubles AL rate. Z-score 17.98, p &lt; 0.001. Card added to Tradeit Experiments tab.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">Experiments Tab &mdash; Month Filter</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>Pill-button filter bar (All / January / March / Ongoing) added to Tradeit Experiments tab. Consistent with NSM dashboard filter patterns.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">Prebid Presentation &mdash; Delivered</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>8-slide deck presented to stakeholders. Moba outperforms Publift on RPV across all tiers. Phased migration recommended.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">Play Interstitial &mdash; One-Pager Sent to Will</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>$8.1M inventory potential, ~$2.0M Year 1 combined (Conservative). 3-slot ad pod at half Watch density. Synced to Google Drive, sent to Will for review.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">Peripheral &mdash; India Validated, Turkey Live</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>India: 2,853 records, 33.7% gaming brands. Turkey deployed at 100%. Dashboard on GitHub Pages.</p>
+        </div>
+      </div>
+
+      <div class="card done" style="cursor: default;">
+        <div class="card-header">
+          <div class="card-title">Skin Vault Dashboard &mdash; Built &amp; Deployed</div>
+          <span class="done-badge">Done</span>
+        </div>
+        <div class="card-body">
+          <p>Traffic analysis, engagement funnel, feedback tracking, go/no-go framework. Light theme. Deployed to GitHub Pages.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Daily Schedule -->
+    <section class="daily-schedule">
+      <h2>Daily Punch List</h2>
+
+      <div class="day-row-list">
+        <div class="day-label">Monday<span class="day-date">23 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Review Skin Vault weekend traffic data (pull CSVs or check source)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Sync with Teodor on Video Interstitial A/B &mdash; confirm split is live, plan GAM creative</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Check Turkey peripheral data is flowing &mdash; pull initial export</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Deploy Apps Script for NSM automation (Code.gs ready in repo)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Tuesday<span class="day-date">24 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Fix Play Interstitial spreadsheet &mdash; replace hardcoded numbers with formulas (Warren flagged)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Prep Brand Product Session agenda &mdash; product lineup + brief-matching cheat sheet</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Schedule Video Interstitial creative in GAM (if Teodor confirms split)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Update Skin Vault dashboard with fresh weekend data (if CSVs available)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Wednesday<span class="day-date">25 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Final prep for Brand Product Session (materials, agenda, one-pager)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Turkey vs India peripheral data comparative analysis</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Prep Play Interstitial meeting materials for Friday (5-slide summary)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p3">P3</span>
+            <span>Gather context on Ads Alerts V2 &mdash; share with AI for scoping</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Thursday<span class="day-date">26 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Brand Product Session &mdash; 1hr with Inventory team (London office)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Debrief Brand Product Session &mdash; capture action items, share notes</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>NSM dashboard &mdash; first draft of funnel &amp; audience data (design + data shape)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Finalize Play Interstitial meeting deck for Friday</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="day-row-list">
+        <div class="day-label">Friday<span class="day-date">28 March</span></div>
+        <div class="day-tasks">
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p0">P0</span>
+            <span>Play Interstitial meeting with Flo + stakeholders</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Update team slide (Slide 19) &mdash; Brand Product Session outcomes, Skin Vault update, experiment results</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p1">P1</span>
+            <span>Post weekly update to #bet-ads-partnerships (Q2 habit: Theme 2)</span>
+          </label>
+          <label class="day-task">
+            <input type="checkbox">
+            <span class="task-tag p2">P2</span>
+            <span>Skin Vault experiment &mdash; week 2 go/no-go decision checkpoint</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Generated by your AI PM assistant &middot; Last updated: Mon 23 March 2026
+    </footer>
+    </div>
+
+    <div class="week-content" id="week-31-04">
+
+    <div class="last-updated">
+      Last updated: <strong>Thu 26 March 2026</strong> &mdash; New week. CDP partner performance added to NSM roadmap. Peripheral dashboard Section A &amp; C now dynamic.
+    </div>
+
+    <!-- P0 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p0">P0</span>
+        <h2>Must do &mdash; hard deadlines this week</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">1. Winline Rewards Tab &mdash; Build from Tradeit Template</div>
+          <span class="card-deadline">Mon 31 Mar</span>
+        </div>
+        <div class="card-body">
+          <p>Build Winline Rewards tab following the same Section A&ndash;G structure as Tradeit Rewards. Needs Winline CSVs (reward progress, campaign IDs, shop item names, mission/challenge data).</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Build the full tab once CSVs are provided. Adapt cost calculations to Winline pricing ($1 = 2,178 FP, subs at ₽499 each).
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Provide Winline reward CSVs and confirm campaign IDs. Share RUB &rarr; EUR conversion rate for subscription costs.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">2. Friday Slide (Slide 19) &mdash; Weekly Update</div>
+          <span class="card-deadline">Fri 4 Apr</span>
+        </div>
+        <div class="card-body">
+          <p>Recurring P1. Update team slide with week's progress: Winline Rewards, peripheral dynamic sections, any experiment results.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft slide content and talking points based on the week's completed work.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Update Slide 19 in the deck. Add any context from stakeholder conversations.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P1 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p1">P1</span>
+        <h2>Do by mid-week</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">3. CDP Partner Performance &mdash; Scope &amp; Data Discovery</div>
+          <span class="card-deadline">April (ongoing)</span>
+        </div>
+        <div class="card-body">
+          <p>New NSM roadmap item (#10). Understand how FACEIT-acquired users perform on partner websites using CDP data. This is the missing piece for proving 2&ndash;3x ROI to brand partners. Need to map which CDP signals are already flowing to BQ and define standardised post-conversion metrics across verticals.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Write BQ discovery queries to identify available CDP tables and signals. Draft the metric framework (post-AL activity rate, conversion depth, retention curve, partner-side LTV). Build the dashboard section once data is confirmed.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Confirm which CDP partner signals are synced to BQ (Tradeit trade events, Winline deposit/bet events). Align with data engineering on any gaps. Decide which metrics matter most for the partner ROI story.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">4. Ads Alerts V2 &mdash; Context Gathering</div>
+          <span class="card-deadline">Wed 2 Apr</span>
+        </div>
+        <div class="card-body">
+          <p>Gather context for Ads Alerts V2. Understand current alerting setup, pain points, and what the team wants to see improved.</p>
+          <div class="what-i-do">
+            <div class="label">What I can do</div>
+            Draft the requirements brief and define alert thresholds based on historical data patterns.
+          </div>
+          <div class="what-you-do">
+            <div class="label">You need to</div>
+            Share current alert setup details and confirm stakeholder needs.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- P2 -->
+    <section class="priority-section">
+      <div class="priority-header">
+        <span class="priority-tag p2">P2</span>
+        <h2>If time permits</h2>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">5. Tradeit Funnel &mdash; Active/Inactive Layer</div>
+          <span class="card-deadline">Blocked on BQ</span>
+        </div>
+        <div class="card-body">
+          <p>Add active vs inactive user segmentation to the Tradeit Funnel tab. Waiting on BQ query results to distinguish users who linked but never returned.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">6. ROI Calculation &mdash; Per-Partner Cost Integration</div>
+          <span class="card-deadline">Blocked on Finance</span>
+        </div>
+        <div class="card-body">
+          <p>Populate the ROI placeholder KPIs in the NSM hero sections. Blocked on Finance providing per-partner cost breakdown (currently only total revenue shared monthly).</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">7. Quarterly Review 2-Pager &mdash; Draft</div>
+          <span class="card-deadline">Fri 4 Apr</span>
+        </div>
+        <div class="card-body">
+          <p>Draft the Q1 quarterly review document covering Brand Integrations and Advertising performance, key experiments, and Q2 outlook.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Generated by your AI PM assistant &middot; Last updated: Thu 26 March 2026
+    </footer>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const weekBtns = document.querySelectorAll('.week-btn');
+      const weekContents = document.querySelectorAll('.week-content');
+      const weekSubtitle = document.getElementById('weekSubtitle');
+      
+      const today = new Date();
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const todayName = dayNames[today.getDay()];
+      
+      function updateTodayFocus(activeWeekContainer) {
+        const dayRows = activeWeekContainer.querySelectorAll('.day-row-list');
+        let targetRow = null;
+        let targetDayName = '';
+        let targetDateStr = '';
+        
+        for (const row of dayRows) {
+          const labelEl = row.querySelector('.day-label');
+          if (!labelEl) continue;
+          
+          const textNode = Array.from(labelEl.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+          const text = textNode ? textNode.textContent.trim() : '';
+          
+          const dateSpan = labelEl.querySelector('.day-date');
+          const dateStr = dateSpan ? dateSpan.textContent.trim() : '';
+          
+          if (text === todayName) {
+            targetRow = row;
+            targetDayName = text;
+            targetDateStr = dateStr;
+            break;
+          }
+        }
+        
+        if (!targetRow && dayRows.length > 0) {
+          const dayOfWeek = today.getDay();
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            targetRow = dayRows[0];
+          } else {
+            targetRow = dayRows[0]; 
+          }
+          
+          if (targetRow) {
+             const labelEl = targetRow.querySelector('.day-label');
+             const textNode = Array.from(labelEl.childNodes).find(n => n.nodeType === Node.TEXT_NODE);
+             targetDayName = textNode ? textNode.textContent.trim() : '';
+             const dateSpan = labelEl.querySelector('.day-date');
+             targetDateStr = dateSpan ? dateSpan.textContent.trim() : '';
+          }
+        }
+        
+        const focusDate = document.getElementById('todayFocusDate');
+        const focusContent = document.getElementById('todayFocusContent');
+        
+        if (targetRow) {
+          const isToday = targetDayName === todayName;
+          focusDate.textContent = `\u2014 ${isToday ? 'Today, ' : ''}${targetDayName} ${targetDateStr}`;
+          
+          const tasksContainer = targetRow.querySelector('.day-tasks');
+          focusContent.innerHTML = '';
+          if (tasksContainer) {
+            const clone = tasksContainer.cloneNode(true);
+            focusContent.appendChild(clone);
+          } else {
+            focusContent.innerHTML = '<p style="color: var(--text-muted)">No tasks scheduled.</p>';
+          }
+        } else {
+          focusDate.textContent = '';
+          focusContent.innerHTML = '<p style="color: var(--text-muted)">No tasks scheduled today.</p>';
+        }
+      }
+
+      weekBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          weekBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          weekSubtitle.innerHTML = btn.getAttribute('data-subtitle');
+          
+          const targetId = btn.getAttribute('data-target');
+          let activeContainer = null;
+          
+          weekContents.forEach(content => {
+            if (content.id === targetId) {
+              content.style.display = 'block';
+              activeContainer = content;
+            } else {
+              content.style.display = 'none';
+            }
+          });
+          
+          if (activeContainer) {
+            updateTodayFocus(activeContainer);
+          }
+        });
+      });
+
+      const initialActive = document.querySelector('.week-btn.active');
+      if (initialActive) {
+        const targetId = initialActive.getAttribute('data-target');
+        const activeContainer = document.getElementById(targetId);
+        if (activeContainer) updateTodayFocus(activeContainer);
+      }
+    });
+  </script>
+</body>
+</html>

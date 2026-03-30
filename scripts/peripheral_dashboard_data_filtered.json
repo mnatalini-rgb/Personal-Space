@@ -1,0 +1,1715 @@
+{
+  "all": {
+    "totalRows": 1351384,
+    "uniqueSystems": 176951,
+    "dau": 0,
+    "cpuAmd": 53.4,
+    "cpuIntel": 46.6,
+    "gamingPenetration": 39.4,
+    "keyboardPct": 56.7,
+    "mousePct": 43.3,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 218297
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 141466
+      },
+      {
+        "name": "SteelSeries",
+        "count": 134128
+      },
+      {
+        "name": "Razer",
+        "count": 118762
+      },
+      {
+        "name": "Microsoft",
+        "count": 69139
+      },
+      {
+        "name": "Standard System",
+        "count": 67896
+      },
+      {
+        "name": "Compx",
+        "count": 60453
+      },
+      {
+        "name": "By Tech",
+        "count": 33921
+      },
+      {
+        "name": "Sonix",
+        "count": 32991
+      },
+      {
+        "name": "Semico",
+        "count": 32413
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 359072
+      },
+      {
+        "name": "MSI",
+        "count": 307962
+      },
+      {
+        "name": "Gigabyte",
+        "count": 257093
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 97631
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 62171
+      },
+      {
+        "name": "Lenovo",
+        "count": 47495
+      },
+      {
+        "name": "HP",
+        "count": 44424
+      },
+      {
+        "name": "Acer",
+        "count": 29548
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 656160
+      },
+      {
+        "cores": "16 Cores",
+        "count": 367815
+      },
+      {
+        "cores": "8 Cores",
+        "count": 88577
+      },
+      {
+        "cores": "20 Cores",
+        "count": 86779
+      },
+      {
+        "cores": "24 Cores",
+        "count": 41883
+      },
+      {
+        "cores": "6 Cores",
+        "count": 37558
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": ""
+  },
+  "TR": {
+    "totalRows": 836735,
+    "uniqueSystems": 60369,
+    "dau": 0,
+    "cpuAmd": 57.1,
+    "cpuIntel": 42.9,
+    "gamingPenetration": 43.7,
+    "keyboardPct": 57.2,
+    "mousePct": 42.8,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 128405
+      },
+      {
+        "name": "SteelSeries",
+        "count": 123364
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 86589
+      },
+      {
+        "name": "Razer",
+        "count": 78461
+      },
+      {
+        "name": "Standard System",
+        "count": 49720
+      },
+      {
+        "name": "Microsoft",
+        "count": 45865
+      },
+      {
+        "name": "Compx",
+        "count": 35638
+      },
+      {
+        "name": "Instant",
+        "count": 24386
+      },
+      {
+        "name": "Sonix",
+        "count": 22418
+      },
+      {
+        "name": "Semico",
+        "count": 20812
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 228248
+      },
+      {
+        "name": "MSI",
+        "count": 216548
+      },
+      {
+        "name": "Gigabyte",
+        "count": 135252
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 61817
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 45039
+      },
+      {
+        "name": "HP",
+        "count": 32741
+      },
+      {
+        "name": "Casper (TR)",
+        "count": 26293
+      },
+      {
+        "name": "Lenovo",
+        "count": 20807
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 430067
+      },
+      {
+        "cores": "16 Cores",
+        "count": 215768
+      },
+      {
+        "cores": "20 Cores",
+        "count": 53075
+      },
+      {
+        "cores": "8 Cores",
+        "count": 52930
+      },
+      {
+        "cores": "24 Cores",
+        "count": 24553
+      },
+      {
+        "cores": "6 Cores",
+        "count": 22055
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": "Early Release",
+    "countryCode": "TR"
+  },
+  "UA": {
+    "totalRows": 80730,
+    "uniqueSystems": 20531,
+    "dau": 0,
+    "cpuAmd": 54.6,
+    "cpuIntel": 45.4,
+    "gamingPenetration": 25.9,
+    "keyboardPct": 53.1,
+    "mousePct": 46.9,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 10990
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 7596
+      },
+      {
+        "name": "Microsoft",
+        "count": 5616
+      },
+      {
+        "name": "Standard System",
+        "count": 5483
+      },
+      {
+        "name": "Razer",
+        "count": 5469
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 4943
+      },
+      {
+        "name": "Compx",
+        "count": 4197
+      },
+      {
+        "name": "Company",
+        "count": 2971
+      },
+      {
+        "name": "Evision",
+        "count": 1778
+      },
+      {
+        "name": "Semico",
+        "count": 1676
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 25690
+      },
+      {
+        "name": "Gigabyte",
+        "count": 14165
+      },
+      {
+        "name": "MSI",
+        "count": 12200
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 8994
+      },
+      {
+        "name": "Lenovo",
+        "count": 6753
+      },
+      {
+        "name": "Acer",
+        "count": 4819
+      },
+      {
+        "name": "ASRock",
+        "count": 1678
+      },
+      {
+        "name": "HP",
+        "count": 1599
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 44015
+      },
+      {
+        "cores": "16 Cores",
+        "count": 17936
+      },
+      {
+        "cores": "8 Cores",
+        "count": 7649
+      },
+      {
+        "cores": "20 Cores",
+        "count": 3084
+      },
+      {
+        "cores": "6 Cores",
+        "count": 2152
+      },
+      {
+        "cores": "4 Cores",
+        "count": 2035
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "UA"
+  },
+  "BR": {
+    "totalRows": 50806,
+    "uniqueSystems": 12733,
+    "dau": 0,
+    "cpuAmd": 68.4,
+    "cpuIntel": 31.6,
+    "gamingPenetration": 29.0,
+    "keyboardPct": 56.8,
+    "mousePct": 43.2,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 9545
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 6293
+      },
+      {
+        "name": "(Dispositivos Padr\u00e3o Do Sistema)",
+        "count": 5246
+      },
+      {
+        "name": "By Tech",
+        "count": 3325
+      },
+      {
+        "name": "Compx",
+        "count": 2967
+      },
+      {
+        "name": "Razer",
+        "count": 2896
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 2494
+      },
+      {
+        "name": "Beken",
+        "count": 1464
+      },
+      {
+        "name": "Hp, Inc",
+        "count": 1247
+      },
+      {
+        "name": "Evision",
+        "count": 1244
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "Gigabyte",
+        "count": 14495
+      },
+      {
+        "name": "ASUS",
+        "count": 11229
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 7977
+      },
+      {
+        "name": "MSI",
+        "count": 5878
+      },
+      {
+        "name": "Biostar Group",
+        "count": 1662
+      },
+      {
+        "name": "Acer",
+        "count": 1571
+      },
+      {
+        "name": "Mancer",
+        "count": 960
+      },
+      {
+        "name": "ASRock",
+        "count": 803
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 22469
+      },
+      {
+        "cores": "16 Cores",
+        "count": 17739
+      },
+      {
+        "cores": "8 Cores",
+        "count": 2949
+      },
+      {
+        "cores": "6 Cores",
+        "count": 1948
+      },
+      {
+        "cores": "20 Cores",
+        "count": 1828
+      },
+      {
+        "cores": "24 Cores",
+        "count": 1544
+      }
+    ],
+    "dateRange": [
+      "2026-03-17",
+      "2026-03-26"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "BR"
+  },
+  "KZ": {
+    "totalRows": 49089,
+    "uniqueSystems": 11923,
+    "dau": 0,
+    "cpuAmd": 26.7,
+    "cpuIntel": 73.3,
+    "gamingPenetration": 21.7,
+    "keyboardPct": 53.8,
+    "mousePct": 46.2,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 7085
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 4164
+      },
+      {
+        "name": "Compx",
+        "count": 4045
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 3497
+      },
+      {
+        "name": "Microsoft",
+        "count": 2759
+      },
+      {
+        "name": "Company",
+        "count": 2597
+      },
+      {
+        "name": "Hp, Inc",
+        "count": 1799
+      },
+      {
+        "name": "By Tech",
+        "count": 1594
+      },
+      {
+        "name": "Razer",
+        "count": 1431
+      },
+      {
+        "name": "Semico",
+        "count": 1288
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "Gigabyte",
+        "count": 16192
+      },
+      {
+        "name": "ASUS",
+        "count": 7792
+      },
+      {
+        "name": "MSI",
+        "count": 6228
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 4282
+      },
+      {
+        "name": "ASRock",
+        "count": 3132
+      },
+      {
+        "name": "Lenovo",
+        "count": 2937
+      },
+      {
+        "name": "Acer",
+        "count": 2590
+      },
+      {
+        "name": "Onda Technology Corporation",
+        "count": 1168
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 25934
+      },
+      {
+        "cores": "16 Cores",
+        "count": 11586
+      },
+      {
+        "cores": "8 Cores",
+        "count": 3898
+      },
+      {
+        "cores": "20 Cores",
+        "count": 3260
+      },
+      {
+        "cores": "6 Cores",
+        "count": 1445
+      },
+      {
+        "cores": "4 Cores",
+        "count": 1074
+      }
+    ],
+    "dateRange": [
+      "2026-03-17",
+      "2026-03-26"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "KZ"
+  },
+  "AR": {
+    "totalRows": 34749,
+    "uniqueSystems": 9003,
+    "dau": 0,
+    "cpuAmd": 74.0,
+    "cpuIntel": 26.0,
+    "gamingPenetration": 34.9,
+    "keyboardPct": 58.6,
+    "mousePct": 41.4,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 8874
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 3644
+      },
+      {
+        "name": "(Dispositivos De Sistema Est\u00e1ndar)",
+        "count": 2980
+      },
+      {
+        "name": "Razer",
+        "count": 2037
+      },
+      {
+        "name": "By Tech",
+        "count": 1854
+      },
+      {
+        "name": "Sonix",
+        "count": 1749
+      },
+      {
+        "name": "Compx",
+        "count": 1586
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 1566
+      },
+      {
+        "name": "Evision",
+        "count": 1525
+      },
+      {
+        "name": "Kingston",
+        "count": 1163
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 9987
+      },
+      {
+        "name": "Gigabyte",
+        "count": 9192
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 6545
+      },
+      {
+        "name": "MSI",
+        "count": 5782
+      },
+      {
+        "name": "ASRock",
+        "count": 950
+      },
+      {
+        "name": "Biostar Group",
+        "count": 584
+      },
+      {
+        "name": "Lenovo",
+        "count": 513
+      },
+      {
+        "name": "HP",
+        "count": 352
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 17234
+      },
+      {
+        "cores": "16 Cores",
+        "count": 10088
+      },
+      {
+        "cores": "8 Cores",
+        "count": 2708
+      },
+      {
+        "cores": "6 Cores",
+        "count": 1313
+      },
+      {
+        "cores": "4 Cores",
+        "count": 1090
+      },
+      {
+        "cores": "20 Cores",
+        "count": 778
+      }
+    ],
+    "dateRange": [
+      "2026-03-19",
+      "2026-03-26"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "AR"
+  },
+  "IT": {
+    "totalRows": 30332,
+    "uniqueSystems": 2224,
+    "dau": 0,
+    "cpuAmd": 52.4,
+    "cpuIntel": 47.6,
+    "gamingPenetration": 47.7,
+    "keyboardPct": 56.8,
+    "mousePct": 43.2,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 7152
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 4374
+      },
+      {
+        "name": "Razer",
+        "count": 2982
+      },
+      {
+        "name": "Microsoft",
+        "count": 1590
+      },
+      {
+        "name": "SteelSeries",
+        "count": 1480
+      },
+      {
+        "name": "(Periferiche Standard Di Sistema)",
+        "count": 759
+      },
+      {
+        "name": "Compx",
+        "count": 711
+      },
+      {
+        "name": "Semico",
+        "count": 613
+      },
+      {
+        "name": "Sonix",
+        "count": 549
+      },
+      {
+        "name": "Corsair",
+        "count": 527
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "MSI",
+        "count": 8822
+      },
+      {
+        "name": "ASUS",
+        "count": 8403
+      },
+      {
+        "name": "Gigabyte",
+        "count": 4384
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 1863
+      },
+      {
+        "name": "Lenovo",
+        "count": 1733
+      },
+      {
+        "name": "HP",
+        "count": 1655
+      },
+      {
+        "name": "Acer",
+        "count": 1091
+      },
+      {
+        "name": "ASRock",
+        "count": 710
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "16 Cores",
+        "count": 12156
+      },
+      {
+        "cores": "12 Cores",
+        "count": 7808
+      },
+      {
+        "cores": "20 Cores",
+        "count": 2401
+      },
+      {
+        "cores": "32 Cores",
+        "count": 2275
+      },
+      {
+        "cores": "24 Cores",
+        "count": 1833
+      },
+      {
+        "cores": "8 Cores",
+        "count": 1798
+      }
+    ],
+    "dateRange": [
+      "2026-03-17",
+      "2026-03-26"
+    ],
+    "tier": "Early Release",
+    "countryCode": "IT"
+  },
+  "IN": {
+    "totalRows": 29954,
+    "uniqueSystems": 2019,
+    "dau": 0,
+    "cpuAmd": 55.2,
+    "cpuIntel": 44.8,
+    "gamingPenetration": 39.5,
+    "keyboardPct": 55.9,
+    "mousePct": 44.1,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 5679
+      },
+      {
+        "name": "Razer",
+        "count": 4677
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 3058
+      },
+      {
+        "name": "Microsoft",
+        "count": 2112
+      },
+      {
+        "name": "Standard System",
+        "count": 1802
+      },
+      {
+        "name": "By Tech",
+        "count": 1096
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 965
+      },
+      {
+        "name": "Compx",
+        "count": 829
+      },
+      {
+        "name": "Semico",
+        "count": 789
+      },
+      {
+        "name": "Evision",
+        "count": 763
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "MSI",
+        "count": 9622
+      },
+      {
+        "name": "Gigabyte",
+        "count": 7578
+      },
+      {
+        "name": "ASUS",
+        "count": 4497
+      },
+      {
+        "name": "Lenovo",
+        "count": 2557
+      },
+      {
+        "name": "Acer",
+        "count": 1709
+      },
+      {
+        "name": "HP",
+        "count": 1613
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 1037
+      },
+      {
+        "name": "Dell",
+        "count": 481
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 12178
+      },
+      {
+        "cores": "16 Cores",
+        "count": 9634
+      },
+      {
+        "cores": "20 Cores",
+        "count": 2354
+      },
+      {
+        "cores": "24 Cores",
+        "count": 1605
+      },
+      {
+        "cores": "8 Cores",
+        "count": 1181
+      },
+      {
+        "cores": "32 Cores",
+        "count": 973
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": "Early Release",
+    "countryCode": "IN"
+  },
+  "earlyRelease": {
+    "totalRows": 897021,
+    "uniqueSystems": 64612,
+    "dau": 0,
+    "cpuAmd": 56.9,
+    "cpuIntel": 43.1,
+    "gamingPenetration": 43.7,
+    "keyboardPct": 57.1,
+    "mousePct": 42.9,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 141236
+      },
+      {
+        "name": "SteelSeries",
+        "count": 124844
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 94021
+      },
+      {
+        "name": "Razer",
+        "count": 86120
+      },
+      {
+        "name": "Standard System",
+        "count": 51522
+      },
+      {
+        "name": "Microsoft",
+        "count": 49567
+      },
+      {
+        "name": "Compx",
+        "count": 37178
+      },
+      {
+        "name": "Instant",
+        "count": 24386
+      },
+      {
+        "name": "Sonix",
+        "count": 22967
+      },
+      {
+        "name": "Semico",
+        "count": 22214
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 241148
+      },
+      {
+        "name": "MSI",
+        "count": 234992
+      },
+      {
+        "name": "Gigabyte",
+        "count": 147214
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 61817
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 47939
+      },
+      {
+        "name": "HP",
+        "count": 36009
+      },
+      {
+        "name": "Casper (TR)",
+        "count": 26293
+      },
+      {
+        "name": "Lenovo",
+        "count": 25097
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 450053
+      },
+      {
+        "cores": "16 Cores",
+        "count": 237558
+      },
+      {
+        "cores": "20 Cores",
+        "count": 57830
+      },
+      {
+        "cores": "8 Cores",
+        "count": 55909
+      },
+      {
+        "cores": "24 Cores",
+        "count": 27991
+      },
+      {
+        "cores": "6 Cores",
+        "count": 22055
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": "Early Release"
+  },
+  "tier3": {
+    "totalRows": 454363,
+    "uniqueSystems": 112377,
+    "dau": 0,
+    "cpuAmd": 46.5,
+    "cpuIntel": 53.5,
+    "gamingPenetration": 30.7,
+    "keyboardPct": 55.8,
+    "mousePct": 44.2,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 77061
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 47445
+      },
+      {
+        "name": "Razer",
+        "count": 32642
+      },
+      {
+        "name": "Compx",
+        "count": 22319
+      },
+      {
+        "name": "Microsoft",
+        "count": 17406
+      },
+      {
+        "name": "Standard System",
+        "count": 15584
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 13664
+      },
+      {
+        "name": "By Tech",
+        "count": 12589
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 9748
+      },
+      {
+        "name": "Company",
+        "count": 8674
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 117924
+      },
+      {
+        "name": "Gigabyte",
+        "count": 109879
+      },
+      {
+        "name": "MSI",
+        "count": 72970
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 49441
+      },
+      {
+        "name": "Lenovo",
+        "count": 21235
+      },
+      {
+        "name": "ASRock",
+        "count": 19705
+      },
+      {
+        "name": "Acer",
+        "count": 13557
+      },
+      {
+        "name": "HP",
+        "count": 6432
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 206107
+      },
+      {
+        "cores": "16 Cores",
+        "count": 130257
+      },
+      {
+        "cores": "8 Cores",
+        "count": 32604
+      },
+      {
+        "cores": "20 Cores",
+        "count": 28912
+      },
+      {
+        "cores": "6 Cores",
+        "count": 11461
+      },
+      {
+        "cores": "24 Cores",
+        "count": 8749
+      }
+    ],
+    "dateRange": [
+      "2026-03-16",
+      "2026-03-26"
+    ],
+    "tier": "Tier 3"
+  },
+  "country_summary": [
+    {
+      "code": "TR",
+      "tier": "Early Release",
+      "rows": 836735,
+      "uniqueUsers": 60369
+    },
+    {
+      "code": "UA",
+      "tier": "Tier 3",
+      "rows": 80730,
+      "uniqueUsers": 20531
+    },
+    {
+      "code": "BR",
+      "tier": "Tier 3",
+      "rows": 50806,
+      "uniqueUsers": 12733
+    },
+    {
+      "code": "KZ",
+      "tier": "Tier 3",
+      "rows": 49089,
+      "uniqueUsers": 11923
+    },
+    {
+      "code": "AR",
+      "tier": "Tier 3",
+      "rows": 34749,
+      "uniqueUsers": 9003
+    },
+    {
+      "code": "IT",
+      "tier": "Early Release",
+      "rows": 30332,
+      "uniqueUsers": 2224
+    },
+    {
+      "code": "IN",
+      "tier": "Early Release",
+      "rows": 29954,
+      "uniqueUsers": 2019
+    },
+    {
+      "code": "BY",
+      "tier": "Tier 3",
+      "rows": 26653,
+      "uniqueUsers": 6772
+    },
+    {
+      "code": "MN",
+      "tier": "Tier 3",
+      "rows": 26412,
+      "uniqueUsers": 6881
+    },
+    {
+      "code": "UZ",
+      "tier": "Tier 3",
+      "rows": 24939,
+      "uniqueUsers": 5666
+    },
+    {
+      "code": "BG",
+      "tier": "Tier 3",
+      "rows": 14297,
+      "uniqueUsers": 3460
+    },
+    {
+      "code": "GE",
+      "tier": "Tier 3",
+      "rows": 10286,
+      "uniqueUsers": 2714
+    },
+    {
+      "code": "VN",
+      "tier": "Tier 3",
+      "rows": 9903,
+      "uniqueUsers": 2262
+    },
+    {
+      "code": "IL",
+      "tier": "Tier 3",
+      "rows": 8946,
+      "uniqueUsers": 1955
+    },
+    {
+      "code": "CN",
+      "tier": "Tier 3",
+      "rows": 8260,
+      "uniqueUsers": 1676
+    },
+    {
+      "code": "MY",
+      "tier": "Tier 3",
+      "rows": 7351,
+      "uniqueUsers": 1727
+    },
+    {
+      "code": "MK",
+      "tier": "Tier 3",
+      "rows": 7163,
+      "uniqueUsers": 1821
+    },
+    {
+      "code": "TH",
+      "tier": "Tier 3",
+      "rows": 6830,
+      "uniqueUsers": 1522
+    },
+    {
+      "code": "TW",
+      "tier": "Tier 3",
+      "rows": 6429,
+      "uniqueUsers": 1625
+    },
+    {
+      "code": "HK",
+      "tier": "Tier 3",
+      "rows": 6266,
+      "uniqueUsers": 1423
+    },
+    {
+      "code": "XK",
+      "tier": "Tier 3",
+      "rows": 6164,
+      "uniqueUsers": 1638
+    },
+    {
+      "code": "PH",
+      "tier": "Tier 3",
+      "rows": 5674,
+      "uniqueUsers": 1390
+    },
+    {
+      "code": "MD",
+      "tier": "Tier 3",
+      "rows": 5222,
+      "uniqueUsers": 1337
+    },
+    {
+      "code": "CL",
+      "tier": "Tier 3",
+      "rows": 4906,
+      "uniqueUsers": 1227
+    },
+    {
+      "code": "KG",
+      "tier": "Tier 3",
+      "rows": 4457,
+      "uniqueUsers": 1078
+    },
+    {
+      "code": "ID",
+      "tier": "Tier 3",
+      "rows": 4061,
+      "uniqueUsers": 951
+    },
+    {
+      "code": "BA",
+      "tier": "Tier 3",
+      "rows": 3607,
+      "uniqueUsers": 1023
+    },
+    {
+      "code": "PK",
+      "tier": "Tier 3",
+      "rows": 3240,
+      "uniqueUsers": 826
+    },
+    {
+      "code": "PE",
+      "tier": "Tier 3",
+      "rows": 3208,
+      "uniqueUsers": 813
+    },
+    {
+      "code": "AZ",
+      "tier": "Tier 3",
+      "rows": 3029,
+      "uniqueUsers": 616
+    },
+    {
+      "code": "PS",
+      "tier": "Tier 3",
+      "rows": 2726,
+      "uniqueUsers": 645
+    },
+    {
+      "code": "DZ",
+      "tier": "Tier 3",
+      "rows": 2489,
+      "uniqueUsers": 653
+    },
+    {
+      "code": "IQ",
+      "tier": "Tier 3",
+      "rows": 2252,
+      "uniqueUsers": 493
+    },
+    {
+      "code": "TJ",
+      "tier": "Tier 3",
+      "rows": 2153,
+      "uniqueUsers": 541
+    },
+    {
+      "code": "UY",
+      "tier": "Tier 3",
+      "rows": 1938,
+      "uniqueUsers": 502
+    },
+    {
+      "code": "LB",
+      "tier": "Tier 3",
+      "rows": 1801,
+      "uniqueUsers": 472
+    },
+    {
+      "code": "ME",
+      "tier": "Tier 3",
+      "rows": 1776,
+      "uniqueUsers": 448
+    },
+    {
+      "code": "MX",
+      "tier": "Tier 3",
+      "rows": 1765,
+      "uniqueUsers": 431
+    },
+    {
+      "code": "AL",
+      "tier": "Tier 3",
+      "rows": 1492,
+      "uniqueUsers": 389
+    },
+    {
+      "code": "AM",
+      "tier": "Tier 3",
+      "rows": 1244,
+      "uniqueUsers": 320
+    },
+    {
+      "code": "CO",
+      "tier": "Tier 3",
+      "rows": 1001,
+      "uniqueUsers": 248
+    },
+    {
+      "code": "VE",
+      "tier": "Tier 3",
+      "rows": 932,
+      "uniqueUsers": 255
+    },
+    {
+      "code": "EG",
+      "tier": "Tier 3",
+      "rows": 751,
+      "uniqueUsers": 181
+    },
+    {
+      "code": "TN",
+      "tier": "Tier 3",
+      "rows": 716,
+      "uniqueUsers": 177
+    },
+    {
+      "code": "MA",
+      "tier": "Tier 3",
+      "rows": 705,
+      "uniqueUsers": 169
+    },
+    {
+      "code": "PY",
+      "tier": "Tier 3",
+      "rows": 681,
+      "uniqueUsers": 165
+    },
+    {
+      "code": "KW",
+      "tier": "Tier 3",
+      "rows": 643,
+      "uniqueUsers": 145
+    },
+    {
+      "code": "ZA",
+      "tier": "Tier 3",
+      "rows": 610,
+      "uniqueUsers": 147
+    },
+    {
+      "code": "KH",
+      "tier": "Tier 3",
+      "rows": 561,
+      "uniqueUsers": 135
+    },
+    {
+      "code": "LU",
+      "tier": "Tier 3",
+      "rows": 497,
+      "uniqueUsers": 111
+    },
+    {
+      "code": "BD",
+      "tier": "Tier 3",
+      "rows": 433,
+      "uniqueUsers": 102
+    },
+    {
+      "code": "MO",
+      "tier": "Tier 3",
+      "rows": 424,
+      "uniqueUsers": 97
+    },
+    {
+      "code": "QA",
+      "tier": "Tier 3",
+      "rows": 424,
+      "uniqueUsers": 93
+    },
+    {
+      "code": "SY",
+      "tier": "Tier 3",
+      "rows": 383,
+      "uniqueUsers": 85
+    },
+    {
+      "code": "BN",
+      "tier": "Tier 3",
+      "rows": 343,
+      "uniqueUsers": 82
+    },
+    {
+      "code": "EC",
+      "tier": "Tier 3",
+      "rows": 297,
+      "uniqueUsers": 70
+    },
+    {
+      "code": "BO",
+      "tier": "Tier 3",
+      "rows": 289,
+      "uniqueUsers": 74
+    },
+    {
+      "code": "MT",
+      "tier": "Tier 3",
+      "rows": 268,
+      "uniqueUsers": 63
+    },
+    {
+      "code": "PA",
+      "tier": "Tier 3",
+      "rows": 206,
+      "uniqueUsers": 44
+    },
+    {
+      "code": "CR",
+      "tier": "Tier 3",
+      "rows": 206,
+      "uniqueUsers": 53
+    },
+    {
+      "code": "DO",
+      "tier": "Tier 3",
+      "rows": 188,
+      "uniqueUsers": 43
+    },
+    {
+      "code": "GT",
+      "tier": "Tier 3",
+      "rows": 170,
+      "uniqueUsers": 39
+    },
+    {
+      "code": "NP",
+      "tier": "Tier 3",
+      "rows": 142,
+      "uniqueUsers": 32
+    },
+    {
+      "code": "LY",
+      "tier": "Tier 3",
+      "rows": 126,
+      "uniqueUsers": 33
+    },
+    {
+      "code": "OM",
+      "tier": "Tier 3",
+      "rows": 125,
+      "uniqueUsers": 27
+    },
+    {
+      "code": "BH",
+      "tier": "Tier 3",
+      "rows": 112,
+      "uniqueUsers": 28
+    },
+    {
+      "code": "LK",
+      "tier": "Tier 3",
+      "rows": 89,
+      "uniqueUsers": 20
+    },
+    {
+      "code": "PR",
+      "tier": "Tier 3",
+      "rows": 88,
+      "uniqueUsers": 20
+    },
+    {
+      "code": "JE",
+      "tier": "Tier 3",
+      "rows": 85,
+      "uniqueUsers": 22
+    },
+    {
+      "code": "LA",
+      "tier": "Tier 3",
+      "rows": 83,
+      "uniqueUsers": 18
+    },
+    {
+      "code": "MM",
+      "tier": "Tier 3",
+      "rows": 63,
+      "uniqueUsers": 17
+    },
+    {
+      "code": "HN",
+      "tier": "Tier 3",
+      "rows": 58,
+      "uniqueUsers": 13
+    },
+    {
+      "code": "IM",
+      "tier": "Tier 3",
+      "rows": 56,
+      "uniqueUsers": 13
+    },
+    {
+      "code": "GL",
+      "tier": "Tier 3",
+      "rows": 54,
+      "uniqueUsers": 13
+    },
+    {
+      "code": "SV",
+      "tier": "Tier 3",
+      "rows": 43,
+      "uniqueUsers": 11
+    },
+    {
+      "code": "NG",
+      "tier": "Tier 3",
+      "rows": 31,
+      "uniqueUsers": 8
+    },
+    {
+      "code": "GG",
+      "tier": "Tier 3",
+      "rows": 28,
+      "uniqueUsers": 5
+    },
+    {
+      "code": "MU",
+      "tier": "Tier 3",
+      "rows": 22,
+      "uniqueUsers": 6
+    },
+    {
+      "code": "NC",
+      "tier": "Tier 3",
+      "rows": 20,
+      "uniqueUsers": 4
+    },
+    {
+      "code": "KY",
+      "tier": "Tier 3",
+      "rows": 15,
+      "uniqueUsers": 3
+    },
+    {
+      "code": "TZ",
+      "tier": "Tier 3",
+      "rows": 13,
+      "uniqueUsers": 2
+    },
+    {
+      "code": "JM",
+      "tier": "Tier 3",
+      "rows": 13,
+      "uniqueUsers": 3
+    },
+    {
+      "code": "MQ",
+      "tier": "Tier 3",
+      "rows": 11,
+      "uniqueUsers": 3
+    },
+    {
+      "code": "NI",
+      "tier": "Tier 3",
+      "rows": 9,
+      "uniqueUsers": 2
+    },
+    {
+      "code": "GH",
+      "tier": "Tier 3",
+      "rows": 9,
+      "uniqueUsers": 3
+    },
+    {
+      "code": "MC",
+      "tier": "Tier 3",
+      "rows": 8,
+      "uniqueUsers": 2
+    },
+    {
+      "code": "MZ",
+      "tier": "Tier 3",
+      "rows": 8,
+      "uniqueUsers": 2
+    },
+    {
+      "code": "GU",
+      "tier": "Tier 3",
+      "rows": 6,
+      "uniqueUsers": 1
+    },
+    {
+      "code": "PF",
+      "tier": "Tier 3",
+      "rows": 5,
+      "uniqueUsers": 1
+    }
+  ]
+}

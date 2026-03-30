@@ -1,0 +1,16 @@
+Event Created At Month,2026-03,2026-02,2026-01,2025-12,2025-11,2025-10,2025-09,2025-08,2025-07,2025-06,2025-05,2025-04,2025-03,2025-02,2025-01,2024-12,2024-11,2024-10,2024-09,2024-08,2024-07,2024-06,2024-05,2024-04,2024-03,2024-02,2024-01,2023-12,2023-11,2023-10,2023-09,2023-08,2023-07,2023-06,2023-05,2023-04,2023-03,2023-02,2023-01,2022-12,2022-11,2022-10,2022-09
+Event Type,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users,Total Distinct Users
+tradeit,"96,966","13,974","10,963","5,069","6,502","6,870","12,291","38,942","24,910",291,432,"1,091","16,863","36,968","55,466","21,345","35,275",24,1,,,,,,,,,,,,,,,,,,,,,,,,
+user_passes_identification,"95,777","13,930","10,879","5,019","6,466","6,809","12,221","38,625","24,678",291,429,"1,090","16,754","27,035",10,11,"29,288",23,,,,,,,,,,,,,,,,,,,,,,,,,
+trade,"21,882","12,133","9,603","7,624","9,004","9,945","12,303","11,288","10,520","5,302","5,630","5,563","9,459","13,444","9,013","10,556","8,114","1,324",909,792,703,746,650,790,822,742,925,530,570,774,534,491,539,457,435,583,659,423,459,406,350,401,133
+trade_5_dollars,"7,697","5,360","4,745","4,218","4,447","5,332","6,405","6,056","4,645","2,361","3,080","3,278","5,479","5,913","4,787","2,545",,,,,,,,,,,,,,,,,,,,,,,,,,,
+trade_250_dollars,"2,054","1,585","1,494","1,431","1,448","1,561","1,960","2,011","1,419",695,866,"1,008","1,411","1,255",763,392,,,,,,,,,,,,,,,,,,,,,,,,,,,
+buy,695,829,795,651,571,769,660,890,704,357,408,450,518,491,352,230,127,61,54,65,47,26,33,40,27,16,29,20,30,31,26,,,,,,,,,,,,
+sell_or_buy,544,543,591,516,513,752,659,741,526,207,256,341,386,377,221,154,,,,,,,,,,,,,,,,,,,,,,,,,,,
+trade_1000_dollars,260,264,256,299,267,271,279,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+sell,137,174,154,158,131,194,246,148,171,104,83,95,92,79,62,68,65,36,37,40,21,30,232,279,288,186,157,81,113,139,75,82,114,83,50,62,81,65,45,25,18,19,17
+sell_or_buy_200_dollars,23,26,26,27,19,47,56,25,19,39,27,45,51,45,21,19,,,,,,,,,,,,,,,,,,,,,,,,,,,
+notification,,,,1,257,530,,,,1,,1,52,"6,335","2,835","6,974","14,112",2,,,,,,,,,,,,,,,,,,,,,,,,,
+trade_500_dollars,,,,,,,,,,,,,,,,41,,,,,,,,,,,,,,,,,,,,,,,,,,,
+trade_5_dollar,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+some_event,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,

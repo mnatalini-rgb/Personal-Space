@@ -1,0 +1,9 @@
+column_name,data_type
+event_id,STRING
+event_timestamp,TIMESTAMP
+client_source,STRING
+entity_type,STRING
+game,STRING
+guid,STRING
+operation,STRING
+platform,STRING
