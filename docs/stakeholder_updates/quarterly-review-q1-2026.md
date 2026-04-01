@@ -1,200 +1,132 @@
-# Ads & Partnerships — PT1 — Bet Overview
+# Ads & Partnerships — Q1 2026 Quarterly Review
 
-| Bet Name | Team Lead | Status |
-|---|---|---|
-| Ads & Partnerships | Moritz Natalini | Live since January '21 |
-
----
-
-## Bet Summary
-
-We are building **Advertising** and **Brand Integration** capabilities to unlock new growth opportunities on the Digital Platform. This BET is driven by three core reasons:
-
-1. **Revenue diversification** — Ads & Partnerships brings a substantial and growing revenue stream to the Digital Platform, independent of subscription economics.
-2. **Reward-driven retention** — We unlock retention and re-engagement by distributing partner-funded rewards to our players, reducing churn cost.
-3. **Measurable advertiser outcomes** — Our CDP and account linkage infrastructure lets us prove ROI to partners with full-funnel visibility — from impression to conversion — which no competitor in esports can match.
-
----
-
-## Upside — The final prize
-
-As FACEIT scales from **2.4M to 10M users by 2029**, the Ads & Partnerships bet compounds in three ways:
-
-- **Brand Integrations** grow with partner portfolio expansion — each new partner multiplies the conversion ladder across their audience. Q1 2026 proves the model: **€650K total partner value** from just 3 active partners, with the Tradeit March surge (5× growth via Mystery Box) showing how experimentation unlocks non-linear value.
-- **Advertising** scales with every new surface, page view, and user session. Beyond Play opens new inventory (Mobalytics, HLTV, Deadlock) beyond the CS2-only footprint. The Play Interstitial business case alone projects **~37M annual sessions** of untapped free-user inventory.
-- **Data moat deepens** with each partner integration — our CDP now ingests CRM signals from multiple partners across betting, crypto, and fintech verticals, creating second-party data assets that improve targeting and make the platform stickier for advertisers.
-
-The prize is not just ad revenue. It's becoming the **default performance marketing platform for esports advertisers** — where they come to acquire, convert, and retain users with provable ROI.
-
----
-
-## Why, Why now, Why EFG — Our right to win
-
-**Vision alignment:** Monetise all users with Brand Integrations; monetise free users with Advertising — aligned with the subscription-first model.
-
-**Strategic alignment:** Directly supports Digital Platform growth and the Beyond Play expansion. New titles (Deadlock, Mobalytics) = new inventory and partner surfaces from day one.
-
-**Strengths (updated Q1 2026):**
-- **€650K total partner value** generated in Q1 across 3 active partners (Winline, Tradeit, WhiteMarket)
-- **2.28M unique Eligible BI Users (EBU)** exposed to brand activations in Q1
-- **25% conversion rate** (deposit/trade/purchase) maintained across the portfolio
-- CDP integrated with **4 partner CRMs** (Winline, Tradeit, WhiteMarket, PaySafe) with **60+ unique data points** enriching user profiles
-- **Mystery Box** proven as the strongest AL lever ever tested — 5-13× lift in account linkage rates across all regions
-- **Trust Modal** — a single UX decision that doubles AL rate (5.34% vs 2.75%, p < 0.001)
-
-**Challenges:**
-- **Tier 3 audience vs Tier 1 commercial focus** — 70%+ of FACEIT users are in Tier 3 geos, but the commercial team prioritises Tier 1 advertisers. Peripheral expansion and tiered CPM models are addressing this gap.
-- **Partner concentration risk** — Winline accounts for ~85% of portfolio value. PaySafe onboarding and vertical diversification (crypto, case openers, fintech) are mitigating this.
-- **No B2B Product Marketing support** — the commercial team lacks product-led pitch materials. Building audience packages and case studies proactively in Q2.
-- **CS2-only environment** — Beyond Play will change this, but current revenue is 100% CS2-dependent.
-
-**Opportunities:**
-- **Beyond Play** — Mobalytics, HLTV, Deadlock as new partner and ad surfaces
-- **Play Interstitial** — new video ad inventory in the matchmaking flow (~37M sessions/year)
-- **Peripheral data** — 91 countries collecting device data, opening hardware advertising vertical
-- **Mystery Box as scalable lever** — proven to work across all regions; applicable to new partners
-
-**Threats:**
-- Legal complexity in crypto, betting, and fintech verticals (KYC, geo-restrictions)
-- Geopolitical instability limiting monetisation of CIS audiences
-- Publisher dependency for Beyond Play titles
-
----
-
-## PLAN (How to succeed) — High-level Milestone Sequencing
-
-**Phase 1 [2024] ✅ Complete**
-Built the account linkage infrastructure and Customer Data Platform (CDP). Established partner CRM integration pipeline.
-
-**Phase 2 [2025] ✅ Complete**
-Shifted from pure conversion to full-funnel AIDA strategy. Introduced Drops mechanism for gamified completion. Launched Publift prebid (3× eCPM vs Ezoic). Engagement Engine POC validated (+0.21pp uplift). Mission Chain shipped (+1.96pp uplift). Formalised the TAVI North Star Metric framework.
-
-**Phase 3 [2026] 🔵 In Progress — Current**
-Moving from competition-based activation contracts to **performance-based partnerships**, measured by the TAVI framework (€ value per conversion, not abstract scores). Key priorities:
-- **Experimentation at scale**: Mystery Box (5-13× AL lift), Trust Modal (2× AL rate), Mission Chain (+94.7% relative uplift) — proving that small, data-driven changes compound into massive value
-- **New inventory types**: Play Interstitial (business case complete, design phase), Peripheral ads (91 countries live)
-- **Platform expansion**: Prebid migration from Publift to Moba (higher RPV after commission), CSStats A/B test launched
-- **NSM operationalised**: Dashboard live with BQ pipeline, per-partner ROI visibility, Finance-confirmed cost data integrated. Total Partner Value tracked on a **30-day rolling window** to smooth mission activation seasonality.
-- **Auto segmentation**: enriching CDP with partner signals for dynamic audience targeting
-
-**Phase 4 [2027/2028] ⬜ Future**
-Full platform monetisation — launching a self-serve Brand Integration platform for external partners and advertisers. AI/ML-driven real-time campaign optimisation. Ecosystem-wide inventory across all EFG properties.
-
----
-
-## Bets within the Bet — Strategic Sub-Initiatives
-
-| Sub-Initiative | Strategic Pillar | Stage | TAVI Impact |
+| Bet | Team Lead | Status | Last Updated |
 |---|---|---|---|
-| **Mystery Box** | Growth — AL volume | 🚀 Launched | HIGH — 5-13× AL rate lift across all regions |
-| **Play Interstitial** | New Inventory | 🎨 Design | HIGH — ~37M annual sessions of new video inventory |
-| **Prebid Migration (Moba)** | Efficiency — RPV | 🚀 Launched (A/B) | MEDIUM — +11-27% RPV vs Publift after commission |
-| **Peripheral Expansion** | New Inventory + Data | 🚢 Deployed | MEDIUM — 91 countries, hardware ad vertical |
-| **Skin Vault** | Growth — Partner Value | 🚢 Deployed | MEDIUM — Tradeit integration on top CS2 profiles |
-| **Trust Modal** | Growth — AL rate | 🔍 Analysed | HIGH — 2× AL rate, simplest win ever shipped |
-| **Engagement Engine** | Retention — Completions | 🔍 Analysed | LOW-MED — +0.21pp, effective for engaged users |
-| **CDP Enrichment** | Efficiency — Targeting | 🚧 Develop | HIGH (long-term) — auto-segmentation foundation |
+| Ads & Partnerships | Moritz Natalini | Live since Jan '21 | April 2026 |
 
 ---
+
+## PAGE 1 — BET OVERVIEW
+
+### Why This Bet Exists
+
+Ads & Partnerships monetises all users — Brand Integrations convert engaged users into partner revenue; Advertising monetises attention at scale. Together they build a revenue engine that compounds with every new user, partner, and surface EFG adds to the platform.
+
+As FACEIT scales from **2.4M to 10M users**, this bet doesn't just grow linearly — it compounds: more users = more impressions + more conversion volume + richer data for targeting. Q1 proves the model works at **€650K partner value** from just 3 active partners.
+
+### Strategic Alignment
+
+Ads & Partnerships is the revenue layer that makes platform growth monetisable from day one. Every new title, surface, or geo that EFG launches immediately generates addressable inventory and partner activation potential. Mobalytics already demonstrates this — cross-title expansion unlocks new audiences and ad surfaces without rebuilding infrastructure.
+
+### Strengths
+
+- **Closed-loop attribution no competitor can match.** We track users from ad impression through account linkage, KYC, deposit, and ongoing activity — proving partner ROI with auditable data, not estimates. This is why partners stay and expand.
+- **Compounding data moat.** Each partner integration enriches our CDP with CRM signals (betting behaviour, deposit patterns, trade activity). This second-party data improves targeting for every subsequent partner — a flywheel that gets harder to replicate over time.
+- **Portable playbooks.** Mystery Box, Trust Modal, and Mission Chain are mechanics, not campaigns. They work across partners, geos, and verticals — meaning every new partner benefits from experiments we've already run.
+- **Partner-side value tracking (NSM).** We don't just measure what happens on FACEIT — we calculate how much each user is worth on the partner's side. This shifts the conversation from "impressions delivered" to "revenue generated," which is how we justify premium pricing.
+
+### Challenges
+
+- **Tier 3 audience, Tier 1 commercial focus.** 70%+ of users sit in geos where the commercial team has limited advertiser relationships. Until we build self-serve tools or Tier 3 pitch materials, we're leaving the majority of our user base under-monetised.
+- **Partner concentration.** Winline drives ~85% of portfolio value. This isn't a sales pipeline problem — it reflects that our product is optimised for a single partner archetype (CIS betting). Diversifying means adapting the conversion ladder for new verticals (crypto, fintech, hardware).
+- **Commercial materials gap.** The commercial team sells without product-led collateral. We're building audience packages and case studies ourselves, but this is a structural gap that limits how fast we can grow the partner portfolio.
+- **CS2-heavy revenue.** 100% of current revenue comes from a single title ecosystem. Cross-title expansion via Mobalytics and new EFG titles is the hedge, but it's early.
+
+### Opportunities
+
+- **Category creation, not competition.** No esports platform offers closed-loop, CRM-integrated performance marketing. We're not competing for ad budgets — we're creating a category where advertisers can acquire verified, high-intent users with provable downstream value.
+- **Cross-title proof of concept.** Mobalytics validates that our infrastructure (CDP, missions, ad stack) works outside CS2. Every new title EFG launches is inventory we can monetise on day one.
+- **Play Interstitial — untapped free-user inventory.** ~37M annual matchmaking sessions where free users see nothing today. Video interstitials here monetise attention without touching the subscriber experience.
+- **Peripheral data as a new advertising vertical.** 193K users across 152 countries sharing hardware data. This opens brand partnerships with peripheral manufacturers — a category FACEIT has never monetised.
+
+### Threats
+
+- **Regulatory fragmentation.** Betting, crypto, and fintech partners each bring jurisdiction-specific compliance requirements. Every new geo or vertical adds legal surface area that slows activation.
+- **CIS monetisation constraints.** Our largest partner (Winline) operates in a region where GAM doesn't serve ads and geopolitical risk is elevated. Revenue concentration + geo instability = fragility.
+- **Publisher dependency.** Cross-title expansion depends on publisher relationships EFG doesn't fully control. A publisher pulling support would collapse an entire inventory vertical overnight.
+
 ---
 
-# Ads & Partnerships — PT2 — Q1 2026 Bet Update
+## PAGE 2 — Q1 2026 UPDATE
 
-| Last Update Date | Update Author |
+### KPIs
+
+| Metric | Q1 '26 Actual | Context |
+|---|---|---|
+| **Total Partner Value** | **€649,876** | 30-day rolling; 3 active partners |
+| **Portfolio ROI** | **+€18,932 (+3%)** | Value minus activation + reward costs |
+| **Unique EBU Exposed** | **2.28M** | Users who saw at least one brand activation |
+| **Conversion Rate** | **25%** | Deposit/trade/purchase across portfolio |
+| **Advertising (Publift)** | **~$50K/mo** | Display programmatic |
+| **Advertising (Primis)** | **~$21K/mo** | Outstream video |
+
+### What We Shipped
+
+**Mystery Box** — Gamified reward mechanic for account linkage. AL rates surged across every region (CIS 13.6%, MENA 22.3%, NA 7.7%, APAC 10.6%). Drove the Tradeit March spike to €68.7K (5x prior months). Strongest AL lever ever tested.
+
+**Peripheral Expansion** — Scaled hardware data collection from 3-country pilot to all Tier 3 countries at 100%. 193K users, 152 countries. Opens hardware advertising vertical at near-zero marginal cost.
+
+**Prebid Migration** — Moba outperforms Publift on RPV across all tiers (+11.5% T1, +12% T2, +27.5% T3 after commission). Primis outstream A/B live on CSStats.
+
+**Play Interstitial** — Business case complete. ~37M annual sessions of free-user video inventory. In design phase.
+
+**NSM Operationalised** — Dashboard live with BQ pipeline, per-partner ROI, Finance-confirmed costs. First time leadership can see which partners make money and which don't.
+
+**Quick Wins** — Trust Modal: among users reaching the AL step, keeping the modal doubles completion (5.34% vs 2.75%, p<0.001, +€416/cohort); across the full 2M exposed population, the variant edges ahead on raw AL rate (+12.8%, p<0.001) but at the cost of 48% lower conversion quality — net recommendation: keep modal. Mission Chain: +94.7% relative completion uplift. Engagement Engine: +0.21pp via automated nudges.
+
+### How to Succeed — 2026
+
+**Q1 — Prove the model works** *(done)*
+
+Q1 answered the foundational question: can we measure what a user is worth to a partner and use that to steer the business? The answer is yes. The NSM framework is now operational — leadership can see per-partner ROI for the first time, backed by Finance-confirmed costs and a BQ pipeline that updates on a 30-day rolling window. This changes the nature of every commercial conversation: we no longer report impressions delivered, we report € value generated on the partner's side.
+
+At the same time, we pressure-tested every layer of the conversion playbook. Mystery Box demonstrated that a single gamification mechanic can shift account linkage rates by 5–13× across four regions, while Trust Modal proved that even a small UX decision — keeping the FACEIT trust badge visible during the linkage flow — compounds into measurable partner value at zero engineering cost (2× AL rate, p<0.001). Mission Chain showed that sequencing missions rather than allowing retroactive credit produces a +94.7% uplift in completion, validating that behavioural design directly drives the conversion funnel.
+
+Beyond Brand Integrations, Q1 laid the groundwork for two new monetisation verticals. Peripheral data collection went global — 193K users across 152 countries now share hardware telemetry (CPU, peripherals, OEM) weekly via the FACEIT Client. This is an entirely new data asset that no competitor in esports collects, and it opens the door to endemic hardware advertising (Logitech, Razer, Intel) based on what users actually own — or don't own (conquest targeting). Simultaneously, Skin Vault launched on the top 300 CS2 profiles as a Tradeit integration experiment, turning player inventory into a monetisable surface with CPC-based referral traffic to the partner. The early signal — 100% non-negative user sentiment and measurable click-through to Tradeit — validates that we can monetise player profiles without degrading the user experience.
+
+On the Advertising side, we began the Prebid A/B test on CSStats, comparing our current vendor (Publift, ~20% commission, limited transparency) against Mobalytics' in-house prebid stack (zero commission, full SSP/DSP ownership). Early results show Moba outperforming Publift on Revenue per Page View across all tiers (+11.5% T1, +12% T2, +27.5% T3 after commission adjustment). More importantly, we discovered that Publift's reported fill rates were artificially inflated by a GAM placeholder line item — reinforcing the case for owning our ad technology rather than renting it. The strategic implication is clear: every percentage point of commission we eliminate and every auction we control directly improves the Advertising component of the NSM.
+
+The model works. The question now is whether it scales — and Q1 also revealed where the friction is.
+
+**Q2 — Close the gaps, activate new inventory**
+
+Q1 exposed the constraints that gate scale, and Q2 is about resolving them systematically before committing to full rollout.
+
+The most urgent gap is conversion quality. Mystery Box drives top-of-funnel volume at unprecedented rates, but downstream quality compressed: 294K expired Tradeit rewards and a 40× drop from gaming mission completion (~90%) to partner conversion (~1–2%) signal a funnel that leaks between linkage and first transaction. Scaling Mystery Box to Winline — our highest-value partner at ~85% of portfolio value — without fixing this leak would inflate AL numbers while eroding the per-user value that makes the NSM credible. Q2 priorities are reward expiry reminders, shorter time-to-reward, and intermediate funnel steps (connect account before deposit/trade) to tighten the conversion ladder before scaling.
+
+In parallel, Q2 activates new revenue surfaces across both pillars. Play Interstitial enters behavioural validation — a premium video format that puts up to 60 seconds of VAST-based pre-roll in front of ~37M monthly free-user matchmaking sessions at the highest-attention moment on the platform, with ad density (2.2%) well below YouTube (3–7%), Twitch (5%+), and even FACEIT's own historical Watch format (10%). Phase 0 runs house ads to measure behavioural tolerance; if validated, it unlocks an estimated ~$2M/year in Year 1 (conservative case: $1.3M paid ad revenue + $702K subscription uplift from house ads as a "push to subscribe" lever). This is not incremental — it's a new ad format category for FACEIT that recaptures the video budgets lost when Watch was sunset and currently flowing to YouTube/Twitch.
+
+The Prebid migration reaches its decision point. The CSStats A/B — now extended to include Primis vs Moba outstream video alongside the display test — will determine whether we fully transition from Publift to Mobalytics' in-house stack. The strategic case goes beyond RPV: owning the prebid technology means full transparency on SSP/DSP fees, direct auction control, zero commission leakage, and the ability to integrate new demand sources (including our own Peripheral and Skin Vault inventory) without third-party gatekeeping. If the data confirms what early results suggest, the migration path is Tier 3 → Tier 2 → Tier 1, de-risking by starting where revenue exposure is lowest.
+
+On the Brand Integrations side, PaySafe onboarding begins — adding a fintech vertical (deposits, not bets) with provisional NSM values of €2.50/AL, €5.00/KYC, €17.50/FTD across Germany, Poland, France, Spain, and Nordics. This directly addresses partner concentration risk and tests whether our conversion playbook transfers to a non-betting partner archetype. Skin Vault expands beyond the initial 300-profile experiment as Tradeit's March performance (€68.7K, 5× prior months) justifies deeper integration — the goal is to prove that player profile inventory can become a scalable, always-on partner surface alongside time-limited missions.
+
+For Peripheral data, Q2 moves from collection to activation. Egor begins scoping the normalised hardware storage layer — a BigQuery serving table with audience primitives (brand ownership, conquest segments, CPU vendor, gaming-grade flag) that can be exported to GAM or injected into Prebid bidder params. Legal review (LEGD-8214) gates the ad-system integration, but internal storage and audience sizing can proceed immediately. The pitch to endemic hardware brands becomes concrete: "We know which of our 193K users own Logitech mice and which don't — here's a conquest segment."
+
+By end of Q2, four decisions must be made: Prebid full migration go/no-go based on CSStats RPV data; Play Interstitial MVP scope based on Phase 0 behavioural tolerance; Mystery Box expansion to Winline gated on C1/C2 conversion quality; and Peripheral ad targeting go/no-go gated on Legal sign-off.
+
+**H2 — From validated tactics to repeatable product lines**
+
+If Q2 confirms the signals, H2 shifts from experimentation to execution at platform scale.
+
+Play Interstitial moves from behavioural test to phased commercial rollout — Tier 2 markets first with direct sales and PMP deals, then Tier 1 with full programmatic demand via VAST/Prebid. Each 1 percentage point of blended fill rate improvement adds ~$81K/year, meaning even modest commercial traction on a ~37M-pod/month inventory generates meaningful revenue. The format gives Commercial a product they can sell against YouTube/Twitch pre-roll budgets with a differentiated pitch: captive, verified competitive gaming audience at 95%+ viewability.
+
+The Prebid stack — now fully owned via Mobalytics — becomes the ad technology backbone for all FACEIT properties. This isn't just a vendor swap: it's the shift from renting ad infrastructure to owning it. In-house prebid means we control the auction, set floor prices, onboard SSPs/DSPs on our timeline, and — critically — integrate first-party data signals (Peripheral hardware segments, CDP partner events, Skin Vault engagement) directly into the bid stream. Every new data signal we add increases bid density and eCPM without adding inventory. The long-term payoff is an advertising platform where revenue scales with data richness, not just traffic volume.
+
+The Brand Integrations playbook (Mystery Box, Mission Chain, Trust Modal, Skin Vault) becomes a productised partner-onboarding package rather than bespoke campaign work. Each new partner inherits validated mechanics from day one instead of starting from scratch — reducing time-to-value from months to weeks. Skin Vault matures from experiment to standard integration for any partner with a tradeable-goods model (skins, in-game items, digital collectibles). Peripheral hardware targeting opens an entirely new advertiser category — endemic brands that have never had a performance channel in esports — and positions FACEIT as the only platform where hardware brands can target users by what they actually own.
+
+NSM automation removes the last manual bottleneck: automated 30-day rolling calculations surface which partners, mechanics, and geos are generating value and which aren't, enabling faster reallocation of activation spend and making the ROI conversation with partners continuous rather than quarterly.
+
+The strategic outcome is a monetisation platform that compounds with user growth by default. Every new user generates ad impressions, hardware data, and conversion potential. Every new title or surface adds inventory that plugs into owned ad technology. Every new partner inherits proven playbooks and gets measured on the same NSM framework. The flywheel turns without requiring proportional headcount or commercial effort — and that's how Ads & Partnerships scales from €650K/quarter to a multi-vertical revenue engine.
+
+### Challenges & Decisions
+
+| Challenge | Decision |
 |---|---|
-| [DATE] | Moritz Natalini |
+| Winline = 85% of value | Diversify via PaySafe + new verticals in Q2 |
+| Tradeit negative ROI (−59%) | Monitor March costs; renegotiate if no improvement |
+| Play Interstitial blocked on design | Descope to MVP if delayed past April |
+| No B2B product marketing | Build 1 case study + 2 audience packages ourselves |
 
 ---
 
-## KPIs (Source: BigQuery + NSM Dashboard)
-
-| Metric | Q4 '25 | Trend | Q1 '26 | '26 Target | '27 Target | '28 Target |
-|---|---|---|---|---|---|---|
-| **Total Partners Value (€)** | [TBD] | [TBD] | **€649,876** | [TBD] | [TBD] | [TBD] |
-| **Partner Efficiency (€/1K EBU)** | [TBD] | [TBD] | **€285** | [TBD] | [TBD] | [TBD] |
-| **Portfolio ROI (€)** | [TBD] | [TBD] | **+€18,932 (+3%)** | [TBD] | [TBD] | [TBD] |
-| **Unique EBU** | [TBD] | [TBD] | **2.28M** | [TBD] | [TBD] | [TBD] |
-| **Account Linkages** | [TBD] | [TBD] | **[pull from BQ]** | [TBD] | [TBD] | [TBD] |
-| **Total Conversions (C1+C2)** | [TBD] | [TBD] | **[pull from BQ]** | [TBD] | [TBD] | [TBD] |
-
-*Revenue removed per leadership directive. All metrics anchored to TAVI framework. ROI = Total Partner Value − Total Costs (activation + reward). Costs reflect Finance-confirmed Jan-Feb data (€547K activation + €84K reward).*
-
----
-
-## Qualitative Update
-
-**Overall Status: 🟢 ON TRACK**
-
-### What We Shipped in Q1 2026
-
-**1. Mystery Box Experiment (March)**
-Deployed gamified reward mechanic across 4 regions (CIS, NA, MENA, APAC) for the General Mission segment. Users earn a mystery reward upon account linkage instead of a known fixed reward.
-- **Results**: AL rates surged across every region — CIS: 1.9-2.5% → 13.6%, MENA: 5.3-6.1% → 22.3%, NA: 5.4% → 7.7%, APAC: 3.0-3.5% → 10.6%
-- **Impact**: Drove the Tradeit March spike — €68.7K partner value (5× Jan/Feb), accounting for most of Q1's value growth
-- **KL**: Gamification via mystery/uncertainty is the strongest AL lever we've tested. The trade-off is lower C1 rate (broader, less-qualified audience linking), which we need to monitor at C2 level to confirm net ROI is positive.
-
-**2. Peripheral Expansion — Tier 3 Global Rollout**
-Expanded hardware data collection from a 3-country pilot (TR, IN, IT) to all 90 Tier 3 countries in a single batch deployment.
-- **Results**: 91 countries now collecting peripheral device data at 100% of eligible users
-- **Impact**: Opens the hardware advertising vertical (gaming peripherals, PC components) and provides brand-new inventory that scales with user growth
-- **KL**: Batch rollout was more efficient than phased — marginal cost near zero, no eCPM dilution observed. Fill rate remains competitive.
-
-**3. Play Interstitial — Business Case Complete**
-Built a comprehensive financial model covering 185 countries × tier × CPM × fill rate. Free-user-only targeting preserves the subscriber experience while monetising the matchmaking queue.
-- **Results**: Model projects ~37M annual sessions of available inventory. Mid-scenario revenue: [TBD from spreadsheet]
-- **Impact**: Entirely new ad format for FACEIT — video interstitials in the matchmaking flow. No cannibalisation of existing display inventory.
-- **KL**: Free-user-only targeting is the right constraint — it protects subscriber UX and aligns incentives (ads as a "push to subscribe" lever).
-
-**4. Publift → Prebid Migration (Moba)**
-Replaced Ezoic with Publift prebid in Q3 2025. Now testing Moba as the next evolution — higher RPV after Publift's 20% commission.
-- **Results**: 3-week experiment showed Moba outperforms Publift on RPV across all tiers (+11.5% T1, +12.0% T2, +27.5% T3 after commission). CSStats A/B with Moba + Primis outstream launched this week.
-- **Impact**: Direct revenue efficiency gain with no user experience trade-off
-- **KL**: Ad tech performance is latency-bound, not demand-bound on our inventory. Each prebid migration step (Ezoic → Publift → Moba) has improved both eCPM and page load.
-
-**5. Partner Portfolio Growth & NSM Operationalised**
-PaySafe onboarded as 4th partner. NSM dashboard built with full BQ pipeline, per-partner views, and Finance-confirmed cost integration.
-- **Results**: Portfolio ROI now calculable — **+€18,932 (+3%)** overall. Per-partner: Winline +14% ROI, Tradeit −59%, WhiteMarket −79% (activation only)
-- **Impact**: First time we can show leadership *which partners make money and which don't*, with auditable cost data
-- **KL**: ROI visibility changes the conversation — Tradeit's negative ROI was invisible before, but the March Mystery Box surge shows the path to positive. WhiteMarket's negative ROI suggests we need to renegotiate activation costs or increase conversion volume.
-
-### Quick Wins — Small Changes, Outsized Impact
-
-- **Trust Modal A/B Test**: Keeping the FACEIT trust modal during account linkage doubles the AL rate (5.34% vs 2.75%, p < 0.001). A single UX decision that required zero engineering effort beyond the A/B test — now the default experience.
-
-- **Mission Chain (Sequential Segment)**: Requiring users to complete missions in order (rather than retroactive credit) produced a +1.96pp uplift — 94.7% relative improvement in completion rates. Users are motivated by "unlocking the next mission."
-
-- **Engagement Engine Reminders**: Sending psychologically-framed reminders at strategic timing (when users are active, up to 4× per challenge) produced a +0.21pp uplift. Small absolute effect, but validates that automated nudges work — foundation for scaled personalisation.
-
----
-
-## Next Quarter Focus — Q2 2026
-
-1. **Prebid Migration Decision** — Analyse CSStats A/B results (Moba + Primis outstream). If positive, plan phased migration Tier 3 → Tier 2 → Tier 1.
-2. **Play Interstitial Build** — Move from design to development. Target: internal test by end of May, phased launch in June.
-3. **Mystery Box Scaling** — Extend to Winline (highest-value partner). Measure impact on C1/C2 conversion quality, not just AL volume.
-4. **Partner Diversification** — Activate PaySafe missions. Negotiate WhiteMarket cost restructure or volume increase.
-5. **NSM Automation** — Deploy Apps Script pipeline for automated 30-day rolling data refresh across all dashboards.
-6. **Vertical Expansion** — Build 2 pitch-ready audience packages for Commercial team (gaming peripherals + fintech). Proactive, not reactive.
-
----
-
-## Challenges / Blockers / Decisions
-
-**Partner Concentration Risk**
-Winline generates ~85% of portfolio value. Single-partner dependency creates revenue fragility. *Decision: Aggressively diversify via PaySafe activation and new vertical outreach in Q2. Mystery Box rollout to Winline increases value but doesn't solve concentration.*
-
-**Tradeit Negative ROI (−59%)**
-Tradeit activation costs (€167K) far exceed partner value generated (€94K) in Jan-Feb. March surge (€68.7K) signals improvement, but full-quarter ROI likely still negative. *Decision: Monitor March cost data when Finance confirms. If ROI trajectory doesn't improve, recommend renegotiating activation cost structure.*
-
-**Play Interstitial Design Dependency**
-Business case approved, but engineering phase is blocked on design review (Flo). Meeting scheduled 28 Mar. *Decision: If design feedback delays past early April, descope to MVP format and iterate.*
-
-**Tier 3 Audience vs Tier 1 Commercial Focus**
-70%+ of FACEIT users are Tier 3, but Commercial prioritises Tier 1 advertisers. This suppresses ad revenue potential and limits partner reach. *Decision: Build the pitch materials ourselves (audience packages, case studies) and share proactively. Peripheral data strengthens the Tier 3 value proposition.*
-
-**No B2B Product Marketing**
-Commercial team lacks product-led sales materials for Brand Integrations. Product is filling the gap, but it's not sustainable. *Decision: Escalate need for dedicated product marketing support. In the interim, create 1 case study (Winline) and 2 audience packages in Q2.*
-
----
-
-*[TBD] items require: Q4 2025 baseline data, '26-'28 targets, Finance-confirmed March costs, final AL/Conversion counts from BQ.*
+*Metrics anchored to NSM framework (€ value per conversion). Total Partner Value on 30-day rolling window. Costs reflect Finance-confirmed data. Advertising evaluated on Revenue per Page View (RPV).*

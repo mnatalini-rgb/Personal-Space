@@ -131,12 +131,15 @@ From a privacy and compliance standpoint: account linking does not involve any p
 
 ---
 
-### Experiment 1: Account Linkage Flow Simplification (Tradeit)
+### Experiment 1: Account Linkage Flow Simplification (Tradeit) — Trust Modal
 
 **Type**: A/B test
 **Partner**: Tradeit (global)
+**Feature Flag**: `exp_TRADEIT_NO_AGE_STEP_EXPERIMENT`
 **Funnel stage**: TOFU
-**Status**: Launched 12 March 2026 — results pending
+**Status**: ✅ Concluded — Winner: Control (keep trust modal)
+**Launched**: 12 March 2026
+**Concluded**: April 2026
 
 #### Problem
 
@@ -146,6 +149,8 @@ The account linkage flow hasn't been updated in ~2 years. The trust modal was in
 
 Removing the trust modal and sending users directly to the partner login/details screen will increase the account linkage rate.
 
+**Result: Hypothesis rejected.** Keeping the trust modal significantly improves linkage-step completion. The modal acts as a trust signal that increases user willingness to complete the linkage.
+
 #### Test Design
 
 | Group | Description |
@@ -153,13 +158,66 @@ Removing the trust modal and sending users directly to the partner login/details
 | Control | Current flow — trust modal shown before partner login |
 | Variant | Trust modal removed — user goes directly to partner login details |
 
+#### Data Sources
+
+| Source | URL |
+|---|---|
+| Feature flag exposure | [Looker: user_feature_flags_v1](https://efgdata.cloud.looker.com/explore/faceit-events/user_feature_flags_v1?toggle=fil&qid=aQ2khmca1wEqJF8JVJR6PE) |
+| Account linkage outcomes | [Looker: user_account_linkage_operation_v1](https://efgdata.cloud.looker.com/explore/faceit-events/user_account_linkage_operation_v1?qid=b9q6tXQkIcbfu89ttyDxCV&toggle=fil) |
+
 #### Results
 
-— Results pending (launched 12 March 2026)
+**Metric 1 — Full-population AL rate** (all users exposed to feature flag):
+
+| | Control (trust modal) | Variant (no trust modal) |
+|---|---|---|
+| Users exposed | 1,404,335 | 596,571 |
+| Account linkages | 2,529 | 1,212 |
+| **AL rate** | **0.1801%** | **0.2032%** |
+
+| Statistic | Value |
+|---|---|
+| Absolute lift (var − control) | +0.023 pp |
+| Relative lift | +12.8% |
+| Z-statistic | 3.46 |
+| p-value (two-tailed) | < 0.001 |
+| 95% CI | [+0.010 pp, +0.037 pp] |
+| Traffic split | 70.2% control / 29.8% variant |
+
+At the full-population level, variant shows a slightly higher AL rate — suggesting the modal may be a minor barrier to *starting* the flow.
+
+**Metric 2 — Linkage-step completion rate** (users who reached the AL step):
+
+| | Control (trust modal) | Variant (no trust modal) |
+|---|---|---|
+| **AL completion rate** | **5.34%** | **2.75%** |
+
+| Statistic | Value |
+|---|---|
+| Relative drop (var vs control) | −48.4% |
+| Z-statistic | 17.98 |
+| p-value | < 0.001 |
+| € impact per cohort | +€416 (control generates more value) |
+| € impact per 1K users | +€9.82 |
+
+Among users who reached the linkage step, removing the trust modal nearly halves the completion rate.
+
+#### Conclusions
+
+The two metrics tell complementary stories: removing the modal may get slightly more users to *start* linking (+12.8% full-pop), but it dramatically reduces *completion* (−48.4% at the linkage step). Since partner value is driven by completed linkages that convert to deposits/trades (C1/C2), the linkage-step metric is the one that matters for NSM.
+
+- **Recommendation: Keep the trust modal as the permanent default for all partner AL flows.**
+- The € impact is significant: +€416 per cohort, +€9.82 per 1K users.
+- Zero engineering cost — the modal is already the default experience.
+- Finding should apply to all partners (Winline, PaySafe, WhiteMarket), not just Tradeit.
+
+**Full write-up:** `docs/product_briefs/trust-modal-experiment-conclusion.md`
 
 #### Next Steps
 
-— To be updated once results are available.
+- Roll back variant. Make trust modal the permanent default.
+- Apply trust modal pattern to all future partner account linkage flows (PaySafe, etc.)
+- Close feature flag `exp_TRADEIT_NO_AGE_STEP_EXPERIMENT` in the feature flag system.
 
 ---
 

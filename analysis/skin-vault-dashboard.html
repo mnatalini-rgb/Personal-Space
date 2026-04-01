@@ -175,7 +175,7 @@
                 <div class="chart-container">
                     <canvas id="dailyViewsChart"></canvas>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">Mar 30 is partial day (data as of query time)</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">Mar 30 is partial day (data as of query time). <span style="color: var(--red); font-weight: 600;">Red dashed line</span> = Mar 24: "BETA" badge added to the Skin Vault tab, explaining the ~3x traffic spike.</p>
             </div>
             <div class="grid-2">
                 <div>
@@ -351,12 +351,12 @@
                     </div>
                     <div class="insight-card" style="border-left-color: var(--border);">
                         <p><strong>Weekend traffic spike?</strong></p>
-                        <p>Weekend traffic strong — Mar 29 (Sat): 812 views. Mar 24+ spike (~3x) suggests organic growth or external referral.</p>
+                        <p>Weekend traffic strong — Mar 29 (Sat): 812 views. The ~3x spike from Mar 24 (253→782/day) is explained by the addition of a "BETA" badge on the Skin Vault tab, which increased discoverability.</p>
                     </div>
 
                     <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
                     <ol style="margin-left: 1rem;">
-                        <li class="list-item">Investigate Mar 24 traffic spike — 3x increase (253→782/day), identify source</li>
+                        <li class="list-item"><strong style="color: var(--green);">Resolved:</strong> Mar 24 traffic spike — caused by "BETA" badge added to the Skin Vault tab, increasing discoverability (~3x uplift sustained)</li>
                         <li class="list-item">Talk to Karen about promotion options</li>
                         <li class="list-item">Feedback target exceeded (28/20 — 140%). Analyse qualitative themes.</li>
                         <li class="list-item">Monitor Steam API rate limiting (Isabel's dashboard)</li>
@@ -380,7 +380,7 @@
 
                     <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
                     <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic (~2.7k/week, 780/day since Mar 24)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic (~2.7k/week, 780/day since BETA badge on Mar 24)</p>
                         <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Click Rate (10.4%)</p>
                         <p><span class="status-indicator status-green"></span> Sentiment (100% non-neg, n=28)</p>
                     </div>
@@ -436,6 +436,39 @@
         const tooltipTitleColor = '#1a1a2e';
         const tooltipBodyColor = '#6b7280';
 
+        // Custom plugin: vertical annotation line
+        const verticalLinePlugin = {
+            id: 'verticalLine',
+            afterDraw(chart, args, options) {
+                if (!options.xLabel) return;
+                const xAxis = chart.scales.x;
+                const yAxis = chart.scales.y;
+                const idx = chart.data.labels.indexOf(options.xLabel);
+                if (idx === -1) return;
+                const x = xAxis.getPixelForValue(idx);
+                const ctx = chart.ctx;
+                ctx.save();
+                ctx.beginPath();
+                ctx.setLineDash([6, 4]);
+                ctx.strokeStyle = options.lineColor || '#dc2626';
+                ctx.lineWidth = 2;
+                ctx.moveTo(x, yAxis.top);
+                ctx.lineTo(x, yAxis.bottom);
+                ctx.stroke();
+                ctx.restore();
+                // Label
+                if (options.label) {
+                    ctx.save();
+                    ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif';
+                    ctx.fillStyle = options.lineColor || '#dc2626';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(options.label, x, yAxis.top - 8);
+                    ctx.restore();
+                }
+            }
+        };
+        Chart.register(verticalLinePlugin);
+
         // 0. Daily Page Views (Line Chart)
         const dailyCtx = document.getElementById('dailyViewsChart').getContext('2d');
         new Chart(dailyCtx, {
@@ -470,9 +503,11 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: { padding: { top: 20 } },
                 plugins: {
                     legend: { position: 'top', labels: { color: '#6b7280' } },
-                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 },
+                    verticalLine: { xLabel: 'Mar 24', label: 'BETA badge added', lineColor: '#dc2626' }
                 },
                 scales: {
                     x: { grid: { color: gridColor } },

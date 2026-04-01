@@ -1240,8 +1240,11 @@
                 </div>
 
                 <div class="section" data-exp-month="ongoing">
-                    <h2 class="section-title">4. AL Flow — Trust Modal A/B Test</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Does showing the trust modal during Account Linkage improve conversion? Control group sees the trust modal; Variant skips it entirely.</p>
+                    <h2 class="section-title">4. AL Flow — Trust Modal A/B Test <span style="font-size: 0.75rem; font-weight: 400; color: var(--green); margin-left: 0.5rem;">✅ CONCLUDED</span></h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Does showing the trust modal during Account Linkage improve conversion? Control group sees the trust modal; Variant skips it entirely. Feature flag: <code>exp_TRADEIT_NO_AGE_STEP_EXPERIMENT</code>.</p>
+
+                    <!-- Metric 2: Linkage-Step Completion (original analysis) -->
+                    <h3 style="font-size: 1rem; color: var(--accent); margin-bottom: 0.75rem;">Linkage-Step Completion Rate (users who reached the AL step)</h3>
                     <div class="grid-2">
                         <div class="ab-card" style="border-color: var(--accent);">
                             <h3>Control (Sees Trust Modal) - <span style="color:var(--text);">Winner</span></h3>
@@ -1263,15 +1266,47 @@
                         </div>
                     </div>
                     <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
-                        <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--accent);">Statistical Significance</h3>
+                        <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--accent);">Statistical Significance (Linkage Step)</h3>
                         <div class="ab-stat"><span>Z-Score</span> <span>17.98</span></div>
                         <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">< 0.001 (highly significant)</span></div>
                         <div class="ab-stat"><span>Relative Lift (Variant vs Control)</span> <span style="color: var(--red);">−48.4%</span></div>
                         <div class="ab-stat"><span>Absolute Difference</span> <span style="color: var(--red);">−2.59 pp</span></div>
                     </div>
+
+                    <!-- Metric 1: Full-Population (final Looker data) -->
+                    <h3 style="font-size: 1rem; color: var(--accent); margin-top: 2rem; margin-bottom: 0.75rem;">Full-Population AL Rate (all users exposed to feature flag)</h3>
+                    <div class="grid-2">
+                        <div class="ab-card">
+                            <h3>Control (Sees Trust Modal)</h3>
+                            <div class="ab-stat"><span>Users Exposed</span> <span>1,404,335</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Count</span> <span>2,529</span></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span>0.1801%</span></div>
+                        </div>
+                        <div class="ab-card" style="border-color: var(--accent);">
+                            <h3>Variant (No Trust Modal)</h3>
+                            <div class="ab-stat"><span>Users Exposed</span> <span>596,571</span></div>
+                            <div class="ab-stat"><span><span class="term" data-tip="Account Linkage — €0.38">AL</span> Count</span> <span>1,212</span></div>
+                            <div class="ab-stat"><span>AL Rate</span> <span style="color: var(--accent);">0.2032% (+12.8%)</span></div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                        <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--accent);">Statistical Significance (Full Population)</h3>
+                        <div class="ab-stat"><span>Z-Score</span> <span>3.46</span></div>
+                        <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">< 0.001</span></div>
+                        <div class="ab-stat"><span>Relative Lift (Variant vs Control)</span> <span style="color: var(--accent);">+12.8%</span></div>
+                        <div class="ab-stat"><span>95% CI</span> <span>[+0.010 pp, +0.037 pp]</span></div>
+                        <div class="ab-stat"><span>Traffic Split</span> <span>70.2% control / 29.8% variant</span></div>
+                    </div>
+
+                    <!-- Reconciliation -->
+                    <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
+                        <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--text);">Reconciling the Two Metrics</h3>
+                        <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">Removing the modal may get slightly more users to <em>start</em> linking (+12.8% full-pop AL rate), but it dramatically reduces <em>completion</em> among those who do (−48.4% at the linkage step). Since partner value is driven by completed linkages that convert to C1/C2, the linkage-step metric is the one that matters for NSM: +€416/cohort, +€9.82 per 1K users.</p>
+                    </div>
+
                     <div style="margin-top: 1.25rem; padding: 1.25rem; background: color-mix(in srgb, var(--green) 8%, transparent); border: 1px solid var(--green); border-radius: var(--radius-md);">
                         <strong style="color: var(--green);">✓ Recommendation: Keep the Trust Modal</strong>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text-muted); font-size: 0.95rem;">Removing the trust modal cuts Account Linkage rates nearly in half (5.34% → 2.75%). The result is statistically significant at p < 0.001 with a z-score of 17.98. The trust modal generates €416 more value per cohort and €9.82 more per 1K users. The modal should remain in the AL flow.</p>
+                        <p style="margin: 0.5rem 0 0 0; color: var(--text-muted); font-size: 0.95rem;">Removing the trust modal cuts linkage-step completion nearly in half (5.34% → 2.75%, z=17.98, p < 0.001). While the full-population variant shows +12.8% raw AL rate, this marginal volume gain (~462 incremental ALs over 2M users) is far outweighed by the 48% quality loss at the conversion step. The trust modal generates €416 more value per cohort and €9.82 more per 1K users. The modal should remain as the permanent default for all partner AL flows. Full write-up: <a href="../docs/product_briefs/trust-modal-experiment-conclusion.md" style="color: var(--accent);">trust-modal-experiment-conclusion.md</a></p>
                     </div>
                 </div>
 
@@ -2631,8 +2666,12 @@
         // Do NOT edit the BQ_DATA placeholder line manually.
         const BQ_DATA = null; // %%BQ_DATA_PLACEHOLDER%%
 
-        Chart.defaults.color = '#6b7280';
-        Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+        // Guard for Chart.js availability (handles file:// protocol)
+        const chartAvailable = typeof Chart !== 'undefined';
+        if (chartAvailable) {
+            Chart.defaults.color = '#6b7280';
+            Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+        }
         const gridColor = '#e2e4e9';
         const formatNumber = num => num === 0 ? '-' : num.toLocaleString('en-US');
 
@@ -4212,40 +4251,42 @@
         }
 
         // Chart Initialization (Combined)
-        function initCombinedCharts() {
-            if (Object.keys(charts.combined).length > 0) return;
+         function initCombinedCharts() {
+             if (Object.keys(charts.combined).length > 0) return;
 
-            const monthlyLabels = dashData ? MONTH_LABELS : ['Jan \'26', 'Feb \'26', 'Mar \'26*'];
-            const winlineMonthly = dashData ? [dashData.winline_all.monthly.jan, dashData.winline_all.monthly.feb, dashData.winline_all.monthly.mar] : [179416, 199735, 160697];
-            const tradeitMonthly = dashData ? [dashData.tradeit.monthly.jan, dashData.tradeit.monthly.feb, dashData.tradeit.monthly.mar] : [12255, 13444, 68719];
-            const whitemarketMonthly = dashData ? [dashData.whitemarket.monthly.jan, dashData.whitemarket.monthly.feb, dashData.whitemarket.monthly.mar] : [1542, 1606, 1113];
-            const groupedEfficiency = dashData ? [dashData.winline_all.eurPer1kEbu, dashData.tradeit.eurPer1kEbu, dashData.whitemarket.eurPer1kEbu] : [791, 62, 43];
-            const weeklyLabels = dashData ? dashData.weekLabels : ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'];
-            const weeklyWinline = dashData ? dashData.winline_all.weeklyValues : [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779];
-            const weeklyTradeit = dashData ? dashData.tradeit.weeklyValues : [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002];
-            const weeklyWhiteMarket = dashData ? dashData.whitemarket.weeklyValues : [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162];
+             if (!chartAvailable) return;
 
-            const winlineBreakdown = dashData
-                ? [
-                    Math.round(dashData.winline_all.monthlyByConversion.al.total),
-                    Math.round(dashData.winline_all.monthlyByConversion.kyc.total),
-                    Math.round(dashData.winline_all.monthlyByConversion.ftd.total),
-                    Math.round(dashData.winline_all.monthlyByConversion.dep2.total),
-                    Math.round(dashData.winline_all.monthlyByConversion.bet.total)
-                ]
-                : [58715, 7699, 133107, 153875, 186452];
+             const monthlyLabels = dashData ? MONTH_LABELS : ['Jan \'26', 'Feb \'26', 'Mar \'26*'];
+             const winlineMonthly = dashData ? [dashData.winline_all.monthly.jan, dashData.winline_all.monthly.feb, dashData.winline_all.monthly.mar] : [179416, 199735, 160697];
+             const tradeitMonthly = dashData ? [dashData.tradeit.monthly.jan, dashData.tradeit.monthly.feb, dashData.tradeit.monthly.mar] : [12255, 13444, 68719];
+             const whitemarketMonthly = dashData ? [dashData.whitemarket.monthly.jan, dashData.whitemarket.monthly.feb, dashData.whitemarket.monthly.mar] : [1542, 1606, 1113];
+             const groupedEfficiency = dashData ? [dashData.winline_all.eurPer1kEbu, dashData.tradeit.eurPer1kEbu, dashData.whitemarket.eurPer1kEbu] : [791, 62, 43];
+             const weeklyLabels = dashData ? dashData.weekLabels : ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'];
+             const weeklyWinline = dashData ? dashData.winline_all.weeklyValues : [42562, 36779, 30771, 19852, 8458, 89586, 34876, 23926, 41130, 57191, 26430, 5779];
+             const weeklyTradeit = dashData ? dashData.tradeit.weeklyValues : [5265, 2696, 1698, 1577, 908, 7714, 2532, 1967, 1179, 94, 58907, 10002];
+             const weeklyWhiteMarket = dashData ? dashData.whitemarket.weeklyValues : [299, 334, 369, 249, 292, 543, 434, 297, 331, 627, 323, 162];
 
-            const tradeitBreakdown = dashData
-                ? [
-                    Math.round(dashData.tradeit.monthlyByConversion.al.total),
-                    Math.round(dashData.tradeit.monthlyByConversion.c1.total),
-                    Math.round(dashData.tradeit.monthlyByConversion.c2.total)
-                ]
-                : [4552.78, 107.60, 7595.00];
+             const winlineBreakdown = dashData
+                 ? [
+                     Math.round(dashData.winline_all.monthlyByConversion.al.total),
+                     Math.round(dashData.winline_all.monthlyByConversion.kyc.total),
+                     Math.round(dashData.winline_all.monthlyByConversion.ftd.total),
+                     Math.round(dashData.winline_all.monthlyByConversion.dep2.total),
+                     Math.round(dashData.winline_all.monthlyByConversion.bet.total)
+                 ]
+                 : [58715, 7699, 133107, 153875, 186452];
 
-            const combinedMonthlyCtx = document.getElementById('combinedMonthlySummaryChart');
-            if (combinedMonthlyCtx) {
-                charts.combined.monthlySummary = new Chart(combinedMonthlyCtx, {
+             const tradeitBreakdown = dashData
+                 ? [
+                     Math.round(dashData.tradeit.monthlyByConversion.al.total),
+                     Math.round(dashData.tradeit.monthlyByConversion.c1.total),
+                     Math.round(dashData.tradeit.monthlyByConversion.c2.total)
+                 ]
+                 : [4552.78, 107.60, 7595.00];
+
+             const combinedMonthlyCtx = document.getElementById('combinedMonthlySummaryChart');
+             if (combinedMonthlyCtx) {
+                 charts.combined.monthlySummary = new Chart(combinedMonthlyCtx, {
                     type: 'bar',
                     data: {
                         labels: monthlyLabels,
@@ -4433,6 +4474,7 @@
 
         // Chart Initialization (Tradeit)
         function initTradeitCharts() {
+            if (!chartAvailable) return;
             const tradeitMonthlyByConv = dashData
                 ? [
                     [Math.round(dashData.tradeit.monthlyByConversion.c2.jan), Math.round(dashData.tradeit.monthlyByConversion.c2.feb), Math.round(dashData.tradeit.monthlyByConversion.c2.mar)],
@@ -4693,9 +4735,10 @@
             });
         }
 
-        // Chart Initialization (Winline)
-        function initWinlineCharts() {
-            if (Object.keys(charts.winline).length > 0) return;
+         // Chart Initialization (Winline)
+         function initWinlineCharts() {
+             if (!chartAvailable) return;
+             if (Object.keys(charts.winline).length > 0) return;
 
             const winlineGeoMetric = dashData ? getWinlineGeoData(currentWinlineGeo) : null;
 
@@ -4925,9 +4968,10 @@
             }
         }
 
-        // Chart Initialization (WhiteMarket)
-        function initWhiteMarketCharts() {
-            if (Object.keys(charts.whitemarket).length > 0) return;
+         // Chart Initialization (WhiteMarket)
+         function initWhiteMarketCharts() {
+             if (!chartAvailable) return;
+             if (Object.keys(charts.whitemarket).length > 0) return;
 
             const wmMonthly = dashData
                 ? [dashData.whitemarket.monthly.jan, dashData.whitemarket.monthly.feb, dashData.whitemarket.monthly.mar]
@@ -5322,9 +5366,10 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             // Weekly Performance Chart Initialization
-            const ctxWeekly = document.getElementById('weeklyPerformanceChart');
-            if (ctxWeekly) {
-                new Chart(ctxWeekly, {
+            if (chartAvailable) {
+                const ctxWeekly = document.getElementById('weeklyPerformanceChart');
+                if (ctxWeekly) {
+                    new Chart(ctxWeekly, {
                     type: 'bar',
                     data: {
                         labels: ['Dec 29', 'Jan 5', 'Jan 12', 'Jan 19', 'Jan 26', 'Feb 2', 'Feb 9', 'Feb 16', 'Feb 23', 'Mar 2', 'Mar 9', 'Mar 16'],
@@ -5380,6 +5425,7 @@
                         }
                     }
                 });
+            }
             }
         });
     </script>
