@@ -427,6 +427,10 @@
     </div>
 
     <script>
+        // Guard for Chart.js availability (handles file:// protocol)
+        const chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
         // Common Chart Defaults
         Chart.defaults.color = '#6b7280';
         Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
@@ -646,6 +650,7 @@
                 }
             }
         });
+        } // end chartAvailable guard
     </script>
 </body>
 </html>
