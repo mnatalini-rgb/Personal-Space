@@ -3,52 +3,627 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ads & Partnerships — Dashboards</title>
+  <title>Ads & Partnerships — Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root { --bg: #0f1117; --surface: #1a1d27; --border: #2a2e3a; --text: #e4e6ed; --muted: #8b8fa3; --accent: #ff5500; }
+    :root {
+      --bg: #EEF2F3;
+      --surface: #ffffff;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --border: #E2E8F0;
+      --accent: #1A1A2E;
+      --accent-light: rgba(26,26,46,0.06);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; background: var(--bg); color: var(--text); padding: 3rem 2rem; }
-    .container { max-width: 640px; margin: 0 auto; }
-    h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.25rem; }
-    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
-    a.card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 0.75rem; text-decoration: none; color: var(--text); transition: border-color 0.15s ease; }
-    a.card:hover { border-color: var(--accent); }
-    .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
-    .card-desc { font-size: 0.82rem; color: var(--muted); }
-    footer { margin-top: 3rem; text-align: center; font-size: 0.75rem; color: var(--muted); }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Sticky Header */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(238, 242, 243, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 6px;
+    }
+
+    .header-nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 24px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .header-nav a:hover {
+      background: var(--accent-light);
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 56px 32px 40px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .hero p {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Sections */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px 48px;
+    }
+
+    .section-header {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      padding-left: 4px;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    a.card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    a.card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .card-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Status Badges */
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 24px;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-live {
+      color: #16a34a;
+      background: rgba(22, 163, 74, 0.10);
+      border: 1px solid rgba(22, 163, 74, 0.20);
+    }
+
+    .badge-sprint {
+      color: #2563eb;
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+    }
+
+    .badge-due {
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.08);
+      border: 1px solid rgba(220, 38, 38, 0.18);
+    }
+
+    .badge-concluded {
+      color: #6B7280;
+      background: rgba(107, 114, 128, 0.10);
+      border: 1px solid rgba(107, 114, 128, 0.20);
+    }
+
+    .badge-shipped {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.18);
+    }
+
+    .badge-area {
+      color: var(--text-muted);
+      background: rgba(107, 114, 128, 0.06);
+      border: 1px solid rgba(107, 114, 128, 0.12);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Subsection headers */
+    .subsection-header {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin: 24px 0 12px;
+      padding-left: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subsection-header:first-of-type {
+      margin-top: 0;
+    }
+
+    .subsection-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot-live { background: #16a34a; }
+    .dot-concluded { background: #6B7280; }
+    .dot-shipped { background: #7c3aed; }
+
+    /* Icon backgrounds per section */
+    .icon-projects { background: rgba(37, 99, 235, 0.10); }
+    .icon-roadmap { background: rgba(124, 58, 237, 0.10); }
+    .icon-weekly { background: rgba(14, 165, 233, 0.10); }
+    .icon-nsm { background: rgba(217, 119, 6, 0.10); }
+    .icon-tradeit { background: rgba(5, 150, 105, 0.10); }
+    .icon-qbr { background: rgba(79, 70, 229, 0.10); }
+    .icon-prebid { background: rgba(220, 38, 38, 0.10); }
+    .icon-prebid-slides { background: rgba(234, 88, 12, 0.10); }
+    .icon-skinvault { background: rgba(8, 145, 178, 0.10); }
+    .icon-peripheral { background: rgba(156, 163, 175, 0.10); }
+    .icon-pipeline { background: rgba(16, 185, 129, 0.10); }
+    .icon-releases { background: rgba(139, 92, 246, 0.10); }
+    .icon-rewarded-video { background: rgba(234, 88, 12, 0.10); }
+    .icon-mystery-box { background: rgba(168, 85, 247, 0.10); }
+    .icon-age-modal { background: rgba(14, 165, 233, 0.10); }
+    .icon-trust-modal { background: rgba(5, 150, 105, 0.10); }
+    .icon-interstitial { background: rgba(220, 38, 38, 0.10); }
+    .icon-csstats { background: rgba(37, 99, 235, 0.10); }
+    .icon-ads-alert { background: rgba(79, 70, 229, 0.10); }
+
+    /* Footer */
+    .hub-footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 32px 48px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .hub-footer a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .hub-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .sticky-header { padding: 12px 16px; }
+      .header-nav { display: none; }
+      .hero { padding: 40px 16px 32px; }
+      .hero h1 { font-size: 26px; }
+      .section { padding: 0 16px 36px; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Ads & Partnerships</h1>
-    <p class="subtitle">Dashboards & Analysis — Moritz Natalini</p>
 
-    <a class="card" href="peripheral-data-dashboard.html">
-      <div class="card-title">Peripheral Initiative — UX Research Brief</div>
-      <div class="card-desc">Hardware data from India (2,853 records). Brand landscape, sample profiles, design questions for UX research.</div>
-    </a>
+  <!-- Sticky Header -->
+  <header class="sticky-header">
+    <div class="header-brand">Ads & Partnerships</div>
+    <nav class="header-nav">
+      <a href="#core">Core</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#experiments">Experiments & Releases</a>
+    </nav>
+  </header>
 
-    <a class="card" href="prebid-slides.html">
-      <div class="card-title">Prebid Evaluation — Slide Deck</div>
-      <div class="card-desc">Moba vs Publift RPV-by-tier analysis. 8-slide presentation with keyboard navigation.</div>
-    </a>
-
-    <a class="card" href="prebid-experiment-results.html">
-      <div class="card-title">Prebid Evaluation — Full Reference</div>
-      <div class="card-desc">Scrolling reference doc with all data tables, charts, and methodology notes.</div>
-    </a>
-
-    <a class="card" href="nsm-dashboard.html">
-      <div class="card-title">NSM Dashboard — Brand Integration Performance</div>
-      <div class="card-desc">Multi-partner dashboard (Tradeit | Winline) with NSM Analysis + CDP Data tabs. € value per conversion tracking.</div>
-    </a>
-
-    <a class="card" href="skin-vault-dashboard.html">
-      <div class="card-title">Skin Vault — Experiment Dashboard</div>
-      <div class="card-desc">CS2 player profile skin showcase. Traffic, engagement funnel, feedback & sentiment tracking. Launched 17 Mar 2026.</div>
-    </a>
-
-    <footer>Last updated: 19 March 2026</footer>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Ads & Partnerships Hub</h1>
+    <p>Dashboards, metrics, experiments, and project tracking — Moritz Natalini</p>
   </div>
+
+  <!-- Section 1: Core Workflows -->
+  <section id="core" class="section">
+    <div class="section-header">Core Workflows</div>
+    <div class="card-grid">
+
+      <a class="card" href="productivity-dashboard.html">
+        <div class="card-icon icon-projects">📋</div>
+        <div class="card-body">
+          <div class="card-title">
+            Projects & Todo
+            <span class="badge badge-live">16 projects</span>
+          </div>
+          <div class="card-desc">Initiative tracking, tasks, goals, and project briefs. Productivity dashboard with priority filters and progress charts.</div>
+        </div>
+      </a>
+
+      <a class="card" href="roadmap-dashboard.html">
+        <div class="card-icon icon-roadmap">🗺️</div>
+        <div class="card-body">
+          <div class="card-title">
+            Ads & Partnerships Roadmap
+            <span class="badge badge-sprint" id="sprint-badge">Q2 2026</span>
+          </div>
+          <div class="card-desc">Internal sprint grid (team × sprint) and stakeholder Gantt timeline. Drag-and-drop, sortable priorities, export/import.</div>
+        </div>
+      </a>
+
+      <a class="card" href="workflow-pipeline-diagram.html">
+        <div class="card-icon icon-pipeline">⚙️</div>
+        <div class="card-body">
+          <div class="card-title">
+            Workflow Pipeline
+            <span class="badge badge-live">10 steps</span>
+          </div>
+          <div class="card-desc">PM automation pipeline — from project creation to Slack release note. Visual flow diagram with automation classification.</div>
+        </div>
+      </a>
+
+      <a class="card" href="monthly-releases.html">
+        <div class="card-icon icon-releases">📦</div>
+        <div class="card-body">
+          <div class="card-title">
+            Monthly Releases & Experiments
+            <span class="badge badge-sprint">Q1 seeded</span>
+          </div>
+          <div class="card-desc">Interactive monthly changelog — shipped releases, experiment results, verdict tracking. Replaces static slide decks for stakeholder updates.</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Section 2: Analytics & Metrics -->
+  <section id="analytics" class="section">
+    <div class="section-header">Analytics & Metrics</div>
+    <div class="card-grid">
+
+      <a class="card" href="nsm-dashboard.html">
+        <div class="card-icon icon-nsm">💰</div>
+        <div class="card-body">
+          <div class="card-title">
+            NSM Dashboard
+            <span class="badge badge-live">Live</span>
+          </div>
+          <div class="card-desc">Brand Integration performance — € value per conversion, Partner Efficiency (€/1K EBU), conversion ladder. Multi-partner tabs (Tradeit, Winline). 30-day rolling.</div>
+        </div>
+      </a>
+
+      <a class="card" href="https://docs.google.com/document/d/1yVXi-ZI9uz4sh77a_FhCy72xFL6K6101tkKlbYvXoYs/edit?tab=t.0" target="_blank" rel="noopener">
+        <div class="card-icon icon-qbr">📊</div>
+        <div class="card-body">
+          <div class="card-title">
+            Q1 Quarterly Review
+            <span class="badge badge-due">Due Apr 9</span>
+          </div>
+          <div class="card-desc">Q1 2-pager for leadership — bet overview, KPI table, initiatives delivered, Q2 focus areas. Google Doc.</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Section 3: Experiments & Releases -->
+  <section id="experiments" class="section">
+    <div class="section-header">Experiments & Releases</div>
+
+    <!-- Live Experiments -->
+    <div class="subsection-header">
+      <span class="subsection-dot dot-live"></span>
+      Live Experiments
+    </div>
+    <div class="card-grid">
+
+      <a class="card" href="#">
+        <div class="card-icon icon-interstitial">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Skippable Video Interstitial
+            <span class="badge badge-live">Live</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Testing skippable video interstitial format on FACEIT. April 2026 experiment — measuring RPV impact and user experience.</div>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-icon icon-csstats">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Prebid Outstream — CSStats
+            <span class="badge badge-live">Live</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Prebid outstream video evaluation on CSStats inventory. April 2026 — RPV comparison against current setup.</div>
+        </div>
+      </a>
+
+      <a class="card" href="skin-vault-dashboard.html">
+        <div class="card-icon icon-skinvault">💎</div>
+        <div class="card-body">
+          <div class="card-title">
+            Skin Vault
+            <span class="badge badge-live">Live</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">CS2 player profile skin showcase. Traffic, engagement funnel, feedback & sentiment tracking. Tradeit integration. Launched 17 Mar 2026.</div>
+        </div>
+      </a>
+
+      <a class="card" href="peripheral-data-dashboard.html">
+        <div class="card-icon icon-peripheral">🖥️</div>
+        <div class="card-body">
+          <div class="card-title">
+            Peripheral Data — UX Research Brief
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Hardware telemetry from India (2,853 records). Brand landscape, sample profiles, design questions for Anouk's UX research.</div>
+        </div>
+      </a>
+
+      <a class="card" href="al-growth-dashboard.html">
+        <div class="card-icon icon-trust-modal">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            AL Growth — Trust Modal Redesign
+            <span class="badge badge-live">Live</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">Trust modal redesign experiment dashboard for design team. Design brief, experiment plan (May 2026), success metrics, and prior A/B test results. Jira: AD-3946.</div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Concluded Experiments -->
+    <div class="subsection-header">
+      <span class="subsection-dot dot-concluded"></span>
+      Concluded Experiments
+    </div>
+    <div class="card-grid">
+
+      <a class="card" href="prebid-experiment-results.html">
+        <div class="card-icon icon-prebid">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Prebid Evaluation — Full Reference
+            <span class="badge badge-concluded">Concluded</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Moba vs Publift RPV-by-tier analysis. All data tables, charts, and methodology. Revenue per Page View as primary metric.</div>
+        </div>
+      </a>
+
+      <a class="card" href="prebid-slides.html">
+        <div class="card-icon icon-prebid-slides">📑</div>
+        <div class="card-body">
+          <div class="card-title">
+            Prebid Evaluation — Slide Deck
+            <span class="badge badge-concluded">Concluded</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">8-slide presentation with keyboard navigation. Stakeholder-ready summary of the Prebid experiment.</div>
+        </div>
+      </a>
+
+      <a class="card" href="docs/product_briefs/trust-modal-experiment-conclusion.md">
+        <div class="card-icon icon-trust-modal">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Trust Modal
+            <span class="badge badge-concluded">Concluded · Mar</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">Trust modal doubles AL rate (5.34% vs 2.75%). Z-score 17.98, p&lt;0.001. €416 more value per cohort. Decision: keep as permanent default.</div>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-icon icon-rewarded-video">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Rewarded Video on Drops
+            <span class="badge badge-concluded">Concluded · Mar</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Tested rewarded video format within Drops flow. March 2026 experiment — evaluated user engagement and ad completion rates.</div>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-icon icon-mystery-box">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Mystery Box — Conversions
+            <span class="badge badge-concluded">Concluded · Mar</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">Mystery Box gamification to drive post-AL conversions (KYC, first deposit). March 2026 experiment measuring conversion ladder progression.</div>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-icon icon-mystery-box">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Mystery Box — Account Linkage
+            <span class="badge badge-concluded">Concluded · Feb</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">Mystery Box as AL incentive. February 2026 experiment — tested gamified reward to increase account linkage rate.</div>
+        </div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-icon icon-age-modal">🧪</div>
+        <div class="card-body">
+          <div class="card-title">
+            Declared Age Modal
+            <span class="badge badge-concluded">Concluded · Jan</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+          <div class="card-desc">Tested declared age step in AL flow. January 2026 experiment — measured impact on AL completion rate and data quality.</div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Releases -->
+    <div class="subsection-header">
+      <span class="subsection-dot dot-shipped"></span>
+      Releases
+    </div>
+    <div class="card-grid">
+
+      <a class="card" href="#">
+        <div class="card-icon icon-ads-alert">🚀</div>
+        <div class="card-body">
+          <div class="card-title">
+            Ads Alert v2
+            <span class="badge badge-shipped">Shipped · Mar</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">Redesigned ads alert notification system. Shipped March 2026 — improved detection and user communication for ad quality issues.</div>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="hub-footer">
+    Ads & Partnerships — Moritz Natalini · Dir. PM · FACEIT<br>
+    <a href="https://github.com/mnatalini-rgb/Personal-Space" target="_blank" rel="noopener">GitHub</a> · Last updated: 4 April 2026
+  </footer>
+
+  <script>
+    // Detect current sprint and update badge
+    (function() {
+      const sprints = [
+        { label: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10' },
+        { label: 'Sprint 2.2', start: '2026-04-13', end: '2026-04-24' },
+        { label: 'Sprint 2.3', start: '2026-04-27', end: '2026-05-08' },
+        { label: 'Sprint 2.4', start: '2026-05-11', end: '2026-05-22' },
+        { label: 'Sprint 2.5', start: '2026-05-25', end: '2026-06-05' },
+        { label: 'Sprint 2.6', start: '2026-06-08', end: '2026-06-19' }
+      ];
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const badge = document.getElementById('sprint-badge');
+      for (const s of sprints) {
+        const start = new Date(s.start + 'T00:00:00');
+        const end = new Date(s.end + 'T23:59:59');
+        if (today >= start && today <= end) {
+          badge.textContent = s.label + ' · Now';
+          return;
+        }
+      }
+    })();
+  </script>
+
 </body>
 </html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM Workflow Pipeline — Ads & Partnerships</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --accent: #1A1A2E;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border: #e2e8f0;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 4px 16px rgba(0,0,0,0.1);
+            
+            --color-manual: #2563eb;
+            --bg-manual: #dbeafe;
+            --text-manual: #1e40af;
+
+            --color-auto: #10b981;
+            --bg-auto: #d1fae5;
+            --text-auto: #065f46;
+
+            --color-semi: #f59e0b;
+            --bg-semi: #fef3c7;
+            --text-semi: #92400e;
+
+            --bg-new: #ffe4e6;
+            --text-new: #e11d48;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--accent);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* Nav */
+        nav {
+            padding: 1rem 2rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        h1 {
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        .subtitle {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        /* Legend */
+        .legend-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+        .legend {
+            display: flex;
+            gap: 2rem;
+            background: var(--surface);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.manual { background: var(--color-manual); }
+        .dot.auto { background: var(--color-auto); }
+        .dot.semi { background: var(--color-semi); }
+
+        /* Phases */
+        .phase {
+            margin-bottom: 4rem;
+        }
+        .phase-title {
+            text-align: center;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .phase-title::before, .phase-title::after {
+            content: '';
+            height: 1px;
+            background: var(--border);
+            width: 80px;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Connecting Lines Wrapper */
+        .step-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Connector Line Segment */
+        .connector {
+            width: 2px;
+            height: 30px;
+            background-color: var(--border);
+            position: relative;
+        }
+        .connector::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: -4px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid var(--border);
+        }
+
+        /* Spacing for next card */
+        .connector-gap {
+            height: 12px; /* space between arrow and next card */
+        }
+
+        /* Cards */
+        .step-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 500px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+        }
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+        .card-title-group {
+            flex-grow: 1;
+        }
+        .step-name-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+        }
+        .step-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--accent);
+        }
+        .step-tool {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Badges */
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge.manual { background: var(--bg-manual); color: var(--text-manual); }
+        .badge.auto { background: var(--bg-auto); color: var(--text-auto); }
+        .badge.semi { background: var(--bg-semi); color: var(--text-semi); }
+        
+        .badge.new {
+            background: var(--bg-new);
+            color: var(--text-new);
+            margin-left: 0.75rem;
+            animation: pulse-new 2s infinite;
+        }
+
+        @keyframes pulse-new {
+            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+        }
+
+        /* Indicators on card */
+        .card-indicator {
+            position: absolute;
+            left: 0;
+            top: 1.5rem;
+            bottom: 1.5rem;
+            width: 4px;
+            border-radius: 0 4px 4px 0;
+        }
+        .card-indicator.manual { background: var(--color-manual); }
+        .card-indicator.auto { background: var(--color-auto); }
+        .card-indicator.semi { background: var(--color-semi); }
+
+        /* Details */
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+        }
+        .step-card.expanded .card-details {
+            max-height: 200px;
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            opacity: 1;
+            border-top: 1px solid var(--border);
+        }
+        .detail-row {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: var(--accent);
+            width: 80px;
+            flex-shrink: 0;
+        }
+        .detail-value {
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Chevron */
+        .chevron {
+            color: var(--border);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        .step-card.expanded .chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">&larr; Hub &middot; Workflow Pipeline</a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>PM Workflow Automation Pipeline</h1>
+            <div class="subtitle">Ads & Partnerships &middot; 10-step flow from idea to release note</div>
+        </header>
+
+        <div class="legend-wrapper">
+            <div class="legend">
+                <div class="legend-item"><div class="dot manual"></div> Manual</div>
+                <div class="legend-item"><div class="dot auto"></div> Automated</div>
+                <div class="legend-item"><div class="dot semi"></div> Semi-auto</div>
+            </div>
+        </div>
+
+        <main class="pipeline">
+            
+            <section class="phase">
+                <div class="phase-title">Phase A: Creation Cascade</div>
+                <div class="pipeline-flow">
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator manual"></div>
+                            <div class="card-header">
+                                <div class="step-number">1</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Create Project</h3>
+                                        <div class="badge manual">Manual</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Productivity Dashboard</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">Moritz creates a new project</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">Manual entry point that cascades to automated setup.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator auto"></div>
+                            <div class="card-header">
+                                <div class="step-number">2</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Generate Tasks</h3>
+                                        <div class="badge auto">Automated</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Productivity Dashboard &rarr; Todo</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project creation</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI generates default tasks from project area template</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator auto"></div>
+                            <div class="card-header">
+                                <div class="step-number">3</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Add Stakeholder Card</h3>
+                                        <div class="badge auto">Automated</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Roadmap Dashboard &rarr; Stakeholder tab</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project creation</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">Maps project fields to stakeholder item</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">4</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Add Sprint Chips</h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Roadmap Dashboard &rarr; Sprint grid</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project creation</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI suggests sprint placement, Moritz confirms</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator auto"></div>
+                            <div class="card-header">
+                                <div class="step-number">5</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Create Jira Ticket</h3>
+                                        <div class="badge auto">Automated</div>
+                                    </div>
+                                    <p class="step-tool">Tool: jira-cli &rarr; Jira Cloud</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project creation</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI constructs and executes <code>jira issue create</code></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="phase">
+                <div class="phase-title">Phase B: Execution & Learning</div>
+                <div class="pipeline-flow">
+                    
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">6</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Experiment Phase</h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Jira &rarr; refresh-roadmap.sh &rarr; Experiment tracking</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">Jira ticket moves to "Done"</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI detects completion, prompts for experiment setup</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">7</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Weekly Update</h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Weekly slide template</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">Every Friday</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI drafts from project state, Moritz reviews</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="phase">
+                <div class="phase-title">Phase C: Ship & Communicate</div>
+                <div class="pipeline-flow">
+                    
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">8</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Monthly Releases Page <span class="badge new">NEW</span></h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Monthly Releases & Experiments dashboard</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project ship or experiment completion</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI creates release/experiment entry with metrics</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">9</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">QBR Reference</h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Quarterly Review document</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project completion</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI generates QBR-ready narrative from Monthly Releases data</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="connector"></div>
+                        <div class="connector-gap"></div>
+                    </div>
+
+                    
+                    <div class="step-wrapper">
+                        <div class="step-card" onclick="this.classList.toggle('expanded')">
+                            <div class="card-indicator semi"></div>
+                            <div class="card-header">
+                                <div class="step-number">10</div>
+                                <div class="card-title-group">
+                                    <div class="step-name-row">
+                                        <h3 class="step-name">Slack Release Note</h3>
+                                        <div class="badge semi">Semi-auto</div>
+                                    </div>
+                                    <p class="step-tool">Tool: Slack #bet-ads-partnerships</p>
+                                </div>
+                                <div class="chevron">▼</div>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-row">
+                                    <div class="detail-label">Trigger:</div>
+                                    <div class="detail-value">On project ship</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Action:</div>
+                                    <div class="detail-value">AI formats message, posts via webhook after approval</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        Last updated: April 2026 &middot; Moritz Natalini &middot; Dir. PM
+    </footer>
+
+</body>
+</html>

@@ -5,21 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Productivity Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f9fafb;
+      --bg: #EEF2F3;
       --surface: #ffffff;
-      --text: #111827;
-      --text-muted: #6b7280;
-      --border: #e5e7eb;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --border: #E2E8F0;
       --accent: #2563eb;
       --accent-hover: #1d4ed8;
-      --p0: #dc2626; /* Red */
-      --p1: #ea580c; /* Orange */
-      --p2: #3b82f6; /* Blue */
-      --success: #16a34a; /* Green */
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --radius: 8px;
+      --accent-light: rgba(37, 99, 235, 0.08);
+      --p0: #dc2626;
+      --p1: #ea580c;
+      --p2: #3b82f6;
+      --success: #16a34a;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius: 20px;
+      --radius-sm: 14px;
+      --radius-xs: 8px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,6 +37,7 @@
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
@@ -57,23 +66,23 @@
     .tab-btn {
       background: none;
       border: none;
-      padding: 8px 16px;
+      padding: 8px 18px;
       font-size: 14px;
       font-weight: 500;
       color: var(--text-muted);
       cursor: pointer;
-      border-radius: var(--radius);
-      transition: background-color 0.2s, color 0.2s;
+      border-radius: 24px;
+      transition: background 0.2s, color 0.2s;
     }
 
-    .tab-btn:hover { background-color: var(--border); color: var(--text); }
-    .tab-btn.active { background-color: var(--accent); color: white; }
+    .tab-btn:hover { background: var(--accent-light); color: var(--text); }
+    .tab-btn.active { background: var(--accent); color: white; }
 
     .settings-btn {
       background: none;
       border: 1px solid var(--border);
       padding: 8px 12px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       cursor: pointer;
       font-size: 14px;
       color: var(--text);
@@ -90,7 +99,8 @@
       border-radius: var(--radius);
       padding: 24px;
       margin-bottom: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
     }
 
     .form-row {
@@ -115,7 +125,7 @@
     input, select {
       padding: 10px;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       font-size: 14px;
       outline: none;
       font-family: inherit;
@@ -130,7 +140,7 @@
     .priority-pill {
       padding: 8px 16px;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 24px;
       background: var(--surface);
       cursor: pointer;
       font-size: 13px;
@@ -147,7 +157,7 @@
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
@@ -166,7 +176,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 6px 12px;
-      border-radius: 16px;
+      border-radius: 24px;
       font-size: 12px;
       cursor: pointer;
     }
@@ -184,7 +194,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       padding: 12px 16px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       margin-bottom: 8px;
       transition: opacity 0.2s;
     }
@@ -204,10 +214,10 @@
       font-size: 11px;
       font-weight: 600;
       padding: 4px 8px;
-      border-radius: 12px;
+      border-radius: 24px;
       text-transform: uppercase;
     }
-    .tag-category { background: #f3f4f6; color: var(--text-muted); }
+    .tag-category { background: rgba(0,0,0,0.03); color: var(--text-muted); }
     .tag-p0 { background: #fee2e2; color: var(--p0); }
     .tag-p1 { background: #ffedd5; color: var(--p1); }
     .tag-p2 { background: #dbeafe; color: var(--p2); }
@@ -230,7 +240,8 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 16px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
     }
     .stat-card h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
     .stat-card .value { font-size: 28px; font-weight: 700; color: var(--text); }
@@ -243,7 +254,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 16px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
       position: relative;
       min-height: 260px;
     }
@@ -253,11 +264,11 @@
     .chart-container h3 { font-size: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 
     .insight-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: var(--radius);
+      background: rgba(37, 99, 235, 0.06);
+      border: 1px solid rgba(37, 99, 235, 0.15);
+      border-radius: var(--radius-sm);
       padding: 16px;
-      color: #1e3a8a;
+      color: var(--text);
       font-size: 14px;
       margin-bottom: 24px;
     }
@@ -270,7 +281,7 @@
       margin-bottom: 24px;
       background: var(--surface);
       padding: 12px 24px;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border);
       width: fit-content;
     }
@@ -282,27 +293,29 @@
     .goal-header { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
     .goal-title { font-weight: 500; }
     .goal-stats { font-size: 12px; color: var(--text-muted); }
-    .progress-track { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer; }
+    .progress-track { background: var(--border); height: 8px; border-radius: var(--radius-xs); overflow: hidden; position: relative; cursor: pointer; }
     .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.3s; pointer-events: none; }
 
     /* Modals */
     .modal-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000;
+      background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 1000;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
     .modal-overlay.active { display: flex; }
     .modal {
       background: var(--surface); border-radius: var(--radius); padding: 24px; width: 400px;
-      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-hover);
     }
     .modal h2 { margin-bottom: 16px; font-size: 18px; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-    .btn-secondary { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: var(--radius); cursor: pointer; }
+    .btn-secondary { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: var(--radius-sm); cursor: pointer; }
 
     /* Project Brief Modal */
     .modal-wide {
       background: var(--surface); border-radius: var(--radius); padding: 32px; width: 720px; max-width: 90vw;
-      max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+      max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow-hover);
     }
     .modal-wide h1 { font-size: 22px; margin-bottom: 4px; }
     .modal-wide h2 { font-size: 17px; margin-top: 24px; margin-bottom: 8px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
@@ -319,7 +332,7 @@
     .brief-meta { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
     .btn-brief { 
       background: var(--bg); border: 1px solid var(--border); padding: 5px 12px; 
-      border-radius: var(--radius); cursor: pointer; font-size: 12px; font-weight: 500;
+      border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; font-weight: 500;
       color: var(--accent); transition: all 0.15s;
     }
     .btn-brief:hover { background: var(--accent); color: white; border-color: var(--accent); }
@@ -331,29 +344,38 @@
       border: 1px solid var(--border); 
       border-radius: var(--radius); 
       padding: 20px; 
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow);
       position: relative;
       border-left: 4px solid var(--border);
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.2s ease, transform 0.15s ease;
       cursor: pointer;
     }
-    .project-card:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .project-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .project-id { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; font-family: 'SF Mono', 'Fira Code', monospace; }
     .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     .project-title { font-size: 16px; font-weight: 600; color: var(--text); }
     .project-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .project-status { font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px; text-transform: uppercase; user-select: none; cursor: pointer; }
+    .project-status { font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 24px; text-transform: uppercase; user-select: none; cursor: pointer; }
     .project-status.active { background: #dcfce7; color: #166534; }
+    .project-status.not_started { background: rgba(0,0,0,0.05); color: var(--text-muted); }
     .project-status.on-hold { background: #fef3c7; color: #b45309; }
     .project-status.completed { background: #dbeafe; color: #1e40af; }
+
+    /* Not-started card treatment */
+    .project-card.not-started-card {
+      opacity: 0.55;
+      border-left-color: var(--border) !important;
+    }
+    .project-card.not-started-card:hover { opacity: 0.85; }
     .project-stats-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-    .project-progress { background: var(--border); height: 6px; border-radius: 3px; overflow: hidden; margin-bottom: 12px; }
+    .project-progress { background: var(--border); height: 6px; border-radius: var(--radius-xs); overflow: hidden; margin-bottom: 12px; }
     .project-progress .progress-fill { height: 100%; transition: width 0.3s; }
-    .project-next-task { font-size: 12px; color: var(--text); background: #f3f4f6; padding: 8px 12px; border-radius: 6px; margin-top: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .project-next-task { font-size: 12px; color: var(--text); background: rgba(0,0,0,0.03); padding: 8px 12px; border-radius: var(--radius-xs); margin-top: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .project-next-task strong { color: var(--text-muted); margin-right: 4px; }
     .project-target-date { font-size: 12px; color: var(--text-muted); margin-top: 12px; text-align: right; }
     .project-tasks-list { display: none; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
     .project-card.expanded .project-tasks-list { display: block; }
-    .ptask-item { display: flex; align-items: center; justify-content: space-between; font-size: 12px; padding: 6px 0; border-bottom: 1px solid #f3f4f6; }
+    .ptask-item { display: flex; align-items: center; justify-content: space-between; font-size: 12px; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.03); }
     .ptask-item:last-child { border-bottom: none; }
     .ptask-name { flex: 1; margin-right: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ptask-item.completed .ptask-name { text-decoration: line-through; color: var(--text-muted); }
@@ -361,6 +383,11 @@
   </style>
 </head>
 <body>
+  <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+    <a href="index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
+    <span style="color:#CBD5E1;">·</span>
+    <span style="color:#6B7280;">Productivity Dashboard</span>
+  </nav>
 
   <div class="container">
     <header>
@@ -434,12 +461,20 @@
 
     <!-- Projects View -->
     <div id="projects" class="view-section">
-      <div class="filter-bar" id="projectPriorityFilters">
-        <span class="filter-label">Priority</span>
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="P0">P0</button>
-        <button class="filter-btn" data-filter="P1">P1</button>
-        <button class="filter-btn" data-filter="P2">P2</button>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 8px;">
+        <div class="filter-bar" id="projectStatusFilters">
+          <span class="filter-label">Status</span>
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="not_started">Not Started</button>
+        </div>
+        <div class="filter-bar" id="projectPriorityFilters">
+          <span class="filter-label">Priority</span>
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="P0">P0</button>
+          <button class="filter-btn" data-filter="P1">P1</button>
+          <button class="filter-btn" data-filter="P2">P2</button>
+        </div>
       </div>
       <div class="insight-box" id="projectsSummary" style="display: flex; gap: 24px;">
         <!-- Summary populated via JS -->
@@ -595,7 +630,7 @@
 
   <script>
     // --- Data Management ---
-    const SEED_VERSION = 11;
+    const SEED_VERSION = 19;
     const SEED_TASKS = [{"id": "c787c5ee-8973-404f-836e-f4a2d034d146", "task": "Prebid analysis: uploaded CSVs, built full RPV-by-tier analysis, slide deck created", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-16", "status": "completed", "completedDate": "2026-03-16", "createdAt": "2026-03-16T09:00:00Z"}, {"id": "6beaee89-5fc3-4328-a9e8-fec65924e3f2", "task": "Book Flo meeting for 28 March (Play Interstitial)", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-16", "status": "completed", "completedDate": "2026-03-16", "createdAt": "2026-03-16T09:00:00Z"}, {"id": "69a605b6-12c9-4cea-9bd3-cd289711156e", "task": "Sync with Teodor on Video Interstitial A/B split status", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-16", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-16T09:00:00Z"}, {"id": "c625d382-5964-4edc-8feb-8440a7f60166", "task": "Review Prebid slide deck, check numbers, prep for Wed delivery", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "524bf945-4798-45cb-af3d-fd3cedfcae29", "task": "Play Interstitial one-pager rewritten (3 ad slots, $5.8M potential)", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-17", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "f7c45f8e-8b62-4c52-b8f1-0ac668f89588", "task": "Turkey peripheral confirmed live at 100%", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-17", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "f1e45f91-11ed-4d2d-88e7-821522f45507", "task": "NSM Combined view built and pushed to GitHub Pages", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-17", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "81760e0c-0935-43f6-8081-6bb0698e04b9", "task": "Play Interstitial doc synced to Google Drive", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-17", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "24c3e747-4da9-4c20-8e99-32af393ae77b", "task": "Schedule Video Interstitial creative in GAM", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-17", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-17T09:00:00Z"}, {"id": "e0f8f2c6-4520-4418-8bbc-053b91e4a04f", "task": "Deliver the Prebid presentation to stakeholders", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-18", "status": "completed", "completedDate": "2026-03-18", "createdAt": "2026-03-18T09:00:00Z"}, {"id": "9b9596a8-c473-446a-b0c4-ed1dc62166d6", "task": "Check Peripheral data is flowing", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-18", "status": "completed", "completedDate": "2026-03-18", "createdAt": "2026-03-18T09:00:00Z"}, {"id": "04251f6e-a6c1-47c7-9ef9-f588b6fafd90", "task": "Validate first Turkey peripheral data (compare vs India baseline)", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-18", "status": "completed", "completedDate": "2026-03-25", "createdAt": "2026-03-18T09:00:00Z"}, {"id": "e341661a-af46-4601-a1f6-e9a2de18b49c", "task": "Skin Vault experiment check-in with Teo + Isabel", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-19T09:00:00Z"}, {"id": "f0a6a8fe-c7ed-43f5-b37e-89a511d7fb31", "task": "Built Skin Vault experiment dashboard", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-19T09:00:00Z"}, {"id": "ed26b6ab-5c3a-4482-9aea-52e9cdfd4f5e", "task": "Deployed Skin Vault dashboard to GitHub Pages", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-19T09:00:00Z"}, {"id": "08e67208-9df8-4670-8eee-624c4127039e", "task": "Play Interstitial one-pager sent to Will for review", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-19T09:00:00Z"}, {"id": "402b7a44-125f-482e-ba2a-ddf2f426d9ec", "task": "Confirmed Brand Product session time with Isaure/Archil", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-19T09:00:00Z"}, {"id": "1bbf6518-2441-4c8a-a41b-b8089651c30d", "task": "Update team slide (Slide 19) — include Prebid results", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-20T09:00:00Z"}, {"id": "a4aff2e4-429c-40af-aba4-c9b8cb2832ef", "task": "Pull AL flow + Mystery Box experiment data", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-20T09:00:00Z"}, {"id": "b56728ae-dfe4-48ad-adad-0b795edb33d4", "task": "Build experiment dashboards for AL flow + Mystery Box", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-20T09:00:00Z"}, {"id": "234b6d1d-742a-4ff4-a548-b77697e6228b", "task": "Get more context on Ads Alerts V2", "priority": "P2", "category": "Advertising", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-20T09:00:00Z"}, {"id": "ae4d4801-5b90-42c3-8a8a-05764f8c4329", "task": "Review Skin Vault weekend traffic baseline", "priority": "P2", "category": "Brand Integrations", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-20T09:00:00Z"}, {"id": "eb75c720-2bf8-45a5-975a-1710377a025f", "task": "Skippable Video Interstitial — Test Setup (needs GAM + MixPanel)", "priority": "P1", "category": "Advertising", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-16T08:00:00Z"}, {"id": "0dc02b5a-9a95-45b1-ba2e-26d90c279f20", "task": "Skin Vault — Experiment monitoring on 300 profiles", "priority": "P2", "category": "Brand Integrations", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-16T08:00:00Z"}, {"id": "cd03ad46-acfc-491d-83a7-355107972501", "task": "Weekly Mission Data + NSM Tracking — maintain dashboard", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-16", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-16T08:00:00Z"}, {"id": "b0779b0b-3074-49f5-9ce5-9592f2eda5f9", "task": "Brand Product Session — prep for Inventory Team", "priority": "P2", "category": "Stakeholders", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-16T08:00:00Z"}, {"id": "b713bb22-6bf4-4780-824d-3f282f1315f2", "task": "NSM Dashboard — BQ Pipeline + Data Fixes (date filter bug)", "priority": "P0", "category": "Data & Analytics", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-16T08:00:00Z"}, {"id": "8bb92111-02c1-4d98-b4bc-2e4180533ab3", "task": "AL Flow Trust Modal A/B Test — Analysis complete", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-16T08:00:00Z"}, {"id": "c03d8a5b-86db-4a39-b2a2-908468b6bd76", "task": "Experiments Tab — Month filter added", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-20", "status": "completed", "completedDate": "2026-03-20", "createdAt": "2026-03-16T08:00:00Z"}, {"id": "299cc1cf-4a82-499b-8dbe-c30a106e6bd4", "task": "Skin Vault Dashboard — Built and deployed to GitHub Pages", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-19", "status": "completed", "completedDate": "2026-03-19", "createdAt": "2026-03-17T08:00:00Z"}, {"id": "7fcd8f4a-abcb-4bdb-84f2-a14ebc43d880", "task": "Review Skin Vault weekend traffic data (pull CSVs)", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-23T09:00:00Z"}, {"id": "2c57ac4f-e337-4131-a28e-eda913d2ed42", "task": "Sync with Teodor on Video Interstitial A/B — plan GAM creative", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-23T09:00:00Z"}, {"id": "aa8a1873-47e8-4698-818f-1b618972aeae", "task": "Check Turkey peripheral data flowing — pull initial export", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-23T09:00:00Z"}, {"id": "5f72bc20-aa2c-4de0-823c-bf144316cdf4", "task": "Deploy Apps Script for NSM automation", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-23T09:00:00Z"}, {"id": "f39877b6-44b8-46a2-abca-6e0f3448d7c2", "task": "Fix Play Interstitial spreadsheet — replace hardcoded numbers with formulas", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-24", "status": "completed", "completedDate": "2026-03-24", "createdAt": "2026-03-24T09:00:00Z"}, {"id": "f7022236-b657-49a3-9590-f79b0f436bfd", "task": "Prep Brand Product Session agenda — product lineup + brief cheat sheet", "priority": "P0", "category": "Stakeholders", "plannedDate": "2026-03-24", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-24T09:00:00Z"}, {"id": "8fb085e5-9d0e-45e2-a02a-94a0dc5a7720", "task": "Schedule Video Interstitial creative in GAM (if Teodor confirms)", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-24", "status": "completed", "completedDate": "2026-03-24", "createdAt": "2026-03-24T09:00:00Z"}, {"id": "c284be0a-9424-445a-8011-d694db794ebb", "task": "Update Skin Vault dashboard with fresh weekend data", "priority": "P2", "category": "Brand Integrations", "plannedDate": "2026-03-24", "status": "completed", "completedDate": "2026-03-24", "createdAt": "2026-03-24T09:00:00Z"}, {"id": "6eda6753-f243-406b-96ef-02e8261cf3dc", "task": "Final prep for Brand Product Session (materials, agenda, one-pager)", "priority": "P0", "category": "Stakeholders", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-25T09:00:00Z"}, {"id": "8660e20a-245c-4994-86b1-1c07c8dc9d1c", "task": "Turkey vs India peripheral data comparative analysis", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-25", "createdAt": "2026-03-25T09:00:00Z"}, {"id": "3b44ff1f-8ce9-445b-97e7-c7d957efc72e", "task": "Prep Play Interstitial meeting materials (5-slide summary)", "priority": "P2", "category": "Advertising", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-25T09:00:00Z"}, {"id": "f3d61a73-e919-4b1b-8fc6-1c8eb86d059c", "task": "Gather context on Ads Alerts V2 for scoping", "priority": "P2", "category": "Advertising", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-25T09:00:00Z"}, {"id": "a761e711-aa7e-4aab-9286-6a808d934511", "task": "Brand Product Session — 1hr with Inventory team (London office)", "priority": "P0", "category": "Stakeholders", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-26T09:00:00Z"}, {"id": "dd08a871-6b5f-4d5a-a5cf-d8e2d1384388", "task": "Debrief Brand Product Session — capture action items", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-26", "createdAt": "2026-03-26T09:00:00Z"}, {"id": "a0d4303b-b167-4494-a8d7-81faa38f2cee", "task": "NSM dashboard — funnel and audience data first draft", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-26", "createdAt": "2026-03-26T09:00:00Z"}, {"id": "5799b421-b2ef-4393-9574-0913b6839184", "task": "Finalize Play Interstitial meeting deck for Friday", "priority": "P2", "category": "Advertising", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-26T09:00:00Z"}, {"id": "8eacfad3-f95e-4cc7-9a79-2f99beea5e86", "task": "Play Interstitial meeting with Flo + stakeholders", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-30", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "f9db3658-7834-47e1-b93d-7a1f0d5f0cf4", "task": "Update team slide (Slide 19) — Brand Product Session outcomes", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-30", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "fa61ef1b-6498-4fd6-b3e5-04e1d9e14356", "task": "Post weekly update to #bet-ads-partnerships", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-30", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "d2251617-879c-406e-8280-ca8bce634771", "task": "Skin Vault experiment — week 2 go/no-go checkpoint", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-03-30", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "ca468ec7-8be5-4388-955c-c09c48182aeb", "task": "Skippable Video Interstitial — GAM Creative + MixPanel", "priority": "P1", "category": "Advertising", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-25", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "60aee812-c748-4dad-a2c2-ca9be1f9592c", "task": "Skin Vault — Weekend Traffic Review", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "d87b5917-c975-479f-bb00-746de011eb1a", "task": "Peripheral — Turkey Data Review", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-25", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "c289d60d-ec46-4dcb-a1ae-24ffcf3ad4a9", "task": "NSM Dashboard — Funnel and Audience Data", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-26", "status": "completed", "completedDate": "2026-03-26", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "5fcae23a-2124-4293-b099-5a434b6bdbf1", "task": "NSM Dashboard — Automation deploy Apps Script", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-23", "status": "completed", "completedDate": "2026-03-23", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "ca3f3725-b58e-4728-a62d-7ddba7ff037a", "task": "Ads Alerts V2 — Scoping carried", "priority": "P2", "category": "Advertising", "plannedDate": "2026-03-25", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T11:09:44.398Z"}, {"id": "a9261633-0776-4e80-93da-0db89aea056c", "task": "Winline Rewards Tab — Build from Tradeit template", "priority": "P0", "category": "Brand Integrations", "plannedDate": "2026-03-31", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "94fc6b49-d080-4643-a4a1-ed5150d5e890", "task": "Friday Slide (Slide 19) — Weekly update", "priority": "P0", "category": "Stakeholders", "plannedDate": "2026-04-06", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "d7f27bb4-cd32-4a52-9f18-89ef1dd44099", "task": "CDP Partner Performance — Scope and data discovery in BQ", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-03-31", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "1dc70e86-817f-4ba5-99ca-f514b6a4b8a4", "task": "Ads Alerts V2 — Context gathering", "priority": "P2", "category": "Advertising", "plannedDate": "2026-04-02", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "f1e1cfad-73e2-4ec6-a482-1511c23b7773", "task": "Tradeit Funnel — Active/Inactive layer blocked on BQ", "priority": "P2", "category": "Brand Integrations", "plannedDate": "2026-03-31", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "27310863-8fe6-4c7e-9dc1-3945f3ccb83a", "task": "ROI Calculation — Per-partner cost blocked on Finance", "priority": "P2", "category": "Data & Analytics", "plannedDate": "2026-03-31", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "38308c92-01bf-498a-9697-186e0751ef4e", "task": "Quarterly Review 2-Pager — Draft Q1 review", "priority": "P0", "category": "Strategy", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T11:10:06.097Z"}, {"id": "14eefa88-1242-4e87-8eab-67f0d5da222c", "task": "Primis Outstream + Mobalytics Experiment — Define experiment plan (control vs variant, traffic split, success metrics: RPV, viewability, eCPM)", "priority": "P0", "category": "Advertising", "plannedDate": "2026-04-01", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "4a0aefae-323a-4618-bf01-2e55027d4780", "task": "Primis Outstream — Coordinate with Primis on tag setup and creative specs for CSStats integration", "priority": "P1", "category": "Advertising", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "f2d8f466-53e0-4e1d-9cad-5684fcef7c01", "task": "Mobalytics Prebid Experiment — Set up Moba header bidding on Mobalytics (align with CSStats A/B learnings)", "priority": "P1", "category": "Advertising", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "54331220-6c0a-4fca-81fa-382307d1d167", "task": "Outstream Experiment — Define guardrail metrics (page load impact, user engagement drop-off, scroll depth)", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-04-01", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "579199de-b970-4c54-b9aa-e6616da49335", "task": "Play Interstitial — Flo agreed to test but flagged UX too aggressive. Research less intrusive ad formats (e.g., opt-in, shorter pod, skip after 5s)", "priority": "P0", "category": "Advertising", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "61d77a2d-628d-42ec-83c2-e5182790ba08", "task": "Play Interstitial — Design workshop scheduled while Moritz OOO (Derek + Flo + Design). Prep brief with UX alternatives + constraints for the team", "priority": "P0", "category": "Stakeholders", "plannedDate": "2026-04-06", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "d7003743-0d03-4da7-95c8-29bcfd4f69d5", "task": "Play Interstitial — Define guardrail metrics with Derek (queue abandonment rate, time-to-match perception, subscriber conversion impact)", "priority": "P0", "category": "Strategy", "plannedDate": "2026-04-06", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "4344b096-a137-49cb-82e4-f2d839ec4ba4", "task": "Play Interstitial — Document Flo + Derek feedback and agreed next steps (UX concerns, workshop format, timeline)", "priority": "P0", "category": "Advertising", "plannedDate": "2026-03-30", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "254a50eb-7af0-4f4b-bdc7-0898105d01c7", "task": "Prebid Moba — Collect first CSStats A/B results (Moba + Primis outstream vs control). Document RPV by tier", "priority": "P0", "category": "Advertising", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "c62cbdd9-400a-429f-896e-81a6ccc182c5", "task": "Prebid Moba — Decision checkpoint: if CSStats results positive, plan phased migration (Tier 3 → Tier 2 → Tier 1)", "priority": "P0", "category": "Advertising", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "7549eab2-3822-4443-83d1-6a4f62d02609", "task": "Prebid Moba — Align with Publift on transition plan (they don't know about Moba experiment). Prepare communication.", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-04-21", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "ec91a986-5aab-4630-b98a-9bb5e9773d7a", "task": "Prebid Moba — Share CSStats A/B results with Commercial within 48hrs of analysis completion", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "989db552-d193-4c6f-99b6-0360169ee47a", "task": "Brand Product Session follow-up — captured action items and feedback (session went well)", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-03-27", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T19:00:00Z"}, {"id": "4467ccc9-3490-4d33-8094-9170aa581b55", "task": "One-Pager Deck: \"What's FACEIT\" — Create intro slide/section explaining FACEIT platform for partner-facing materials", "priority": "P1", "category": "Strategy", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "0c608c44-07c4-4d93-bd2c-a7be39f4ce35", "task": "One-Pager Deck: Latest info on Missions + Brand Takeover (Drops + Reward Video) — update product descriptions and capabilities", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "a59a1fdd-c41a-42be-8d31-e5be013d8dbf", "task": "One-Pager Deck: Performance features section — CDP capabilities, Account Linkage flow, conversion tracking, data points", "priority": "P1", "category": "Brand Integrations", "plannedDate": "2026-04-21", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "157bc8a1-a5d4-4478-ae7c-365e3ee12b2c", "task": "One-Pager Deck: Case studies — wait for template from Inventory team, then build Winline + Tradeit case studies with metrics", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-05-12", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "b1ba827e-b1c1-42d7-9e87-7dd550cf907b", "task": "One-Pager Deck: Pricing and key verticals — work with Inventory team on pricing structure and vertical targeting", "priority": "P1", "category": "Strategy", "plannedDate": "2026-05-19", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "e951a0a8-203b-4ec2-ae5a-bb61179d5f62", "task": "Process: Keep Inventory team updated on experiments and betas ahead of official release — establish cadence", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-04-06", "status": "active", "completedDate": null, "createdAt": "2026-03-27T19:00:00Z"}, {"id": "c2465d87-86fe-448f-9825-32422a7b9d25", "task": "Process: Create dedicated Slack channel for sharing slides, experiment results, and product updates with Inventory team", "priority": "P2", "category": "Internal/Ops", "plannedDate": "2026-04-01", "status": "completed", "completedDate": "2026-03-27", "createdAt": "2026-03-27T19:00:00Z"}, {"id": "tw-001", "task": "Twitch Extension — Review Fahad's answers to Lulu's 3 questions", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-04-01", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "tw-002", "task": "Twitch Extension — Clarify Chexx licensing risk with Fahad", "priority": "P1", "category": "Stakeholders", "plannedDate": "2026-04-01", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "tw-003", "task": "Twitch Extension — Go/no-go decision on Pick'Ems with Will", "priority": "P0", "category": "Strategy", "plannedDate": "2026-04-03", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "tw-004", "task": "Twitch Extension — Kick off holistic extension scoping with Georg + Grid", "priority": "P1", "category": "Strategy", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "0afefa71-f68c-45e0-b586-e4466443d5f7", "task": "Q1 Quarterly Review — Discussion with Warren (16 Apr 4PM BST). Present Q1 results, bet performance, Q2 focus areas.", "priority": "P0", "category": "Strategy", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T16:00:00Z"}, {"id": "ce256e59-8630-4b38-ae52-cd14e5920590", "task": "CDP User Behaviour — Discovery: identify what partner-side CRM signals we receive post-AL (deposits, purchases, session frequency). Map data availability per partner.", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-04-07", "status": "active", "completedDate": null, "createdAt": "2026-03-27T17:00:00Z"}, {"id": "954db194-3b7b-4154-a926-ea8376061ce2", "task": "CDP User Behaviour — BQ analysis: do Mission-activated users spend on partner sites beyond the Mission reward? Compare C2/C3 conversion rates for Mission vs organic AL users.", "priority": "P1", "category": "Data & Analytics", "plannedDate": "2026-04-14", "status": "active", "completedDate": null, "createdAt": "2026-03-27T17:00:00Z"}, {"id": "a76da687-5927-4ddd-b064-0befb85a4d40", "task": "CDP User Behaviour — Build insight deck for partners: incremental spend data, user retention post-Mission, lifetime value comparison. Feed into NSM partner value narrative.", "priority": "P1", "category": "Strategy", "plannedDate": "2026-04-21", "status": "active", "completedDate": null, "createdAt": "2026-03-27T17:00:00Z"}, {"id": "a1b2c3d4-legal-peripheral-001", "task": "Submit legal ticket for peripheral hardware data compliance review (doc ready)", "priority": "P0", "category": "Internal/Ops", "plannedDate": "2026-03-30", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}, {"id": "b2c3d4e5-be-data-storage-001", "task": "Plan BE data storage with engineering — skins + peripherals for analysis & Brand Integration/Ads targeting", "priority": "P0", "category": "Data & Analytics", "plannedDate": "2026-03-30", "status": "active", "completedDate": null, "createdAt": "2026-03-27T18:00:00Z"}];
     // Version check: invalidate localStorage when SEED_TASKS change
     const storedVersion = parseInt(localStorage.getItem('productivity_seed_version') || '0', 10);
@@ -617,19 +652,21 @@
     ];
 
     const SEED_PROJECTS = [
-      { id: 'proj-1', name: 'Prebid Migration', description: 'Phased migration from Publift to Prebid — Moba experiment on CSStats, Primis outstream, T3→T1 rollout', status: 'active', priority: 'P2', keywords: ['prebid', 'moba', 'publift', 'primis', 'rpv', 'csstats'], color: '#2563eb', targetDate: '2026-06-30', docFile: 'docs/projects/prebid-migration.md', dashboard: 'analysis/prebid-experiment-results.html' },
+      { id: 'proj-1', name: 'Prebid Migration', description: 'Phased migration from Publift to Prebid — Moba experiment on CSStats, Primis outstream, T3→T1 rollout', status: 'not_started', priority: 'P2', keywords: ['prebid', 'moba', 'publift', 'primis', 'rpv', 'csstats'], color: '#2563eb', targetDate: '2026-06-30', docFile: 'docs/projects/prebid-migration.md', dashboard: 'analysis/prebid-experiment-results.html' },
       { id: 'proj-2', name: 'Play Interstitial', description: 'New ad format in queue — business case done, design workshop for less aggressive UX, guardrail metrics', status: 'active', priority: 'P0', keywords: ['play', 'interstitial', 'flo', 'ad pod', 'queue'], color: '#7c3aed', targetDate: '2026-05-31', docFile: 'docs/projects/play-interstitial.md', dashboard: null },
-      { id: 'proj-3', name: 'Mystery Box / AL Growth', description: 'Scale account linkage experiments — Mystery Box to Winline, monitor C1/C2 conversion quality', status: 'active', priority: 'P1', keywords: ['mystery', 'box', 'account linkage', 'al rate', 'al '], color: '#059669', targetDate: null, docFile: 'docs/projects/mystery-box-al-growth.md', dashboard: 'analysis/tradeit-nsm-dashboard.html' },
-      { id: 'proj-4', name: 'NSM Dashboard', description: 'Live ROI visibility per partner — automation pipeline with Apps Script, BQ source of truth', status: 'active', priority: 'P1', keywords: ['nsm', 'dashboard', 'bq', 'pipeline', 'roi'], color: '#d97706', targetDate: '2026-04-30', docFile: 'docs/projects/nsm-dashboard.md', dashboard: 'analysis/nsm-dashboard.html' },
-      { id: 'proj-5', name: 'Peripheral Initiative', description: 'Italy + all Tier 3 countries live at 100% — hardware ad vertical, Tier 1 expansion gated on Legal (LEGD-8214)', status: 'active', priority: 'P0', keywords: ['peripheral', 'hardware', 'tier 3', 'country', 'countries'], color: '#dc2626', targetDate: null, docFile: 'docs/projects/peripheral-expansion.md', dashboard: 'analysis/peripheral-data-dashboard.html' },
+      { id: 'proj-3', name: 'AL Growth', description: 'Scale account linkage volume and conversion quality across all partners. Optimise AL→C1→C2 funnel through trust modal, flow UX, and targeting experiments.', status: 'active', priority: 'P1', keywords: ['account linkage', 'al growth', 'al rate', 'trust modal', 'linkage flow', 'al conversion', 'al funnel', 'account link'], color: '#059669', targetDate: null, docFile: null, dashboard: 'analysis/al-growth-dashboard.html' },
+      { id: 'proj-4', name: 'NSM Dashboard', description: 'Live ROI visibility per partner — automation pipeline with Apps Script, BQ source of truth', status: 'not_started', priority: 'P1', keywords: ['nsm', 'dashboard', 'bq', 'pipeline', 'roi'], color: '#d97706', targetDate: '2026-04-30', docFile: 'docs/projects/nsm-dashboard.md', dashboard: 'analysis/nsm-dashboard.html' },
+      { id: 'proj-5', name: 'Peripheral Initiative', description: 'End-to-end peripheral data play: collect hardware telemetry via FACEIT Client, design user-facing profile, normalise storage for ad targeting segments. Live in IT + T3 countries. Egor (BE), Anouk (Design). Gated on Legal (LEGD-8214).', status: 'active', priority: 'P0', keywords: ['peripheral', 'hardware', 'tier 3', 'country', 'countries', 'targeting', 'egor', 'anouk', 'audience', 'segment', 'gpu', 'cpu', 'design', 'telemetry', 'ad targeting'], color: '#dc2626', targetDate: null, docFile: 'docs/product_briefs/hardware-ad-targeting-scoping.md', dashboard: 'analysis/peripheral-data-dashboard.html' },
       { id: 'proj-6', name: 'Skin Vault', description: 'Live on 300 profiles — monitoring engagement and Tradeit integration performance', status: 'active', priority: 'P0', keywords: ['skin', 'vault', 'tradeit', 'profile'], color: '#0891b2', targetDate: null, docFile: 'docs/projects/skin-vault.md', dashboard: 'analysis/skin-vault-dashboard.html' },
-      { id: 'proj-7', name: 'One-Pager Deck', description: 'Sales deck — What is FACEIT, Missions, Brand Takeover, CDP features, case studies, pricing', status: 'active', priority: 'P2', keywords: ['one-pager', 'deck', 'case stud', 'inventory', 'sales deck'], color: '#be185d', targetDate: '2026-04-15', docFile: 'docs/projects/one-pager-deck.md', dashboard: null },
+      { id: 'proj-7', name: 'One-Pager Deck', description: 'Sales deck — What is FACEIT, Missions, Brand Takeover, CDP features, case studies, pricing', status: 'not_started', priority: 'P2', keywords: ['one-pager', 'deck', 'case stud', 'inventory', 'sales deck'], color: '#be185d', targetDate: '2026-04-15', docFile: 'docs/projects/one-pager-deck.md', dashboard: null },
       { id: 'proj-8', name: 'Q1 Quarterly Review', description: 'Q1 2-pager for leadership — bet overview, KPI table, initiatives, Q2 focus', status: 'active', priority: 'P0', keywords: ['quarterly', 'review', 'q1', '2-pager'], color: '#4f46e5', targetDate: '2026-04-09', docFile: 'docs/projects/q1-quarterly-review.md', dashboard: null },
-      { id: 'proj-9', name: 'Partner Diversification', description: 'PaySafe activation, WhiteMarket cost restructure, new vertical pitches', status: 'active', priority: 'P2', keywords: ['paysafe', 'whitemarket', 'partner', 'diversif', 'vertical'], color: '#9333ea', targetDate: null, docFile: 'docs/projects/partner-diversification.md', dashboard: null },
-      { id: 'proj-10', name: 'Twitch Extension', description: 'Evaluate Pick\'Ems overlay for IEM Cologne Major + holistic EFG extension opportunity. Twitch open to commercialisation.', status: 'active', priority: 'P1', keywords: ['twitch', 'extension', 'pickems', 'pick\'em', 'overlay', 'chexx', 'valve', 'major'], color: '#6366f1', targetDate: '2026-04-07', docFile: 'docs/projects/twitch-extension.md', dashboard: null },
-      { id: 'proj-11', name: 'CDP User Behaviour', description: 'Use CDP data to understand user behaviour on partner websites — do users spend beyond Mission activation? Prove incremental value to partners.', status: 'active', priority: 'P1', keywords: ['cdp', 'user behav', 'partner website', 'spend', 'mission', 'crm', 'incremental'], color: '#0d9488', targetDate: null, docFile: 'docs/projects/cdp-user-behaviour.md', dashboard: null },
-      { id: 'proj-12', name: 'Peripherals Initiative', description: 'End-to-end peripheral data play: collect hardware telemetry via FACEIT Client, design user-facing peripheral profile, normalise storage for ad targeting segments. Live in IT + T3 countries. Egor (BE), Anouk (Design). Gated on Legal (LEGD-8214).', status: 'active', priority: 'P1', keywords: ['hardware', 'targeting', 'peripheral', 'egor', 'anouk', 'audience', 'segment', 'gpu', 'cpu', 'design', 'telemetry', 'ad targeting'], color: '#ea580c', targetDate: null, docFile: 'docs/product_briefs/hardware-ad-targeting-scoping.md', dashboard: 'analysis/peripheral-data-dashboard.html' },
-      { id: 'proj-13', name: 'Brand Takeover Improvements', description: 'Iterate Brand Takeover product: Rewarded Video A/B/C experiment, CTR collection fix, geo-level reporting, BE Ad Spec, pre-launch QA. From March 2026 Logitech retro.', status: 'active', priority: 'P2', keywords: ['brand takeover', 'takeover', 'rewarded video', 'rv', 'ctr', 'logitech', 'drops', 'match skin', 'impressions', 'geo reporting'], color: '#f59e0b', targetDate: null, docFile: 'docs/product_briefs/brand-takeover-improvements.md', dashboard: null }
+      { id: 'proj-9', name: 'Partner Diversification', description: 'PaySafe activation, WhiteMarket cost restructure, new vertical pitches', status: 'not_started', priority: 'P2', keywords: ['paysafe', 'whitemarket', 'partner', 'diversif', 'vertical'], color: '#9333ea', targetDate: null, docFile: 'docs/projects/partner-diversification.md', dashboard: null },
+      { id: 'proj-10', name: 'Twitch Extension', description: 'Evaluate Pick\'Ems overlay for IEM Cologne Major + holistic EFG extension opportunity. Twitch open to commercialisation.', status: 'not_started', priority: 'P1', keywords: ['twitch', 'extension', 'pickems', 'pick\'em', 'overlay', 'chexx', 'valve', 'major'], color: '#6366f1', targetDate: '2026-04-07', docFile: 'docs/projects/twitch-extension.md', dashboard: null },
+      { id: 'proj-11', name: 'CDP User Behaviour', description: 'Use CDP data to understand user behaviour on partner websites — do users spend beyond Mission activation? Prove incremental value to partners.', status: 'not_started', priority: 'P1', keywords: ['cdp', 'user behav', 'partner website', 'spend', 'mission', 'crm', 'incremental'], color: '#0d9488', targetDate: null, docFile: 'docs/projects/cdp-user-behaviour.md', dashboard: null },
+      { id: 'proj-13', name: 'Brand Takeover Improvements', description: 'Iterate Brand Takeover product: Rewarded Video A/B/C experiment, CTR collection fix, geo-level reporting, BE Ad Spec, pre-launch QA. From March 2026 Logitech retro.', status: 'not_started', priority: 'P2', keywords: ['brand takeover', 'takeover', 'rewarded video', 'rv', 'ctr', 'logitech', 'drops', 'match skin', 'impressions', 'geo reporting'], color: '#f59e0b', targetDate: null, docFile: 'docs/product_briefs/brand-takeover-improvements.md', dashboard: null },
+      { id: 'proj-14', name: 'Ad Ops Handover', description: 'Document and transfer ad operations responsibilities to Mandar\'s Ad Operations team. Formalise runbooks, escalation paths, and ownership boundaries.', status: 'not_started', priority: 'P1', keywords: ['ad ops', 'handover', 'mandar', 'operations', 'runbook', 'transfer', 'responsibility'], color: '#ea580c', targetDate: '2026-06-30', docFile: null, dashboard: null },
+      { id: 'proj-15', name: 'NSM: Advertising Layer', description: 'Extend the NSM framework to cover Advertising (display + outstream video) alongside Brand Integrations. Unify RPV, fill rate, eCPM into the same € value-per-conversion lens.', status: 'not_started', priority: 'P2', keywords: ['nsm', 'advertising', 'rpv', 'ecpm', 'fill rate', 'display', 'outstream', 'prebid', 'unified'], color: '#0e7490', targetDate: '2026-12-31', docFile: null, dashboard: 'analysis/nsm-dashboard.html' },
+      { id: 'proj-16', name: 'Automated Roadmap', description: 'Replace manual Google Sheets roadmaps with an automated dashboard. Two views: internal sprint grid (team × sprint) and stakeholder priority table (BI + Ads). Jira auto-pull + manual override.', status: 'not_started', priority: 'P2', keywords: ['roadmap', 'sprint', 'stakeholder', 'planning', 'jira', 'automation'], color: '#7c3aed', targetDate: '2026-06-30', docFile: null, dashboard: 'docs/decisions/roadmap-dashboard.html' }
     ];
 
     const PROJECT_BRIEFS = {
@@ -686,29 +723,41 @@ Skippable video interstitial with a 5-second unskippable segment, then a clear S
 ## Updates
 - **2026-03-30 10:30** — Brief created. Business case complete, design workshop pending.`,
 
-      'proj-3': `# Mystery Box / AL Growth
-**Status:** Active — Monitoring conversion quality
-**Priority:** P1
+      'proj-3': `# AL Growth
+**Status:** Active
+**Priority:** P1 | **Product Area:** Brand Integrations
 
-## Background
-Mystery Box is a gamified reward mechanic added to general missions to drive account linkage (AL) volume. Launched with Tradeit in March 2026 across EU, CIS, and LATAM geos.
+## Problem
+Account Linkage (AL) is the entry point to the partner conversion funnel (AL → C1/KYC → C2/FTD → C3). Volume and quality of ALs directly determine partner value (€/1K EBU). Current AL rates vary significantly by partner and geo, and the flow UX has not been systematically optimised.
 
-## Results (March 2026)
-- **129K ALs in one week** vs ~2.5K/week baseline (50x spike)
-- Mar 9 week = 62% of total Tradeit value
-- However: C1/C2 conversion rates compressed — volume up, quality diluted
-- **294K users** had rewards expire unclaimed (7:1 expiration-to-claim ratio)
+## Goal
+Increase AL volume while maintaining or improving conversion quality (C1/C2 rates). Optimise the end-to-end linkage flow through UX experiments, trust signals, and targeting.
 
-## Key Question
-Does Mystery Box generate net positive partner value, or does the volume dilute conversion quality enough to reduce €/1K EBU?
+## Key Metrics
+- **AL Rate** (linkages / eligible impressions)
+- **C1 Conversion** (KYC completions / ALs)
+- **C2 Conversion** (first deposit or purchase / ALs)
+- **€ Value per 1K EBU** (NSM, per partner)
 
-## Next Steps
-- Evaluate Mystery Box ROI: cost-per-actual-trade vs control
-- Add reward expiration reminders (24h + 2h push notifications)
-- Consider extending to Winline
-- Shorten time between mission completion and reward availability
+## Experiment Results
+
+### Trust Modal Experiment (Concluded — Keep Modal)
+- **Hypothesis:** Removing the trust modal during AL increases raw AL volume
+- **Result:** Removing modal cuts linkage-step completion nearly in half (5.34% → 2.75%, z=17.98, p < 0.001)
+- **Decision:** Trust modal generates €416 more value per cohort and €9.82 more per 1K users. Modal remains as permanent default for all partner AL flows
+- **Feature flag:** \`exp_TRADEIT_NO_AGE_STEP_EXPERIMENT\`
+- **Full write-up:** [trust-modal-experiment-conclusion.md](docs/product_briefs/trust-modal-experiment-conclusion.md)
+- **Design implication:** Trust signals are critical to conversion quality — any AL flow redesign must preserve or enhance them
+
+## Reference Doc
+[AL Growth — Google Doc](https://docs.google.com/document/d/1LjPIDV28Yj303dcp4DJsPGvOZsfCv90HaceUFqGZxqg/edit?tab=t.0#heading=h.37m0mxy0ux2g)
+
+## Related Dashboards
+- [NSM Dashboard](analysis/nsm-dashboard.html) — partner conversion funnel & AL rates
 
 ## Updates
+- **2026-04-04 16:00** — Created AL Growth experiment dashboard (analysis/al-growth-dashboard.html) for design team. Includes: trust modal A/B test results, design brief for Anouk, experiment plan (May 2026 timeline), success metrics, and open questions. Added to roadmap dashboard as stakeholder item (sh-26, Brand Integration, May 2026, AD-3946). Dashboard linked from hub.
+- **2026-04-04 14:00** — Renamed from "Mystery Box / AL Growth" to "AL Growth". Mystery Box separated out. Linked trust modal experiment results (keep modal — 48% quality loss without it). Updated keywords to focus on account linkage, trust modal, conversion funnel. Google Doc linked as reference.
 - **2026-03-30 10:30** — Brief created. March mission review complete, monitoring conversion quality post-Mystery Box.`,
 
       'proj-4': `# NSM Dashboard
@@ -742,17 +791,19 @@ Migrated from weekly tracking to **30-day rolling window** to solve mission acti
 - **2026-03-30 10:30** — Brief created. Dashboard fully migrated to 30-day rolling window. WoW/MoM removed from hero KPIs. BQ SQL templates created. Tradeit-specific dashboard also available.`,
 
       'proj-5': `# Peripheral Initiative
-**Status:** Active — 91 countries live, Tier 1 expansion in progress
+**Status:** Active — Data collection live (91 countries), design in progress, ad targeting scoping
 **Priority:** P0
+**Team:** Egor Shestakov (BE), Anouk Lubbers (Design), Teodor (EM)
+
+## What It Is
+An end-to-end initiative to collect, surface, and monetise hardware peripheral data from FACEIT Client users. Three layers:
+
+1. **Data Collection** (live) — FACEIT Client collects hardware telemetry (peripherals, CPU, GPU, motherboard). Currently live at 100% in Italy and all Tier 3 countries. 193K+ unique users, 152 countries.
+2. **User-Facing Profile** (design phase) — Peripheral profile page showing users their hardware setup. Anouk designing the UI. Investigating game settings (e.g. CS2 sensitivity, resolution) alongside hardware.
+3. **Ad Targeting** (scoping) — Normalise collected data into audience segments (owns_brand_X, cpu_vendor, gaming_grade) for ad targeting. This is the monetisation layer — turns peripheral data into sellable inventory for partners like Logitech, Razer, SteelSeries.
 
 ## Problem
-Endemic hardware brands (Logitech, Razer, SteelSeries) value the esports audience but need proof of impact on product consideration → sales. Our current ad products (reach/traffic + mission sponsorships) can't target by hardware ownership or prove incrementality.
-
-## Solution
-Use the FACEIT PC Client to collect privacy-compliant hardware signals (keyboard, mouse, system manufacturer), enabling:
-- Audience targeting ("Lenovo users" vs "non-Lenovo users")
-- Incrementality measurement (holdouts / A/B)
-- Performance packages for peripheral brands
+Endemic hardware brands value the esports audience but need proof of impact on product consideration → sales. Our current ad products can't target by hardware ownership or prove incrementality.
 
 ## Rollout Progress
 | Phase | Market | DAU | Status |
@@ -769,10 +820,59 @@ Use the FACEIT PC Client to collect privacy-compliant hardware signals (keyboard
 - Gaming brand penetration: 25%
 - Tracking optimised: 1 collection per user per week (was 3/day)
 
+## Current State
+- **Collection**: Live in IT + T3 countries via FACEIT Client
+- **Raw data**: ~1.4M rows across CSVs (data/brand_integrations/)
+- **ETL**: scripts/aggregate_peripheral_csv.py (normalisation, brand detection, country tiers)
+- **Dashboard**: analysis/peripheral-data-dashboard.html (per-country metrics)
+- **Design**: Anouk working on peripheral profile UI (AD-4026, in progress)
+- **BE investigations**: Egor scoping game settings integration (AD-4018) and peripheral model detail enrichment (AD-4017)
+- **Storage**: Tech analysis on where to persist normalised data (AD-4035)
+- **Legal**: LEGD-8214 — 14 questions on consent, GDPR, ePrivacy (blocker for ad targeting phase)
+
+## Proposed Ad Targeting Schema (Phase 3)
+One row per user, updated weekly:
+- user_id, cpu_vendor (AMD/Intel), cpu_cores_bucket, mobo_brand, peripheral_brands[], owns_logitech/razer/steelseries (booleans), gaming_peripheral_flag, country, last_collected_at, advertising_use_allowed
+
+## Audience Segments
+- owns_brand_X / not_owns_brand_X (conquest targeting)
+- cpu_vendor_intel / cpu_vendor_amd
+- gaming_grade / budget_setup
+- core_count_high (16+)
+
+## Phases
+1. Data collection rollout (done — IT + T3 live)
+2. Peripheral profile design + FE build (in progress — Anouk)
+3. BE investigations: game settings + peripheral model enrichment (in progress — Egor)
+4. Normalised storage table + ETL (scoping — AD-4035)
+5. Audience primitives + sizing
+6. Ad-system integration (gated on Legal LEGD-8214)
+7. Single partner pilot (TR or IN)
+
+## Dependencies
+- Legal sign-off (LEGD-8214) — blocker for ad targeting phase
+- Consent store integration — need advertising_use_allowed flag
+- Frontend ad tag access (for client-side key-values option)
+- Design sign-off on peripheral profile before FE build
+
+## Full Brief
+docs/product_briefs/hardware-ad-targeting-scoping.md
+
+## Jira Tickets
+| Ticket | Title | Status | Assignee |
+|---|---|---|---|
+| [AD-4035](https://efgcloud.atlassian.net/browse/AD-4035) | [BE] Peripherals: Where to store the user hardware data | To Do | Egor Shestakov |
+| [AD-4026](https://efgcloud.atlassian.net/browse/AD-4026) | Peripherals Initiative: Design | In Progress | Anouk Lubbers |
+| [AD-4018](https://efgcloud.atlassian.net/browse/AD-4018) | [BE] Peripherals: Investigate if we can get game settings | To Do | Egor Shestakov |
+| [AD-4017](https://efgcloud.atlassian.net/browse/AD-4017) | [BE] Peripherals: Investigate peripheral model details | To Do | Egor Shestakov |
+
 ## Updates
-- **2026-03-30 10:30** — Brief created. Phase 2 (Turkey) live at 100%, Phase 3 (Italy) next.
+- **2026-04-02 15:00** — Merged proj-12 (Hardware Ad Targeting) into proj-5. Single card now covers full lifecycle: data collection → user profile → ad targeting. Project ID consolidated as proj-5 (P0).
+- **2026-04-02 12:00** — Jira tickets linked: AD-4035 (storage), AD-4026 (design, in progress), AD-4018 (game settings), AD-4017 (peripheral models). Design in progress with Anouk; Egor scoping 3 BE tickets.
+- **2026-03-30 15:30** — Hardware Ad Targeting one-pager created. Egor assigned for next sprint. Legal ticket LEGD-8214 open, gating Phase 3.
+- **2026-03-30 11:05** — Italy and all Tier 3 countries now live at 100%. Next milestone: remaining Tier 1 markets (gated on LEGD-8214).
 - **2026-03-30 11:00** — Legal ticket LEGD-8214 opened for peripheral data assessment (gates Tier 1 expansion).
-- **2026-03-30 11:05** — Italy and all Tier 3 countries now live at 100%. Next milestone: remaining Tier 1 markets (gated on LEGD-8214).`,
+- **2026-03-30 10:30** — Brief created. Phase 2 (Turkey) live at 100%, Phase 3 (Italy) next.`,
 
       'proj-6': `# Skin Vault
 **Status:** Active — Live on 300 profiles
@@ -910,6 +1010,7 @@ Separate the workstreams: decide Pick'Ems by end of next week (revenue-committed
 - Go/no-go on Pick'Ems by April 3
 
 ## Updates
+- **2026-04-02 14:00** — Easter break OOO (Apr 2–8). Next step: organise call with Fahad Syed post-Easter (week of 9 Apr) to get answers on Lulu's 3 questions + Chexx licensing + Twitch commercialisation policy. Go/no-go on Pick'Ems deferred until after that call.
 - **2026-03-30 10:30** — Brief created from evaluation doc (27 March). Decision pending week of 31 March.`,
 
       'proj-11': `# CDP User Behaviour
@@ -943,69 +1044,6 @@ If we can prove incremental value, we can:
 
 ## Updates
 - **2026-03-30 10:30** — Brief created. Discovery phase.`,
-
-      'proj-12': `# Peripherals Initiative
-**Status:** Active — Data collection live, design in progress, ad targeting scoping
-**Priority:** P1
-**Team:** Egor (BE), Anouk (Design), Teodor (EM)
-
-## What It Is
-An end-to-end initiative to collect, surface, and monetise hardware peripheral data from FACEIT Client users. Three layers:
-
-1. **Data Collection** (live) — FACEIT Client collects hardware telemetry (peripherals, CPU, GPU, motherboard) from users. Currently live at 100% in Italy and all Tier 3 countries. 193K+ unique users, 152 countries.
-2. **User-Facing Profile** (design phase) — A peripheral profile page showing users their hardware setup. Anouk designing the UI. Investigating whether we can also surface game settings (e.g. CS2 sensitivity, resolution) alongside hardware.
-3. **Ad Targeting** (scoping) — Normalise the collected data into audience segments (owns_brand_X, cpu_vendor, gaming_grade) for advertising targeting. This is the monetisation layer — turns peripheral data into sellable inventory for partners like Logitech, Razer, SteelSeries.
-
-## Current State
-- **Collection**: Live in IT + T3 countries via FACEIT Client
-- **Raw data**: ~1.4M rows across CSVs (data/brand_integrations/)
-- **ETL**: scripts/aggregate_peripheral_csv.py (normalisation, brand detection, country tiers)
-- **Dashboard**: analysis/peripheral-data-dashboard.html (per-country metrics)
-- **Design**: Anouk working on peripheral profile UI (AD-4026, in progress)
-- **BE investigations**: Egor scoping game settings integration (AD-4018) and peripheral model detail enrichment (AD-4017)
-- **Storage**: Tech analysis on where to persist normalised data (AD-4035)
-- **Legal**: LEGD-8214 — 14 questions on consent, GDPR, ePrivacy (blocker for ad targeting phase)
-
-## Proposed Ad Targeting Schema (Phase 3)
-One row per user, updated weekly:
-- user_id, cpu_vendor (AMD/Intel), cpu_cores_bucket, mobo_brand, peripheral_brands[], owns_logitech/razer/steelseries (booleans), gaming_peripheral_flag, country, last_collected_at, advertising_use_allowed
-
-## Audience Segments
-- owns_brand_X / not_owns_brand_X (conquest targeting)
-- cpu_vendor_intel / cpu_vendor_amd
-- gaming_grade / budget_setup
-- core_count_high (16+)
-
-## Phases
-1. Data collection rollout (done — IT + T3 live)
-2. Peripheral profile design + FE build (in progress — Anouk)
-3. BE investigations: game settings + peripheral model enrichment (in progress — Egor)
-4. Normalised storage table + ETL (scoping — AD-4035)
-5. Audience primitives + sizing
-6. Ad-system integration (gated on Legal LEGD-8214)
-7. Single partner pilot (TR or IN)
-
-## Dependencies
-- Legal sign-off (LEGD-8214) — blocker for ad targeting phase
-- Consent store integration — need advertising_use_allowed flag
-- Frontend ad tag access (for client-side key-values option)
-- Design sign-off on peripheral profile before FE build
-
-## Full Brief
-docs/product_briefs/hardware-ad-targeting-scoping.md
-
-## Jira Tickets
-| Ticket | Title | Status | Assignee |
-|---|---|---|---|
-| [AD-4035](https://efgcloud.atlassian.net/browse/AD-4035) | [BE] Peripherals: Where to store the user hardware data | To Do | Egor Shestakov |
-| [AD-4026](https://efgcloud.atlassian.net/browse/AD-4026) | Peripherals Initiative: Design | In Progress | Anouk Lubbers |
-| [AD-4018](https://efgcloud.atlassian.net/browse/AD-4018) | [BE] Peripherals: Investigate if we can get game settings | To Do | Egor Shestakov |
-| [AD-4017](https://efgcloud.atlassian.net/browse/AD-4017) | [BE] Peripherals: Investigate peripheral model details | To Do | Egor Shestakov |
-
-## Updates
-- **2026-04-02 12:00** — Merged into single "Peripherals Initiative" card (was "Hardware Ad Targeting"). Now covers full lifecycle: data collection (live), user-facing profile (design), ad targeting (scoping). Jira tickets linked.
-- **2026-04-02 11:00** — Jira tickets referenced: AD-4035 (storage), AD-4026 (design, in progress), AD-4018 (game settings), AD-4017 (peripheral models). Design in progress with Anouk; Egor scoping 3 BE tickets.
-- **2026-03-30 15:30** — One-pager created. Egor assigned for next sprint. Legal ticket LEGD-8214 open, gating Phase 3.`,
 
       'proj-13': `# Brand Takeover Improvements
 **Status:** Active — Planning
@@ -1066,7 +1104,164 @@ Harden Brand Takeover into a repeatable, sellable product by fixing data quality
 docs/product_briefs/brand-takeover-improvements.md
 
 ## Updates
-- **2026-04-01 10:00** — PRD created from March Logitech BT retro. 10 action items documented. RV A/B/C experiment designed (Control/V1-single/V2-rotation, primary metric = claim rate). CTR collection improvement scoped. Project card added to dashboard.`
+- **2026-04-01 10:00** — PRD created from March Logitech BT retro. 10 action items documented. RV A/B/C experiment designed (Control/V1-single/V2-rotation, primary metric = claim rate). CTR collection improvement scoped. Project card added to dashboard.`,
+
+      'proj-14': `# Ad Ops Handover
+**Status:** Active — Scoping
+**Priority:** P1 | **Product Area:** Advertising
+
+## Problem
+Ad operations responsibilities (campaign setup, trafficking, troubleshooting, yield optimisation, partner onboarding) currently sit within the Product team. As the advertising stack matures (Prebid, Primis, Publift, programmatic), these operational tasks need to move to Mandar's dedicated Ad Operations team so Product can focus on strategy, experimentation, and new revenue streams.
+
+## Goal
+By end of Q2 (June 30, 2026), fully transfer day-to-day ad operations ownership to the Ad Ops team with:
+- **Zero knowledge loss** — every process documented in runbooks
+- **Clear escalation paths** — what stays with Product vs. what moves to Ad Ops
+- **No revenue disruption** — phased transition with parallel running period
+
+## Scope
+
+### In Scope
+- **Runbook creation**: Step-by-step guides for all recurring ad ops tasks (GAM trafficking, Prebid config changes, Publift/Primis partner comms, fill rate monitoring)
+- **Ownership matrix**: RACI for every ad ops process (who owns, who approves, who's informed)
+- **Escalation framework**: When Ad Ops escalates to Product (e.g., experiment design, new partner integration, pricing decisions)
+- **Training & shadowing**: 2-week shadow period per process area
+- **Handover acceptance criteria**: Ad Ops signs off on each process before Product steps back
+
+### Out of Scope
+- Hiring/resourcing for Mandar's team (his responsibility)
+- Changing the ad tech stack (separate roadmap)
+- Revenue targets or KPI ownership transfer (stays with Product for now)
+
+## Key Deliverables
+| # | Deliverable | Target Date | Owner |
+|---|---|---|---|
+| 1 | Audit of all current ad ops tasks + time allocation | Mid-April | MN |
+| 2 | Runbook drafts (GAM, Prebid, Publift, Primis) | End of April | MN |
+| 3 | RACI / Ownership matrix | Mid-May | MN + Mandar |
+| 4 | Shadow period (Ad Ops observes, then leads) | May–June | Ad Ops team |
+| 5 | Formal sign-off & handover complete | June 30 | MN + Mandar |
+
+## Risks
+- **Mandar's team capacity**: If Ad Ops is understaffed, handover stalls
+- **Undocumented tribal knowledge**: Some processes live only in MN's head — audit must be thorough
+- **Revenue sensitivity**: Mis-configured campaigns during transition could impact fill rate / RPV
+
+## Dependencies
+- Mandar confirms team capacity and timeline alignment
+- Access provisioning (GAM, Prebid dashboard, BQ) for Ad Ops team members
+- Stakeholder alignment on what "Product owns" vs "Ad Ops owns" post-handover
+
+## Updates
+- **2026-04-02 16:00** — Project created. Goal: full ad ops handover to Mandar's team by end of Q2. First step: audit all current ad ops tasks and time allocation.`,
+
+      'proj-15': `# NSM: Advertising Layer
+**Status:** Active — Discovery
+**Priority:** P2 | **Product Area:** Advertising × Data & Analytics
+
+## Problem
+The North Star Metric (NSM) framework currently only covers **Brand Integrations** (partner value, missions, account linkages, conversion ladder). Advertising revenue — display, outstream video, programmatic — generates significant value but is tracked separately via RPV, fill rate, eCPM, and partner-specific dashboards. There is no unified view of total monetisation efficiency across both pillars.
+
+## Goal
+Extend the NSM framework to cover Advertising alongside Brand Integrations, creating a **single € value-per-conversion lens** across all monetisation. Target: operational by H2 2026.
+
+### Success Metrics
+- **Unified NSM dashboard** showing Brand Integrations + Advertising side by side
+- **Advertising efficiency metric**: € Revenue per 1K EAU (Eligible Advertising Users) — mirrors Partner Efficiency (€/1K EBU)
+- **Apples-to-apples comparison**: ability to evaluate whether a page view is better monetised via ads or brand integrations
+- **Decision support**: NSM informs resource allocation between the two pillars
+
+## Scope
+
+### In Scope
+- Define Advertising NSM layer: what metrics feed in, how they aggregate
+- Map existing ad metrics (RPV, fill rate, eCPM, viewability) into the € value framework
+- Extend NSM dashboard (BQ + HTML) with Advertising tab
+- Include Prebid, Publift, Primis, and direct-sold inventory
+- Establish Advertising EAU definition (which users count, geo/platform segmentation)
+
+### Out of Scope (for now)
+- Replacing existing ad dashboards (Prebid experiment results, etc.) — those stay as deep-dives
+- Real-time bidding optimisation (that's Ad Ops)
+- Extending NSM to non-monetisation products (engagement, retention)
+
+## Open Questions
+1. **EAU definition**: Is it all users who see ads, or only users in monetisable geos (excl. Russia)?
+2. **Revenue attribution**: How to handle blended revenue from programmatic (where we don't control pricing)?
+3. **Outstream vs display weighting**: Should video impressions carry different weight given higher CPMs?
+4. **Cannibalisation**: If a user completes a mission AND sees ads in the same session, how do we avoid double-counting value?
+5. **Data latency**: GAM data has T+1 lag — acceptable for a 30-day rolling metric?
+
+## Dependencies
+- BQ tables: \`faceit-events-prod-2.ad_delivery.*\` (need schema confirmation)
+- Prebid experiment data pipeline (already operational)
+- Publift + Primis revenue feeds (currently manual CSV — may need automation)
+- NSM dashboard codebase (analysis/nsm-dashboard.html)
+
+## Updates
+- **2026-04-02 16:00** — Project created. Discovery phase: define EAU, map ad metrics into € framework, identify BQ tables. Target H2 2026 for operational dashboard.`,
+
+      'proj-16': `# Automated Roadmap
+**Status:** Active — Building
+**Priority:** P2 | **Product Area:** Productivity & Planning
+
+## Problem
+The team roadmap (internal sprint view) and stakeholder roadmap (Ads + Brand Integrations priority table) are maintained manually in Google Sheets. They require repetitive updates every sprint and fall out of sync with Jira. There is no single source of truth for what each team member is working on or what stakeholders should expect.
+
+## Goal
+Replace both Google Sheets with an automated HTML dashboard that:
+- **Internal Sprint View**: Shows team member × sprint grid (like the Q1 sheet), auto-populated from Jira with manual override
+- **Stakeholder Roadmap**: Shows a combined Brand Integrations + Advertising priority table with status badges, impact values, and filter tabs
+- Reduces manual update time from ~30 min/sprint to ~5 min
+- Syncs to GitHub Pages for always-on access
+
+## Architecture
+- **Single HTML file**: \`docs/decisions/roadmap-dashboard.html\` (same pattern as productivity dashboard)
+- **Data persistence**: SEED_VERSION + localStorage (edits persist, seed upgrades wipe stale data)
+- **Jira refresh**: \`scripts/refresh-roadmap.sh\` pulls tickets from Board 222 → JSON → manual review → seed update
+- **Two tabs**: Internal Sprint View + Stakeholder Roadmap (combined BI + Ads with filter tabs)
+
+## Team Members (Q2 2026)
+| Name | Role |
+|---|---|
+| Anouk Lubbers | Product Designer |
+| Isabel Diezma Pérez | Senior Backend Engineer |
+| Egor Shestakov | Senior Backend Engineer |
+| Teodor Kuzmanov | Senior Frontend Engineer |
+| Omar del Real Ouldam | Senior Frontend Engineer (joining Apr 20) |
+| Moritz Natalini | PM, Monetisation |
+
+## Key Features
+- Sprint grid with initiative chips (colored by project)
+- **Drag-and-drop** initiative chips between sprints and team members
+- Holiday blocking (yellow cells)
+- New team member handling (greyed cells before start date)
+- RELEASES row for tracking what ships per sprint
+- Stakeholder table: sortable, filterable, inline-editable
+- **Grouped views**: By Timeline (This Month / This Quarter / H2 / No ETA) — visual Gantt chart with APR/MAY/JUN columns
+- **Structured ETA dropdown** with predefined options (Apr–Jun 2026, Q3, Q4, H2, 2027) + custom free-text
+- Collapsible sections with item counts and total impact per group
+- Jira auto-linking (AD-XXXX → Atlassian URL)
+- Add/edit/delete initiatives in both views
+- Summary stats (Active / Done / Blocked / Total Impact €)
+- Cross-link to NSM Dashboard
+
+## Dashboard
+[roadmap-dashboard.html](docs/decisions/roadmap-dashboard.html)
+
+## Updates
+- **2026-04-04 12:30** — Design consistency: Restyled both Productivity Dashboard and NSM Dashboard to Soft UI design system. Updated CSS tokens (bg #EEF2F3, Inter font, 20px/14px/8px radius hierarchy, soft shadows 0 2px 12px), pill-shaped tabs, card hover transitions (translateY -2px + shadow elevation), body padding fix on NSM, section titles changed from blue to dark text. All pages now visually consistent with hub. Root copies synced for GitHub Pages.
+- **2026-04-04 15:00** — Hub Experiments redesign: Restructured Experiments section into three subsections — Live Experiments (4 cards), Concluded Experiments (7 cards), Releases (1 card). Added 8 new experiment/release cards with area badges (Advertising/Brand Integration) and status badges (Live/Concluded/Shipped). New CSS: .badge-concluded (grey), .badge-shipped (purple), .badge-area (muted uppercase), subsection headers with colored status dots. Total hub cards: 18 across all sections. Placeholder links (#) for experiments without dashboards; Trust Modal links to write-up doc.
+- **2026-04-04 11:00** — Monthly Releases & Experiments page built (analysis/monthly-releases.html). Interactive timeline replacing static monthly slide decks for stakeholders. Sticky sidebar with month navigation, expandable release/experiment cards, color-coded verdicts, Slack summary copy + JSON export. Seeded with 9 Q1 2026 entries (6 releases, 3 experiments: Prebid, Mystery Box, Trust Modal, Mission Chain, Skin Vault, NSM v2, Peripheral Data, Winline, Drops Notification). Root copy synced for GitHub Pages. Hub updated with 2 new cards: Workflow Pipeline (10 steps) and Monthly Releases.
+- **2026-04-03 22:00** — Information Architecture proposal drafted (docs/decisions/information-architecture-proposal.md). Audited all 13 HTML pages and 58+ markdown docs. Proposed hub-and-spoke architecture: rebuild index.html as entry point with 4 sections (Core Workflows, Analytics & Metrics, Experiments, Reference). Every spoke page gets back-to-hub navigation. Waiting for Moritz's review of open questions before implementation.
+- **2026-04-03 23:30** — Hub page built and deployed (index.html rebuilt with Soft UI, 3 sections, 9 cards, sticky header, sprint auto-detection). Back-to-hub navigation added to all 12 spoke pages. Weekly Plan and Tradeit cards removed (obsolete). Root copies synced for GitHub Pages.
+- **2026-04-03 24:00** — PM Workflow Automation proposal written (docs/decisions/pm-workflow-automation.md). Maps Moritz's 9-step vision to concrete implementation: AI-assisted cascade from project creation → tasks → stakeholder card → sprint chips → Jira ticket → experiment phase → weekly updates → QBR entries → Slack release notes. Key design: PENDING arrays bridge AI file edits to browser localStorage. 4 implementation phases proposed. Awaiting Moritz's review.
+- **2026-04-03 20:30** — Applied "Soft UI / Clean Tech" design system: Inter font, mint background (#EEF2F3), 20px border-radius, soft shadows, pastel priority pills, pill-shaped tabs/buttons, rounded modals. Fixed 7 CSS bugs from initial restyling (duplicate declarations, escaped selectors, invisible inputs, over-rounded containers). Root copy synced.
+- **2026-04-03 19:00** — Added consistent INITIATIVE_COLORS map across Sprint Grid and Gantt timeline. Each initiative now has a fixed color (teal family = Advertising, amber/orange = Brand Integrations, purple = cross-cutting). Auto-backup on seed version upgrade protects manual edits. SEED_VERSION bumped to 3.
+- **2026-04-03 18:00** — Removed "By Status" sub-view from stakeholder roadmap — Gantt timeline is now the only view. Added Export/Import buttons for data backup (JSON download/restore), protecting manual edits from seed version upgrades.
+- **2026-04-03 15:30** — Stakeholder tab redesigned: added "By Status" and "By Timeline" grouped views with collapsible sections, section headers with item count + impact totals. ETA field upgraded to structured dropdown with Custom option.
+- **2026-04-03 14:00** — Added drag-and-drop for sprint grid initiative chips (native HTML5 DnD). Chips can be moved between sprints and team members with visual feedback. Cross-links added between NSM and Roadmap dashboards.
+- **2026-04-03 12:00** — Project created. Dashboard built with both views. Jira refresh script created. Seeded with Q2 2026 sprints and current stakeholder roadmap data from existing Google Sheets.`
     };
 
     let projects = JSON.parse(localStorage.getItem('productivity_projects')) || SEED_PROJECTS;
@@ -1080,6 +1275,7 @@ docs/product_briefs/brand-takeover-improvements.md
     let currentFilter = 'active';
     let currentPriorityFilter = 'P0';
     let currentProjectPriorityFilter = 'all';
+    let currentProjectStatusFilter = 'all';
     let selectedPriority = 'P0';
     let activeWeekOffset = 0; // 0 = current week
     let activeMonthOffset = 0; // 0 = current month
@@ -1140,6 +1336,16 @@ docs/product_briefs/brand-takeover-improvements.md
         document.querySelectorAll('#projectPriorityFilters .filter-btn').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
         currentProjectPriorityFilter = e.target.getAttribute('data-filter');
+        renderProjects();
+      });
+    });
+
+    // Filter Logic — Project Status
+    document.querySelectorAll('#projectStatusFilters .filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('#projectStatusFilters .filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentProjectStatusFilter = e.target.getAttribute('data-filter');
         renderProjects();
       });
     });
@@ -1628,18 +1834,22 @@ docs/product_briefs/brand-takeover-improvements.md
         return { ...p, linked, total, completed, pct, nextTask };
       });
 
-      // Apply priority filter
-      const filteredProjects = currentProjectPriorityFilter === 'all'
+      // Apply priority + status filters
+      let filteredProjects = currentProjectPriorityFilter === 'all'
         ? enrichedProjects
         : enrichedProjects.filter(p => p.priority === currentProjectPriorityFilter);
+      filteredProjects = currentProjectStatusFilter === 'all'
+        ? filteredProjects
+        : filteredProjects.filter(p => p.status === currentProjectStatusFilter);
       
       if (filteredProjects.length > 0) {
         totalProgress = Math.round(filteredProjects.reduce((sum, p) => sum + p.pct, 0) / filteredProjects.length);
       }
       
       summaryContainer.innerHTML = `
-        <div><strong>Total Projects:</strong> ${filteredProjects.length}</div>
+        <div><strong>Showing:</strong> ${filteredProjects.length} projects</div>
         <div><strong>Active:</strong> ${filteredProjects.filter(p => p.status === 'active').length}</div>
+        <div><strong>Not Started:</strong> ${filteredProjects.filter(p => p.status === 'not_started').length}</div>
         <div><strong>Avg Progress:</strong> ${totalProgress}%</div>
       `;
       
@@ -1676,11 +1886,14 @@ docs/product_briefs/brand-takeover-improvements.md
           </div>
         `).join('');
 
+        const statusLabel = p.status === 'not_started' ? 'not started' : p.status;
+        const cardClass = p.status === 'not_started' ? 'project-card not-started-card' : 'project-card';
         return `
-          <div class="project-card" style="border-left-color: ${p.color}" onclick="this.classList.toggle('expanded')">
+          <div class="${cardClass}" style="border-left-color: ${p.color}" onclick="this.classList.toggle('expanded')">
+            <div class="project-id">${p.id}</div>
             <div class="project-header">
               <div class="project-title">${p.name} <span class="tag tag-${p.priority.toLowerCase()}" style="font-size:10px; margin-left:6px">${p.priority}</span></div>
-              <div class="project-status ${p.status}" onclick="cycleProjectStatus('${p.id}', event)">${p.status}</div>
+              <div class="project-status ${p.status}" onclick="cycleProjectStatus('${p.id}', event)">${statusLabel}</div>
             </div>
             <div class="project-desc">${p.description}</div>
             
@@ -1729,7 +1942,7 @@ docs/product_briefs/brand-takeover-improvements.md
       event.stopPropagation();
       const p = projects.find(x => x.id === id);
       if(p) {
-        const next = { 'active': 'on-hold', 'on-hold': 'completed', 'completed': 'active' };
+        const next = { 'not_started': 'active', 'active': 'on-hold', 'on-hold': 'completed', 'completed': 'not_started' };
         p.status = next[p.status];
         saveProjects();
         renderProjects();

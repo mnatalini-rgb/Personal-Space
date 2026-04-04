@@ -1,4 +1,4 @@
-## **Product One‑Pager: Play Interstitial — Pre‑Roll Video for FACEIT**
+How ## **Product One‑Pager: Play Interstitial — Pre‑Roll Video for FACEIT**
 
 **Owner**: [Moritz Natalini](mailto:m.natalini@efg.gg) | **Contributors**: [Kerrin Meek](mailto:k.meek@efg.gg), [William Seghers](mailto:w.seghers@efg.gg) | **Date**: March 2026 | **Status**: Discovery — *Seeking approval to run behavioural tolerance test*
 
@@ -6,7 +6,7 @@
 
 ## 1. Overview
 
-Play Interstitial introduces premium video ad inventory at the most engaged moment of the FACEIT experience — immediately before a player queues for a match. The format delivers **up to 60 seconds of video ads** (as many slots as fit) per match for free users, creating a high‑value pre‑roll product that fills the video inventory gap left by Watch's sunset and gives the Commercial team a path to **shift streaming budgets from YouTube/Twitch back to FACEIT**.
+Play Interstitial introduces premium video ad inventory at the most engaged moment of the FACEIT experience — immediately before a player queues for a match. The format delivers up to **3 × 30‑second ad slots** (90 seconds total) per match for free users, creating a high‑value pre‑roll product that fills the video inventory gap left by Watch's sunset and gives the Commercial team a path to **shift streaming budgets from YouTube/Twitch back to FACEIT**.
 
 ---
 
@@ -36,25 +36,24 @@ Serve **VAST‑based pre‑roll video ads** in a full‑screen interstitial plac
 
 | Parameter | Spec | Rationale |
 |:--|:--|:--|
-| **Ad pod per match** | Up to **60 seconds** total | As many slots as fit within 60s. 1 minute of ads per ~45 minutes of gameplay = **1.3 minutes per hour** — less than **a quarter** of the ad density Commercial wanted for Watch (6 min/hr of streaming) |
-| **Max length per slot** | 15–30 seconds | Industry standard pre‑roll length |
+| **Ad slots per match** | Up to **3** (ad pod) | 90 seconds of ads per ~45 minutes of gameplay = **2 minutes per hour** — exactly **half** the ad density Commercial wanted for Watch (6 min/hr of streaming) |
+| **Max length per slot** | 30 seconds | Industry standard pre‑roll length |
+| **Total ad time** | Up to 90 seconds | Competitive with YouTube pre‑roll (15–30s per video, but users watch 10–20 videos/session) |
 | **Frequency** | 1 ad pod per match | Natural placement at the moment of highest intent |
 | **Eligible users** | Free users only | Subscribers skip ads — creates a premium conversion lever |
 
-The pod fills dynamically — at launch most pods will contain 1–2 shorter creatives. The 60‑second cap leaves headroom to scale inventory as demand grows, without changing the player experience. And the ad density is defensible:
+### Why 3 Slots is the Right Number
 
-- **FACEIT (proposed)**: 1 min ads / 45 min match = **2.2% ad density**
+William's insight: *"I'd rather have a feature with 10M impressions at 10% fill rate, than 1M impressions at 100% fill rate. In the first scenario I still have 90% of potential that's not filled yet."*
+
+3 slots maximises **inventory potential**. Even at modest fill rates, the total addressable inventory is large enough to attract programmatic demand and justify dedicated sales effort. And the ad density is defensible:
+
+- **FACEIT (proposed)**: 2 min ads / 60 min gameplay = **3.3% ad density**
 - **Watch (historical)**: 6 min ads / 60 min streaming = **10% ad density**
 - **YouTube**: 2–4 min ads / 60 min viewing = **3–7% ad density**
 - **Twitch**: 3+ min ads / 60 min viewing = **5%+ ad density**
 
-FACEIT's proposed ad density is **well below** every major streaming platform.
-
-### Why Maximise Inventory Potential
-
-William's insight: *"I'd rather have a feature with 10M impressions at 10% fill rate, than 1M impressions at 100% fill rate. In the first scenario I still have 90% of potential that's not filled yet."*
-
-A 60‑second pod maximises **inventory potential**. Even at modest fill rates, the total addressable inventory is large enough to attract programmatic demand and justify dedicated sales effort.
+FACEIT's proposed ad density is **at or below** every major streaming platform.
 
 ### Technical Approach — Hybrid Format
 
@@ -72,82 +71,59 @@ This hybrid gives us the best of both worlds:
 
 ---
 
-## 4. Revenue Model
+## 4. Inventory Value — The Big Number
 
-All numbers below are derived from the [Business Case Calculations spreadsheet](https://docs.google.com/spreadsheets/d/1EqqmNj3TMF4cC7XYQ_mz4LHlMG-QVA7c0fsbMDgPklk/edit?usp=sharing). Every figure can be traced back to a specific cell with formula. William's framework: *"Show a big number of potential. Higher inventory, lower fill rate."*
+William's framework: *"Show a big number of potential. Higher inventory, lower fill rate."*
 
-### 4a. Inventory Sizing — ~37M ad pods / ~111M impressions per month
+### Inputs
 
-| Input | Value | Source / Calculation |
-|:--|--:|:--|
-| **Monthly free finished match sessions (incl. Russia)** | **36,994,576** | [Looker](https://efgdata.cloud.looker.com/x/ppIcoKxQKKrJKCwCWs2dRE) — Feb 2026, free users only |
-| **Ad pods per match** | **1** | 1 pod (up to 60s) per match session |
-| **Total monthly ad pods** | **~37.0M** | = Monthly sessions (spreadsheet col E, Grand Total row 196) |
-| **Total monthly impressions** | **~111.0M** | = Pods × 3 (3 ads per pod, avg 20s each within 60s cap) |
-| — of which **Tier 1** (DE, US, FR, GB, ES, CA, IT, AU) | 2,843,125 (7.7%) | 8 countries (spreadsheet row 192) |
-| — of which **Tier 2** (PL, RO, FI, PT, NL, DK + 27 more) | 9,379,848 (25.4%) | 33 countries (spreadsheet row 193) |
-| — of which **Tier 3** (KZ, UA, TR, BY + 142 more) | 12,597,276 (34.1%) | 146 countries (spreadsheet row 194) |
-| — of which **Russia** | 12,174,327 (32.9%) | Separate — limited ad server availability (spreadsheet row 195) |
+| Input | Value | Source |
+|:--|:--|:--|
+| Monthly matches (free users, globally) | **~15M** | ~45M impressions ÷ 3 matches/user estimate. Based on existing appendix data |
+| Ad slots per match | **3** | Proposed ad pod |
+| **Total monthly inventory** | **~45M ad slots** | 15M matches × 3 slots |
+| Tier 1 share (~40%) | ~18M slots | US, UK, DE, FR, etc. |
+| Tier 2 share (~35%) | ~15.75M slots | PL, TR, UA, KZ, etc. |
+| Tier 3 share (~25%) | ~11.25M slots | Remaining geos (excl. Russia) |
 
-Each ad pod can contain **up to 60 seconds of video ads**. We model **3 impressions per pod** (average 3×20s creatives within the 60s cap). Revenue is calculated on impressions (pods × 3), while fill rate and subs model apply at the pod level.
+### Scenario A — Inventory Value (Maximum Potential)
 
-### 4b. Inventory Value — What This Is Worth at 100% Fill
+*What this inventory is worth if we could fill every slot.* This is the ceiling — the number that shows Commercial why this product is worth dedicated sales effort.
 
-*This is the ceiling — the number that shows Commercial why this product is worth dedicated sales effort.*
-
-| Tier | Monthly Impressions | CPM | Monthly Revenue | Annual Revenue |
+| Tier | Monthly Slots | CPM | Monthly Revenue | Annual Revenue |
 |:--|--:|--:|--:|--:|
-| **Tier 1** (8 countries) | 8,529,375 | $15 | $127,941 | **$1,535,288** |
-| **Tier 2** (33 countries) | 28,139,544 | $10 | $281,395 | **$3,376,745** |
-| **Tier 3** (146 countries) | 37,791,828 | $5 | $188,959 | **$2,267,510** |
-| **Russia** | 36,522,981 | $2 | $73,046 | **$876,552** |
-| **Total** | **110,983,728** | | **$671,341** | **$8,056,094** |
+| **Tier 1** | 18,000,000 | $15 | $270,000 | **$3,240,000** |
+| **Tier 2** | 15,750,000 | $10 | $157,500 | **$1,890,000** |
+| **Tier 3** | 11,250,000 | $5 | $56,250 | **$675,000** |
+| **Total** | **45,000,000** | | **$483,750** | **$5,805,000** |
 
-**The full inventory potential is ~$8.1M/year** — before fill rate.
+**The full inventory potential is ~$5.8M/year** — before fill rate.
 
-### 4c. Ad Revenue Scenarios — Paid Fill
+### Scenario B — Realistic Case (Year 1)
 
-The base case assumes **20% fill rate** on Tier 1 and Tier 2, and **10% fill** on Tier 3 and Russia. CPMs vary by tier to reflect advertiser willingness to pay. (Spreadsheet: Scenario Comparison rows 202–204.)
+If Steve starts moving budget from ESL/Socials to FACEIT, with additional programmatic sales and potentially Winline in Tier 3:
 
-| Scenario | Fill Rate | CPM Assumption | T1 Annual | T2 Annual | T3 Annual | RU Annual | **Total Ad Revenue** |
-|:--|:--|:--|--:|--:|--:|--:|--:|
-| **Conservative (Year 1)** | 20% T1/T2, 10% T3/RU | T1 $15, T2 $10, T3 $5, RU $2 | $307,058 | $675,349 | $226,751 | $87,655 | **$1.3M** |
-| **Mid Case** | 20% T1/T2, 10% T3/RU | T1 $20, T2 $15, T3 $5, RU $2 | $409,410 | $1,013,024 | $226,751 | $87,655 | **$1.7M** |
-| **100% Fill Ceiling** | 100% all tiers | T1 $15, T2 $10, T3 $5, RU $2 | $1,535,288 | $3,376,745 | $2,267,510 | $876,552 | **$8.1M** |
+| Lever | Fill Rate | Monthly Revenue | Annual Revenue |
+|:--|--:|--:|--:|
+| **Tier 1** (direct + programmatic) | 25% | $67,500 | $810,000 |
+| **Tier 2** (programmatic + PMPs) | 15% | $23,625 | $283,500 |
+| **Tier 3** (programmatic remnant) | 10% | $5,625 | $67,500 |
+| **Video Ads Subtotal** | | **$96,750** | **$1,161,000** |
+| **Incremental Subs** (upsell in ad slots) | | | **$800,000** |
+| **Total Year 1** | | | **~$2.0M** |
 
-*Calculation: Revenue = Impressions × Fill Rate ÷ 1,000 × CPM × 12, where Impressions = Pods × 3 (3 ads per pod). All formulas in spreadsheet.*
+**Realistic Year 1 target: ~€1M ARR in ad revenue** + subs upside. With 75%+ of inventory still unfilled, the growth runway is massive.
 
-Every **1 percentage point increase** in blended fill rate ≈ **$81K/year** in incremental ad revenue (at Conservative CPMs).
+### Scenario C — Why Unfilled Inventory = Opportunity, Not Risk
 
-### 4d. Subscription Revenue Upside (House Ads)
-
-Unfilled ad pods serve **house ads** promoting FACEIT Premium subscriptions. This applies to **all** users including Russia (house ads don't require GAM). This creates a secondary revenue stream.
-
-| Step | Value | Calculation |
-|:--|--:|:--|
-| Total pods (all users incl. Russia) | 36,994,576/month | Spreadsheet Grand Total, col E row 196 |
-| Unfilled pods (~87% average) | ~32.1M/month | Total pods minus filled pods (spreadsheet col K) |
-| Subs conversion rate | 0.05% | Spreadsheet col L |
-| Gross new subscribers | ~16,000/month | Unfilled × 0.05% |
-| Cannibalisation (50%) | ~8,000/month | 50% would have subscribed anyway |
-| **Net incremental subs** | **~8,000/month** | Spreadsheet col M |
-| Revenue per subscriber | $7.30/month | FACEIT Premium monthly price |
-| **Monthly subs revenue** | **~$58,500** | |
-| **Annual subs revenue** | **~$702K** | Spreadsheet col O, Grand Total |
-
-**Combined Year 1 estimate (Conservative): ~$1.3M ad revenue + ~$702K subs upside = ~$2.0M/year.** Subs revenue is shown separately because it depends on house ad creative effectiveness and conversion assumptions.
-
-### 4e. Why Unfilled Inventory = Opportunity, Not Risk
-
-| Metric | Year 1 (Conservative) |
+| Metric | Value |
 |:--|:--|
-| Total addressable ad pods | ~37.0M pods/month |
-| Year 1 filled (paid ads, Conservative) | ~4.9M pods/month |
-| **Unfilled (available for future demand)** | **~32.1M pods/month** |
-| **Blended paid fill rate** | **~13.3%** |
-| Unfilled pods serving house ads | ~32.1M pods/month |
+| Total addressable inventory | 45M slots/month |
+| Year 1 filled (Scenario B) | ~7.5M slots/month |
+| **Unfilled** | **~37.5M slots/month** |
+| **Fill rate** | **~17%** |
 
-This means **~87% of inventory remains available** for future demand — as the sales team scales, as programmatic demand matures, and as we add partners. The unfilled pods aren't wasted: they serve house ads that drive ~$702K/year in incremental subscription revenue.
+This means **83% of inventory remains available** for future demand — as the sales team scales, as programmatic demand matures, and as we add partners. Every percentage point of fill rate improvement = ~$57K/year in incremental revenue.
 
 ---
 
@@ -163,7 +139,7 @@ When Watch was sunset, Commercial redirected video budgets to YouTube and Twitch
 | **Targeting** | Contextual (channels, topics) | Deterministic (geo, game, rank, hardware) |
 | **Viewability** | 65–70% (YouTube average) | **95%+** (full‑screen, sound‑on, unskippable) |
 | **Attention quality** | Passive (lean‑back viewing) | **Active** (queuing for a match — highest intent moment) |
-| **Ad density** | 3–7% of viewing time | **2.2%** of gameplay time |
+| **Ad density** | 3–7% of viewing time | **3.3%** of gameplay time |
 | **SOV** | Shared with 5–10 other advertisers | **100% SOV** per ad slot |
 | **Fraud risk** | Bot traffic, view farming | **Anti‑cheat verified users** — near-zero fraud |
 
@@ -186,7 +162,7 @@ When Watch was sunset, Commercial redirected video budgets to YouTube and Twitch
 | Twitch pre‑rolls | €1–3M | 5–10% | Twitch's audience overlaps heavily with FACEIT's |
 | **New direct sales** (Adam, Domenik) | n/a | €200–500K | Brand Takeover clients (Logitech, etc.) upsold to video |
 
-**Conservative Year 1 estimate: ~$1.3M in ad revenue** (20% fill T1/T2, 10% fill T3/RU — per Section 4c) **+ ~$702K in subscription upside** from house ads. As fill rate scales and programmatic demand matures, the $8.1M ceiling (100% fill) provides significant headroom.
+**Conservative Year 1 estimate: €500K–€1M in shifted/new video budget**, growing as fill rate scales and programmatic demand matures.
 
 ### Mid‑Roll / Content Chaser (William's Suggestion)
 
@@ -240,7 +216,7 @@ Run an A/B test with **internal campaigns** (house ads, sub promotions) in US/NA
 
 **Player journey:**
 1. User presses **Find Match**
-2. Short video pod plays (≤ 60s — Phase 0 uses 1 internal creative, ~15s) with countdown UI
+2. Short video pod plays (≤ 90s across up to 3 slots — Phase 0 uses 1 internal creative)
 3. Matchmaking begins
 
 Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=17-12019&t=3J3hDAFIXcXzNRrf-4)
@@ -248,16 +224,16 @@ Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg
 ### Phase 1: Limited Monetised Rollout
 - Selected Tier 2 markets, solo players only
 - Direct sales + PMP deals (Adam, Domenik)
-- 1–2 ad slots active within the 60s cap
+- 1–2 ad slots active
 
 ### Phase 2: Tier 1 Expansion + Programmatic
 - Tier 1 markets with direct advertisers
 - Open programmatic via VAST / prebid (Publift or Mobalytics stack)
 - Test content chaser (mid‑roll experiment)
-- Scale to full 60s pod where demand supports it
+- Scale to full 3‑slot pod where demand supports it
 
 ### Phase 3: Full Commercial Rollout
-- All geos including Russia (house ads where GAM is limited, programmatic where available)
+- All geos (excl. Russia — GAM constraint)
 - Full programmatic + direct hybrid
 - Party player support
 
@@ -268,12 +244,12 @@ Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg
 | Requirement | Detail |
 |:--|:--|
 | **VAST 4.2 compliance** | XML ad responses, multi‑bitrate media files, full tracking events (impression, quartiles, complete, error) |
-| **Ad pod support** | Sequential serving of multiple creatives up to 60s total in a single ad break |
+| **Ad pod support** | Sequential serving of up to 3 creatives in a single ad break |
 | **Pre‑caching** | Video assets pre‑loaded during UI navigation to eliminate latency at match start |
 | **Frequency capping** | Server‑side, 1 pod per user per match (not per day — clarified) |
 | **Measurement integration** | IAS or DoubleVerify for brand safety + viewability verification (table stakes for premium CPMs) |
 | **Macro support** | `[CACHEBUSTING]`, `[TIMESTAMP]`, `[CONTENTPLAYHEAD]` for dynamic VAST values |
-| **Russia handling** | Serve house ads where GAM is unavailable; serve programmatic where available at $2 CPM |
+| **Russia exclusion** | GAM does not operate in Russia — exclude from all programmatic setups |
 
 ---
 
@@ -281,27 +257,19 @@ Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg
 
 | Risk | Mitigation |
 |:--|:--|
-| Player frustration (60s is noticeable) | Phase 0 starts with 1 short creative (~15s). Pod length scales with demand, not day 1. Strict max 60s. |
+| Player frustration (90s is long) | Phase 0 starts with 1 slot (30s). Pod length scales with demand, not day 1. Strict max 90s. |
 | Party player complexity | Phase 1 targets solo players only |
 | Technical latency | Pre‑cached video assets + Phase 0 validates load times |
 | New player disruption | Excluded until first match played |
-| Low initial fill rate | Expected and acceptable (see Section 4c). Unfilled = future growth runway. |
+| Low initial fill rate | Expected and acceptable (see Section 4C). Unfilled = future growth runway. |
 | IAB "no content" classification | Hybrid approach: sell as interstitial (direct) and instream (programmatic). Content chaser in Phase 2 addresses formally. |
 | Ad‑block risk | Monitor ad‑block activation as guardrail. 1/match frequency is dramatically lower than typical web ad load. |
-| No Match found | User won't see any ads again for the rest of the day |
 
 ---
 
 ## Appendix
 
-1. **Business Case Calculations spreadsheet** — [link](https://docs.google.com/spreadsheets/d/1EqqmNj3TMF4cC7XYQ_mz4LHlMG-QVA7c0fsbMDgPklk/edit?usp=sharing). All revenue numbers in Section 4 trace back to this file. Column mapping:
-   - Col A: Tier | Col B: Country | Col C: Monthly Sessions | Col D: Unique Users
-   - Col E: Ad Pods/Month (=C) | Col F: Impressions/Month (=E×3) | Col G: Fill Rate | Col H: Filled Impressions (=F×G) | Col I: CPM
-   - Col J: Monthly Ad Rev (=H/1000×I) | Col K: Annual Ad Rev (=J×12)
-   - Col L: House Ads unfilled pods (=E×(1−G)) | Col M: Subs conversion (=L×0.05%) | Col N: Cannibalisation (=M×50%)
-   - Col O: Monthly Subs Rev (=N×7.30) | Col P: Annual Subs Rev (=O×12) | Col Q: Monthly Total | Col R: Annual Total
-2. **Key assumptions**: 1 ad pod per match; 3 impressions per pod (3×20s avg creatives within 60s cap); up to 60s per pod; 20% paid fill rate T1/T2, 10% T3/RU; $7.30/month subscriber value; 50% cannibalisation on house ad–driven subs
-3. **Session data**: Feb 2026 Looker export — 36,994,576 monthly sessions across all geos (free users, finished matchmaking matches)
-4. Watch historical ad density: 6 min ads / 60 min streaming
-5. FACEIT proposed ad density: 1 min ads / 45 min gameplay
-6. Roblox case study: $100M+ in video ad revenue (2025), programmatic partnership with Google
+1. Full data available [here](https://docs.google.com/spreadsheets/d/1nN-b8SML75S3W8Ai4tJIwVFL0CQlm0lCqzkEB43o5Jk/edit?gid=0#gid=0)
+2. Watch historical ad density: 6 min ads / 60 min streaming
+3. FACEIT proposed ad density: 2 min ads / 60 min gameplay (3 × 30s per ~45 min match)
+4. Roblox case study: $100M+ in video ad revenue (2025), programmatic partnership with Google

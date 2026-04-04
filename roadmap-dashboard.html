@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ads & Partnerships Roadmap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg: #EEF2F3;
+      --surface: #ffffff;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --border: #E2E8F0;
+      --accent: #1A1A2E;
+      --accent-hover: #334155;
+      --p0: #FEE2E2;
+      --p0-text: #C2410C;
+      --p1: #FEF3C7;
+      --p1-text: #92400E;
+      --p2: #E8DEFF;
+      --p2-text: #6D28D9;
+      --success: #16a34a;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius: 20px;
+      --radius-sm: 12px;
+      --radius-pill: 24px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+    }
+
+    .header-titles h1 { font-size: 28px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
+    .header-titles p { font-size: 14px; color: var(--text-muted); margin-top: 4px; font-weight: 400; }
+
+    .nav-tabs {
+      display: flex;
+      gap: 16px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid #D1D5DB;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { background-color: #F3F4F6; color: var(--text); border-color: #D1D5DB; }
+    .tab-btn.active {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Views */
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    /* Summary Bar */
+    .summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface);
+      padding: 16px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow);
+      border: none;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      background: var(--surface);
+    }
+
+    select:focus, input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Sprint Grid */
+    .sprint-grid {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      table-layout: fixed;
+    }
+
+    .sprint-grid th, .sprint-grid td {
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .sprint-grid th:last-child, .sprint-grid td:last-child {
+      border-right: none;
+    }
+    .sprint-grid tr:last-child td {
+      border-bottom: none;
+    }
+
+    .sprint-grid th {
+      background: #F8FAFA;
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .month-header {
+      text-align: center !important;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px !important;
+      background: #F8FAFA !important;
+    }
+
+    .sprint-col { width: 15%; }
+    .sprint-col.current-sprint {
+      background: rgba(26, 26, 46, 0.05);
+    }
+    .sprint-col .current-pill {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 9px;
+      font-weight: 500;
+      padding: 1px 6px;
+      border-radius: var(--radius-pill);
+      margin-left: 4px;
+      vertical-align: middle;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .current-sprint-col {
+      border-top: 2px solid var(--accent) !important;
+      background: rgba(26, 26, 46, 0.03);
+    }
+    .member-col {
+      width: 10%;
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .cell-content {
+      min-height: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cell-content.drag-over {
+      background-color: rgba(59, 130, 246, 0.1);
+      border: 1px dashed var(--accent);
+    }
+
+    .holiday-cell {
+      background-color: #FFFBEB !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+      color: #B45309;
+      height: 100%;
+      min-height: 60px;
+      border-radius: var(--radius-sm);
+    }
+
+    .inactive-cell {
+      background-color: #f3f4f6 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+      height: 100%;
+      min-height: 60px;
+    }
+
+    /* Chips */
+    .chip {
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 400;
+      color: white;
+      cursor: pointer;
+      word-break: break-word;
+      line-height: 1.3;
+      transition: opacity 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .chip.dragging {
+      opacity: 0.4;
+      border: 1px dashed var(--text);
+    }
+
+    .chip:hover { opacity: 0.9; }
+
+    .add-btn {
+      width: 100%;
+      padding: 6px;
+      background: none;
+      border: 1px dashed #D1D5DB;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .add-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* Stakeholder Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: none;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      background: var(--bg);
+      font-weight: 500;
+      color: var(--text-muted);
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .data-table th:hover { background: #f3f4f6; }
+
+    .data-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover { background-color: var(--bg); }
+
+    .editable-cell { cursor: pointer; }
+    .editable-cell:hover { background-color: rgba(0,0,0,0.02); }
+
+    /* Grouped Sections */
+    .section-header-cell {
+      background: var(--bg);
+      padding: 12px 16px !important;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .section-count {
+      background: #e5e7eb;
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .section-impact {
+      color: var(--success);
+      margin-left: auto;
+    }
+    .section-active { border-left: 4px solid var(--accent) !important; }
+    .section-hold { border-left: 4px solid #f59e0b !important; }
+    .section-done { border-left: 4px solid var(--success) !important; opacity: 0.7; }
+    .section-no-eta { border-left: 4px solid var(--border) !important; }
+    .section-timeline { border-left: 4px solid var(--accent) !important; }
+    .section-timeline-future { border-left: 4px solid #8b5cf6 !important; }
+    
+    .group-collapsed .group-rows { display: none; }
+
+    /* Badges & Pills */
+    .priority-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .priority-pill.P0 { background-color: var(--p0); color: var(--p0-text); }
+    .priority-pill.P1 { background-color: var(--p1); color: var(--p1-text); }
+    .priority-pill.P2 { background-color: var(--p2); color: var(--p2-text); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: capitalize;
+    }
+    .status-badge.tbd { background: #F3F4F6; color: #4B5563; }
+    .status-badge.in_progress { background: #D1FAE5; color: #065F46; }
+    .status-badge.on_hold { background: #FEF9C3; color: #854D0E; }
+    .status-badge.done { background: #DCFCE7; color: #166534; }
+    .status-badge.blocked { background: #FCE7F3; color: #9D174D; }
+
+    .effort-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      border: none;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* Links */
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    .jira-link {
+      color: var(--accent);
+      font-weight: 400;
+      text-decoration: none;
+    }
+    .jira-link:hover { text-decoration: underline; }
+
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      background: var(--bg);
+      margin-right: 4px;
+      text-decoration: none;
+    }
+    .icon-link:hover { background: var(--border); color: var(--text); text-decoration: none; }
+
+    /* Modals & Popups */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title { font-size: 18px; font-weight: 600; }
+    .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
+    
+    .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 12px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; }
+    
+    .btn-primary {
+      background: var(--text);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-export, .btn-import { background: var(--surface); color: var(--text-muted); box-shadow: var(--shadow); border: none; padding: 6px 14px; border-radius: var(--radius-pill); cursor: pointer; font-size: 13px; font-weight: 400; transition: all 0.2s; }
+    .btn-export:hover, .btn-import:hover { background: var(--border); color: var(--text); }
+    .btn-danger {
+      background: #FEE2E2;
+      color: #DC2626;
+      border: none;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .flex-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 24px; }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 24px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+
+    .gantt-container {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      border: none;
+    }
+    .gantt-header {
+      display: flex;
+      flex-direction: column;
+      background: #1E293B;
+      color: white;
+      font-weight: 500;
+      font-size: 13px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .gantt-quarter-label {
+      background: #162d4a;
+      padding: 12px 24px;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .gantt-months {
+      display: flex;
+    }
+    .gantt-month {
+      flex: 1;
+      text-align: center;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
+    .gantt-month:first-child {
+      border-left: none;
+    }
+    .gantt-body {
+      padding: 16px;
+    }
+    .gantt-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .gantt-bar-container {
+      flex: 1;
+      display: flex;
+      position: relative;
+      height: 40px;
+    }
+    .gantt-bar {
+      height: 28px;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 12px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: opacity 0.2s;
+    }
+    .gantt-bar:hover { opacity: 0.85; }
+    .backlog-section, .blocked-section, .completed-section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      border: none;
+      margin-bottom: 16px;
+    }
+    .backlog-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+    }
+    .backlog-col-header {
+      display: grid;
+      grid-template-columns: 16px 40px 1fr 120px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .backlog-col-header span {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .backlog-col-header span:hover { color: var(--text); }
+    .backlog-col-header .sort-arrow { font-size: 10px; opacity: 0.5; }
+    .backlog-col-header .sort-arrow.active { opacity: 1; color: var(--accent); }
+    .backlog-item {
+      display: grid;
+      grid-template-columns: 16px 40px 1fr 120px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .backlog-item:last-child { border-bottom: none; }
+    .backlog-item:hover { background: var(--bg); border-radius: var(--radius-sm); }
+    .area-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 400;
+    }
+    .area-tag.advertising { background: #e0f2fe; color: #0369a1; }
+    .area-tag.brand_integrations { background: #fef3c7; color: #92400e; }
+    .section-tbd { border-left: 4px solid #6b7280 !important; }
+    .section-blocked { border-left: 4px solid #dc2626 !important; opacity: 0.7; }
+  </style>
+</head>
+<body>
+  <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+    <a href="index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
+    <span style="color:#CBD5E1;">·</span>
+    <span style="color:#6B7280;">Ads & Partnerships Roadmap</span>
+  </nav>
+  <div class="container">
+    <header>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 0.5rem;">
+        <div class="header-titles">
+          <h1>Ads & Partnerships Roadmap</h1>
+          <p>FACEIT Monetisation — Brand Integrations & Advertising</p>
+        </div>
+        <a href="nsm-dashboard.html" style="color: #60a5fa; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.35rem; opacity: 0.85; transition: opacity 0.2s; margin-top: 0.5rem; white-space: nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">📊 NSM Metrics <span style="font-size: 0.75rem;">→</span></a>
+      </div>
+      <div class="nav-tabs">
+        <button type="button" class="tab-btn active" onclick="switchTab('sprint-view', this)">Internal Sprint View</button>
+        <button type="button" class="tab-btn" onclick="switchTab('stakeholder-view', this)">Stakeholder Roadmap</button>
+      </div>
+    </header>
+
+    <!-- TAB 1: Internal Sprint View -->
+    <section id="sprint-view" class="view-section active">
+      <div class="controls">
+        <select id="quarter-select" onchange="renderSprintGrid()">
+          <option value="Q2-2026">Q2 2026 (Apr - Jun)</option>
+        </select>
+        <div style="font-size: 14px; color: var(--text-muted);">
+          Double-click a cell to edit.
+        </div>
+      </div>
+
+      <div id="sprint-grid-container" style="overflow-x: auto;">
+        <!-- Grid injected via JS -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Stakeholder Roadmap -->
+    <section id="stakeholder-view" class="view-section">
+      <div class="summary-bar">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="filter-tabs" id="sh-filters">
+            <button type="button" class="tab-btn active" onclick="setShFilter('All', this)">All</button>
+            <button type="button" class="tab-btn" onclick="setShFilter('brand_integrations', this)">Brand Integrations</button>
+            <button type="button" class="tab-btn" onclick="setShFilter('advertising', this)">Advertising</button>
+          </div>
+
+        </div>
+        <div id="sh-summary-stats">
+          <!-- Stats injected via JS -->
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <div id="sh-timeline-container"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+        <span style="font-size: 13px; color: var(--text-muted);">Double-click any item to edit. "AD-XXXX" in Notes automatically link to Jira.</span>
+        <button type="button" class="btn-primary" onclick="addNewShItem()">+ Add Initiative</button>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <a href="productivity-dashboard.html" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Productivity Dashboard</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" class="btn-export" onclick="exportRoadmapData()" title="Download roadmap data as JSON backup">Export</button>
+        <button type="button" class="btn-import" onclick="document.getElementById('import-file').click()" title="Restore roadmap data from JSON backup">Import</button>
+        <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importRoadmapData(event)">
+      </div>
+      <div style="text-align: right;">
+        <span id="last-updated">Last updated: -</span><br>
+        <span style="font-size: 12px;">Data source: Manual + Jira (Board 222)</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal for Editing Cell in Sprint View -->
+  <div class="modal-overlay" id="sprint-edit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="sprint-modal-title">Edit Cell</h2>
+        <button type="button" class="close-btn" onclick="closeModal('sprint-edit-modal')">&times;</button>
+      </div>
+      <div id="sprint-chips-list" style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+        <!-- Existing chips injected here -->
+      </div>
+      <div class="form-group" style="margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px;">
+        <label>Add Initiative</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="new-initiative-name" placeholder="Name" style="flex: 1;">
+          <input type="color" id="new-initiative-color" value="#94a3b8" style="width: 40px; height: 38px; padding: 2px;">
+          <button type="button" class="btn-primary" onclick="addInitiativeToCell()">Add</button>
+        </div>
+      </div>
+      <div class="flex-actions">
+        <button type="button" class="btn-primary" style="background: var(--border); color: var(--text);" onclick="closeModal('sprint-edit-modal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Editing Stakeholder Row -->
+  <div class="modal-overlay" id="sh-edit-modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Initiative</h2>
+        <button type="button" class="close-btn" onclick="closeModal('sh-edit-modal')">&times;</button>
+      </div>
+      <input type="hidden" id="sh-edit-id">
+      
+      <div class="form-group">
+        <label>Initiative</label>
+        <input type="text" id="sh-edit-initiative">
+      </div>
+      
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Area</label>
+          <select id="sh-edit-area">
+            <option value="advertising">Advertising</option>
+            <option value="brand_integrations">Brand Integrations</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Priority</label>
+          <select id="sh-edit-priority">
+            <option value="P0">P0</option>
+            <option value="P1">P1</option>
+            <option value="P2">P2</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Impact (€)</label>
+          <input type="text" id="sh-edit-impact" placeholder="e.g. €250,000">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Effort</label>
+          <input type="text" id="sh-edit-effort" placeholder="e.g. S, M, L">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Status</label>
+          <select id="sh-edit-status">
+            <option value="tbd">TBD</option>
+            <option value="on_hold">On Hold</option>
+            <option value="in_progress">In Progress</option>
+            <option value="blocked">Blocked</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>ETA</label>
+          <select id="sh-edit-eta-select" onchange="toggleEtaCustom()" style="margin-bottom: 4px;">
+            <option value="">No ETA Set</option>
+            <option value="Apr 2026">Apr 2026</option>
+            <option value="May 2026">May 2026</option>
+            <option value="Jun 2026">Jun 2026</option>
+            <option value="Q3 2026">Q3 2026</option>
+            <option value="Q4 2026">Q4 2026</option>
+            <option value="H2 2026">H2 2026</option>
+            <option value="2027">2027</option>
+            <option value="custom">Custom...</option>
+          </select>
+          <input type="text" id="sh-edit-eta" placeholder="e.g. September 15" style="display: none;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Notes</label>
+        <input type="text" id="sh-edit-notes">
+      </div>
+
+      <div class="form-group">
+        <label>Jira Ticket</label>
+        <input type="text" id="sh-edit-jira" placeholder="e.g. AD-1234">
+      </div>
+
+      <div class="flex-actions" style="justify-content: space-between;">
+        <button type="button" class="btn-danger" onclick="deleteShItem()">Delete</button>
+        <div>
+          <button type="button" class="btn-primary" style="background: var(--border); color: var(--text); margin-right: 8px;" onclick="closeModal('sh-edit-modal')">Cancel</button>
+          <button type="button" class="btn-primary" onclick="saveShEdit()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants & Seed Data
+    const SEED_VERSION = 6;
+    const JIRA_BASE_URL = 'https://efgcloud.atlassian.net/browse/';
+
+    const TEAM_MEMBERS = [
+      { id: 'anouk', name: 'Anouk', role: 'Sr. Designer', color: '#8b5cf6' },
+      { id: 'isabel', name: 'Isabel', role: 'Sr. BE', color: '#06b6d4' },
+      { id: 'egor', name: 'Egor', role: 'Sr. BE', color: '#f59e0b' },
+      { id: 'teodor', name: 'Teodor', role: 'Sr. FE', color: '#10b981' },
+      { id: 'omar', name: 'Omar', role: 'Sr. FE', color: '#ec4899', startDate: '2026-04-20' },
+      { id: 'moritz', name: 'Moritz', role: 'Dir. PM', color: '#2563eb' }
+    ];
+
+    const HOLIDAYS = [
+      { memberId: 'moritz', startDate: '2026-04-02', endDate: '2026-04-08', label: 'Easter' }
+    ];
+
+    // ── Consistent initiative color map (used in both Sprint Grid + Gantt) ──
+    const INITIATIVE_COLORS = {
+      // Advertising (teal family)
+      'Play Interstitial':             '#0891b2',
+      'Video Skippable Interstitial':  '#06b6d4',
+      'Ads Alerts V2':                 '#22d3ee',
+      'AdOps handover document':       '#0e7490',
+      'Primis / Moba outstream AB test': '#67e8f9',
+      'Primis / Moba display AB test': '#a5f3fc',
+      'Primis content video':          '#155e75',
+      'Primis':                        '#164e63',
+      'Publift display Faceit':        '#0284c7',
+      'Publift: CMP optimisation':     '#0ea5e9',
+      'Publift: AR investigation':     '#38bdf8',
+      'Publift outstream video':       '#7dd3fc',
+      'AdShield Implementation':       '#0c4a6e',
+      'Placement improvements':        '#075985',
+      'Outstream competitors exclusion': '#0369a1',
+      'Ezoic outstream':               '#bae6fd',
+      'Ezoic anchor ads':              '#e0f2fe',
+      'Google':                        '#0d9488',
+      'Rewarded video':                '#14b8a6',
+      // Brand Integrations (amber/orange family)
+      'Blacklyte Activation':          '#f59e0b',
+      'Blacklyte iterations':          '#d97706',
+      'Logitech Brand Takeover + RV experiment': '#ea580c',
+      'Missions Admin Migration':      '#fb923c',
+      'AL Growth — Trust Modal Redesign': '#b45309',
+      // Cross-cutting / Product (purple family)
+      'Skin Initiative':               '#8b5cf6',
+      'Peripherals Initiative Discovery': '#7c3aed',
+      'Hardware component investigation': '#6d28d9',
+      // Neutral / unassigned
+      'Tech Debts':                    '#94a3b8',
+      'Onboarding':                    '#94a3b8',
+      'Advertiser portal Tradeit':     '#64748b'
+    };
+
+    const AREA_FALLBACK_COLORS = {
+      'advertising': '#06b6d4',
+      'brand_integrations': '#f59e0b'
+    };
+
+    function getInitiativeColor(name, area) {
+      if (INITIATIVE_COLORS[name]) return INITIATIVE_COLORS[name];
+      if (area && AREA_FALLBACK_COLORS[area]) return AREA_FALLBACK_COLORS[area];
+      return '#94a3b8';
+    }
+
+    const SEED_SPRINT_DATA = {
+      'Q2-2026': {
+        sprints: [
+{ id: 's2.1', name: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10', month: 'APR' },
+      { id: 's2.2', name: 'Sprint 2.2', start: '2026-04-13', end: '2026-04-24', month: 'APR' },
+      { id: 's2.3', name: 'Sprint 2.3', start: '2026-04-27', end: '2026-05-08', month: 'MAY' },
+      { id: 's2.4', name: 'Sprint 2.4', start: '2026-05-11', end: '2026-05-22', month: 'MAY' },
+      { id: 's2.5', name: 'Sprint 2.5', start: '2026-05-25', end: '2026-06-05', month: 'JUN' },
+      { id: 's2.6', name: 'Sprint 2.6', start: '2026-06-08', end: '2026-06-19', month: 'JUN' }
+        ],
+        assignments: {
+          'anouk': {
+            's2.1': [{ id: '1', name: 'Peripherals Initiative Discovery', projectId: 'proj-5', color: '#7c3aed' }],
+            's2.2': [{ id: '2', name: 'Skin Initiative', projectId: 'proj-3', color: '#8b5cf6' }],
+            's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'isabel': {
+            's2.1': [{ id: '3', name: 'Skin Initiative', projectId: 'proj-3', color: '#8b5cf6' }, { id: '4', name: 'Missions Admin Migration', projectId: 'proj-8', color: '#fb923c' }],
+            's2.2': [{ id: '5', name: 'Skin Initiative', projectId: 'proj-3', color: '#8b5cf6' }],
+            's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'egor': {
+            's2.1': [{ id: '6', name: 'Hardware component investigation', projectId: 'proj-5', color: '#6d28d9' }],
+            's2.2': [{ id: '7', name: 'Advertiser portal Tradeit', projectId: null, color: '#64748b' }],
+            's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'teodor': {
+            's2.1': [{ id: '8', name: 'Tech Debts', projectId: null, color: '#94a3b8' }],
+            's2.2': [{ id: '9', name: 'Tech Debts', projectId: null, color: '#94a3b8' }],
+            's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'omar': {
+            's2.1': [],
+            's2.2': [{ id: '10', name: 'Onboarding', projectId: null, color: '#94a3b8' }],
+            's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'moritz': {
+            's2.1': [], 's2.2': [], 's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          },
+          'releases': {
+            's2.1': [], 's2.2': [], 's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
+          }
+        }
+      }
+    };
+
+    const SEED_STAKEHOLDER_DATA = [
+      { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null },
+      { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html' },
+      { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr-May 2026', notes: 'Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html' }
+    ];
+
+    // State Variables
+    let sprintData = {};
+    let stakeholderData = [];
+    let currentQuarter = 'Q2-2026';
+    let currentShFilter = 'All';
+    let currentShView = 'timeline';
+    let currentSort = { column: 'priority', direction: 'asc' };
+    
+    let activeSprintEdit = null; // { memberId, sprintId }
+
+    // Initialization
+    function init() {
+      const storedVersion = localStorage.getItem('roadmap_seed_version');
+      if (!storedVersion || parseInt(storedVersion) < SEED_VERSION) {
+        // Auto-backup before overwriting user data with new seed
+        if (storedVersion && localStorage.getItem('roadmap_sprint_data')) {
+          try {
+            const backup = {
+              exportedAt: new Date().toISOString(),
+              autoBackup: true,
+              previousVersion: parseInt(storedVersion),
+              newVersion: SEED_VERSION,
+              lastUpdated: localStorage.getItem('roadmap_last_updated'),
+              sprintData: JSON.parse(localStorage.getItem('roadmap_sprint_data')),
+              stakeholderData: JSON.parse(localStorage.getItem('roadmap_stakeholder_data'))
+            };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `roadmap-auto-backup-v${storedVersion}-${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          } catch(e) { console.warn('Auto-backup failed:', e); }
+        }
+        localStorage.setItem('roadmap_seed_version', SEED_VERSION);
+        localStorage.setItem('roadmap_sprint_data', JSON.stringify(SEED_SPRINT_DATA));
+        localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(SEED_STAKEHOLDER_DATA));
+        updateTimestamp();
+      }
+
+      sprintData = JSON.parse(localStorage.getItem('roadmap_sprint_data')) || SEED_SPRINT_DATA;
+      stakeholderData = JSON.parse(localStorage.getItem('roadmap_stakeholder_data')) || SEED_STAKEHOLDER_DATA;
+
+      document.getElementById('last-updated').innerText = `Last updated: ${localStorage.getItem('roadmap_last_updated') || new Date().toLocaleString()}`;
+
+      renderSprintGrid();
+      renderStakeholderTable();
+    }
+
+    function updateTimestamp() {
+      const ts = new Date().toLocaleString();
+      localStorage.setItem('roadmap_last_updated', ts);
+      document.getElementById('last-updated').innerText = `Last updated: ${ts}`;
+    }
+
+    function saveData() {
+      localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
+      localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
+      updateTimestamp();
+    }
+
+    function exportRoadmapData() {
+      const data = {
+        exportedAt: new Date().toISOString(),
+        seedVersion: parseInt(localStorage.getItem('roadmap_seed_version')) || SEED_VERSION,
+        lastUpdated: localStorage.getItem('roadmap_last_updated') || new Date().toLocaleString(),
+        sprintData: sprintData,
+        stakeholderData: stakeholderData
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `roadmap-backup-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importRoadmapData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data.sprintData || !data.stakeholderData) {
+            alert('Invalid backup file — missing sprintData or stakeholderData.');
+            return;
+          }
+          if (!confirm(`Restore roadmap from backup?\n\nBackup date: ${data.exportedAt || 'unknown'}\nThis will overwrite your current data.`)) return;
+          sprintData = data.sprintData;
+          stakeholderData = data.stakeholderData;
+          localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
+          localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
+          if (data.seedVersion) localStorage.setItem('roadmap_seed_version', data.seedVersion);
+          updateTimestamp();
+          renderSprintGrid();
+          renderStakeholderTable();
+          alert('Roadmap restored successfully.');
+        } catch (err) {
+          alert('Failed to parse backup file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    // Tabs
+    function switchTab(viewId, btn) {
+      document.querySelectorAll('.view-section').forEach(el => { el.classList.remove('active'); });
+      document.getElementById(viewId).classList.add('active');
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(el => { el.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+
+    // --- DRAG AND DROP LOGIC --- //
+    
+    let dragSrc = null;
+
+    function handleDragStart(e, memberId, sprintId, chipId) {
+      dragSrc = { memberId, sprintId, chipId };
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', chipId);
+      setTimeout(() => e.target.classList.add('dragging'), 0);
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      document.querySelectorAll('.drag-over').forEach(el => { el.classList.remove('drag-over'); });
+      dragSrc = null;
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      // Need to add closest('.cell-content') just to be safe if dragging over child elements
+      const cell = e.target.closest('.cell-content');
+      if (cell) cell.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      const cell = e.target.closest('.cell-content');
+      if (cell) cell.classList.remove('drag-over');
+    }
+
+    function handleDrop(e, targetMemberId, targetSprintId) {
+      e.preventDefault();
+      const cell = e.target.closest('.cell-content');
+      if (cell) cell.classList.remove('drag-over');
+      
+      if (!dragSrc) return;
+      const { memberId: srcMemberId, sprintId: srcSprintId, chipId } = dragSrc;
+      
+      if (srcMemberId === targetMemberId && srcSprintId === targetSprintId) return;
+
+      const srcArray = sprintData[currentQuarter].assignments[srcMemberId]?.[srcSprintId] || [];
+      const chipIndex = srcArray.findIndex(c => c.id === chipId);
+      if (chipIndex === -1) return;
+
+      const chip = srcArray.splice(chipIndex, 1)[0];
+
+      if (!sprintData[currentQuarter].assignments[targetMemberId]) {
+        sprintData[currentQuarter].assignments[targetMemberId] = {};
+      }
+      if (!sprintData[currentQuarter].assignments[targetMemberId][targetSprintId]) {
+        sprintData[currentQuarter].assignments[targetMemberId][targetSprintId] = [];
+      }
+      sprintData[currentQuarter].assignments[targetMemberId][targetSprintId].push(chip);
+
+      saveData();
+      renderSprintGrid();
+    }
+
+    // --- SPRINT VIEW LOGIC --- //
+
+    function isHoliday(memberId, sprintStart, sprintEnd) {
+      return HOLIDAYS.some(h => {
+        if (h.memberId !== memberId) return false;
+        const hStart = new Date(h.startDate);
+        const hEnd = new Date(h.endDate);
+        const sStart = new Date(sprintStart);
+        const sEnd = new Date(sprintEnd);
+        return (hStart <= sEnd && hEnd >= sStart);
+      });
+    }
+
+    function hasStarted(memberId, sprintStart) {
+      const member = TEAM_MEMBERS.find(m => m.id === memberId);
+      if (!member || !member.startDate) return true;
+      const startDate = new Date(member.startDate);
+      const sStart = new Date(sprintStart);
+      return sStart >= startDate;
+    }
+
+    function renderSprintGrid() {
+      const qData = sprintData[currentQuarter];
+      if (!qData) return;
+      
+      const sprints = qData.sprints;
+      const assignments = qData.assignments;
+      const container = document.getElementById('sprint-grid-container');
+
+      let html = `<table class="sprint-grid"><thead><tr><th class="member-col">Team Member</th>`;
+      
+      // Calculate month spans
+      let monthCounts = {};
+      sprints.forEach(s => { monthCounts[s.month] = (monthCounts[s.month] || 0) + 1; });
+
+      let currentMonth = '';
+      let monthHeaders = '';
+      let sprintHeaders = '';
+      
+      sprints.forEach((s, idx) => {
+        if (s.month !== currentMonth) {
+          monthHeaders += `<th colspan="${monthCounts[s.month]}" class="month-header">${s.month}</th>`;
+          currentMonth = s.month;
+        }
+        const today = new Date();
+        const sStart = new Date(s.start);
+        const sEnd = new Date(s.end);
+        const isCurrent = today >= sStart && today <= sEnd;
+        const currentCls = isCurrent ? ' current-sprint' : '';
+        const currentPill = isCurrent ? ' <span class="current-pill">Now</span>' : '';
+        sprintHeaders += `<th class="sprint-col${currentCls}">${s.name}${currentPill}<br><span style="font-weight:400; font-size:11px;">${formatDateRange(s.start, s.end)}</span></th>`;
+      });
+
+      html = `<table class="sprint-grid">
+        <thead>
+          <tr><th class="member-col" rowspan="2">Team Member</th>${monthHeaders}</tr>
+          <tr>${sprintHeaders}</tr>
+        </thead>
+        <tbody>`;
+
+      // Determine current sprint
+      const todayDate = new Date();
+      const currentSprintId = sprints.find(s => todayDate >= new Date(s.start) && todayDate <= new Date(s.end))?.id || null;
+
+      // Render Team Members
+      TEAM_MEMBERS.forEach(member => {
+        html += `<tr><td class="member-col">${member.name}<br><span style="font-weight:400; font-size:12px; color:var(--text-muted);">${member.role}</span></td>`;
+        
+        sprints.forEach(sprint => {
+          const isHol = isHoliday(member.id, sprint.start, sprint.end);
+          const active = hasStarted(member.id, sprint.start);
+          const cellData = assignments[member.id]?.[sprint.id] || [];
+          const currentColCls = sprint.id === currentSprintId ? ' current-sprint-col' : '';
+          
+          let cellHtml = '';
+          if (!active) {
+            cellHtml = `<div class="inactive-cell">Not yet started</div>`;
+          } else if (isHol) {
+            cellHtml = `<div class="holiday-cell">🌴 Holiday</div>`;
+          } else {
+            let chipsHtml = cellData.map(chip => 
+              `<div class="chip" draggable="true" ondragstart="handleDragStart(event, '${member.id}', '${sprint.id}', '${chip.id}')" ondragend="handleDragEnd(event)" style="background-color: ${chip.color}">${chip.name}</div>`
+            ).join('');
+            
+            cellHtml = `<div class="cell-content" ondblclick="openSprintEdit('${member.id}', '${sprint.id}')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '${member.id}', '${sprint.id}')">
+              ${chipsHtml}
+              <button class="add-btn" onclick="openSprintEdit('${member.id}', '${sprint.id}')">+</button>
+            </div>`;
+          }
+          html += `<td class="${currentColCls}">${cellHtml}</td>`;
+        });
+        html += `</tr>`;
+      });
+
+      // Render Releases
+      html += `<tr><td class="member-col" style="background:#f3f4f6;">RELEASES</td>`;
+      sprints.forEach(sprint => {
+        const cellData = assignments['releases']?.[sprint.id] || [];
+        const relCurrentCls = sprint.id === currentSprintId ? ' current-sprint-col' : '';
+        let chipsHtml = cellData.map(chip => 
+          `<div class="chip" draggable="true" ondragstart="handleDragStart(event, 'releases', '${sprint.id}', '${chip.id}')" ondragend="handleDragEnd(event)" style="background-color: ${chip.color}">${chip.name}</div>`
+        ).join('');
+        html += `<td class="${relCurrentCls}" style="background:#f9fafb;"><div class="cell-content" ondblclick="openSprintEdit('releases', '${sprint.id}')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'releases', '${sprint.id}')">
+          ${chipsHtml}
+          <button class="add-btn" onclick="openSprintEdit('releases', '${sprint.id}')">+</button>
+        </div></td>`;
+      });
+      html += `</tr></tbody></table>`;
+
+      container.innerHTML = html;
+    }
+
+    function formatDateRange(start, end) {
+      const s = new Date(start);
+      const e = new Date(end);
+      const fmt = d => `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`;
+      return `${fmt(s)} &ndash; ${fmt(e)}`;
+    }
+
+    function openSprintEdit(memberId, sprintId) {
+      activeSprintEdit = { memberId, sprintId };
+      const qData = sprintData[currentQuarter];
+      const memberName = memberId === 'releases' ? 'RELEASES' : TEAM_MEMBERS.find(m => m.id === memberId).name;
+      const sprintName = qData.sprints.find(s => s.id === sprintId).name;
+      
+      document.getElementById('sprint-modal-title').innerText = `${memberName} - ${sprintName}`;
+      renderSprintEditChips();
+      
+      document.getElementById('sprint-edit-modal').classList.add('active');
+    }
+
+    function renderSprintEditChips() {
+      if (!activeSprintEdit) return;
+      const { memberId, sprintId } = activeSprintEdit;
+      const chips = sprintData[currentQuarter].assignments[memberId]?.[sprintId] || [];
+      const list = document.getElementById('sprint-chips-list');
+      
+      if (chips.length === 0) {
+        list.innerHTML = `<div style="font-size:13px; color:var(--text-muted);">No initiatives assigned.</div>`;
+      } else {
+        list.innerHTML = chips.map(chip => `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; border:1px solid var(--border); border-radius:4px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="width:12px; height:12px; border-radius:50%; background:${chip.color};"></div>
+              <span style="font-size:14px; font-weight:500;">${chip.name}</span>
+            </div>
+            <button class="btn-danger" style="padding:4px 8px; font-size:12px;" onclick="removeInitiative('${chip.id}')">Remove</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    function addInitiativeToCell() {
+      if (!activeSprintEdit) return;
+      const { memberId, sprintId } = activeSprintEdit;
+      const nameInput = document.getElementById('new-initiative-name');
+      const colorInput = document.getElementById('new-initiative-color');
+      
+      const name = nameInput.value.trim();
+      if (!name) return;
+
+      if (!sprintData[currentQuarter].assignments[memberId]) {
+        sprintData[currentQuarter].assignments[memberId] = {};
+      }
+      if (!sprintData[currentQuarter].assignments[memberId][sprintId]) {
+        sprintData[currentQuarter].assignments[memberId][sprintId] = [];
+      }
+
+      sprintData[currentQuarter].assignments[memberId][sprintId].push({
+        id: Date.now().toString(),
+        name,
+        projectId: null,
+        color: INITIATIVE_COLORS[name] || colorInput.value
+      });
+
+      nameInput.value = '';
+      saveData();
+      renderSprintEditChips();
+      renderSprintGrid();
+    }
+
+    function removeInitiative(chipId) {
+      if (!activeSprintEdit) return;
+      const { memberId, sprintId } = activeSprintEdit;
+      let chips = sprintData[currentQuarter].assignments[memberId][sprintId];
+      sprintData[currentQuarter].assignments[memberId][sprintId] = chips.filter(c => c.id !== chipId);
+      
+      saveData();
+      renderSprintEditChips();
+      renderSprintGrid();
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    // --- STAKEHOLDER ROADMAP LOGIC --- //
+
+    function setShFilter(filter, btn) {
+      currentShFilter = filter;
+      document.querySelectorAll('#sh-filters .tab-btn').forEach(el => { el.classList.remove('active'); });
+      btn.classList.add('active');
+      renderStakeholderTable();
+    }
+
+    // setShView removed — timeline is now the only stakeholder view
+
+    function toggleGroup(tbodyId, iconId) {
+      const tbody = document.getElementById(tbodyId);
+      const icon = document.getElementById(iconId);
+      if (tbody.classList.contains('group-collapsed')) {
+        tbody.classList.remove('group-collapsed');
+        if (icon) icon.innerText = '▾';
+      } else {
+        tbody.classList.add('group-collapsed');
+        if (icon) icon.innerText = '▸';
+      }
+    }
+
+    function parseEtaBucket(eta, status) {
+      if (status === 'done') return 'Completed';
+      if (!eta || eta.trim() === '') return 'No ETA Set';
+      
+      const v = eta.toLowerCase().trim();
+      if (['apr 2026', 'april', 'apr'].includes(v)) return 'This Month';
+      if (['may 2026', 'jun 2026', 'june', 'may', 'q2', 'q2 2026'].includes(v)) return 'This Quarter';
+      if (['q3', 'q3 2026', 'q4', 'q4 2026', 'h2', 'h2 2026', 'september 15'].includes(v)) return 'H2 2026';
+      
+      return 'Future';
+    }
+
+    const STATUS_ORDER = { 'in_progress': 1, 'tbd': 2, 'on_hold': 3, 'blocked': 4, 'done': 5 };
+    const PRIORITY_ORDER = { 'P0': 1, 'P1': 2, 'P2': 3 };
+
+    function sortShData(column) {
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+      renderStakeholderTable();
+    }
+
+    function parseMoney(val) {
+      if (!val) return 0;
+      let clean = val.replace(/[^0-9.]/g, '');
+      if (val.toLowerCase().includes('k')) return parseFloat(clean) * 1000;
+      if (val.toLowerCase().includes('m')) return parseFloat(clean) * 1000000;
+      return parseFloat(clean) || 0;
+    }
+
+
+    function parseEtaMonths(eta) {
+      if (!eta) return null;
+      const v = eta.toLowerCase().trim();
+      if (v.includes('apr') && !v.includes('may')) return { start: 0, span: 1 }; 
+      if (v.includes('may') && !v.includes('apr') && !v.includes('jun')) return { start: 1, span: 1 };
+      if (v.includes('jun') && !v.includes('may')) return { start: 2, span: 1 };
+      if (v.includes('apr') && v.includes('may')) return { start: 0, span: 2 };
+      if (v.includes('may') && v.includes('jun')) return { start: 1, span: 2 };
+      if (v.includes('q2')) return { start: 0, span: 3 };
+      return null;
+    }
+
+    function renderGanttView(filtered, container) {
+      const inTimeline = filtered.filter(i => ['in_progress', 'tbd'].includes(i.status) && parseEtaMonths(i.eta) !== null);
+      const backlogList = filtered.filter(i => ['on_hold', 'tbd', 'in_progress'].includes(i.status) && !inTimeline.includes(i));
+      const blockedList = filtered.filter(i => i.status === 'blocked');
+      const doneList = filtered.filter(i => i.status === 'done');
+
+      let html = `
+        <div class="gantt-container">
+          <div class="gantt-header">
+            <div class="gantt-quarter-label">Q2</div>
+            <div class="gantt-months">
+              <div class="gantt-month">April</div>
+              <div class="gantt-month">May</div>
+              <div class="gantt-month">June</div>
+            </div>
+          </div>
+          <div class="gantt-body">
+      `;
+
+      inTimeline.forEach(item => {
+        const span = parseEtaMonths(item.eta);
+        const leftPct = (span.start / 3) * 100;
+        const widthPct = (span.span / 3) * 100;
+        const color = getInitiativeColor(item.initiative, item.area);
+        
+        html += `
+          <div class="gantt-row" ondblclick="openShEdit('${item.id}')">
+            <span class="priority-pill ${item.priority}">${item.priority}</span>
+            <div class="gantt-bar-container">
+              <div class="gantt-bar" style="margin-left: ${leftPct}%; width: ${widthPct}%; background: ${color};" title="${item.initiative}">
+                ${item.initiative}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div></div>`; 
+
+      const renderList = (items) => {
+        return items.map(i => {
+          const dotColor = getInitiativeColor(i.initiative, i.area);
+          return `
+          <div class="backlog-item" ondblclick="openShEdit('${i.id}')">
+            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${dotColor}; flex-shrink:0;"></span>
+            <span class="priority-pill ${i.priority}">${i.priority}</span>
+            <span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${i.initiative}</span>
+            <span class="area-tag ${i.area}">${i.area.replace('_', ' ')}</span>
+            <span style="color: var(--text-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${i.notes || '—'}</span>
+          </div>
+        `}).join('');
+      };
+
+      const getImpact = (items) => {
+        let t = 0; items.forEach(i => { t += parseMoney(i.impact); });
+        return t >= 1000000 ? `€${(t/1000000).toFixed(1)}M` : (t > 0 ? `€${Math.round(t/1000)}K` : '');
+      };
+
+      html += `
+        <div class="backlog-section">
+          <div class="backlog-header">📋 Backlog <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${backlogList.length})</span></div>
+          ${backlogColHeaders()}
+          <div>${renderList(sortBacklogItems(backlogList))}</div>
+        </div>
+      `;
+
+      const blImpact = getImpact(blockedList);
+      html += `
+        <div class="blocked-section">
+          <div class="backlog-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <span style="width:16px; font-family: monospace;">▾</span>🚫 Blocked <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${blockedList.length})</span>
+            ${blImpact ? `<span style="margin-left:auto; color:var(--text-muted); font-size:13px;">Total Impact: ${blImpact}</span>` : ''}
+          </div>
+          <div class="collapsible-content" style="display:none; opacity: 0.7;">
+            ${backlogColHeaders()}
+            ${renderList(sortBacklogItems(blockedList))}
+          </div>
+        </div>
+      `;
+
+      const dnImpact = getImpact(doneList);
+      html += `
+        <div class="completed-section">
+          <div class="backlog-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
+            <span style="width:16px; font-family: monospace;">▾</span>✅ Completed <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${doneList.length})</span>
+            ${dnImpact ? `<span style="margin-left:auto; color:var(--text-muted); font-size:13px;">Total Impact: ${dnImpact}</span>` : ''}
+          </div>
+          <div style="display:none; opacity: 0.6;">
+            ${backlogColHeaders()}
+            ${renderList(sortBacklogItems(doneList))}
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    // Backlog sort state
+    let backlogSortKey = null; // 'priority' | 'name' | 'area'
+    let backlogSortDir = 'asc';
+    const PRIORITY_RANK = { P0: 0, P1: 1, P2: 2 };
+
+    function sortBacklogItems(items) {
+      if (!backlogSortKey) return items;
+      const sorted = [...items];
+      sorted.sort((a, b) => {
+        let cmp = 0;
+        if (backlogSortKey === 'priority') {
+          cmp = (PRIORITY_RANK[a.priority] ?? 9) - (PRIORITY_RANK[b.priority] ?? 9);
+        } else if (backlogSortKey === 'name') {
+          cmp = a.initiative.localeCompare(b.initiative);
+        } else if (backlogSortKey === 'area') {
+          cmp = a.area.localeCompare(b.area);
+        }
+        return backlogSortDir === 'asc' ? cmp : -cmp;
+      });
+      return sorted;
+    }
+
+    function toggleBacklogSort(key) {
+      if (backlogSortKey === key) {
+        backlogSortDir = backlogSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        backlogSortKey = key;
+        backlogSortDir = 'asc';
+      }
+      renderStakeholderTable();
+    }
+
+    function backlogColHeaders() {
+      const arrow = (key) => {
+        if (backlogSortKey !== key) return '<span class="sort-arrow">↕</span>';
+        return `<span class="sort-arrow active">${backlogSortDir === 'asc' ? '↑' : '↓'}</span>`;
+      };
+      return `<div class="backlog-col-header">
+        <span></span>
+        <span onclick="toggleBacklogSort('priority')">Priority ${arrow('priority')}</span>
+        <span onclick="toggleBacklogSort('name')">Name ${arrow('name')}</span>
+        <span onclick="toggleBacklogSort('area')">Area ${arrow('area')}</span>
+        <span>Notes</span>
+      </div>`;
+    }
+
+    function renderStakeholderTable() {
+      const ganttContainer = document.getElementById('sh-timeline-container');
+      
+      let filtered = stakeholderData.filter(item => {
+        if (currentShFilter === 'All') return true;
+        return item.area === currentShFilter;
+      });
+
+      let active = 0, done = 0, blocked = 0, totalImpact = 0;
+      filtered.forEach(item => {
+        if (item.status === 'in_progress' || item.status === 'tbd') active++;
+        else if (item.status === 'done') done++;
+        else if (item.status === 'blocked') blocked++;
+        totalImpact += parseMoney(item.impact);
+      });
+      const formatImpact = totalImpact >= 1000000 ? `€${(totalImpact/1000000).toFixed(1)}M` : `€${Math.round(totalImpact/1000)}K`;
+      document.getElementById('sh-summary-stats').innerText = `${active} Active | ${done} Done | ${blocked} Blocked | Total Impact: ${formatImpact}`;
+
+      renderGanttView(filtered, ganttContainer);
+    }
+
+    function toggleEtaCustom() {
+      const select = document.getElementById('sh-edit-eta-select');
+      const input = document.getElementById('sh-edit-eta');
+      if (select.value === 'custom') {
+        input.style.display = 'block';
+        input.focus();
+      } else {
+        input.style.display = 'none';
+      }
+    }
+
+    function openShEdit(id) {
+      const item = stakeholderData.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById('sh-edit-id').value = item.id;
+      document.getElementById('sh-edit-initiative').value = item.initiative || '';
+      document.getElementById('sh-edit-area').value = item.area || 'advertising';
+      document.getElementById('sh-edit-priority').value = item.priority || 'P1';
+      document.getElementById('sh-edit-impact').value = item.impact || '';
+      document.getElementById('sh-edit-effort').value = item.effort || '';
+      document.getElementById('sh-edit-status').value = item.status || 'tbd';
+      
+      const etaSelect = document.getElementById('sh-edit-eta-select');
+      const etaInput = document.getElementById('sh-edit-eta');
+      const knownOptions = ["", "Apr 2026", "May 2026", "Jun 2026", "Q3 2026", "Q4 2026", "H2 2026", "2027"];
+      
+      if (!item.eta) {
+        etaSelect.value = "";
+        etaInput.value = "";
+        etaInput.style.display = "none";
+      } else if (knownOptions.includes(item.eta)) {
+        etaSelect.value = item.eta;
+        etaInput.value = item.eta;
+        etaInput.style.display = "none";
+      } else {
+        etaSelect.value = "custom";
+        etaInput.value = item.eta;
+        etaInput.style.display = "block";
+      }
+
+      document.getElementById('sh-edit-notes').value = item.notes || '';
+      document.getElementById('sh-edit-jira').value = item.jiraKey || '';
+
+      document.getElementById('sh-edit-modal').classList.add('active');
+    }
+
+    function saveShEdit() {
+      const id = document.getElementById('sh-edit-id').value;
+      const index = stakeholderData.findIndex(i => i.id === id);
+      
+      if (index > -1) {
+        const etaSelect = document.getElementById('sh-edit-eta-select').value;
+        const etaVal = etaSelect === 'custom' ? document.getElementById('sh-edit-eta').value.trim() : etaSelect;
+
+        stakeholderData[index] = {
+          ...stakeholderData[index],
+          initiative: document.getElementById('sh-edit-initiative').value,
+          area: document.getElementById('sh-edit-area').value,
+          priority: document.getElementById('sh-edit-priority').value,
+          impact: document.getElementById('sh-edit-impact').value,
+          effort: document.getElementById('sh-edit-effort').value,
+          status: document.getElementById('sh-edit-status').value,
+          eta: etaVal || null,
+          notes: document.getElementById('sh-edit-notes').value,
+          jiraKey: document.getElementById('sh-edit-jira').value
+        };
+        
+        saveData();
+        renderStakeholderTable();
+        closeModal('sh-edit-modal');
+      }
+    }
+
+    function deleteShItem() {
+      if(confirm('Are you sure you want to delete this initiative?')) {
+        const id = document.getElementById('sh-edit-id').value;
+        stakeholderData = stakeholderData.filter(i => i.id !== id);
+        saveData();
+        renderStakeholderTable();
+        closeModal('sh-edit-modal');
+      }
+    }
+
+    function addNewShItem() {
+      const newItem = {
+        id: 'sh-' + Date.now(),
+        initiative: 'New Initiative',
+        area: 'advertising',
+        priority: 'P1',
+        impact: null,
+        effort: null,
+        status: 'tbd',
+        eta: null,
+        notes: '',
+        jiraKey: null,
+        prdLink: null,
+        dashboardLink: null
+      };
+      stakeholderData.push(newItem);
+      saveData();
+      renderStakeholderTable();
+      openShEdit(newItem.id);
+    }
+
+    // Run on load
+    window.onload = init;
+
+  </script>
+</body>
+</html>

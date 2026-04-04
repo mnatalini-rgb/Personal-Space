@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL Growth — Trust Modal Redesign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #EEF2F3;
+            --surface-color: #ffffff;
+            --text-main: #1A1A2E;
+            --text-muted: #6B7280;
+            --border-color: #E2E8F0;
+            --accent-color: #2563eb;
+            --accent-light: rgba(37, 99, 235, 0.08);
+            --green: #059669;
+            --red: #dc2626;
+            
+            --radius-large: 20px;
+            --radius-medium: 14px;
+            --radius-small: 8px;
+            
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+            
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .nav-bar {
+            margin-bottom: 32px;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all var(--transition);
+        }
+
+        .nav-link:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent-color);
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin: 0 0 20px 0;
+        }
+
+        .metadata {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .metadata a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .metadata a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--surface-color);
+            border-radius: var(--radius-large);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 24px 0;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 16px 0;
+            color: var(--text-main);
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 32px;
+            padding-bottom: 8px;
+            overflow-x: auto;
+        }
+
+        .flow-step {
+            flex: 1;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-medium);
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+
+        .flow-arrow {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-medium);
+            padding: 24px;
+            text-align: left;
+            transition: box-shadow var(--transition);
+        }
+
+        .kpi-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .kpi-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value.red { color: var(--red); }
+        .kpi-value.green { color: var(--green); }
+
+        .kpi-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .insight-card {
+            background: rgba(5, 150, 105, 0.05);
+            border-left: 4px solid var(--green);
+            border-radius: var(--radius-small);
+            padding: 16px 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .insight-card.default {
+            background: var(--bg-color);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .brief-content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 24px 0 12px 0;
+        }
+        
+        .brief-content h4:first-child {
+            margin-top: 0;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 0 0 16px 0;
+        }
+
+        li {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface-color);
+            text-align: left;
+        }
+
+        th, td {
+            padding: 16px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-color);
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-in-progress {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--green);
+        }
+
+        .status-not-started {
+            background: var(--bg-color);
+            color: var(--text-muted);
+        }
+
+        .status-planned {
+            background: var(--accent-light);
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .flow-diagram {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .flow-arrow {
+                text-align: center;
+                transform: rotate(90deg);
+                margin: 4px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="nav-bar">
+        <a href="../index.html" class="nav-link">&larr; Back to Hub</a>
+    </div>
+
+    <header class="header">
+        <div class="badge">Experiment &middot; Design Phase</div>
+        <h1 class="page-title">AL Growth &mdash; Trust Modal Redesign</h1>
+        <p class="page-subtitle">Increasing account linkage rates through trust signal optimisation</p>
+        <div class="metadata">
+            Owner: Moritz Natalini &middot; Team: Anouk (Design), Teodor (FE) &middot; Jira: <a href="https://efgcloud.atlassian.net/browse/AD-3946" target="_blank">AD-3946</a>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2 class="section-title">1. Background & Hypothesis</h2>
+        <p>Account Linkage (AL) is the entry point to the partner conversion funnel: AL &rarr; KYC (C1) &rarr; First Deposit (C2) &rarr; Deeper Milestones (C3). The volume and quality of ALs directly determine partner value measured in &euro; per 1K EBU.</p>
+        <p>The Trust Modal experiment (concluded March 2026) proved that showing a FACEIT trust badge before the partner login screen doubles the linkage-step completion rate. Users need reassurance before sharing credentials with third-party partners.</p>
+        
+        <div class="flow-diagram">
+            <div class="flow-step">User clicks "Link Account"</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Trust Modal shown</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">User clicks "Connect"</div>
+            <div class="flow-arrow">&rarr;</div>
+            <div class="flow-step">Partner login screen</div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">2. Trust Modal A/B Test &mdash; Results</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Control AL Rate</div>
+                <div class="kpi-value">5.34%</div>
+                <div class="kpi-sub">Trust modal shown</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Variant AL Rate</div>
+                <div class="kpi-value">2.75%</div>
+                <div class="kpi-sub">No trust modal</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Relative Drop</div>
+                <div class="kpi-value red">&minus;48.4%</div>
+                <div class="kpi-sub">z = 17.98, p &lt; 0.001</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">&euro; Impact / Cohort</div>
+                <div class="kpi-value green">+&euro;416</div>
+                <div class="kpi-sub">+&euro;9.82 per 1K users</div>
+            </div>
+        </div>
+        <div class="insight-card">
+            Decision: Keep trust modal as permanent default for all partner AL flows. Trust signals are critical to conversion quality &mdash; any AL flow redesign must preserve or enhance them.
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">3. Design Brief for Anouk</h2>
+        <div class="brief-content">
+            <h4>Objective</h4>
+            <p>Redesign the trust modal to further improve AL completion rate. Build on the proven trust signal concept &mdash; the current modal already doubles completion. The design challenge: can we do even better?</p>
+            
+            <h4>Current UX flow</h4>
+            <ol>
+                <li>User is shown a mission/event requiring account linkage</li>
+                <li>User clicks to link account</li>
+                <li>Trust modal appears with: partner branding (logo + name), benefits list (Hassle free, Automated, Safety &amp; Security), and "CONNECT ACCOUNT" CTA</li>
+                <li>User clicks CTA &rarr; redirected to partner login/OAuth</li>
+            </ol>
+
+            <h4>What the current modal shows</h4>
+            <ul>
+                <li>Partner logo + verified badge</li>
+                <li>Headline: "Connect your account once to automatically claim prizes from this organizer of all missions and events"</li>
+                <li>Benefits list with checkmarks: "Hassle free &mdash; One time login for all FACEIT competitions", "Automated &mdash; Claim any prize without copy and paste codes", "Safety &amp; Security &mdash; No personal data shared with partners"</li>
+                <li>Orange CTA button: "CONNECT ACCOUNT"</li>
+            </ul>
+
+            <h4>Design constraints</h4>
+            <ul>
+                <li>MUST keep trust signals (FACEIT verified badge, security messaging)</li>
+                <li>MUST show partner branding (logo, name)</li>
+                <li>MUST include clear CTA</li>
+                <li>CAN experiment with: layout, copy, visual hierarchy, benefit framing, social proof elements, progress indicators</li>
+                <li>SHOULD explore: A/B testable variants (min 2 designs)</li>
+            </ul>
+
+            <h4>Jira ticket</h4>
+            <p><a href="https://efgcloud.atlassian.net/browse/AD-3946" target="_blank" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">AD-3946</a></p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">4. Experiment Plan &mdash; May 2026</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Dates</th>
+                        <th>Activity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Design</td>
+                        <td>Apr 7&ndash;25</td>
+                        <td>Anouk delivers 2+ design variants</td>
+                        <td><span class="status-pill status-in-progress">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dev</td>
+                        <td>Apr 28&ndash;May 9</td>
+                        <td>Teodor implements variants + feature flag</td>
+                        <td><span class="status-pill status-not-started">Not Started</span></td>
+                    </tr>
+                    <tr>
+                        <td>QA</td>
+                        <td>May 9&ndash;12</td>
+                        <td>Internal testing</td>
+                        <td><span class="status-pill status-not-started">Not Started</span></td>
+                    </tr>
+                    <tr>
+                        <td>Launch</td>
+                        <td>May 12</td>
+                        <td>Experiment goes live</td>
+                        <td><span class="status-pill status-planned">Planned</span></td>
+                    </tr>
+                    <tr>
+                        <td>Monitor</td>
+                        <td>May 12&ndash;30</td>
+                        <td>Collect data, daily checks</td>
+                        <td><span class="status-pill status-planned">Planned</span></td>
+                    </tr>
+                    <tr>
+                        <td>Conclude</td>
+                        <td>May 30</td>
+                        <td>Analyse results, pick winner</td>
+                        <td><span class="status-pill status-planned">Planned</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">5. Success Metrics</h2>
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">Primary Metric</div>
+                <div class="kpi-value">AL Completion Rate</div>
+                <div class="kpi-sub">Baseline: 5.34% (current trust modal)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Secondary Metric</div>
+                <div class="kpi-value">&euro; Value per 1K EBU</div>
+                <div class="kpi-sub">Partner efficiency improvement</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">Guardrail</div>
+                <div class="kpi-value">C1/C2 Conversion Rate</div>
+                <div class="kpi-sub">Must not decrease vs. control</div>
+            </div>
+        </div>
+        <div class="insight-card default">
+            Success = statistically significant improvement in AL completion rate over the current 5.34% baseline, with no degradation in downstream conversion quality (C1/C2 rates).
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">6. Open Questions</h2>
+        <ul>
+            <li>How many design variants should we test? (minimum 2 recommended)</li>
+            <li>Should we test across all partners or start with Tradeit only?</li>
+            <li>Do we want to test copy changes alongside visual changes, or isolate them?</li>
+            <li>What's the minimum detectable effect for the sample size in May?</li>
+        </ul>
+    </section>
+
+    <footer>
+        AL Growth &middot; proj-3 &middot; Ads &amp; Partnerships &mdash; Moritz Natalini<br>
+        <a href="../index.html">Back to Hub</a> &middot; Last updated: 4 April 2026
+    </footer>
+</div>
+
+</body>
+</html>

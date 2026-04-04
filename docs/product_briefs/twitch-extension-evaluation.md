@@ -75,4 +75,12 @@ The strategic opportunity is real. Being first to commercialise Twitch extension
 
 ---
 
-*This doc captures the state of discussion as of 27 March 2026. To be revisited week of 31 March once Fahad responds.*
+---
+
+## Updates
+
+- **2026-04-02** — Moritz OOO until 9 April (Easter). Go/no-go on Pick'Ems deferred. Next step: organise call with Fahad Syed for week of 9 April to get answers on Lulu's 3 questions, Chexx licensing risk, and Twitch commercialisation policy confirmation. Holistic extension scoping kickoff also deferred to post-Easter.
+
+---
+
+*This doc captures the state of discussion as of 27 March 2026. Updated 2 April 2026.*

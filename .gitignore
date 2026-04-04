@@ -16,3 +16,5 @@ test.py
 test2.py
 test3.py
 trace.py
+fix_*.py
+update_styles.py

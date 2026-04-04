@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Releases & Experiments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #EEF2F3;
+            --surface: #ffffff;
+            --text-main: #1A1A2E;
+            --text-muted: #6B7280;
+            --border: #E2E8F0;
+            
+            --radius-card: 20px;
+            --radius-pill: 14px;
+            
+            --shadow-base: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+            
+            --transition: 0.2s ease;
+            
+            --color-advertising: #dc2626;
+            --color-brand: #10b981;
+            --color-infra: #6366f1;
+            
+            --pill-p0: #fee2e2; --text-p0: #991b1b;
+            --pill-p1: #ffedd5; --text-p1: #9a3412;
+            --pill-p2: #dbeafe; --text-p2: #1e40af;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+        .top-nav a:hover { color: var(--text-main); }
+
+        /* Layout Structure */
+        .container {
+            display: flex;
+            gap: 2rem;
+            max-width: 1060px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            position: sticky;
+            top: 60px;
+            align-self: flex-start;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .month-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .month-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all var(--transition);
+        }
+        .month-link:hover, .month-link.active {
+            background-color: rgba(0,0,0,0.04);
+            color: var(--text-main);
+        }
+        
+        .divider {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        .stats {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .export-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all var(--transition);
+            text-align: left;
+        }
+        .btn:hover {
+            border-color: #cbd5e1;
+            box-shadow: var(--shadow-base);
+            transform: translateY(-1px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        /* Monthly Section */
+        .month-section {
+            scroll-margin-top: 80px;
+        }
+        .month-header {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .month-divider {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        .sub-section-header {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 2rem 0 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-base);
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        
+        /* Area Indicator */
+        .card-indicator {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+        .area-advertising { background-color: var(--color-advertising); }
+        .area-brand_integrations { background-color: var(--color-brand); }
+        .area-infrastructure { background-color: var(--color-infra); }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            padding-left: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .card-header-main { flex-grow: 1; }
+        
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .card-meta-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* Badges & Pills */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: var(--radius-pill);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .pill-p0 { background: var(--pill-p0); color: var(--text-p0); }
+        .pill-p1 { background: var(--pill-p1); color: var(--text-p1); }
+        .pill-p2 { background: var(--pill-p2); color: var(--text-p2); }
+        
+        .pill-area { background: #f3f4f6; color: #4b5563; }
+        .pill-status-shipped { background: #dcfce7; color: #166534; }
+        .pill-status-rolling { background: #fef9c3; color: #854d0e; }
+        .pill-status-planned { background: #dbeafe; color: #1e40af; }
+        .pill-team { background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; }
+
+        .verdict-confirmed { background: #d1fae5; color: #065f46; }
+        .verdict-not_confirmed { background: #fee2e2; color: #991b1b; }
+        .verdict-inconclusive { background: #fef3c7; color: #92400e; }
+
+        .chevron {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: transform var(--transition);
+        }
+        .card.expanded .chevron { transform: rotate(90deg); }
+
+        /* Card Details (Expanded) */
+        .card-details {
+            display: none;
+            padding: 0 1.5rem 1.5rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: -0.5rem;
+            padding-top: 1rem;
+            font-size: 0.95rem;
+        }
+        .card.expanded .card-details { display: block; }
+        
+        .details-section { margin-bottom: 1rem; }
+        .details-section:last-child { margin-bottom: 0; }
+        
+        .impact-text { font-weight: 600; color: var(--text-main); }
+        .hypothesis-text { font-style: italic; color: var(--text-muted); }
+        
+        .metric-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric-name { font-weight: 500; font-size: 0.9rem; color: var(--text-muted); }
+        .metric-result { font-weight: 600; font-size: 1.1rem; margin-top: 2px; }
+        .metric-target { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        .metrics-list {
+            list-style: none;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .metrics-list li {
+            padding: 4px 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        .metrics-list li:last-child { border-bottom: none; }
+
+        .links-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .link-pill {
+            text-decoration: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 0.8rem;
+            color: var(--text-main);
+            transition: all var(--transition);
+        }
+        .link-pill:hover { background: #f1f5f9; }
+
+        .notes-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #f9fafb;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 2px solid var(--border);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+                gap: 1rem;
+            }
+            .month-links {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 8px;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            .export-actions {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="../index.html">← Hub</a> · Monthly Releases & Experiments
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="month-links" id="sidebar-links">
+            </div>
+            
+            <hr class="divider">
+            
+            <div class="stats" id="sidebar-stats">
+            </div>
+            
+            <div class="export-actions">
+                <button type="button" class="btn" onclick="copySlackSummary()">Copy Slack Summary</button>
+                <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
+            </div>
+        </aside>
+
+        <main class="main-content" id="main-content">
+        </main>
+    </div>
+
+    <footer class="footer">
+        Ads & Partnerships — Moritz Natalini · Dir. PM · FACEIT<br>
+        Last updated: April 2026
+    </footer>
+
+    <script>
+        const SEED_VERSION = 1;
+        const SEED_DATA = [
+            // RELEASES
+            {
+                id: 'rel-1', month: '2026-01', type: 'release',
+                name: 'Trust Modal Refresh', projectId: 'proj-9',
+                area: 'brand_integrations', priority: 'P1',
+                releaseDate: '2026-01-20', sprintId: 's1.3',
+                team: ['teodor', 'anouk'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'Redesigned the trust modal shown during account linkage flows. Clearer value proposition, updated copy, improved CTA hierarchy.',
+                impact: 'AL click-through rate improved by 12%',
+                links: { jira: null, dashboard: null, prd: null, slides: null },
+                notes: ''
+            },
+            {
+                id: 'rel-2', month: '2026-01', type: 'release',
+                name: 'Mission Chain v1', projectId: 'proj-10',
+                area: 'brand_integrations', priority: 'P1',
+                releaseDate: '2026-01-28', sprintId: 's1.4',
+                team: ['isabel', 'egor', 'teodor'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'Sequential mission system where completing Mission A unlocks Mission B. Increases engagement depth and drives users further down the conversion ladder.',
+                impact: 'Average missions per user +34%, C1 conversion up 8%',
+                links: { jira: null, dashboard: null, prd: null, slides: null },
+                notes: ''
+            },
+            {
+                id: 'rel-3', month: '2026-02', type: 'release',
+                name: 'Peripheral Data Collection v1', projectId: 'proj-5',
+                area: 'advertising', priority: 'P2',
+                releaseDate: '2026-02-10', sprintId: 's1.5',
+                team: ['isabel', 'egor'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'Backend pipeline to collect hardware peripheral data (mouse, keyboard, headset, monitor) from player profiles. Initial rollout to India region.',
+                impact: '2,853 records collected in first 2 weeks. 47 unique brands identified.',
+                links: { jira: null, dashboard: 'peripheral-data-dashboard.html', prd: null, slides: null },
+                notes: 'Part of Hardware Ad Targeting initiative'
+            },
+            {
+                id: 'rel-4', month: '2026-02', type: 'release',
+                name: 'Winline Integration Launch', projectId: 'proj-11',
+                area: 'brand_integrations', priority: 'P0',
+                releaseDate: '2026-02-17', sprintId: 's1.5',
+                team: ['isabel', 'moritz'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'New betting partner integration for CIS markets. Full account linkage flow, KYC handoff, and mission set targeting Winline-eligible users.',
+                impact: 'First CIS betting partner live. Targeting 50K ALs in Q1.',
+                links: { jira: null, dashboard: 'nsm-dashboard.html', prd: null, slides: null },
+                notes: ''
+            },
+            {
+                id: 'rel-5', month: '2026-03', type: 'release',
+                name: 'Skin Vault Launch', projectId: 'proj-3',
+                area: 'brand_integrations', priority: 'P1',
+                releaseDate: '2026-03-17', sprintId: 's1.8',
+                team: ['teodor', 'isabel', 'anouk'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'CS2 player profile feature showcasing users\' skin inventory. Tradeit-powered marketplace integration with real-time pricing.',
+                impact: '12K+ unique visitors in first week. Tradeit integration driving AL pipeline.',
+                links: { jira: null, dashboard: 'skin-vault-dashboard.html', prd: null, slides: null },
+                notes: ''
+            },
+            {
+                id: 'rel-6', month: '2026-03', type: 'release',
+                name: 'NSM Dashboard v2', projectId: 'proj-12',
+                area: 'brand_integrations', priority: 'P1',
+                releaseDate: '2026-03-10', sprintId: 's1.7',
+                team: ['moritz'],
+                status: 'shipped', rolloutPct: 100,
+                summary: 'Unified multi-partner NSM dashboard replacing individual partner dashboards. Partner tabs, conversion ladder visualization, 30-day rolling metrics.',
+                impact: 'Single source of truth for all partner performance. Tradeit dashboard deprecated.',
+                links: { jira: null, dashboard: 'nsm-dashboard.html', prd: null, slides: null },
+                notes: ''
+            },
+            // EXPERIMENTS
+            {
+                id: 'exp-1', month: '2026-03', type: 'experiment',
+                name: 'Prebid Migration Evaluation', projectId: 'proj-1',
+                area: 'advertising', priority: 'P0',
+                hypothesis: 'Migrating from Publift (managed) to Prebid.js (self-serve) can maintain or improve Revenue per Page View while reducing ad ops dependency.',
+                startDate: '2026-02-01', endDate: '2026-03-15',
+                primaryMetric: { name: 'Revenue per Page View', result: 'Moba +22% vs Publift baseline', target: 'Maintain parity' },
+                secondaryMetrics: [
+                    { name: 'Fill Rate', result: '89% avg', target: '85%+' },
+                    { name: 'Viewability', result: '68%', target: '60%+' },
+                    { name: 'eCPM', result: '$3.42 avg', target: '$3.00+' }
+                ],
+                sampleSize: 'Full CSStats.gg traffic (ex-Russia)',
+                confidence: '95%',
+                verdict: 'confirmed',
+                verdictSummary: 'Moba Prebid setup outperforms Publift across all tiers. RPV is the primary evaluation metric and shows clear uplift. Proceeding with full migration.',
+                team: ['moritz'],
+                links: { jira: null, dashboard: 'prebid-experiment-results.html', report: null },
+                notes: 'Russia excluded from analysis (GAM does not operate there)'
+            },
+            {
+                id: 'exp-2', month: '2026-01', type: 'experiment',
+                name: 'Mission Reward Framing Test', projectId: 'proj-10',
+                area: 'brand_integrations', priority: 'P2',
+                hypothesis: 'Showing estimated reward value (€X.XX) in mission cards increases mission start rate by 10%+.',
+                startDate: '2026-01-06', endDate: '2026-01-27',
+                primaryMetric: { name: 'Mission start rate', result: '+7%', target: '+10%' },
+                secondaryMetrics: [
+                    { name: 'Mission completion rate', result: '+3%', target: null },
+                    { name: 'AL rate (downstream)', result: 'No significant change', target: null }
+                ],
+                sampleSize: '18,000 users (50/50 split)',
+                confidence: '90%',
+                verdict: 'inconclusive',
+                verdictSummary: 'Lift is positive but below target threshold. May revisit with stronger reward framing in Q2.',
+                team: ['moritz', 'teodor'],
+                links: { jira: null, dashboard: null, report: null },
+                notes: ''
+            },
+            {
+                id: 'exp-3', month: '2026-02', type: 'experiment',
+                name: 'Drops Notification Cadence',
+                area: 'brand_integrations', priority: 'P2',
+                hypothesis: 'Reducing drop notification frequency from daily to 3x/week increases open rate without hurting redemption.',
+                startDate: '2026-02-03', endDate: '2026-02-28',
+                primaryMetric: { name: 'Notification open rate', result: '+31%', target: '+15%' },
+                secondaryMetrics: [
+                    { name: 'Drop redemption rate', result: '-2% (not significant)', target: 'No decrease' },
+                    { name: 'Unsubscribe rate', result: '-18%', target: 'Decrease' }
+                ],
+                sampleSize: '42,000 users',
+                confidence: '95%',
+                verdict: 'confirmed',
+                verdictSummary: 'Reducing cadence significantly improves open rates and reduces unsubscribes with no meaningful impact on redemption. Implementing globally.',
+                team: ['moritz', 'isabel'],
+                links: { jira: null, dashboard: null, report: null },
+                notes: ''
+            }
+        ];
+
+        const PENDING_RELEASES = []; // AI writes entries here
+
+        const TEAM_NAMES = {
+            'moritz': 'Moritz',
+            'teodor': 'Teodor',
+            'isabel': 'Isabel',
+            'egor': 'Egor',
+            'anouk': 'Anouk',
+            'omar': 'Omar'
+        };
+
+        const AREA_LABELS = {
+            'advertising': 'Advertising',
+            'brand_integrations': 'Brand Integrations',
+            'infrastructure': 'Infrastructure'
+        };
+
+        let appData = [];
+
+        function init() {
+            let data = JSON.parse(localStorage.getItem('monthly_releases_data'));
+            const storedVersion = parseInt(localStorage.getItem('monthly_releases_seed_version') || '0');
+            
+            if (!data || storedVersion < SEED_VERSION) {
+                data = [...SEED_DATA];
+                localStorage.setItem('monthly_releases_seed_version', SEED_VERSION.toString());
+            }
+            
+            // Merge pending
+            if (PENDING_RELEASES.length > 0) {
+                const existingIds = new Set(data.map(d => d.id));
+                for (const item of PENDING_RELEASES) {
+                    if (!existingIds.has(item.id)) {
+                        data.push(item);
+                    }
+                }
+            }
+            
+            appData = data;
+            localStorage.setItem('monthly_releases_data', JSON.stringify(appData));
+            
+            renderPage();
+        }
+
+        function formatMonthString(yyyyMm) {
+            const [year, month] = yyyyMm.split('-');
+            const date = new Date(year, parseInt(month) - 1);
+            return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        }
+
+        function toggleCard(element) {
+            const card = element.closest('.card');
+            card.classList.toggle('expanded');
+        }
+
+        function createPill(text, typeClass) {
+            return `<span class="pill ${typeClass}">${text}</span>`;
+        }
+
+        function createTeamPills(teamArray) {
+            if (!teamArray || !teamArray.length) return '';
+            return teamArray.map(t => createPill(TEAM_NAMES[t] || t, 'pill-team')).join('');
+        }
+
+        function renderLinks(links) {
+            if (!links) return '';
+            const html = [];
+            for (const [key, val] of Object.entries(links)) {
+                if (val) {
+                    const label = key.charAt(0).toUpperCase() + key.slice(1);
+                    html.push(`<a href="${val}" class="link-pill" target="_blank">${label}</a>`);
+                }
+            }
+            if (html.length === 0) return '';
+            return `<div class="links-row">${html.join('')}</div>`;
+        }
+
+        function renderReleaseCard(item) {
+            const statusLabels = { 'shipped': 'Shipped', 'rolling_out': 'Rolling Out', 'planned': 'Planned' };
+            const statusClass = item.status === 'shipped' ? 'pill-status-shipped' : (item.status === 'rolling_out' ? 'pill-status-rolling' : 'pill-status-planned');
+            
+            return `
+            <div class="card">
+                <div class="card-indicator area-${item.area}"></div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-header-main">
+                        <div class="card-title-row">
+                            <span class="card-title">${item.name}</span>
+                            ${createPill(item.priority, `pill-${item.priority.toLowerCase()}`)}
+                            ${createPill(AREA_LABELS[item.area], 'pill-area')}
+                        </div>
+                        <div class="card-meta-row">
+                            <span>${item.releaseDate}</span>
+                            <span>•</span>
+                            ${createPill(statusLabels[item.status] || item.status, statusClass)}
+                            <span>•</span>
+                            ${createTeamPills(item.team)}
+                        </div>
+                    </div>
+                    <div class="chevron">▸</div>
+                </div>
+                <div class="card-details">
+                    <div class="details-section">
+                        <p>${item.summary}</p>
+                    </div>
+                    ${item.impact ? `<div class="details-section impact-text">Impact: ${item.impact}</div>` : ''}
+                    ${renderLinks(item.links)}
+                    ${item.notes ? `<div class="notes-text">${item.notes}</div>` : ''}
+                </div>
+            </div>`;
+        }
+
+        function renderExperimentCard(item) {
+            const verdictLabels = { 'confirmed': 'Confirmed', 'not_confirmed': 'Not Confirmed', 'inconclusive': 'Inconclusive' };
+            const verdictClass = `verdict-${item.verdict}`;
+            
+            let secondaryMetricsHtml = '';
+            if (item.secondaryMetrics && item.secondaryMetrics.length > 0) {
+                secondaryMetricsHtml = `
+                    <ul class="metrics-list">
+                        ${item.secondaryMetrics.map(m => `
+                            <li>
+                                <span>${m.name}</span>
+                                <strong>${m.result}</strong>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            }
+
+            return `
+            <div class="card">
+                <div class="card-indicator area-${item.area}"></div>
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-header-main">
+                        <div class="card-title-row">
+                            <span class="card-title">${item.name}</span>
+                            ${createPill(item.priority, `pill-${item.priority.toLowerCase()}`)}
+                            ${createPill(AREA_LABELS[item.area], 'pill-area')}
+                            ${createPill(verdictLabels[item.verdict], verdictClass)}
+                        </div>
+                        <div class="card-meta-row">
+                            <span>${item.startDate} → ${item.endDate}</span>
+                            <span>•</span>
+                            ${createTeamPills(item.team)}
+                        </div>
+                    </div>
+                    <div class="chevron">▸</div>
+                </div>
+                <div class="card-details">
+                    <div class="details-section hypothesis-text">
+                        Hypothesis: "${item.hypothesis}"
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div>
+                            <div class="metric-name">${item.primaryMetric.name}</div>
+                            <div class="metric-target">Target: ${item.primaryMetric.target}</div>
+                        </div>
+                        <div class="metric-result">${item.primaryMetric.result}</div>
+                    </div>
+                    
+                    ${secondaryMetricsHtml}
+                    
+                    <div class="details-section">
+                        <span class="impact-text">Verdict:</span> ${item.verdictSummary}
+                    </div>
+                    <div class="details-section" style="font-size: 0.8rem; color: var(--text-muted)">
+                        Sample Size: ${item.sampleSize} | Confidence: ${item.confidence}
+                    </div>
+                    
+                    ${renderLinks(item.links)}
+                    ${item.notes ? `<div class="notes-text">${item.notes}</div>` : ''}
+                </div>
+            </div>`;
+        }
+
+        function renderPage() {
+            // Group by month
+            const grouped = {};
+            let totalReleases = 0;
+            let totalExperiments = 0;
+            let confirmedExps = 0;
+
+            appData.forEach(item => {
+                if (!grouped[item.month]) grouped[item.month] = { releases: [], experiments: [] };
+                
+                if (item.type === 'release') {
+                    grouped[item.month].releases.push(item);
+                    totalReleases++;
+                } else if (item.type === 'experiment') {
+                    grouped[item.month].experiments.push(item);
+                    totalExperiments++;
+                    if (item.verdict === 'confirmed') confirmedExps++;
+                }
+            });
+
+            // Sort months descending
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            
+            // Render Sidebar Links
+            const sidebarLinksEl = document.getElementById('sidebar-links');
+            sidebarLinksEl.innerHTML = sortedMonths.map(m => 
+                `<a href="#month-${m}" class="month-link">${formatMonthString(m)}</a>`
+            ).join('');
+            
+            // Render Stats
+            document.getElementById('sidebar-stats').innerHTML = 
+                `${totalReleases} shipped · ${totalExperiments} experiments · ${confirmedExps} confirmed`;
+
+            // Render Main Content
+            const mainEl = document.getElementById('main-content');
+            mainEl.innerHTML = '';
+            
+            sortedMonths.forEach(m => {
+                const group = grouped[m];
+                
+                // Sort by date inside
+                group.releases.sort((a,b) => b.releaseDate.localeCompare(a.releaseDate));
+                group.experiments.sort((a,b) => b.endDate.localeCompare(a.endDate));
+                
+                let html = `
+                    <section class="month-section" id="month-${m}">
+                        <h2 class="month-header">${formatMonthString(m)}</h2>
+                        <hr class="month-divider">
+                `;
+                
+                if (group.releases.length > 0) {
+                    html += `<div class="sub-section-header">🚀 RELEASES (${group.releases.length})</div>`;
+                    html += group.releases.map(renderReleaseCard).join('');
+                }
+                
+                if (group.experiments.length > 0) {
+                    html += `<div class="sub-section-header">🔬 EXPERIMENTS (${group.experiments.length})</div>`;
+                    html += group.experiments.map(renderExperimentCard).join('');
+                }
+                
+                html += `</section>`;
+                mainEl.innerHTML += html;
+            });
+            
+            // Setup intersection observer for active link highlighting
+            setupScrollSpy();
+        }
+
+        function setupScrollSpy() {
+            const sections = document.querySelectorAll('.month-section');
+            const navLinks = document.querySelectorAll('.month-link');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-100px 0px -50% 0px' });
+            
+            sections.forEach(sec => { observer.observe(sec); });
+        }
+
+        // Export Functions
+        function copySlackSummary() {
+            // Group by month
+            const grouped = {};
+            appData.forEach(item => {
+                if (!grouped[item.month]) grouped[item.month] = { releases: [], experiments: [] };
+                if (item.type === 'release') grouped[item.month].releases.push(item);
+                else if (item.type === 'experiment') grouped[item.month].experiments.push(item);
+            });
+            
+            const sortedMonths = Object.keys(grouped).sort().reverse();
+            let summaryText = '';
+            
+            sortedMonths.forEach(m => {
+                const group = grouped[m];
+                summaryText += `*${formatMonthString(m)}* — ${group.releases.length} releases, ${group.experiments.length} experiment(s)\n\n`;
+                
+                if (group.releases.length > 0) {
+                    summaryText += `Releases:\n`;
+                    group.releases.forEach(r => {
+                        const dateStr = new Date(r.releaseDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        summaryText += `• ${r.name} (${r.priority}, ${AREA_LABELS[r.area]}) — Shipped ${dateStr}\n`;
+                    });
+                    summaryText += `\n`;
+                }
+                
+                if (group.experiments.length > 0) {
+                    summaryText += `Experiments:\n`;
+                    group.experiments.forEach(e => {
+                        const verdictIcon = e.verdict === 'confirmed' ? '✅' : (e.verdict === 'not_confirmed' ? '❌' : '⚠️');
+                        const verdictLabel = e.verdict === 'confirmed' ? 'Confirmed' : (e.verdict === 'not_confirmed' ? 'Not Confirmed' : 'Inconclusive');
+                        summaryText += `• ${e.name} — ${verdictIcon} ${verdictLabel} (${e.primaryMetric.result})\n`;
+                    });
+                    summaryText += `\n`;
+                }
+                summaryText += `----------------------------------------\n\n`;
+            });
+            
+            navigator.clipboard.writeText(summaryText.trim()).then(() => {
+                alert('Slack summary copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+
+        function downloadJSON() {
+            const dataStr = JSON.stringify(appData, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const dateStr = new Date().toISOString().split('T')[0];
+            const filename = `monthly-releases-${dateStr}.json`;
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
