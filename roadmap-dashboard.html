@@ -488,50 +488,121 @@
       margin-bottom: 24px;
       border: none;
     }
-    .gantt-header {
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      background: #1E293B;
-      color: white;
+      gap: 4px;
+    }
+    .kpi-active { border-top: 3px solid #2563eb; }
+    .kpi-done { border-top: 3px solid #16a34a; }
+    .kpi-blocked { border-top: 3px solid #DC2626; }
+    .kpi-impact { border-top: 3px solid #f59e0b; }
+    .kpi-value { font-size: 28px; font-weight: 600; color: var(--text); }
+    .kpi-label { font-size: 12px; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
+
+    /* Gantt Styles */
+    .gantt-container {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      border: none;
+      position: relative;
+    }
+    .gantt-header {
+      display: flex;
+      background: #F8FAFA;
+      color: var(--text);
       font-weight: 500;
       font-size: 13px;
       position: sticky;
       top: 0;
       z-index: 10;
       border-radius: var(--radius) var(--radius) 0 0;
+      height: 40px;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
     }
     .gantt-quarter-label {
-      background: #162d4a;
-      padding: 12px 24px;
-      font-size: 20px;
+      padding: 0 16px;
+      font-size: 13px;
       font-weight: 600;
-      text-align: center;
-      letter-spacing: 0.5px;
+      min-width: 80px;
     }
     .gantt-months {
       display: flex;
+      flex: 1;
+      height: 100%;
     }
     .gantt-month {
       flex: 1;
       text-align: center;
-      padding: 10px 12px;
-      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 1px;
-      border-left: 1px solid rgba(255,255,255,0.15);
-    }
-    .gantt-month:first-child {
-      border-left: none;
+      border-left: 1px solid var(--border);
+      color: var(--text-muted);
     }
     .gantt-body {
       padding: 16px;
+      position: relative;
+    }
+    .gantt-grid-lines {
+      position: absolute;
+      top: 0;
+      left: 80px; /* offset for priority pill space */
+      right: 16px;
+      bottom: 0;
+      pointer-events: none;
+    }
+    .gantt-grid-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 1px dashed var(--border);
+    }
+    .gantt-today-marker {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      border-left: 2px dashed rgba(220, 38, 38, 0.5);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .gantt-today-pill {
+      position: absolute;
+      top: 0;
+      left: -22px;
+      background: #1A1A2E;
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 600;
     }
     .gantt-row {
       display: flex;
       align-items: center;
       margin-bottom: 8px;
       gap: 8px;
+      position: relative;
+      z-index: 2;
     }
     .gantt-bar-container {
       flex: 1;
@@ -539,24 +610,46 @@
       position: relative;
       height: 40px;
     }
-    .gantt-bar {
+    .gantt-bar-wrapper {
+      position: absolute;
       height: 28px;
       border-radius: var(--radius-sm);
-      color: white;
-      font-size: 12px;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      padding: 0 8px;
-      cursor: pointer;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       margin-top: 4px;
+      cursor: pointer;
+      display: flex;
+      overflow: hidden;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       transition: opacity 0.2s;
     }
-    .gantt-bar:hover { opacity: 0.85; }
+    .gantt-bar-wrapper:hover { opacity: 0.85; }
+    .gantt-bar-filled {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 8px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .gantt-bar-remaining {
+      height: 100%;
+    }
+    .gantt-stage-pill {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.25);
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
     .backlog-section, .blocked-section, .completed-section {
       background: var(--surface);
       border-radius: var(--radius);
@@ -663,6 +756,7 @@
 
     <!-- TAB 2: Stakeholder Roadmap -->
     <section id="stakeholder-view" class="view-section">
+      <div id="sh-summary-stats" style="margin-bottom: 16px;"></div>
       <div class="summary-bar">
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <div class="filter-tabs" id="sh-filters">
@@ -672,9 +766,7 @@
           </div>
 
         </div>
-        <div id="sh-summary-stats">
-          <!-- Stats injected via JS -->
-        </div>
+
       </div>
 
       <div style="overflow-x: auto;">
@@ -738,6 +830,36 @@
       <div class="form-group">
         <label>Initiative</label>
         <input type="text" id="sh-edit-initiative">
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Stage</label>
+          <select id="sh-edit-stage">
+            <option value="scoping">Scoping</option>
+            <option value="development">Development</option>
+            <option value="ready">Ready</option>
+            <option value="experimenting">Experimenting</option>
+            <option value="concluded">Concluded</option>
+            <option value="released">Released</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 8px;">
+          <input type="checkbox" id="sh-edit-requiresExperiment" style="width: 16px; height: 16px; margin:0;">
+          <label style="margin:0; text-transform:none;">Requires Experiment</label>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 16px;">
+        <div class="form-group" style="flex: 1;">
+          <label>Start Date</label>
+          <input type="date" id="sh-edit-startDate">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Dev Start Date</label>
+          <input type="date" id="sh-edit-devStartDate">
+        </div>
       </div>
       
       <div style="display: flex; gap: 16px;">
@@ -819,7 +941,7 @@
 
   <script>
     // Constants & Seed Data
-    const SEED_VERSION = 7;
+    const SEED_VERSION = 8;
     const JIRA_BASE_URL = 'https://efgcloud.atlassian.net/browse/';
 
     const TEAM_MEMBERS = [
@@ -931,33 +1053,33 @@
     };
 
     const SEED_STAKEHOLDER_DATA = [
-      { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null },
-      { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html' },
-      { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr-May 2026', notes: 'Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
-      { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html' }
-    ];
+  { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-02-15', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html', stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: '2026-01-15', experimentStartDate: '2026-01-20', concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10' },
+  { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-01', devStartDate: '2026-03-20', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-10-01', devStartDate: '2025-11-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-02-01', completedDate: '2026-02-15' },
+  { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr-May 2026', notes: 'Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: null, experimentStartDate: null, concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10' },
+  { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-09-01', devStartDate: '2025-10-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-15', completedDate: '2026-01-15' },
+  { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-06-01', devStartDate: '2025-07-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2025-09-15', completedDate: '2025-09-15' },
+  { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-08-01', devStartDate: '2025-09-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-01', completedDate: '2026-01-01' },
+  { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-07-01', devStartDate: '2025-08-01', readyDate: null, experimentStartDate: null, concludedDate: '2025-12-01', releasedDate: null, completedDate: '2025-12-15' },
+  { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2025-06-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-15', devStartDate: '2026-04-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
+  { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html', stage: 'development', requiresExperiment: true, startDate: '2026-04-01', devStartDate: '2026-04-07', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null }
+];
 
     // State Variables
     let sprintData = {};
@@ -1402,8 +1524,25 @@
       return null;
     }
 
+    
+    function dateToGanttPct(dateStr) {
+      if (!dateStr) return null;
+      const d = new Date(dateStr);
+      const qStart = new Date('2026-04-01');
+      const qEnd = new Date('2026-06-30');
+      const totalDays = (qEnd - qStart) / 86400000;
+      const elapsed = (d - qStart) / 86400000;
+      return Math.max(0, Math.min(100, (elapsed / totalDays) * 100));
+    }
+
+    function getTodayPct() {
+      return dateToGanttPct('2026-04-04'); // Using provided today's date
+    }
+
     function renderGanttView(filtered, container) {
-      const inTimeline = filtered.filter(i => ['in_progress', 'tbd'].includes(i.status) && parseEtaMonths(i.eta) !== null);
+      // Items with startDate and eta go to Gantt
+      const inTimeline = filtered.filter(i => i.startDate && parseEtaMonths(i.eta) !== null);
+      // Exclude items in timeline from backlog, but keep blocked and done logic intact
       const backlogList = filtered.filter(i => ['on_hold', 'tbd', 'in_progress'].includes(i.status) && !inTimeline.includes(i));
       const blockedList = filtered.filter(i => i.status === 'blocked');
       const doneList = filtered.filter(i => i.status === 'done');
@@ -1411,7 +1550,7 @@
       let html = `
         <div class="gantt-container">
           <div class="gantt-header">
-            <div class="gantt-quarter-label">Q2</div>
+            <div class="gantt-quarter-label">Q2 2026</div>
             <div class="gantt-months">
               <div class="gantt-month">April</div>
               <div class="gantt-month">May</div>
@@ -1419,20 +1558,62 @@
             </div>
           </div>
           <div class="gantt-body">
+            <div class="gantt-grid-lines">
+              <div class="gantt-grid-line" style="left: 0%"></div>
+              <div class="gantt-grid-line" style="left: 16.6%"></div>
+              <div class="gantt-grid-line" style="left: 33.3%"></div>
+              <div class="gantt-grid-line" style="left: 50%"></div>
+              <div class="gantt-grid-line" style="left: 66.6%"></div>
+              <div class="gantt-grid-line" style="left: 83.3%"></div>
+              <div class="gantt-grid-line" style="left: 100%"></div>
+            </div>
       `;
+
+      const todayPct = getTodayPct();
+      
+      if (inTimeline.length > 0) {
+        html += `
+            <div class="gantt-today-marker" style="left: calc(80px + ${todayPct}% * calc(100% - 80px) / 100)">
+              <div class="gantt-today-pill">TODAY</div>
+            </div>
+        `;
+      }
 
       inTimeline.forEach(item => {
         const span = parseEtaMonths(item.eta);
-        const leftPct = (span.start / 3) * 100;
-        const widthPct = (span.span / 3) * 100;
+        const etaEndPct = ((span.start + span.span) / 3) * 100;
+        const startPct = dateToGanttPct(item.startDate);
+        
+        let leftPct = startPct;
+        let widthPct = etaEndPct - startPct;
+        if (widthPct < 0) widthPct = 5; // fallback
+        if (leftPct + widthPct > 100) widthPct = 100 - leftPct;
+
         const color = getInitiativeColor(item.initiative, item.area);
+        
+        let fillPct = 100;
+        if (item.status !== 'done' && item.stage !== 'completed') {
+            if (todayPct < etaEndPct) {
+                fillPct = ((todayPct - startPct) / (etaEndPct - startPct)) * 100;
+                fillPct = Math.max(0, Math.min(100, fillPct));
+            }
+        }
+
+        let stageLabel = item.stage ? item.stage.substring(0,3).toUpperCase() : 'DEV';
+        
+        let stageStyle = "";
+        if (item.stage === 'scoping') stageStyle = "background: linear-gradient(0deg, rgba(255,255,255,0.15), rgba(255,255,255,0.15));";
         
         html += `
           <div class="gantt-row" ondblclick="openShEdit('${item.id}')">
-            <span class="priority-pill ${item.priority}">${item.priority}</span>
+            <span class="priority-pill ${item.priority}" style="width: 24px; text-align: center;">${item.priority}</span>
             <div class="gantt-bar-container">
-              <div class="gantt-bar" style="margin-left: ${leftPct}%; width: ${widthPct}%; background: ${color};" title="${item.initiative}">
-                ${item.initiative}
+              <div class="gantt-bar-wrapper" style="left: ${leftPct}%; width: ${widthPct}%;" title="${item.initiative} (${item.stage})">
+                <div class="gantt-bar-filled" style="width: ${fillPct}%; background: ${color}; ${stageStyle}">
+                  <span style="overflow: hidden; text-overflow: ellipsis; padding-right: 32px;">${item.initiative}</span>
+                  <div class="gantt-stage-pill">${stageLabel}</div>
+                </div>
+                <div class="gantt-bar-remaining" style="width: ${100 - fillPct}%; background: ${color}; opacity: 0.2;"></div>
               </div>
             </div>
           </div>
@@ -1498,8 +1679,7 @@
 
       container.innerHTML = html;
     }
-
-    // Backlog sort state
+// Backlog sort state
     let backlogSortKey = null; // 'priority' | 'name' | 'area'
     let backlogSortDir = 'asc';
     const PRIORITY_RANK = { P0: 0, P1: 1, P2: 2 };
@@ -1561,7 +1741,26 @@
         totalImpact += parseMoney(item.impact);
       });
       const formatImpact = totalImpact >= 1000000 ? `€${(totalImpact/1000000).toFixed(1)}M` : `€${Math.round(totalImpact/1000)}K`;
-      document.getElementById('sh-summary-stats').innerText = `${active} Active | ${done} Done | ${blocked} Blocked | Total Impact: ${formatImpact}`;
+      document.getElementById('sh-summary-stats').innerHTML = `
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-active">
+            <div class="kpi-value">${active}</div>
+            <div class="kpi-label">Active</div>
+          </div>
+          <div class="kpi-card kpi-done">
+            <div class="kpi-value">${done}</div>
+            <div class="kpi-label">Done</div>
+          </div>
+          <div class="kpi-card kpi-blocked">
+            <div class="kpi-value">${blocked}</div>
+            <div class="kpi-label">Blocked</div>
+          </div>
+          <div class="kpi-card kpi-impact">
+            <div class="kpi-value">${formatImpact}</div>
+            <div class="kpi-label">Total Impact</div>
+          </div>
+        </div>
+      `;
 
       renderGanttView(filtered, ganttContainer);
     }
@@ -1583,6 +1782,10 @@
 
       document.getElementById('sh-edit-id').value = item.id;
       document.getElementById('sh-edit-initiative').value = item.initiative || '';
+      document.getElementById('sh-edit-stage').value = item.stage || 'scoping';
+      document.getElementById('sh-edit-requiresExperiment').checked = !!item.requiresExperiment;
+      document.getElementById('sh-edit-startDate').value = item.startDate || '';
+      document.getElementById('sh-edit-devStartDate').value = item.devStartDate || '';
       document.getElementById('sh-edit-area').value = item.area || 'advertising';
       document.getElementById('sh-edit-priority').value = item.priority || 'P1';
       document.getElementById('sh-edit-impact').value = item.impact || '';
@@ -1624,6 +1827,10 @@
         stakeholderData[index] = {
           ...stakeholderData[index],
           initiative: document.getElementById('sh-edit-initiative').value,
+          stage: document.getElementById('sh-edit-stage').value,
+          requiresExperiment: document.getElementById('sh-edit-requiresExperiment').checked,
+          startDate: document.getElementById('sh-edit-startDate').value || null,
+          devStartDate: document.getElementById('sh-edit-devStartDate').value || null,
           area: document.getElementById('sh-edit-area').value,
           priority: document.getElementById('sh-edit-priority').value,
           impact: document.getElementById('sh-edit-impact').value,
@@ -1663,7 +1870,16 @@
         notes: '',
         jiraKey: null,
         prdLink: null,
-        dashboardLink: null
+        dashboardLink: null,
+        stage: 'scoping',
+        requiresExperiment: false,
+        startDate: null,
+        devStartDate: null,
+        readyDate: null,
+        experimentStartDate: null,
+        concludedDate: null,
+        releasedDate: null,
+        completedDate: null
       };
       stakeholderData.push(newItem);
       saveData();

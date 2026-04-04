@@ -581,6 +581,114 @@ curl -X POST -H 'Content-type: application/json' \
 
 ---
 
+## Project Lifecycle Stages
+
+Every project follows a defined lifecycle. The roadmap Gantt view uses these stages to render progress bars — each stage maps to a visual segment on the bar, giving stakeholders an at-a-glance view of where every initiative stands.
+
+### Stage Definitions
+
+| # | Stage | Trigger | Who | Visual |
+|---|---|---|---|---|
+| 1 | **In Scoping** | PM opens the project | Moritz | Lightest shade of initiative color |
+| 2 | **In Development** | Design, BE, or FE starts work (Jira ticket moves to "In Progress") | Anouk / Isabel / Egor / Teodor / Omar | Medium shade |
+| 3 | **Ready** | Development complete, pending release or experiment setup | Team | Full bright |
+| 3a | **Experimenting** | A/B test deployed and live | Moritz + team | Full bright (striped/patterned) |
+| 3a✓ | **Concluded** | Experiment results in, go/no-go decision made | Moritz | Full bright (with verdict indicator) |
+| 3b | **Released** | Shipped to production (no experiment required) | Team | Full bright |
+| 4 | **Completed** | Fully rolled out — either post-experiment rollout or direct release confirmed | Moritz | Full bright, entire bar filled |
+
+### Stage Flow
+
+```
+1. In Scoping
+   │  PM opens project, writes brief, defines success metrics
+   │  Specifies: does this feature require experimentation? (yes/no)
+   │
+   ▼
+2. In Development
+   │  Design / Backend / Frontend work begins
+   │  Signal: Jira ticket status → "In Progress"
+   │
+   ▼
+3. Ready
+   │  Dev complete. Two paths:
+   │
+   ├─── Experiment required ──► 3a. Experimenting
+   │                                │  A/B test live, monitoring
+   │                                ▼
+   │                            3a✓. Concluded
+   │                                │  Results analysed, decision made
+   │                                │  (confirmed / not confirmed / inconclusive)
+   │                                ▼
+   │                            4. Completed (rollout or sunset)
+   │
+   └─── No experiment ─────► 3b. Released
+                                    │  Shipped to production
+                                    ▼
+                                4. Completed
+```
+
+### Scoping Phase Details
+
+During **In Scoping**, the PM:
+1. Creates the project in the Productivity Dashboard
+2. Writes the product brief / one-pager
+3. Defines success metrics (tied to NSM where applicable)
+4. Declares whether the feature **requires experimentation**
+   - If yes: experiment hypothesis, primary metric, and success threshold are defined upfront
+   - If no: feature ships directly after dev completion
+5. Triggers the cascade workflow (Steps 2-5 of the pipeline)
+
+### Data Model Impact
+
+Each stakeholder item in the roadmap gains these fields:
+
+```javascript
+{
+  // Existing fields
+  id, initiative, area, priority, impact, effort, status, eta, notes, jiraKey, prdLink, dashboardLink,
+
+  // NEW: Lifecycle fields
+  stage: 'scoping',           // 'scoping' | 'development' | 'ready' | 'experimenting' | 'concluded' | 'released' | 'completed'
+  requiresExperiment: false,  // declared during scoping
+  startDate: '2026-04-01',   // when project entered "In Scoping"
+  devStartDate: null,         // when dev/design started (from Jira or manual)
+  readyDate: null,            // when dev completed
+  experimentStartDate: null,  // when A/B test went live (if applicable)
+  concludedDate: null,        // when experiment results were finalised (if applicable)
+  releasedDate: null,         // when shipped to production
+  completedDate: null         // when fully rolled out
+}
+```
+
+### Gantt Progress Bar Rendering
+
+The roadmap Gantt uses `startDate` → `eta` as the full bar width. The progress fill is split by lifecycle stage:
+
+```
+[In Scoping ░░░|In Dev ▓▓▓▓▓|Ready ████|Remaining ·····]
+                                         ▲
+                                      TODAY line
+```
+
+- **Filled segments** (left of today): Show completed stages in progressively darker shades
+- **Faded segment** (right of today): Shows remaining planned duration
+- **TODAY marker**: Vertical line across all rows, anchored to current date
+
+### Automation Hooks
+
+| Transition | Trigger | Automation |
+|---|---|---|
+| → In Scoping | PM creates project | Cascade command (Steps 1-5) |
+| → In Development | Jira ticket → "In Progress" | `refresh-roadmap.sh` detects status change, updates `devStartDate` |
+| → Ready | Jira ticket → "Done" | `refresh-roadmap.sh` detects, prompts PM |
+| → Experimenting | PM confirms experiment setup | AI updates stage + `experimentStartDate` |
+| → Concluded | PM enters results | AI updates stage + `concludedDate` + verdict |
+| → Released | PM confirms ship | AI updates stage + `releasedDate` |
+| → Completed | PM confirms full rollout | AI updates stage + `completedDate`, triggers Steps 8-10 |
+
+---
+
 ## Key Design Decisions
 
 ### Why AI assistant as orchestrator (not GitHub Actions)?
