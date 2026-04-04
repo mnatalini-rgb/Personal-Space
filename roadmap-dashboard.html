@@ -624,18 +624,27 @@
     .gantt-bar-wrapper:hover { opacity: 0.85; }
     .gantt-bar-filled {
       height: 100%;
+      position: relative;
+    }
+    .gantt-bar-remaining {
+      height: 100%;
+    }
+    .gantt-bar-label {
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      right: 40px;
       display: flex;
       align-items: center;
-      padding-left: 8px;
       color: white;
       font-size: 12px;
       font-weight: 500;
       white-space: nowrap;
-      position: relative;
       overflow: hidden;
-    }
-    .gantt-bar-remaining {
-      height: 100%;
+      text-overflow: ellipsis;
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .gantt-stage-pill {
       position: absolute;
@@ -1566,18 +1575,11 @@
               <div class="gantt-grid-line" style="left: 66.6%"></div>
               <div class="gantt-grid-line" style="left: 83.3%"></div>
               <div class="gantt-grid-line" style="left: 100%"></div>
+              <div class="gantt-today-marker" style="left: ${getTodayPct()}%">
+                <div class="gantt-today-pill">TODAY</div>
+              </div>
             </div>
       `;
-
-      const todayPct = getTodayPct();
-      
-      if (inTimeline.length > 0) {
-        html += `
-            <div class="gantt-today-marker" style="left: calc(80px + ${todayPct}% * calc(100% - 80px) / 100)">
-              <div class="gantt-today-pill">TODAY</div>
-            </div>
-        `;
-      }
 
       inTimeline.forEach(item => {
         const span = parseEtaMonths(item.eta);
@@ -1609,11 +1611,10 @@
             <span class="priority-pill ${item.priority}" style="width: 24px; text-align: center;">${item.priority}</span>
             <div class="gantt-bar-container">
               <div class="gantt-bar-wrapper" style="left: ${leftPct}%; width: ${widthPct}%;" title="${item.initiative} (${item.stage})">
-                <div class="gantt-bar-filled" style="width: ${fillPct}%; background: ${color}; ${stageStyle}">
-                  <span style="overflow: hidden; text-overflow: ellipsis; padding-right: 32px;">${item.initiative}</span>
-                  <div class="gantt-stage-pill">${stageLabel}</div>
-                </div>
+                <div class="gantt-bar-filled" style="width: ${fillPct}%; background: ${color}; ${stageStyle}"></div>
                 <div class="gantt-bar-remaining" style="width: ${100 - fillPct}%; background: ${color}; opacity: 0.2;"></div>
+                <span class="gantt-bar-label">${item.initiative}</span>
+                <div class="gantt-stage-pill">${stageLabel}</div>
               </div>
             </div>
           </div>
