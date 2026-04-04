@@ -1581,6 +1581,8 @@
             </div>
       `;
 
+      const todayPct = getTodayPct();
+
       inTimeline.forEach(item => {
         const span = parseEtaMonths(item.eta);
         const etaEndPct = ((span.start + span.span) / 3) * 100;
