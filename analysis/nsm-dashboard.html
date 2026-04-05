@@ -1325,16 +1325,127 @@
 
                     <div style="margin-top: 1.25rem; padding: 1.25rem; background: color-mix(in srgb, var(--green) 8%, transparent); border: 1px solid var(--green); border-radius: var(--radius-md);">
                         <strong style="color: var(--green);">✓ Recommendation: Keep the Trust Modal</strong>
-                        <p style="margin: 0.5rem 0 0 0; color: var(--text-muted); font-size: 0.95rem;">Removing the trust modal cuts linkage-step completion nearly in half (5.34% → 2.75%, z=17.98, p < 0.001). While the full-population variant shows +12.8% raw AL rate, this marginal volume gain (~462 incremental ALs over 2M users) is far outweighed by the 48% quality loss at the conversion step. The trust modal generates €416 more value per cohort and €9.82 more per 1K users. The modal should remain as the permanent default for all partner AL flows. Full write-up: <a href="../docs/product_briefs/trust-modal-experiment-conclusion.md" style="color: var(--accent);">trust-modal-experiment-conclusion.md</a></p>
+                        <p style="margin: 0.5rem 0 0 0; color: var(--text-muted); font-size: 0.95rem;">Removing the trust modal cuts linkage-step completion nearly in half (5.34% → 2.75%, z=17.98, p &lt; 0.001). While the full-population variant shows +12.8% raw AL rate, this marginal volume gain (~462 incremental ALs over 2M users) is far outweighed by the 48% quality loss at the conversion step. The trust modal generates €416 more value per cohort and €9.82 more per 1K users. The modal should remain as the permanent default for all partner AL flows. Full write-up: <a href="../docs/product_briefs/trust-modal-experiment-conclusion.md" style="color: var(--accent);">trust-modal-experiment-conclusion.md</a></p>
                     </div>
                 </div>
 
             </div>
             <div id="tradeit-tab-rewards" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
+                <div class="section" id="tradeit-rewards-section-1">
+                    <h2 class="section-title">1. Reward Distribution & Status (March 2026)</h2>
+                    <div class="kpi-hero-wrapper" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                        <div class="kpi-card" style="border-left: 4px solid var(--green);">
+                            <div class="kpi-title" style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Total FP Claimed (Completed)</div>
+                            <div class="kpi-value" style="font-size: 2.5rem; margin-top: 0.5rem;">92,259,000</div>
+                            <div class="kpi-sub" style="color: var(--text-muted); font-size: 0.9rem;">From 110,197 claim events by 109,685 unique users</div>
+                        </div>
+                        <div class="kpi-card" style="border-left: 4px solid var(--orange);">
+                            <div class="kpi-title" style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">FP In Progress</div>
+                            <div class="kpi-value" style="font-size: 2.5rem; margin-top: 0.5rem;">3,781,779,000</div>
+                            <div class="kpi-sub" style="color: var(--text-muted); font-size: 0.9rem;">From 1,974,872 events by 1,431,858 unique users</div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper" style="margin-bottom: 2rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th class="number">FP Events</th>
+                                    <th class="number">Total FP</th>
+                                    <th class="number">Unique Users</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #059669; margin-right: 8px;"></span>COMPLETED</td>
+                                    <td class="number">110,197</td>
+                                    <td class="number" style="font-weight: 600;">92,259,000</td>
+                                    <td class="number">109,685</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3b82f6; margin-right: 8px;"></span>AVAILABLE</td>
+                                    <td class="number">264,797</td>
+                                    <td class="number" style="font-weight: 600;">735,174,000</td>
+                                    <td class="number">132,400</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #d97706; margin-right: 8px;"></span>IN_PROGRESS</td>
+                                    <td class="number">1,974,872</td>
+                                    <td class="number" style="font-weight: 600;">3,781,779,000</td>
+                                    <td class="number">1,431,858</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #6b7280; margin-right: 8px;"></span>EXPIRED</td>
+                                    <td class="number">396,969</td>
+                                    <td class="number" style="font-weight: 600;">1,682,453,500</td>
+                                    <td class="number">310,372</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="insight-card" style="margin-bottom: 2rem;">
+                        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem;">Shop Items Summary</h3>
+                        <p style="margin: 0; color: var(--text-muted);">Alongside FACEIT Points, Tradeit campaigns also distribute direct shop items: <strong>397,000</strong> currently available, <strong>3,000,000</strong> in progress, and <strong>990,000</strong> expired.</p>
+                    </div>
+                </div>
+
+                <div class="section" id="tradeit-rewards-section-2">
+                    <h2 class="section-title">2. Top Campaigns by FP Claimed</h2>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Campaign Name</th>
+                                    <th class="number">FP Claimed</th>
+                                    <th class="number">Users Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>EU General</td>
+                                    <td class="number" style="font-weight: 600;">64,062,000</td>
+                                    <td class="number">64,137</td>
+                                </tr>
+                                <tr>
+                                    <td>CIS General (Mystery Box)</td>
+                                    <td class="number" style="font-weight: 600;">16,494,500</td>
+                                    <td class="number">30,137</td>
+                                </tr>
+                                <tr>
+                                    <td>CIS Exc General</td>
+                                    <td class="number" style="font-weight: 600;">3,658,000</td>
+                                    <td class="number">7,366</td>
+                                </tr>
+                                <tr>
+                                    <td>NA General (Mystery Box)</td>
+                                    <td class="number" style="font-weight: 600;">2,137,000</td>
+                                    <td class="number">2,161</td>
+                                </tr>
+                                <tr>
+                                    <td>CIS AL & No Trade</td>
+                                    <td class="number" style="font-weight: 600;">1,795,000</td>
+                                    <td class="number">23,780</td>
+                                </tr>
+                                <tr>
+                                    <td>LATAM General</td>
+                                    <td class="number" style="font-weight: 600;">1,704,000</td>
+                                    <td class="number">3,450</td>
+                                </tr>
+                                <tr>
+                                    <td>APAC General (Mystery Box)</td>
+                                    <td class="number" style="font-weight: 600;">1,009,000</td>
+                                    <td class="number">1,818</td>
+                                </tr>
+                                <tr>
+                                    <td>MENA General (Mystery Box)</td>
+                                    <td class="number" style="font-weight: 600;">1,004,500</td>
+                                    <td class="number">1,810</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id="tradeit-tab-audience" class="tab-content">
@@ -1920,10 +2031,92 @@
                 </div>
             </div>
             <div id="winline-tab-rewards" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
+                <div class="section" id="winline-rewards-section-1">
+                    <h2 class="section-title">1. Reward Allocation (March 2026)</h2>
+                    <div class="kpi-hero-wrapper" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                        <div class="kpi-card" style="border-left: 4px solid var(--green);">
+                            <div class="kpi-title" style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Total FP Claimed</div>
+                            <div class="kpi-value" style="font-size: 2.5rem; margin-top: 0.5rem;">35,579,900</div>
+                            <div class="kpi-sub" style="color: var(--text-muted); font-size: 0.9rem;">From all active Winline missions</div>
+                        </div>
+                        <div class="kpi-card" style="border-left: 4px solid var(--blue);">
+                            <div class="kpi-title" style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Competition Entries</div>
+                            <div class="kpi-value" style="font-size: 2.5rem; margin-top: 0.5rem;">285</div>
+                            <div class="kpi-sub" style="color: var(--text-muted); font-size: 0.9rem;">Tickets claimed for special raffles</div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Campaign</th>
+                                    <th class="number">FP Claimed</th>
+                                    <th class="number">FP Available</th>
+                                    <th class="number">FP In Progress</th>
+                                    <th class="number">Users Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mission 4 FTD</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">18,101,100</td>
+                                    <td class="number" style="color: #3b82f6;">1,000</td>
+                                    <td class="number" style="color: #d97706;">86,214,700</td>
+                                    <td class="number">79,357</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission 5 Whale</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">6,886,900</td>
+                                    <td class="number" style="color: #3b82f6;">0</td>
+                                    <td class="number" style="color: #d97706;">24,100,100</td>
+                                    <td class="number">21,742</td>
+                                </tr>
+                                <tr>
+                                    <td>Agnostic Mission 1</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">3,437,500</td>
+                                    <td class="number" style="color: #3b82f6;">0</td>
+                                    <td class="number" style="color: #d97706;">194,517,900</td>
+                                    <td class="number">5,931</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission 2 No KYC</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">2,886,300</td>
+                                    <td class="number" style="color: #3b82f6;">0</td>
+                                    <td class="number" style="color: #d97706;">16,222,700</td>
+                                    <td class="number">26,403</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission 3 No FTD</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">2,205,400</td>
+                                    <td class="number" style="color: #3b82f6;">500</td>
+                                    <td class="number" style="color: #d97706;">12,255,800</td>
+                                    <td class="number">20,644</td>
+                                </tr>
+                                <tr>
+                                    <td>KZ AL Users</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">977,700</td>
+                                    <td class="number" style="color: #3b82f6;">1,984,900</td>
+                                    <td class="number" style="color: #d97706;">21,058,600</td>
+                                    <td class="number">5,312</td>
+                                </tr>
+                                <tr>
+                                    <td>KZ No AL Users</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">793,500</td>
+                                    <td class="number" style="color: #3b82f6;">76,487,500</td>
+                                    <td class="number" style="color: #d97706;">193,165,000</td>
+                                    <td class="number">648</td>
+                                </tr>
+                                <tr>
+                                    <td>BY</td>
+                                    <td class="number" style="font-weight: 600; color: #059669;">291,500</td>
+                                    <td class="number" style="color: #3b82f6;">0</td>
+                                    <td class="number" style="color: #d97706;">19,130,000</td>
+                                    <td class="number">346</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id="winline-tab-audience" class="tab-content">
@@ -2255,10 +2448,53 @@
                 </div>
             </div>
             <div id="whitemarket-tab-rewards" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
+                <div class="section" id="whitemarket-rewards-section-1">
+                    <h2 class="section-title">1. Reward Distribution: Shop Items</h2>
+                    
+                    <div class="insight-card" style="margin-bottom: 2rem;">
+                        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: color-mix(in srgb, var(--blue) 15%, transparent); color: var(--blue); border-radius: 4px; font-size: 0.9rem;">ℹ️</span>
+                            Shop Items Exclusively
+                        </h3>
+                        <p style="margin: 0; color: var(--text-muted);">Unlike Tradeit and Winline, WhiteMarket rewards are exclusively distributed as direct shop items (not FACEIT Points). Across all campaigns, there were <strong>187,279 shop item events</strong> involving <strong>78,975 unique users</strong>.</p>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Campaign</th>
+                                    <th class="number">Shop Items In Progress</th>
+                                    <th class="number">Users Completed</th>
+                                    <th class="number">Users Claimed</th>
+                                    <th class="number">Users Expired</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mission 1 (No AL)</td>
+                                    <td class="number" style="color: #d97706; font-weight: 600;">143,186</td>
+                                    <td class="number" style="color: #059669; font-weight: 600;">1,468</td>
+                                    <td class="number">1,470</td>
+                                    <td class="number" style="color: #6b7280;">31,700</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission 2 (AL + No Buy)</td>
+                                    <td class="number" style="color: #d97706; font-weight: 600;">38,302</td>
+                                    <td class="number" style="color: #059669; font-weight: 600;">2,582</td>
+                                    <td class="number">18,449</td>
+                                    <td class="number" style="color: #6b7280;">19,902</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission 3 (AL + Buy)</td>
+                                    <td class="number" style="color: #d97706; font-weight: 600;">5,791</td>
+                                    <td class="number" style="color: #059669; font-weight: 600;">503</td>
+                                    <td class="number">2,619</td>
+                                    <td class="number" style="color: #6b7280;">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id="whitemarket-tab-audience" class="tab-content">
