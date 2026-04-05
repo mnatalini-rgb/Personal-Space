@@ -603,6 +603,7 @@
       gap: 8px;
       position: relative;
       z-index: 2;
+      cursor: pointer;
     }
     .gantt-bar-container {
       flex: 1;
@@ -637,14 +638,12 @@
       right: 40px;
       display: flex;
       align-items: center;
-      color: white;
       font-size: 12px;
       font-weight: 500;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       pointer-events: none;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .gantt-stage-pill {
       position: absolute;
@@ -654,8 +653,6 @@
       font-size: 9px;
       padding: 1px 5px;
       border-radius: 8px;
-      background: rgba(255,255,255,0.25);
-      color: white;
       font-weight: 600;
       text-transform: uppercase;
     }
@@ -948,6 +945,17 @@
     </div>
   </div>
 
+  <!-- Stakeholder Brief Modal -->
+  <div class="modal-overlay" id="sh-brief-modal" onclick="if(event.target===this)closeModal('sh-brief-modal')">
+    <div class="modal-content" style="max-width: 560px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <span id="sh-brief-title" style="font-size:16px;font-weight:600;color:var(--text);"></span>
+        <button type="button" class="close-btn" onclick="closeModal('sh-brief-modal')">&times;</button>
+      </div>
+      <div id="sh-brief-content"></div>
+    </div>
+  </div>
+
   <script>
     // Constants & Seed Data
     const SEED_VERSION = 8;
@@ -1013,6 +1021,15 @@
       if (INITIATIVE_COLORS[name]) return INITIATIVE_COLORS[name];
       if (area && AREA_FALLBACK_COLORS[area]) return AREA_FALLBACK_COLORS[area];
       return '#94a3b8';
+    }
+
+    function getContrastColor(hex) {
+      // Returns dark or white text based on background luminance
+      const r = parseInt(hex.slice(1,3), 16);
+      const g = parseInt(hex.slice(3,5), 16);
+      const b = parseInt(hex.slice(5,7), 16);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return luminance > 0.55 ? '#1A1A2E' : '#ffffff';
     }
 
     const SEED_SPRINT_DATA = {
@@ -1594,6 +1611,7 @@
         if (leftPct + widthPct > 100) widthPct = 100 - leftPct;
 
         const color = getInitiativeColor(item.initiative, item.area);
+        const textColor = getContrastColor(color);
         
         let fillPct = 100;
         if (item.status !== 'done' && item.stage !== 'completed') {
@@ -1609,14 +1627,14 @@
         if (item.stage === 'scoping') stageStyle = "background: linear-gradient(0deg, rgba(255,255,255,0.15), rgba(255,255,255,0.15));";
         
         html += `
-          <div class="gantt-row" ondblclick="openShEdit('${item.id}')">
+          <div class="gantt-row" onclick="openStakeholderBrief('${item.id}')" ondblclick="openShEdit('${item.id}')">
             <span class="priority-pill ${item.priority}" style="width: 24px; text-align: center;">${item.priority}</span>
             <div class="gantt-bar-container">
               <div class="gantt-bar-wrapper" style="left: ${leftPct}%; width: ${widthPct}%;" title="${item.initiative} (${item.stage})">
                 <div class="gantt-bar-filled" style="width: ${fillPct}%; background: ${color}; ${stageStyle}"></div>
                 <div class="gantt-bar-remaining" style="width: ${100 - fillPct}%; background: ${color}; opacity: 0.2;"></div>
-                <span class="gantt-bar-label">${item.initiative}</span>
-                <div class="gantt-stage-pill">${stageLabel}</div>
+                <span class="gantt-bar-label" style="color: ${textColor}; text-shadow: ${textColor === '#ffffff' ? '0 1px 2px rgba(0,0,0,0.3)' : '0 1px 2px rgba(255,255,255,0.4)'};">${item.initiative}</span>
+                <div class="gantt-stage-pill" style="color: ${textColor}; background: ${textColor === '#ffffff' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)'};">${stageLabel}</div>
               </div>
             </div>
           </div>
@@ -1629,7 +1647,7 @@
         return items.map(i => {
           const dotColor = getInitiativeColor(i.initiative, i.area);
           return `
-          <div class="backlog-item" ondblclick="openShEdit('${i.id}')">
+          <div class="backlog-item" onclick="openStakeholderBrief('${i.id}')" ondblclick="openShEdit('${i.id}')">
             <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${dotColor}; flex-shrink:0;"></span>
             <span class="priority-pill ${i.priority}">${i.priority}</span>
             <span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${i.initiative}</span>
@@ -1779,7 +1797,82 @@
       }
     }
 
+    let briefClickTimer = null;
+    function openStakeholderBrief(id) {
+      clearTimeout(briefClickTimer);
+      briefClickTimer = setTimeout(() => {
+        const item = stakeholderData.find(i => i.id === id);
+      if (!item) return;
+
+      const color = getInitiativeColor(item.initiative, item.area);
+      const areaLabel = item.area === 'brand_integrations' ? 'Brand Integrations' : 'Advertising';
+      const stageLabels = { scoping: 'In Scoping', development: 'In Development', ready: 'Ready', experimenting: 'Experimenting', concluded: 'Concluded', released: 'Released', completed: 'Completed' };
+      const statusLabels = { tbd: 'TBD', on_hold: 'On Hold', in_progress: 'In Progress', blocked: 'Blocked', done: 'Done' };
+
+      let html = `<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+        <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${color};"></span>
+        <span class="area-tag ${item.area}" style="margin:0;">${areaLabel}</span>
+        <span class="priority-pill ${item.priority}" style="margin:0;">${item.priority}</span>
+        <span style="background:var(--accent-light);color:var(--accent);padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">${stageLabels[item.stage] || item.stage || '—'}</span>
+        <span style="background:${item.status === 'blocked' ? '#FEE2E2' : item.status === 'done' ? '#D1FAE5' : '#F3F4F6'};color:${item.status === 'blocked' ? '#DC2626' : item.status === 'done' ? '#059669' : '#6B7280'};padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">${statusLabels[item.status] || item.status}</span>
+        ${item.requiresExperiment ? '<span style="background:#FEF3C7;color:#B45309;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">Experiment Required</span>' : ''}
+      </div>`;
+
+      if (item.notes) {
+        html += `<div style="margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Notes</div>
+          <div style="font-size:14px;line-height:1.5;color:var(--text);">${item.notes}</div>
+        </div>`;
+      }
+
+      if (item.impact || item.effort) {
+        html += `<div style="display:flex;gap:24px;margin-bottom:16px;">
+          ${item.impact ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Impact</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.impact}</div></div>` : ''}
+          ${item.effort ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Effort</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.effort}</div></div>` : ''}
+          ${item.eta ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">ETA</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.eta}</div></div>` : ''}
+        </div>`;
+      }
+
+      const dates = [
+        { label: 'Started', value: item.startDate },
+        { label: 'Dev Started', value: item.devStartDate },
+        { label: 'Ready', value: item.readyDate },
+        { label: 'Experiment Started', value: item.experimentStartDate },
+        { label: 'Concluded', value: item.concludedDate },
+        { label: 'Released', value: item.releasedDate },
+        { label: 'Completed', value: item.completedDate }
+      ].filter(d => d.value);
+
+      if (dates.length > 0) {
+        html += `<div style="margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Timeline</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            ${dates.map(d => `<div style="background:var(--bg);padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;"><span style="color:var(--text-muted);">${d.label}:</span> <span style="font-weight:500;">${d.value}</span></div>`).join('')}
+          </div>
+        </div>`;
+      }
+
+      let links = [];
+      if (item.jiraKey) links.push(`<a href="${JIRA_BASE_URL}${item.jiraKey}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">${item.jiraKey} &rarr;</a>`);
+      if (item.dashboardLink) links.push(`<a href="${item.dashboardLink}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">Open Dashboard &rarr;</a>`);
+      if (item.prdLink) links.push(`<a href="${item.prdLink}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">View PRD &rarr;</a>`);
+
+      if (links.length > 0) {
+        html += `<div style="display:flex;gap:16px;padding-top:12px;border-top:1px solid var(--border);">${links.join('')}</div>`;
+      }
+
+      if (!item.notes && !item.impact && !item.effort && dates.length === 0 && links.length === 0) {
+        html += `<div style="color:var(--text-muted);font-size:13px;font-style:italic;">No details available yet. Double-click to edit.</div>`;
+      }
+
+      document.getElementById('sh-brief-title').textContent = item.initiative;
+      document.getElementById('sh-brief-content').innerHTML = html;
+      document.getElementById('sh-brief-modal').classList.add('active');
+      }, 250);
+    }
+
     function openShEdit(id) {
+      clearTimeout(briefClickTimer);
       const item = stakeholderData.find(i => i.id === id);
       if (!item) return;
 
