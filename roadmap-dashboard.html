@@ -747,8 +747,9 @@
     <!-- TAB 1: Internal Sprint View -->
     <section id="sprint-view" class="view-section active">
       <div class="controls">
-        <select id="quarter-select" onchange="renderSprintGrid()">
+        <select id="quarter-select" onchange="currentQuarter=this.value; renderSprintGrid()">
           <option value="Q2-2026">Q2 2026 (Apr - Jun)</option>
+          <option value="Q1-2026">Q1 2026 (Jan - Mar)</option>
         </select>
         <div style="font-size: 14px; color: var(--text-muted);">
           Double-click a cell to edit.
@@ -958,7 +959,7 @@
 
   <script>
     // Constants & Seed Data
-    const SEED_VERSION = 8;
+    const SEED_VERSION = 9;
     const JIRA_BASE_URL = 'https://efgcloud.atlassian.net/browse/';
 
     const TEAM_MEMBERS = [
@@ -1033,6 +1034,64 @@
     }
 
     const SEED_SPRINT_DATA = {
+      'Q1-2026': {
+        sprints: [
+          { id: 's1.1', name: 'Sprint 1.1', start: '2026-01-05', end: '2026-01-16', month: 'JAN' },
+          { id: 's1.2', name: 'Sprint 1.2', start: '2026-01-19', end: '2026-01-30', month: 'JAN' },
+          { id: 's1.3', name: 'Sprint 1.3', start: '2026-02-02', end: '2026-02-13', month: 'FEB' },
+          { id: 's1.4', name: 'Sprint 1.4', start: '2026-02-16', end: '2026-02-27', month: 'FEB' },
+          { id: 's1.5', name: 'Sprint 1.5', start: '2026-03-02', end: '2026-03-13', month: 'MAR' },
+          { id: 's1.6', name: 'Sprint 1.6', start: '2026-03-16', end: '2026-03-27', month: 'MAR' }
+        ],
+        assignments: {
+          'anouk': {
+            's1.1': [],
+            's1.2': [],
+            's1.3': [{ id: 'q1-1', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
+            's1.4': [{ id: 'q1-2', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
+            's1.5': [{ id: 'q1-3', name: 'Skin Initiative', color: '#8b5cf6' }],
+            's1.6': [{ id: 'q1-4', name: 'Skin Initiative', color: '#8b5cf6' }]
+          },
+          'isabel': {
+            's1.1': [{ id: 'q1-5', name: 'Blacklyte iterations', color: '#d97706' }],
+            's1.2': [{ id: 'q1-6', name: 'Blacklyte iterations', color: '#d97706' }],
+            's1.3': [{ id: 'q1-7', name: 'Missions Admin Migration', color: '#fb923c' }],
+            's1.4': [{ id: 'q1-8', name: 'Missions Admin Migration', color: '#fb923c' }],
+            's1.5': [{ id: 'q1-9', name: 'Missions Admin Migration', color: '#fb923c' }],
+            's1.6': [{ id: 'q1-10', name: 'Skin Initiative', color: '#8b5cf6' }]
+          },
+          'egor': {
+            's1.1': [{ id: 'q1-11', name: 'Primis', color: '#164e63' }],
+            's1.2': [{ id: 'q1-12', name: 'Primis', color: '#164e63' }, { id: 'q1-13', name: 'Publift display Faceit', color: '#0284c7' }],
+            's1.3': [{ id: 'q1-14', name: 'Publift display Faceit', color: '#0284c7' }],
+            's1.4': [{ id: 'q1-15', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }],
+            's1.5': [{ id: 'q1-16', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }],
+            's1.6': [{ id: 'q1-17', name: 'Primis / Moba display AB test', color: '#a5f3fc' }]
+          },
+          'teodor': {
+            's1.1': [{ id: 'q1-18', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
+            's1.2': [{ id: 'q1-19', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
+            's1.3': [{ id: 'q1-20', name: 'Play Interstitial', color: '#0891b2' }],
+            's1.4': [{ id: 'q1-21', name: 'Play Interstitial', color: '#0891b2' }],
+            's1.5': [{ id: 'q1-22', name: 'Play Interstitial', color: '#0891b2' }],
+            's1.6': [{ id: 'q1-23', name: 'Play Interstitial', color: '#0891b2' }, { id: 'q1-24', name: 'Video Skippable Interstitial', color: '#06b6d4' }]
+          },
+          'omar': {
+            's1.1': [], 's1.2': [], 's1.3': [], 's1.4': [], 's1.5': [], 's1.6': []
+          },
+          'moritz': {
+            's1.1': [], 's1.2': [], 's1.3': [], 's1.4': [], 's1.5': [], 's1.6': []
+          },
+          'releases': {
+            's1.1': [{ id: 'q1-r1', name: 'Primis', color: '#164e63' }],
+            's1.2': [{ id: 'q1-r2', name: 'Blacklyte iterations', color: '#d97706' }],
+            's1.3': [],
+            's1.4': [{ id: 'q1-r3', name: 'Publift: AR investigation', color: '#38bdf8' }],
+            's1.5': [{ id: 'q1-r4', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }, { id: 'q1-r5', name: 'Primis / Moba display AB test', color: '#a5f3fc' }],
+            's1.6': [{ id: 'q1-r6', name: 'Ads Alerts V2', color: '#22d3ee' }]
+          }
+        }
+      },
       'Q2-2026': {
         sprints: [
 { id: 's2.1', name: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10', month: 'APR' },
