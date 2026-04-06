@@ -1,0 +1,50 @@
+name: Refresh NSM Dashboard Data
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Personal-Space
+        uses: actions/checkout@v4
+        with:
+          path: Personal-Space
+
+      - name: Checkout Master_Product_Folder
+        uses: actions/checkout@v4
+        with:
+          repository: mnatalini-rgb/Master_Product_Folder
+          path: Master_Product_Folder
+          token: ${{ secrets.REPO_PAT }}
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Run BQ export
+        working-directory: Master_Product_Folder
+        run: bash scripts/refresh-nsm-data.sh
+
+      - name: Commit and push
+        working-directory: Personal-Space
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add nsm-dashboard.html
+          if git diff --staged --quiet; then
+            echo "No data changes — skipping commit"
+          else
+            git commit -m "Update NSM dashboard data $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
