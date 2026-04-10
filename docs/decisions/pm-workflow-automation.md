@@ -17,11 +17,11 @@ Today, every initiative goes through ~10 stages from idea to release note. Each 
 
 ## Goal
 
-Reduce the 9-step workflow to **1 trigger + AI-assisted cascading**, where creating a project in the Productivity Dashboard kicks off everything downstream automatically or semi-automatically.
+Reduce the 11-step workflow to **1 trigger + AI-assisted cascading + continuous sync**, where creating a project in the Productivity Dashboard kicks off everything downstream automatically or semi-automatically.
 
 ---
 
-## The 10-Step Pipeline
+## The 11-Step Pipeline
 
 ### Overview
 
@@ -35,6 +35,8 @@ Step 3:  Add Stakeholder Card (Roadmap → Stakeholder tab)
 Step 4:  Add Sprint Chips (Roadmap → Internal Sprint tab)
   ↓ auto
 Step 5:  Create Jira Ticket (for Scrum Master)
+  ↓ auto
+Step 5.5: Sync on Update (bi-directional doc ↔ card sync)
   ↓ on Jira "Done"
 Step 6:  Move to Experiment Phase (track results)
   ↓ manual review
@@ -60,6 +62,7 @@ Step 10: Post Release Note (Slack #bet-ads-partnerships)
 | 3. Stakeholder Card | On project creation | AI assistant + Dashboard JS | **Automated** — cascade from project data |
 | 4. Sprint Chips | On project creation | AI assistant + Dashboard JS | **Semi-auto** — AI suggests, Moritz confirms sprint/assignee |
 | 5. Jira Ticket | On project creation | `jira-cli` via shell | **Automated** — AI creates ticket from project brief |
+| 5.5 Sync on Update | Doc/card/meeting-note change detected | AI assistant | **Automated** — AI detects changes, propagates to all linked surfaces |
 | 6. Experiment Phase | Jira ticket → "Done" | Manual check / `refresh-roadmap.sh` | **Semi-auto** — Jira refresh detects "Done", AI prompts for experiment setup |
 | 7. Weekly Update | Every Friday | AI assistant | **Semi-auto** — AI drafts from project state, Moritz reviews |
 | 8. Monthly Releases Page | On project ship/experiment complete | AI assistant + Dashboard JS | **Semi-auto** — AI adds release/experiment entry, Moritz reviews |
@@ -234,6 +237,107 @@ jira issue create \
 3. Update the project's metadata with the Jira key
 
 **Implementation**: Direct `jira-cli` execution via the AI assistant's bash tool. No webhook or GitHub Action needed — runs locally.
+
+---
+
+### Step 5.5: Sync on Update (AUTOMATED) — NEW
+
+**Purpose**: Ensure all project surfaces stay in sync throughout a project's lifecycle. When a PRD, one-pager, meeting note, or dashboard card is updated, the AI propagates changes to all linked surfaces automatically.
+
+**The problem this solves**: Today, updating a PRD after a meeting (e.g. adding confirmed flow, MVP spec, Figma links) requires manually updating:
+- The productivity dashboard project brief (`proj-N`)
+- The roadmap stakeholder card (`sh-N`)  
+- Any linked documents (one-pager, PRD, meeting notes)
+
+This is exactly the "double-entry" and "drift" problem described in the Problem section — but it happens *during* a project, not just at creation time.
+
+**Classification**: Automated — runs continuously throughout the project lifecycle (not a one-time cascade like Steps 1-5).
+
+**Triggers**:
+| Trigger | Detection Method | Example |
+|---|---|---|
+| PRD or one-pager edited | AI detects file changes when user says "update my projects" or references a doc edit | Moritz updates `docs/product_briefs/PRD — Video Interstitials.md` after a meeting |
+| Meeting notes shared | User shares meeting notes with AI | "Here are the notes from my meeting with Anouk, please update my projects" |
+| Dashboard project card edited | AI edits `SEED_PROJECT_BRIEFS` or `SEED_PROJECTS` | Moritz asks to update proj-2 description |
+| Stakeholder card edited | AI edits `SEED_STAKEHOLDER_DATA` | Moritz asks to change sh-1 status or notes |
+
+**Sync Map — What Maps Where**:
+
+| Source Field | → Target Field(s) |
+|---|---|
+| PRD/one-pager `Status` line | → `SEED_PROJECTS[proj-N].status`, `SEED_STAKEHOLDER_DATA[sh-N].status` |
+| PRD/one-pager description/summary | → `SEED_PROJECT_BRIEFS['proj-N']` content section, `SEED_STAKEHOLDER_DATA[sh-N].notes` |
+| PRD/one-pager success metrics | → `SEED_PROJECT_BRIEFS['proj-N']` metrics section |
+| PRD/one-pager next steps | → `SEED_PROJECT_BRIEFS['proj-N']` next steps section |
+| PRD/one-pager Figma/design links | → `SEED_PROJECT_BRIEFS['proj-N']` reference docs section, `SEED_PROJECTS[proj-N].links[]`, `SEED_STAKEHOLDER_DATA[sh-N].links[]` |
+| Meeting notes (key decisions, updates) | → `SEED_PROJECT_BRIEFS['proj-N']` Updates log section |
+| `SEED_PROJECTS[proj-N].status` | → PRD/one-pager status line, `SEED_STAKEHOLDER_DATA[sh-N].status` |
+| `SEED_PROJECTS[proj-N].links[]` | → `SEED_STAKEHOLDER_DATA[sh-N].links[]` (mirror doc/Figma/dashboard links to team-facing view) |
+| `SEED_STAKEHOLDER_DATA[sh-N].links[]` | → `SEED_PROJECTS[proj-N].links[]` (bi-directional — team-added links propagate back to PM view) |
+| `SEED_STAKEHOLDER_DATA[sh-N].prdLink` (legacy) | → `SEED_PROJECT_BRIEFS['proj-N']` reference docs (fallback if `links[]` empty) |
+
+**Hub Index (`index.html`) — Sync Surface**:
+
+The hub homepage is the front door to the Product Hub. Cards on the index represent dashboards, experiments, releases, and reference docs. These drift when project state changes but the index isn't updated.
+
+| Trigger | → index.html Update |
+|---|---|
+| New dashboard or experiment page created | → Add card to correct section (Live Experiments / Concluded / Releases), or update existing `href="#"` placeholder with real link |
+| Experiment status changes (Live → Concluded → Shipped) | → Move card between subsections, update badge (`badge-live` → `badge-concluded` → `badge-shipped`) |
+| Due date or milestone date changes | → Update badge text (e.g., "Due Apr 9" → "Discussion Apr 16") |
+| New experiment or release added to portfolio | → Add new card to correct section + update section item count (`· N`) |
+| Card removed or deprecated | → Remove card or move to a "Past" section + update section item count |
+| Any sync action on index.html | → Update footer "Last updated" date |
+
+**Hub Sync Checklist** (run mentally after any project surface change):
+
+```
+□ Does a card exist on index.html for this project/experiment/dashboard?
+  → If not, should one be added?
+□ Does the card href point to the correct file?
+  → Watch for href="#" placeholders that never got updated
+□ Is the badge status correct? (Live / Concluded / Shipped / Due date)
+□ Is the card in the correct section? (Core Workflows / Analytics / Live Experiments / Concluded / Releases)
+□ Are section item counts (· N) still accurate?
+□ Is the footer "Last updated" date current?
+```
+
+**Project ↔ Document Registry**:
+
+The AI resolves which documents belong to which project using:
+1. **`docFile` field** on `SEED_PROJECTS` — points to the primary project doc
+2. **`links[]` array** on both `SEED_PROJECTS` and `SEED_STAKEHOLDER_DATA` — contains all reference links (PRDs, one-pagers, Figma boards, dashboards). This is the primary link source for both PM and team views.
+3. **`prdLink` field** on `SEED_STAKEHOLDER_DATA` (legacy) — points to the PRD or one-pager. Kept for backward compatibility; `links[]` takes precedence when populated.
+4. **Project name matching** — fuzzy match between project name and doc title (e.g. "Play Interstitial" matches both `PRD — Video Interstitials.md` and `onePager_ Play Interstitial.md`)
+5. **Explicit mapping** maintained by the AI in session context (e.g. `proj-2` → `sh-1` + `sh-7`)
+
+**Example — the exact workflow that triggered this step**:
+
+1. Moritz has a meeting with Anouk about Play Interstitial
+2. Moritz shares meeting notes with AI: "update my projects and todo"
+3. AI reads meeting notes, identifies project = Play Interstitial
+4. AI updates:
+   - `docs/product_briefs/PRD — Video Interstitials.md` (confirmed flow, MVP spec, A/B→A/B/C, Figma link)
+   - `docs/product_documentation/onePager_ Play Interstitial.md` (status, Phase 0 rewrite, contributors, FigJam link)
+   - `productivity-dashboard.html` → `SEED_PROJECT_BRIEFS['proj-2']` (full brief rewrite with flow, spec, links, update log)
+   - `productivity-dashboard.html` → `SEED_PROJECTS['proj-2'].links[]` (PRD, One-Pager, Figma Board pills on card)
+   - `roadmap-dashboard.html` → `SEED_STAKEHOLDER_DATA` → `sh-1.links[]`, `sh-7.links[]` (team-visible doc/Figma pills on stakeholder cards)
+   - `roadmap-dashboard.html` → `SEED_STAKEHOLDER_DATA` → `sh-1.prdLink`, `sh-7.prdLink` (legacy fields, kept for backward compat)
+5. All surfaces now reflect the same information — zero drift. The team sees the same links on stakeholder cards that Moritz sees on his project cards.
+
+**Bi-directional sync rules**:
+- **Doc → Cards**: When a PRD or one-pager is updated, propagate status, description, metrics, links, and next steps to all linked project cards and stakeholder items.
+- **Cards → Docs**: When a project card status or description changes in a dashboard, update the corresponding doc's status line and summary.
+- **Meeting Notes → All**: Meeting notes are "write-only" sources — they feed into docs and cards but are never modified by the sync process.
+- **Conflict resolution**: If a field differs between doc and card, the most recently edited surface wins. The AI notes the sync in both places (e.g. "Updated from PRD edit on Apr 9").
+
+**Implementation**: This step is **not** a PENDING array pattern like Steps 2-5. It's an AI behavioral protocol:
+1. AI maintains a mental registry of project ↔ doc ↔ card mappings per session
+2. When any project surface is edited, AI checks for linked surfaces
+3. AI propagates changes using the Edit tool — direct file modifications
+4. AI logs each sync action (what changed, where, when) in the project brief's Updates section
+
+**Why automated (not semi-auto)**: Unlike Steps 7-10 which require narrative judgment, sync is mechanical — field A changed, update field B. No editorial decision needed. The AI should do this without asking "should I also update the roadmap card?" — the answer is always yes.
 
 ---
 
@@ -490,6 +594,15 @@ curl -X POST -H 'Content-type: application/json' \
   - Modified `roadmap-dashboard.html` with PENDING_STAKEHOLDER_ITEMS + PENDING_SPRINT_ASSIGNMENTS merge logic
   - Documented "cascade" workflow
 
+### Phase 1.5: Sync on Update Protocol (Step 5.5)
+- Define the project ↔ doc ↔ card registry (which proj-N maps to which docs and sh-N items)
+- Document the sync map (which fields propagate where)
+- AI behavioral protocol: on any project surface edit, check and propagate to linked surfaces
+- Add `links[]` arrays to all existing projects and stakeholder items (primary link source for both PM and team views)
+- Maintain `prdLink` and `docFile` fields for backward compatibility; `links[]` takes precedence
+- **Effort**: ~1 hour (documentation + field backfill)
+- **Deliverable**: Sync protocol documented, all existing project↔doc links populated, stakeholder cards show link pills matching productivity dashboard
+
 ### Phase 2: Jira Done → Experiment Bridge (Step 6)
 - Enhance `refresh-roadmap.sh` to diff against previous state
 - AI workflow for experiment setup
@@ -542,6 +655,10 @@ curl -X POST -H 'Content-type: application/json' \
 │  │ Task          │  │ Stakeholder  │  │ Sprint       │   │
 │  │ Generator     │  │ Card Creator │  │ Suggester    │   │
 │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘   │
+│  ┌──────────────┐                                        │
+│  │ Sync Engine   │ ← doc/card change detected             │
+│  │ (Step 5.5)   │ → propagates to all linked surfaces    │
+│  └──────────────┘                                        │
 │         │                  │                  │            │
 │         ▼                  ▼                  ▼            │
 │  ┌─────────────────────────────────────────────────┐     │
@@ -576,6 +693,7 @@ curl -X POST -H 'Content-type: application/json' \
 │  │PENDING → │     │PENDING → │      │PENDING → │        │
 │  │localStorage    │localStorage    │localStorage        │
 │  └──────────┘     └──────────┘      └──────────┘        │
+│  + Sync Engine: AI edits files directly (no PENDING)     │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -726,6 +844,8 @@ Steps 4 (sprint assignment), 6 (experiment setup), 7 (weekly update), 8 (monthly
 - QBR entries need strategic positioning
 - Slack posts need tone calibration
 
+Step 5.5 (Sync on Update) is deliberately **automated**, not semi-auto, because sync is mechanical rather than editorial: when mapped field A changes, mapped field B should always be updated.
+
 The AI drafts; Moritz confirms. This avoids automation that produces low-quality output nobody trusts.
 
 ---
@@ -753,5 +873,6 @@ The AI drafts; Moritz confirms. This avoids automation that produces low-quality
 1. **Moritz reviews this proposal** — confirms approach, answers open questions
 2. **Phase 0**: Build "Add Project" modal in Productivity Dashboard
 3. **Phase 1**: Implement PENDING array merge logic + cascade command
-4. **Phase 3**: Build Monthly Releases & Experiments interactive page
-5. **Phase 5 prerequisite**: Set up Slack webhook (needs workspace permissions)
+4. **Phase 1.5**: Document sync protocol and backfill project↔doc links
+5. **Phase 3**: Build Monthly Releases & Experiments interactive page
+6. **Phase 5 prerequisite**: Set up Slack webhook (needs workspace permissions)

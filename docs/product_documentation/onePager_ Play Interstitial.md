@@ -1,6 +1,6 @@
 How ## **Product One‑Pager: Play Interstitial — Pre‑Roll Video for FACEIT**
 
-**Owner**: [Moritz Natalini](mailto:m.natalini@efg.gg) | **Contributors**: [Kerrin Meek](mailto:k.meek@efg.gg), [William Seghers](mailto:w.seghers@efg.gg) | **Date**: March 2026 | **Status**: Discovery — *Seeking approval to run behavioural tolerance test*
+**Owner**: [Moritz Natalini](mailto:m.natalini@efg.gg) | **Contributors**: [Kerrin Meek](mailto:k.meek@efg.gg), [William Seghers](mailto:w.seghers@efg.gg), [Anouk Lubbers](mailto:a.lubbers@efg.gg) | **Date**: March 2026 (updated April 2026) | **Status**: Design — **P0 Priority** — *Flow confirmed, concept design in progress*
 
 ---
 
@@ -210,16 +210,37 @@ Roblox scaled video ads to **$100M+ in 2025** by partnering with Google for prog
 
 ## 8. Rollout Plan
 
-### Phase 0: Behaviour Validation (Current Ask)
+### Phase 0: Behaviour Validation (**P0 Priority** — In Progress)
 
-Run an A/B test with **internal campaigns** (house ads, sub promotions) in US/NA to validate that 1 forced video pod/match does not harm engagement — before introducing real ads.
+Run an A/B/C test with **internal campaigns** (house ads, sub promotions) to validate that the interstitial format does not harm engagement — before introducing real ads.
 
-**Player journey:**
+**Confirmed player journey (April 2026):**
 1. User presses **Find Match**
-2. Short video pod plays (≤ 90s across up to 3 slots — Phase 0 uses 1 internal creative)
-3. Matchmaking begins
+2. Video interstitial overlay appears (sound-on, full-screen, remaining time UI)
+3. User watches the ad — or uses their **1 daily skip**
+4. After the daily skip is used, the skip button transitions to an **"Upgrade"** button
+5. Matchmaking begins automatically after video completes
+6. **No ads on the first match** — ads begin from the 2nd match onward
 
-Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=17-12019&t=3J3hDAFIXcXzNRrf-4)
+**A/B/C test groups:**
+- **A (Control):** No ads — baseline retention and engagement
+- **B:** No ads on first match, ads from 2nd match onward
+- **C:** Ads from the first match onward
+
+**MVP UX requirements:**
+- Sound-on by default (user-initiated action; user can mute)
+- Full-screen overlay — no interaction with page behind
+- UI showing remaining video duration
+- Clear upfront communication (sound, duration, skip mechanics)
+
+Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1)
+
+**Next Steps (as of 9 April 2026):**
+- [ ] Anouk Lubbers: Create concept design, share with Moritz + Karen
+- [ ] Moritz Natalini: Define guardrail metrics before development starts
+- [ ] Group: Brief Theo after design approval
+- [ ] Isabel: Automate hub data updates (24h refresh)
+- [ ] Moritz Natalini: Discuss hub hosting with Theo and Isabel
 
 ### Phase 1: Limited Monetised Rollout
 - Selected Tier 2 markets, solo players only
@@ -260,7 +281,7 @@ Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg
 | Player frustration (90s is long) | Phase 0 starts with 1 slot (30s). Pod length scales with demand, not day 1. Strict max 90s. |
 | Party player complexity | Phase 1 targets solo players only |
 | Technical latency | Pre‑cached video assets + Phase 0 validates load times |
-| New player disruption | Excluded until first match played |
+| New player disruption | No ads on first match (confirmed). Ads begin from 2nd match to build momentum. |
 | Low initial fill rate | Expected and acceptable (see Section 4C). Unfilled = future growth runway. |
 | IAB "no content" classification | Hybrid approach: sell as interstitial (direct) and instream (programmatic). Content chaser in Phase 2 addresses formally. |
 | Ad‑block risk | Monitor ad‑block activation as guardrail. 1/match frequency is dramatically lower than typical web ad load. |
@@ -273,3 +294,4 @@ Full UX flow available in [FigJam](https://www.figma.com/board/PRwDAnFVQpYASGFeg
 2. Watch historical ad density: 6 min ads / 60 min streaming
 3. FACEIT proposed ad density: 2 min ads / 60 min gameplay (3 × 30s per ~45 min match)
 4. Roblox case study: $100M+ in video ad revenue (2025), programmatic partnership with Google
+5. [Mixpanel Board — Play Interstitial Experiment](https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg)

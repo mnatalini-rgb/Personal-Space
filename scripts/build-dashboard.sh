@@ -70,6 +70,12 @@ WEEKLY_EBU_BY_PARTNER=$(cat "$DATA_DIR/weekly_ebu_by_partner.json" | tr -d '\n')
 MISSION_COMPLETIONS=$(cat "$DATA_DIR/mission_completions.json" | tr -d '\n')
 WEEKLY_MISSION_COMPLETIONS=$(cat "$DATA_DIR/weekly_mission_completions.json" | tr -d '\n')
 REWARD_CLAIMS=$(cat "$DATA_DIR/reward_claims.json" | tr -d '\n')
+if [ -f "$DATA_DIR/account_linkages.json" ]; then
+    ACCOUNT_LINKAGES=$(cat "$DATA_DIR/account_linkages.json" | tr -d '\n')
+else
+    echo "⚠ account_linkages.json not found — AL data will be empty"
+    ACCOUNT_LINKAGES="[]"
+fi
 
 # Build the BQ_DATA JavaScript object
 # Using a heredoc to construct the replacement line
@@ -80,6 +86,7 @@ BQ_DATA_JS="const BQ_DATA = {
             missionCompletions: ${MISSION_COMPLETIONS},
             weeklyMissionCompletions: ${WEEKLY_MISSION_COMPLETIONS},
             rewardClaims: ${REWARD_CLAIMS},
+            accountLinkages: ${ACCOUNT_LINKAGES},
             buildTimestamp: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"
         }; // %%BQ_DATA_PLACEHOLDER%%"
 

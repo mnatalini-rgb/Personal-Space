@@ -6,11 +6,14 @@
 # Usage: ./scripts/refresh-nsm-data.sh
 # Requires: gcloud SDK authenticated as m.natalini@efg.gg
 #
-# Last updated: 2026-03-21
+# Last updated: 2026-04-06
 
 set -euo pipefail
 
-export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+# Add gcloud to PATH (macOS homebrew). In CI, setup-gcloud handles this.
+if [ -d "/opt/homebrew/share/google-cloud-sdk/bin" ]; then
+    export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
+fi
 
 PROJECT="business-intelligence-prod"
 OUTPUT_DIR="$(dirname "$0")/../data/bq_exports"
@@ -37,7 +40,7 @@ WHITEMARKET_ORG="db18537b-4172-4813-b089-36490c1553b7"
 # ─────────────────────────────────────────────
 # Q1: EBU per partner YTD + deduplicated total
 # ─────────────────────────────────────────────
-echo "[1/6] EBU per partner (YTD)..."
+echo "[1/7] EBU per partner (YTD)..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=10 '
 WITH partner_campaigns AS (
   SELECT
@@ -83,7 +86,7 @@ echo "  ✓ Saved ebu_ytd.json"
 # ─────────────────────────────────────────────
 # Q2: Weekly EBU per partner
 # ─────────────────────────────────────────────
-echo "[2/6] Weekly EBU per partner..."
+echo "[2/7] Weekly EBU per partner..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=200 '
 WITH partner_campaigns AS (
   SELECT
@@ -115,7 +118,7 @@ echo "  ✓ Saved weekly_ebu_by_partner.json"
 # ─────────────────────────────────────────────
 # Q3: Weekly deduplicated total EBU
 # ─────────────────────────────────────────────
-echo "[3/6] Weekly deduplicated EBU (portfolio)..."
+echo "[3/7] Weekly deduplicated EBU (portfolio)..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=200 '
 WITH partner_campaigns AS (
   SELECT _id as campaign_id
@@ -139,7 +142,7 @@ echo "  ✓ Saved weekly_ebu_dedup.json"
 # Q4: Mission completions by challenge per partner per month
 # (feeds Missions tabs + NSM € value calculation)
 # ─────────────────────────────────────────────
-echo "[4/6] Mission completions by challenge..."
+echo "[4/7] Mission completions by challenge..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=500 '
 WITH partner_campaigns AS (
   SELECT
@@ -176,7 +179,7 @@ echo "  ✓ Saved mission_completions.json"
 # Q5: Weekly mission completions by challenge per partner
 # (for weekly trend charts)
 # ─────────────────────────────────────────────
-echo "[5/6] Weekly mission completions..."
+echo "[5/7] Weekly mission completions..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=1000 '
 WITH partner_campaigns AS (
   SELECT
@@ -212,7 +215,7 @@ echo "  ✓ Saved weekly_mission_completions.json"
 # ─────────────────────────────────────────────
 # Q6: Reward claims (for AL tracking — especially Tradeit)
 # ─────────────────────────────────────────────
-echo "[6/6] Reward claims by partner..."
+echo "[6/7] Reward claims by partner..."
 bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=200 '
 WITH partner_campaigns AS (
   SELECT
@@ -243,6 +246,60 @@ ORDER BY pc.partner, month, cnt DESC
 ' > "$OUTPUT_DIR/reward_claims.json" 2>/dev/null
 
 echo "  ✓ Saved reward_claims.json"
+
+# ─────────────────────────────────────────────
+# Q7: Account Linkages (AL) by partner per week and month
+# Source: CDP event table (covers all partners, including those without AL mission challenges)
+#
+# ID mapping problem: CampaignService.Campaigns._id = config_id (UUID format),
+# but account_linkage_operation_v1.parent_id = real campaign_id (hex/ObjectId).
+# We bridge via dbt_user.dim__campaigns which has both config_id and campaign_id.
+# ─────────────────────────────────────────────
+echo "[7/7] Account linkages by partner..."
+if bq query --project_id="$PROJECT" --use_legacy_sql=false --format=json --max_rows=500 '
+WITH partner_campaigns AS (
+  SELECT
+    _id as config_id,
+    CASE
+      WHEN organizer.id = "'"$TRADEIT_ORG"'" THEN "Tradeit"
+      WHEN organizer.id = "'"$WINLINE_ORG"'" THEN "Winline"
+      WHEN organizer.id = "'"$WINLINE_BY_ORG"'" THEN "Winline_BY"
+      WHEN organizer.id = "'"$WINLINE_KZ_ORG"'" THEN "Winline_KZ"
+      WHEN organizer.id = "'"$WHITEMARKET_ORG"'" THEN "WhiteMarket"
+    END as partner
+  FROM `business-intelligence-prod.CampaignService.Campaigns`
+  WHERE organizer.id IN ("'"$TRADEIT_ORG"'", "'"$WINLINE_ORG"'", "'"$WINLINE_BY_ORG"'", "'"$WINLINE_KZ_ORG"'", "'"$WHITEMARKET_ORG"'")
+    AND schedule.start_date >= "2025-12-01"
+),
+id_mapping AS (
+  SELECT
+    pc.config_id,
+    pc.partner,
+    dc.campaign_id as real_campaign_id
+  FROM partner_campaigns pc
+  JOIN `business-intelligence-prod.dbt_user.dim__campaigns` dc
+    ON pc.config_id = dc.config_id
+)
+SELECT
+  im.partner,
+  FORMAT_DATE("%Y-%m", DATE(al.event_timestamp)) as month,
+  DATE_TRUNC(DATE(al.event_timestamp), WEEK(MONDAY)) as week_start,
+  COUNT(*) as al_count,
+  COUNT(DISTINCT al.user_id) as unique_users
+FROM `faceit-events-prod-2.user.account_linkage_operation_v1` al
+JOIN id_mapping im ON al.parent_id = im.real_campaign_id
+WHERE al.parent_type = "CAMPAIGN"
+  AND al.operation = "CONNECT"
+  AND al.event_timestamp >= "2025-12-01"
+GROUP BY im.partner, month, week_start
+ORDER BY im.partner, month, week_start
+' > "$OUTPUT_DIR/account_linkages.json" 2>/dev/null; then
+  echo "  ✓ Saved account_linkages.json"
+else
+  echo "  ⚠ Q7 failed (likely missing cross-project access to faceit-events-prod-2)"
+  echo "  → Writing empty array — dashboard will show zero AL counts"
+  echo "[]" > "$OUTPUT_DIR/account_linkages.json"
+fi
 
 echo ""
 echo "=== DATA EXPORT DONE ==="

@@ -99,6 +99,36 @@
       line-height: 1.6;
     }
 
+    
+    /* Summary Card */
+    .summary-card {
+      background: rgba(37, 99, 235, 0.03);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .summary-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .summary-header svg {
+      color: #2563eb;
+    }
+    .summary-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .summary-placeholder {
+      opacity: 0.8;
+    }
+
     /* Sections */
     .section {
       max-width: 960px;
@@ -119,18 +149,20 @@
     /* Card Grid */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
     }
 
     a.card {
       display: flex;
-      gap: 16px;
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 20px;
+      padding: 24px 16px;
       text-decoration: none;
       color: inherit;
       box-shadow: var(--shadow);
@@ -144,29 +176,34 @@
     }
 
     .card-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 24px;
       flex-shrink: 0;
+      margin-bottom: 4px;
     }
 
     .card-body {
-      flex: 1;
-      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
     }
 
     .card-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      margin-bottom: 4px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+      line-height: 1.3;
     }
 
     .card-desc {
@@ -178,7 +215,7 @@
 
     /* Status Badges */
     .badge {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 24px;
@@ -304,72 +341,210 @@
       .section { padding: 0 16px 36px; }
       .card-grid { grid-template-columns: 1fr; }
     }
+  
+    /* Sidebar Layout */
+    .dashboard-layout {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: var(--sidebar-width, 260px);
+      flex-shrink: 0;
+      padding: 24px 16px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid var(--border);
+      background-color: var(--bg);
+      transition: width 0.3s ease, padding 0.3s ease;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      z-index: 200;
+    }
+    .sidebar.collapsed {
+      width: var(--sidebar-collapsed-width, 64px);
+      padding: 24px 8px;
+    }
+    .sidebar-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      align-self: flex-end;
+      transition: transform 0.3s ease, background-color 0.2s ease;
+    }
+    .sidebar-toggle:hover {
+      background-color: var(--surface);
+      color: var(--text);
+    }
+    .sidebar.collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+      align-self: center;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      white-space: nowrap;
+    }
+    .nav-btn svg {
+      flex-shrink: 0;
+    }
+    .nav-btn:hover { 
+      color: var(--text); 
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .nav-btn.active {
+      background-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 12px var(--accent-light);
+    }
+    .sidebar.collapsed .btn-label {
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 0;
+      min-width: 0;
+      background-color: var(--bg);
+    }
+    @media (max-width: 900px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar { width: 100% !important; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; flex-direction: row; align-items: center; justify-content: space-between; z-index: 100; }
+      .sidebar-toggle { display: none; }
+      .sidebar-nav { flex-direction: row; flex-wrap: wrap; width: 100%; gap: 8px; }
+      .nav-btn { width: auto; padding: 8px 16px; }
+      .sidebar.collapsed .btn-label { opacity: 1; width: auto; overflow: visible; }
+      .main-content { padding: 0; width: 100%; }
+    }
+
   </style>
 </head>
 <body>
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" onclick="scrollToSection('core')">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span class="btn-label">Core Workflows</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('analytics')">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span class="btn-label">Analytics</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('experiments')">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m14-6h2m-2 6h2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+          <span class="btn-label">Experiments</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToSection('releases')">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+          <span class="btn-label">Releases</span>
+        </button>
+      </nav>
+    </aside>
+    <main class="main-content">
 
   <!-- Sticky Header -->
   <header class="sticky-header">
     <div class="header-brand">Ads & Partnerships</div>
     <nav class="header-nav">
-      <a href="#core">Core</a>
-      <a href="#analytics">Analytics</a>
-      <a href="#experiments">Experiments & Releases</a>
     </nav>
   </header>
 
   <!-- Hero -->
-  <div class="hero">
-    <h1>Ads & Partnerships Hub</h1>
-    <p>Dashboards, metrics, experiments, and project tracking — Moritz Natalini</p>
+  <div class="hero" style="padding: 40px 32px 24px;">
+    <h1 style="font-size: 24px;">Ads & Partnerships</h1>
   </div>
+
+
+  <!-- Daily Summary -->
+  <section id="daily-summary" class="section" style="padding-top: 0;">
+    <div class="summary-card">
+      <div class="summary-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span id="daily-date">Today</span>
+      </div>
+      <div class="summary-body">
+        <p class="summary-placeholder">No updates yet. Daily summary will appear here.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Section 1: Core Workflows -->
   <section id="core" class="section">
-    <div class="section-header">Core Workflows</div>
+    <div class="section-header">Core Workflows &middot; 4</div>
     <div class="card-grid">
 
       <a class="card" href="productivity-dashboard.html">
-        <div class="card-icon icon-projects">📋</div>
+        <div class="card-icon icon-projects"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M9 14h6"></path><path d="M9 10h6"></path><path d="M9 18h6"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Projects & Todo
             <span class="badge badge-live">16 projects</span>
           </div>
-          <div class="card-desc">Initiative tracking, tasks, goals, and project briefs. Productivity dashboard with priority filters and progress charts.</div>
         </div>
       </a>
 
       <a class="card" href="roadmap-dashboard.html">
-        <div class="card-icon icon-roadmap">🗺️</div>
+        <div class="card-icon icon-roadmap"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg></div>
         <div class="card-body">
           <div class="card-title">
             Ads & Partnerships Roadmap
             <span class="badge badge-sprint" id="sprint-badge">Q2 2026</span>
           </div>
-          <div class="card-desc">Internal sprint grid (team × sprint) and stakeholder Gantt timeline. Drag-and-drop, sortable priorities, export/import.</div>
         </div>
       </a>
 
       <a class="card" href="workflow-pipeline-diagram.html">
-        <div class="card-icon icon-pipeline">⚙️</div>
+        <div class="card-icon icon-pipeline"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Workflow Pipeline
             <span class="badge badge-live">10 steps</span>
           </div>
-          <div class="card-desc">PM automation pipeline — from project creation to Slack release note. Visual flow diagram with automation classification.</div>
         </div>
       </a>
 
       <a class="card" href="monthly-releases.html">
-        <div class="card-icon icon-releases">📦</div>
+        <div class="card-icon icon-releases"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
         <div class="card-body">
           <div class="card-title">
             Monthly Releases & Experiments
             <span class="badge badge-sprint">Q1 seeded</span>
           </div>
-          <div class="card-desc">Interactive monthly changelog — shipped releases, experiment results, verdict tracking. Replaces static slide decks for stakeholder updates.</div>
         </div>
       </a>
 
@@ -378,28 +553,26 @@
 
   <!-- Section 2: Analytics & Metrics -->
   <section id="analytics" class="section">
-    <div class="section-header">Analytics & Metrics</div>
+    <div class="section-header">Analytics & Metrics &middot; 2</div>
     <div class="card-grid">
 
       <a class="card" href="nsm-dashboard.html">
-        <div class="card-icon icon-nsm">💰</div>
+        <div class="card-icon icon-nsm"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             NSM Dashboard
             <span class="badge badge-live">Live</span>
           </div>
-          <div class="card-desc">Brand Integration performance — € value per conversion, Partner Efficiency (€/1K EBU), conversion ladder. Multi-partner tabs (Tradeit, Winline). 30-day rolling.</div>
         </div>
       </a>
 
       <a class="card" href="https://docs.google.com/document/d/1yVXi-ZI9uz4sh77a_FhCy72xFL6K6101tkKlbYvXoYs/edit?tab=t.0" target="_blank" rel="noopener">
-        <div class="card-icon icon-qbr">📊</div>
+        <div class="card-icon icon-qbr"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
         <div class="card-body">
           <div class="card-title">
             Q1 Quarterly Review
-            <span class="badge badge-due">Due Apr 9</span>
+            <span class="badge badge-due">Discussion Apr 16</span>
           </div>
-          <div class="card-desc">Q1 2-pager for leadership — bet overview, KPI table, initiatives delivered, Q2 focus areas. Google Doc.</div>
         </div>
       </a>
 
@@ -418,61 +591,56 @@
     <div class="card-grid">
 
       <a class="card" href="#">
-        <div class="card-icon icon-interstitial">🧪</div>
+        <div class="card-icon icon-interstitial"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
         <div class="card-body">
           <div class="card-title">
             Skippable Video Interstitial
             <span class="badge badge-live">Live</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Testing skippable video interstitial format on FACEIT. April 2026 experiment — measuring RPV impact and user experience.</div>
         </div>
       </a>
 
-      <a class="card" href="#">
-        <div class="card-icon icon-csstats">🧪</div>
+      <a class="card" href="analysis/prebid-outstream-csstats-dashboard.html">
+        <div class="card-icon icon-csstats"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><path d="M6 13l4-4 3 3 5-5"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Prebid Outstream — CSStats
             <span class="badge badge-live">Live</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Prebid outstream video evaluation on CSStats inventory. April 2026 — RPV comparison against current setup.</div>
         </div>
       </a>
 
       <a class="card" href="skin-vault-dashboard.html">
-        <div class="card-icon icon-skinvault">💎</div>
+        <div class="card-icon icon-skinvault"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 22 22 7 12 2"></polygon><polyline points="2 7 12 7 22 7"></polyline><polyline points="12 22 12 7"></polyline></svg></div>
         <div class="card-body">
           <div class="card-title">
             Skin Vault
             <span class="badge badge-live">Live</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">CS2 player profile skin showcase. Traffic, engagement funnel, feedback & sentiment tracking. Tradeit integration. Launched 17 Mar 2026.</div>
         </div>
       </a>
 
       <a class="card" href="peripheral-data-dashboard.html">
-        <div class="card-icon icon-peripheral">🖥️</div>
+        <div class="card-icon icon-peripheral"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
         <div class="card-body">
           <div class="card-title">
             Peripheral Data — UX Research Brief
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Hardware telemetry from India (2,853 records). Brand landscape, sample profiles, design questions for Anouk's UX research.</div>
         </div>
       </a>
 
       <a class="card" href="al-growth-dashboard.html">
-        <div class="card-icon icon-trust-modal">🧪</div>
+        <div class="card-icon icon-trust-modal"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             AL Growth — Trust Modal Redesign
             <span class="badge badge-live">Live</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">Trust modal redesign experiment dashboard for design team. Design brief, experiment plan (May 2026), success metrics, and prior A/B test results. Jira: AD-3946.</div>
         </div>
       </a>
 
@@ -486,107 +654,99 @@
     <div class="card-grid">
 
       <a class="card" href="prebid-experiment-results.html">
-        <div class="card-icon icon-prebid">🧪</div>
+        <div class="card-icon icon-prebid"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
         <div class="card-body">
           <div class="card-title">
             Prebid Evaluation — Full Reference
             <span class="badge badge-concluded">Concluded</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Moba vs Publift RPV-by-tier analysis. All data tables, charts, and methodology. Revenue per Page View as primary metric.</div>
         </div>
       </a>
 
       <a class="card" href="prebid-slides.html">
-        <div class="card-icon icon-prebid-slides">📑</div>
+        <div class="card-icon icon-prebid-slides"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
         <div class="card-body">
           <div class="card-title">
             Prebid Evaluation — Slide Deck
             <span class="badge badge-concluded">Concluded</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">8-slide presentation with keyboard navigation. Stakeholder-ready summary of the Prebid experiment.</div>
         </div>
       </a>
 
       <a class="card" href="docs/product_briefs/trust-modal-experiment-conclusion.md">
-        <div class="card-icon icon-trust-modal">🧪</div>
+        <div class="card-icon icon-trust-modal"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg></div>
         <div class="card-body">
           <div class="card-title">
             Trust Modal
             <span class="badge badge-concluded">Concluded · Mar</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">Trust modal doubles AL rate (5.34% vs 2.75%). Z-score 17.98, p&lt;0.001. €416 more value per cohort. Decision: keep as permanent default.</div>
         </div>
       </a>
 
       <a class="card" href="#">
-        <div class="card-icon icon-rewarded-video">🧪</div>
+        <div class="card-icon icon-rewarded-video"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg></div>
         <div class="card-body">
           <div class="card-title">
             Rewarded Video on Drops
             <span class="badge badge-concluded">Concluded · Mar</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Tested rewarded video format within Drops flow. March 2026 experiment — evaluated user engagement and ad completion rates.</div>
         </div>
       </a>
 
       <a class="card" href="#">
-        <div class="card-icon icon-mystery-box">🧪</div>
+        <div class="card-icon icon-mystery-box"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Mystery Box — Conversions
             <span class="badge badge-concluded">Concluded · Mar</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">Mystery Box gamification to drive post-AL conversions (KYC, first deposit). March 2026 experiment measuring conversion ladder progression.</div>
         </div>
       </a>
 
       <a class="card" href="#">
-        <div class="card-icon icon-mystery-box">🧪</div>
+        <div class="card-icon icon-mystery-box"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Mystery Box — Account Linkage
             <span class="badge badge-concluded">Concluded · Feb</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">Mystery Box as AL incentive. February 2026 experiment — tested gamified reward to increase account linkage rate.</div>
         </div>
       </a>
 
       <a class="card" href="#">
-        <div class="card-icon icon-age-modal">🧪</div>
+        <div class="card-icon icon-age-modal"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg></div>
         <div class="card-body">
           <div class="card-title">
             Declared Age Modal
             <span class="badge badge-concluded">Concluded · Jan</span>
             <span class="badge badge-area">Brand Integration</span>
           </div>
-          <div class="card-desc">Tested declared age step in AL flow. January 2026 experiment — measured impact on AL completion rate and data quality.</div>
         </div>
       </a>
 
     </div>
 
     <!-- Releases -->
-    <div class="subsection-header">
+    <div class="subsection-header" id="releases">
       <span class="subsection-dot dot-shipped"></span>
       Releases
     </div>
     <div class="card-grid">
 
       <a class="card" href="#">
-        <div class="card-icon icon-ads-alert">🚀</div>
+        <div class="card-icon icon-ads-alert"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div>
         <div class="card-body">
           <div class="card-title">
             Ads Alert v2
             <span class="badge badge-shipped">Shipped · Mar</span>
             <span class="badge badge-area">Advertising</span>
           </div>
-          <div class="card-desc">Redesigned ads alert notification system. Shipped March 2026 — improved detection and user communication for ad quality issues.</div>
         </div>
       </a>
 
@@ -597,10 +757,59 @@
   <!-- Footer -->
   <footer class="hub-footer">
     Ads & Partnerships — Moritz Natalini · Dir. PM · FACEIT<br>
-    <a href="https://github.com/mnatalini-rgb/Personal-Space" target="_blank" rel="noopener">GitHub</a> · Last updated: 4 April 2026
+    <a href="https://github.com/mnatalini-rgb/Personal-Space" target="_blank" rel="noopener">GitHub</a> · Last updated: 10 April 2026
   </footer>
 
   <script>
+
+    // Generate today's date
+    (function() {
+      const dateEl = document.getElementById('daily-date');
+      if (dateEl) {
+        const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
+        dateEl.textContent = 'Today — ' + new Date().toLocaleDateString('en-GB', options);
+      }
+    })();
+
+    // Sidebar toggle with localStorage persistence
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+      localStorage.setItem('hub-sidebar-collapsed', sidebar.classList.contains('collapsed'));
+    }
+    (function() {
+      if (localStorage.getItem('hub-sidebar-collapsed') === 'true') {
+        document.getElementById('sidebar').classList.add('collapsed');
+      }
+    })();
+
+    // Scroll to section and update active nav button
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector('.nav-btn[onclick*="' + id + '"]');
+      if (activeBtn) activeBtn.classList.add('active');
+    }
+
+    // Scrollspy — highlight active sidebar nav based on scroll position
+    (function() {
+      const sections = ['core', 'analytics', 'experiments', 'releases'];
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.querySelector('.nav-btn[onclick*="' + entry.target.id + '"]');
+            if (activeBtn) activeBtn.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    })();
+
     // Detect current sprint and update badge
     (function() {
       const sprints = [
@@ -624,6 +833,9 @@
       }
     })();
   </script>
+
+    </main>
+  </div>
 
 </body>
 </html>

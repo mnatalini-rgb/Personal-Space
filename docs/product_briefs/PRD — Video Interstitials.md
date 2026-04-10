@@ -51,6 +51,27 @@ This:
 * preserves advertiser impact in the opening seconds  
 * reduces risk to retention compared to fully unskippable formats
 
+### Confirmed Flow (April 2026)
+
+Homepage → **Play** → **Find a Match** → **Video Interstitial Modal** → System searches for a match.
+
+The ad plays **before** the matchmaking queue starts (not during), to avoid user perception of longer wait times. Once the video completes, the match search begins automatically.
+
+### MVP UX Requirements
+
+| Element | Spec |
+|:--|:--|
+| **Sound** | Sound-on by default (user-initiated action). User can mute manually. |
+| **Display** | Full-screen interstitial overlay — user cannot interact with the page behind it |
+| **Remaining time** | UI element showing remaining video duration |
+| **Skip** | 1 skip per day. After the daily skip is used, the skip button transitions to an **"Upgrade"** button (premium upsell) |
+| **Onboarding** | No ads on the first match. Ads begin from the **2nd match onward** to build user momentum |
+| **Communication** | Clear upfront UI explaining the ad will play with sound, the duration, and the skip mechanics |
+
+### Future: Smart Skip System (Post-MVP)
+
+A context-aware skip system could offer additional free skips based on the user's state — e.g., after losing a match or filing a report. This accounts for the player's mental state and creates a more scalable, user-respectful pattern. **Not in MVP scope.**
+
 ## **Further Testing & Iteration**
 
 After MVP validation, explore:
@@ -87,10 +108,18 @@ Goal: identify the best CPM uplift without measurable UX degradation.
 Initial UX explorations and format concepts:  
 [https://www.figma.com/design/QpjhKpg2hE9Dp71CcvqNpC/Ad-formats-2025?node-id=6270-180511\&t=SZAYYwdXfTmKbSNU-1](https://www.figma.com/design/QpjhKpg2hE9Dp71CcvqNpC/Ad-formats-2025?node-id=6270-180511&t=SZAYYwdXfTmKbSNU-1)
 
+Play Interstitial concept board (April 2026):  
+[https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1\&t=iw9eKdWDLP2J8MZ9-1](https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1)
+
 ## Experiment & Validation Plan (Next Step)
 
-* A/B test:  
-  * Control: static interstitial  
-  * Test: skippable video interstitial (5s skip)  
+* A/B/C test (confirmed April 2026):  
+  * **Control (A)**: No ads — baseline retention and engagement  
+  * **Test B**: No ads on the first match, ads from 2nd match onward  
+  * **Test C**: Ads from the first match onward  
+* Primary question: does the first-match ad-free experience meaningfully improve retention vs immediate ads?
 * Validate whether revenue per user increases without negative behavioural impact
+
+**Experiment tracking**:  
+[Mixpanel Board — Play Interstitial Experiment](https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg)
 

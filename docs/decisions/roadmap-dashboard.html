@@ -6,6 +6,7 @@
   <title>Ads & Partnerships Roadmap</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
       --bg: #EEF2F3;
@@ -13,8 +14,9 @@
       --text: #1A1A2E;
       --text-muted: #6B7280;
       --border: #E2E8F0;
-      --accent: #1A1A2E;
-      --accent-hover: #334155;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: rgba(37, 99, 235, 0.08);
       --p0: #FEE2E2;
       --p0-text: #C2410C;
       --p1: #FEF3C7;
@@ -67,18 +69,20 @@
       border: 1px solid #D1D5DB;
       padding: 8px 16px;
       font-size: 14px;
+      font-family: inherit;
       font-weight: 400;
       color: var(--text-muted);
       cursor: pointer;
-      border-radius: var(--radius-pill);
-      transition: all 0.2s;
+      border-radius: 9999px;
+      transition: all 0.15s ease;
     }
 
     .tab-btn:hover { background-color: #F3F4F6; color: var(--text); border-color: #D1D5DB; }
     .tab-btn.active {
-      background-color: var(--accent);
+      background: var(--accent);
       color: white;
       border-color: var(--accent);
+      font-weight: 600;
     }
 
     /* Views */
@@ -92,7 +96,7 @@
       align-items: center;
       background: var(--surface);
       padding: 16px 24px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       box-shadow: var(--shadow);
       border: none;
       margin-bottom: 24px;
@@ -179,7 +183,7 @@
       font-size: 9px;
       font-weight: 500;
       padding: 1px 6px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       margin-left: 4px;
       vertical-align: middle;
       letter-spacing: 0.5px;
@@ -220,6 +224,34 @@
       border-radius: var(--radius-sm);
     }
 
+    .holiday-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    .holiday-item {
+      display: grid;
+      grid-template-columns: 2fr 3fr 2fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .holiday-item:last-child {
+      border-bottom: none;
+    }
+
+    .holiday-form {
+      background: var(--bg);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
     .inactive-cell {
       background-color: #f3f4f6 !important;
       display: flex;
@@ -258,11 +290,11 @@
       padding: 6px;
       background: none;
       border: 1px dashed #D1D5DB;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       color: var(--text-muted);
       cursor: pointer;
       font-size: 12px;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
     .add-btn:hover {
@@ -346,11 +378,12 @@
     .priority-pill {
       display: inline-block;
       padding: 2px 8px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       font-size: 11px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      transition: all 0.15s ease;
     }
     .priority-pill.P0 { background-color: var(--p0); color: var(--p0-text); }
     .priority-pill.P1 { background-color: var(--p1); color: var(--p1-text); }
@@ -448,23 +481,25 @@
       color: white;
       border: none;
       padding: 8px 16px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       font-weight: 500;
       cursor: pointer;
       font-size: 14px;
+      transition: all 0.15s ease;
     }
     .btn-primary:hover { background: var(--accent-hover); }
-    .btn-export, .btn-import { background: var(--surface); color: var(--text-muted); box-shadow: var(--shadow); border: none; padding: 6px 14px; border-radius: var(--radius-pill); cursor: pointer; font-size: 13px; font-weight: 400; transition: all 0.2s; }
+    .btn-export, .btn-import { background: var(--surface); color: var(--text-muted); box-shadow: var(--shadow); border: none; padding: 6px 14px; border-radius: 9999px; cursor: pointer; font-size: 13px; font-weight: 400; transition: all 0.15s ease; }
     .btn-export:hover, .btn-import:hover { background: var(--border); color: var(--text); }
     .btn-danger {
       background: #FEE2E2;
       color: #DC2626;
       border: none;
       padding: 8px 16px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       font-weight: 500;
       cursor: pointer;
       font-size: 14px;
+      transition: all 0.15s ease;
     }
 
     .flex-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 24px; }
@@ -492,24 +527,24 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 12px;
     }
     .kpi-card {
-      background: var(--surface);
-      border-radius: 16px;
-      padding: 20px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 14px 16px;
       text-align: center;
-      box-shadow: var(--shadow);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
-    .kpi-active { border-top: 3px solid #2563eb; }
-    .kpi-done { border-top: 3px solid #16a34a; }
-    .kpi-blocked { border-top: 3px solid #DC2626; }
-    .kpi-impact { border-top: 3px solid #f59e0b; }
-    .kpi-value { font-size: 28px; font-weight: 600; color: var(--text); }
-    .kpi-label { font-size: 12px; font-weight: 500; text-transform: uppercase; color: var(--text-muted); }
+    .kpi-active { border-top: 2px solid #2563eb; }
+    .kpi-done { border-top: 2px solid #16a34a; }
+    .kpi-blocked { border-top: 2px solid #DC2626; }
+    .kpi-impact { border-top: 2px solid #f59e0b; }
+    .kpi-value { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .kpi-label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em; }
 
     /* Gantt Styles */
     .gantt-container {
@@ -713,7 +748,7 @@
     .area-tag {
       display: inline-block;
       padding: 2px 8px;
-      border-radius: var(--radius-pill);
+      border-radius: 9999px;
       font-size: 11px;
       font-weight: 400;
     }
@@ -721,6 +756,172 @@
     .area-tag.brand_integrations { background: #fef3c7; color: #92400e; }
     .section-tbd { border-left: 4px solid #6b7280 !important; }
     .section-blocked { border-left: 4px solid #dc2626 !important; opacity: 0.7; }
+    
+    .filter-impact-badge {
+      display: inline-block;
+      margin-left: 10px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.08);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .tab-btn.active .filter-impact-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+    .sh-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .sh-link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .sh-link-pill.doc {
+      background: #f0f4ff;
+      color: #2563eb;
+      border: 1px solid #dbeafe;
+    }
+    .sh-link-pill.doc:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+    .sh-link-pill.figma {
+      background: #fdf2f8;
+      color: #db2777;
+      border: 1px solid #fce7f3;
+    }
+    .sh-link-pill.figma:hover {
+      background: #fce7f3;
+      border-color: #f9a8d4;
+    }
+    .sh-link-pill.dashboard {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #dcfce7;
+    }
+    .sh-link-pill.dashboard:hover {
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+    .sh-link-pill.analytics {
+      background: #faf5ff;
+      color: #7c3aed;
+      border: 1px solid #ede9fe;
+    }
+    .sh-link-pill.analytics:hover {
+      background: #ede9fe;
+      border-color: #c4b5fd;
+    }
+    .sh-link-pill.legal {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1px solid #fef3c7;
+    }
+    .sh-link-pill.legal:hover {
+      background: #fef3c7;
+      border-color: #fcd34d;
+    }
+    .sh-edit-links-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .sh-edit-link-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-size: 12px;
+      background: #f3f4f6;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+    .sh-edit-link-chip .remove-link {
+      cursor: pointer;
+      color: #ef4444;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .sh-edit-link-chip .remove-link:hover {
+      color: #dc2626;
+    }
+    /* Markdown Preview Modal */
+    .md-preview-container {
+      max-width: 760px;
+      width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .md-preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .md-preview-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .md-preview-content {
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 8px;
+    }
+    /* Markdown rendered content styles */
+    .md-preview-content h1 { font-size: 22px; font-weight: 700; margin: 24px 0 12px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .md-preview-content h2 { font-size: 18px; font-weight: 600; margin: 20px 0 10px; color: var(--text); }
+    .md-preview-content h3 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
+    .md-preview-content h4 { font-size: 14px; font-weight: 600; margin: 12px 0 6px; color: var(--text); }
+    .md-preview-content p { font-size: 14px; line-height: 1.7; margin: 0 0 12px; color: var(--text); }
+    .md-preview-content ul, .md-preview-content ol { margin: 0 0 12px; padding-left: 24px; font-size: 14px; line-height: 1.7; }
+    .md-preview-content li { margin-bottom: 4px; }
+    .md-preview-content li ul, .md-preview-content li ol { margin-top: 4px; margin-bottom: 4px; }
+    .md-preview-content strong { font-weight: 600; }
+    .md-preview-content em { font-style: italic; }
+    .md-preview-content a { color: var(--accent); text-decoration: none; }
+    .md-preview-content a:hover { text-decoration: underline; }
+    .md-preview-content code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: 'SF Mono', 'Consolas', monospace; }
+    .md-preview-content pre { background: #f3f4f6; padding: 14px; border-radius: var(--radius-sm); overflow-x: auto; margin: 0 0 12px; }
+    .md-preview-content pre code { background: none; padding: 0; font-size: 13px; }
+    .md-preview-content blockquote { border-left: 3px solid var(--accent); padding: 8px 16px; margin: 0 0 12px; background: var(--accent-light); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .md-preview-content blockquote p { margin: 0; color: var(--text-muted); }
+    .md-preview-content hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+    .md-preview-content table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 13px; }
+    .md-preview-content thead { background: #f9fafb; }
+    .md-preview-content th { text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid var(--border); color: var(--text); }
+    .md-preview-content td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .md-preview-content tr:hover { background: #f9fafb; }
+    .md-preview-content img { max-width: 100%; border-radius: var(--radius-sm); }
+    /* Checkbox lists */
+    .md-preview-content input[type="checkbox"] { margin-right: 6px; }
+    /* Scrollbar styling */
+    .md-preview-content::-webkit-scrollbar { width: 6px; }
+    .md-preview-content::-webkit-scrollbar-track { background: transparent; }
+    .md-preview-content::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+    .md-preview-content::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
   </style>
 </head>
 <body>
@@ -736,7 +937,6 @@
           <h1>Ads & Partnerships Roadmap</h1>
           <p>FACEIT Monetisation — Brand Integrations & Advertising</p>
         </div>
-        <a href="nsm-dashboard.html" style="color: #60a5fa; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.35rem; opacity: 0.85; transition: opacity 0.2s; margin-top: 0.5rem; white-space: nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">📊 NSM Metrics <span style="font-size: 0.75rem;">→</span></a>
       </div>
       <div class="nav-tabs">
         <button type="button" class="tab-btn active" onclick="switchTab('sprint-view', this)">Internal Sprint View</button>
@@ -751,8 +951,11 @@
           <option value="Q2-2026">Q2 2026 (Apr - Jun)</option>
           <option value="Q1-2026">Q1 2026 (Jan - Mar)</option>
         </select>
-        <div style="font-size: 14px; color: var(--text-muted);">
-          Double-click a cell to edit.
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <button type="button" class="btn-primary" style="background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; font-size: 13px; padding: 6px 14px;" onclick="openHolidayModal()">🌴 Holidays</button>
+          <div style="font-size: 14px; color: var(--text-muted);">
+            Double-click a cell to edit.
+          </div>
         </div>
       </div>
 
@@ -763,13 +966,12 @@
 
     <!-- TAB 2: Stakeholder Roadmap -->
     <section id="stakeholder-view" class="view-section">
-      <div id="sh-summary-stats" style="margin-bottom: 16px;"></div>
       <div class="summary-bar">
         <div style="display: flex; flex-direction: column; gap: 12px;">
           <div class="filter-tabs" id="sh-filters">
-            <button type="button" class="tab-btn active" onclick="setShFilter('All', this)">All</button>
-            <button type="button" class="tab-btn" onclick="setShFilter('brand_integrations', this)">Brand Integrations</button>
-            <button type="button" class="tab-btn" onclick="setShFilter('advertising', this)">Advertising</button>
+            <button type="button" class="tab-btn active" onclick="setShFilter('All', this)">All<span class="filter-impact-badge" id="badge-all"></span></button>
+            <button type="button" class="tab-btn" onclick="setShFilter('brand_integrations', this)">Brand Integrations<span class="filter-impact-badge" id="badge-brand"></span></button>
+            <button type="button" class="tab-btn" onclick="setShFilter('advertising', this)">Advertising<span class="filter-impact-badge" id="badge-ads"></span></button>
           </div>
 
         </div>
@@ -779,6 +981,7 @@
       <div style="overflow-x: auto;">
         <div id="sh-timeline-container"></div>
       </div>
+      <div id="sh-summary-stats" style="margin-top: 16px; margin-bottom: 16px;"></div>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
         <span style="font-size: 13px; color: var(--text-muted);">Double-click any item to edit. "AD-XXXX" in Notes automatically link to Jira.</span>
         <button type="button" class="btn-primary" onclick="addNewShItem()">+ Add Initiative</button>
@@ -936,6 +1139,16 @@
         <input type="text" id="sh-edit-jira" placeholder="e.g. AD-1234">
       </div>
 
+      <div class="form-group">
+        <label>Links</label>
+        <div id="sh-edit-links-list" class="sh-edit-links-list"></div>
+        <div style="display: flex; gap: 8px; margin-top: 4px;">
+          <input type="text" id="sh-edit-link-label" placeholder="Label (e.g. PRD, Figma)" style="flex: 1; max-width: 140px;">
+          <input type="text" id="sh-edit-link-url" placeholder="URL or file path" style="flex: 2;">
+          <button type="button" class="btn-primary" style="padding: 8px 12px; font-size: 12px;" onclick="addShEditLink()">Add</button>
+        </div>
+      </div>
+
       <div class="flex-actions" style="justify-content: space-between;">
         <button type="button" class="btn-danger" onclick="deleteShItem()">Delete</button>
         <div>
@@ -957,23 +1170,71 @@
     </div>
   </div>
 
+  <!-- Markdown Document Preview Modal -->
+  <div class="modal-overlay" id="md-preview-modal" onclick="if(event.target===this)closeModal('md-preview-modal')">
+    <div class="modal-content md-preview-container">
+      <div class="md-preview-header">
+        <span id="md-preview-title" class="md-preview-title"></span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a id="md-preview-open-link" href="#" target="_blank" style="font-size: 12px; color: var(--accent); text-decoration: none; white-space: nowrap;">Open file ↗</a>
+          <button type="button" class="close-btn" onclick="closeModal('md-preview-modal')">&times;</button>
+        </div>
+      </div>
+      <div id="md-preview-content" class="md-preview-content"></div>
+    </div>
+  </div>
+
+  <!-- Holiday Modal -->
+  <div class="modal-overlay" id="holiday-modal" onclick="if(event.target===this)closeModal('holiday-modal')">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h2 class="modal-title">🌴 Manage Holidays</h2>
+        <button type="button" class="close-btn" onclick="closeModal('holiday-modal')">&times;</button>
+      </div>
+      <div id="holiday-list" class="holiday-list"></div>
+      <div class="holiday-form">
+        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Add Holiday</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 8px; align-items: end;">
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Team Member</label>
+            <select id="holiday-member" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;"></select>
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Start Date</label>
+            <input type="date" id="holiday-start" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">End Date</label>
+            <input type="date" id="holiday-end" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
+          </div>
+          <div>
+            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Label</label>
+            <input type="text" id="holiday-label" placeholder="e.g. Summer break" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
+          </div>
+          <button type="button" class="btn-primary" onclick="addHoliday()" style="padding: 8px 16px; white-space: nowrap;">+ Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Constants & Seed Data
-    const SEED_VERSION = 9;
+    const SEED_VERSION = 20;
     const JIRA_BASE_URL = 'https://efgcloud.atlassian.net/browse/';
 
     const TEAM_MEMBERS = [
-      { id: 'anouk', name: 'Anouk', role: 'Sr. Designer', color: '#8b5cf6' },
-      { id: 'isabel', name: 'Isabel', role: 'Sr. BE', color: '#06b6d4' },
-      { id: 'egor', name: 'Egor', role: 'Sr. BE', color: '#f59e0b' },
-      { id: 'teodor', name: 'Teodor', role: 'Sr. FE', color: '#10b981' },
-      { id: 'omar', name: 'Omar', role: 'Sr. FE', color: '#ec4899', startDate: '2026-04-20' },
-      { id: 'moritz', name: 'Moritz', role: 'Dir. PM', color: '#2563eb' }
+      { id: 'anouk', name: 'Anouk', role: 'Sr. Designer', color: '#8b5cf6', links: [] },
+      { id: 'isabel', name: 'Isabel', role: 'Sr. BE', color: '#06b6d4', links: [] },
+      { id: 'egor', name: 'Egor', role: 'Sr. BE', color: '#f59e0b', links: [] },
+      { id: 'teodor', name: 'Teodor', role: 'Sr. FE', color: '#10b981', links: [] },
+      { id: 'omar', name: 'Omar', role: 'Sr. FE', color: '#ec4899', startDate: '2026-04-20', links: [] },
+      { id: 'moritz', name: 'Moritz', role: 'Dir. PM', color: '#2563eb', links: [] }
     ];
 
-    const HOLIDAYS = [
+    const SEED_HOLIDAYS = [
       { memberId: 'moritz', startDate: '2026-04-02', endDate: '2026-04-08', label: 'Easter' }
     ];
+    let HOLIDAYS = JSON.parse(localStorage.getItem('roadmap_holidays')) || [...SEED_HOLIDAYS];
 
     // ── Consistent initiative color map (used in both Sprint Grid + Gantt) ──
     const INITIATIVE_COLORS = {
@@ -1030,18 +1291,18 @@
       const g = parseInt(hex.slice(3,5), 16);
       const b = parseInt(hex.slice(5,7), 16);
       const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      return luminance > 0.55 ? '#1A1A2E' : '#ffffff';
+      return luminance > 0.35 ? '#1e293b' : '#ffffff';
     }
 
     const SEED_SPRINT_DATA = {
       'Q1-2026': {
         sprints: [
-          { id: 's1.1', name: 'Sprint 1.1', start: '2026-01-05', end: '2026-01-16', month: 'JAN' },
-          { id: 's1.2', name: 'Sprint 1.2', start: '2026-01-19', end: '2026-01-30', month: 'JAN' },
-          { id: 's1.3', name: 'Sprint 1.3', start: '2026-02-02', end: '2026-02-13', month: 'FEB' },
-          { id: 's1.4', name: 'Sprint 1.4', start: '2026-02-16', end: '2026-02-27', month: 'FEB' },
-          { id: 's1.5', name: 'Sprint 1.5', start: '2026-03-02', end: '2026-03-13', month: 'MAR' },
-          { id: 's1.6', name: 'Sprint 1.6', start: '2026-03-16', end: '2026-03-27', month: 'MAR' }
+          { id: 's1.1', name: 'Sprint 1.1', start: '2026-01-05', end: '2026-01-16', month: 'JAN', links: [] },
+          { id: 's1.2', name: 'Sprint 1.2', start: '2026-01-19', end: '2026-01-30', month: 'JAN', links: [] },
+          { id: 's1.3', name: 'Sprint 1.3', start: '2026-02-02', end: '2026-02-13', month: 'FEB', links: [] },
+          { id: 's1.4', name: 'Sprint 1.4', start: '2026-02-16', end: '2026-02-27', month: 'FEB', links: [] },
+          { id: 's1.5', name: 'Sprint 1.5', start: '2026-03-02', end: '2026-03-13', month: 'MAR', links: [] },
+          { id: 's1.6', name: 'Sprint 1.6', start: '2026-03-16', end: '2026-03-27', month: 'MAR', links: [] }
         ],
         assignments: {
           'anouk': {
@@ -1094,12 +1355,12 @@
       },
       'Q2-2026': {
         sprints: [
-{ id: 's2.1', name: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10', month: 'APR' },
-      { id: 's2.2', name: 'Sprint 2.2', start: '2026-04-13', end: '2026-04-24', month: 'APR' },
-      { id: 's2.3', name: 'Sprint 2.3', start: '2026-04-27', end: '2026-05-08', month: 'MAY' },
-      { id: 's2.4', name: 'Sprint 2.4', start: '2026-05-11', end: '2026-05-22', month: 'MAY' },
-      { id: 's2.5', name: 'Sprint 2.5', start: '2026-05-25', end: '2026-06-05', month: 'JUN' },
-      { id: 's2.6', name: 'Sprint 2.6', start: '2026-06-08', end: '2026-06-19', month: 'JUN' }
+{ id: 's2.1', name: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10', month: 'APR', links: [] },
+      { id: 's2.2', name: 'Sprint 2.2', start: '2026-04-13', end: '2026-04-24', month: 'APR', links: [] },
+      { id: 's2.3', name: 'Sprint 2.3', start: '2026-04-27', end: '2026-05-08', month: 'MAY', links: [] },
+      { id: 's2.4', name: 'Sprint 2.4', start: '2026-05-11', end: '2026-05-22', month: 'MAY', links: [] },
+      { id: 's2.5', name: 'Sprint 2.5', start: '2026-05-25', end: '2026-06-05', month: 'JUN', links: [] },
+      { id: 's2.6', name: 'Sprint 2.6', start: '2026-06-08', end: '2026-06-19', month: 'JUN', links: [] }
         ],
         assignments: {
           'anouk': {
@@ -1138,32 +1399,34 @@
     };
 
     const SEED_STAKEHOLDER_DATA = [
-  { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-02-15', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html', stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: '2026-01-15', experimentStartDate: '2026-01-20', concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10' },
-  { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-01', devStartDate: '2026-03-20', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-10-01', devStartDate: '2025-11-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-02-01', completedDate: '2026-02-15' },
-  { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr-May 2026', notes: 'Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: null, experimentStartDate: null, concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10' },
-  { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-09-01', devStartDate: '2025-10-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-15', completedDate: '2026-01-15' },
-  { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-06-01', devStartDate: '2025-07-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2025-09-15', completedDate: '2025-09-15' },
-  { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-08-01', devStartDate: '2025-09-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-01', completedDate: '2026-01-01' },
-  { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-07-01', devStartDate: '2025-08-01', readyDate: null, experimentStartDate: null, concludedDate: '2025-12-01', releasedDate: null, completedDate: '2025-12-15' },
-  { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2025-06-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-15', devStartDate: '2026-04-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null },
-  { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html', stage: 'development', requiresExperiment: true, startDate: '2026-04-01', devStartDate: '2026-04-07', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null }
+  { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: 'docs/product_documentation/onePager_ Play Interstitial.md', dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-02-15', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'One-Pager', url: 'docs/product_documentation/onePager_ Play Interstitial.md' }, { label: 'PRD', url: 'docs/product_briefs/PRD — Video Interstitials.md' }, { label: 'Figma Board', url: 'https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1' }] },
+  { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html', stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: '2026-01-15', experimentStartDate: '2026-01-20', concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10', links: [{ label: 'Results Dashboard', url: 'analysis/prebid-experiment-results.html' }] },
+  { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: 'docs/product_briefs/PRD — Video Interstitials.md', dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-01', devStartDate: '2026-03-20', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'PRD', url: 'docs/product_briefs/PRD — Video Interstitials.md' }, { label: 'Mixpanel', url: 'https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg' }] },
+  { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-10-01', devStartDate: '2025-11-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-02-01', completedDate: '2026-02-15', links: [] },
+  { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'Moved to backlog — no bandwidth. Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: null, experimentStartDate: null, concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10', links: [] },
+  { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-09-01', devStartDate: '2025-10-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-15', completedDate: '2026-01-15', links: [] },
+  { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-06-01', devStartDate: '2025-07-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2025-09-15', completedDate: '2025-09-15', links: [] },
+  { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-08-01', devStartDate: '2025-09-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-01', completedDate: '2026-01-01', links: [] },
+  { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-07-01', devStartDate: '2025-08-01', readyDate: null, experimentStartDate: null, concludedDate: '2025-12-01', releasedDate: null, completedDate: '2025-12-15', links: [] },
+  { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2025-06-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'Experiment live since 2026-04-09', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-outstream-csstats-dashboard.html', stage: 'experimenting', requiresExperiment: true, startDate: '2026-03-15', devStartDate: '2026-04-01', readyDate: '2026-04-09', experimentStartDate: '2026-04-09', concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/prebid-outstream-csstats-dashboard.html' }] },
+  { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
+  { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html', stage: 'development', requiresExperiment: true, startDate: '2026-04-01', devStartDate: '2026-04-07', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/al-growth-dashboard.html' }] },
+  { id: 'sh-27', initiative: 'Peripheral Initiative', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: 'End-to-end peripheral data play: collect hardware telemetry via FACEIT Client, design user-facing profile, normalise storage for ad targeting segments. Live in IT + T3 countries. Egor (BE), Anouk (Design). Gated on Legal (LEGD-8214).', jiraKey: null, prdLink: null, dashboardLink: 'analysis/peripheral-data-dashboard.html', stage: 'development', requiresExperiment: false, startDate: '2026-02-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'PRD', url: 'docs/product_briefs/hardware-ad-targeting-scoping.md' }, { label: 'Dashboard', url: 'analysis/peripheral-data-dashboard.html' }] },
+  { id: 'sh-28', initiative: 'Skin Vault', area: 'brand_integrations', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: 'Live on 300 profiles — monitoring engagement and Tradeit integration performance', jiraKey: null, prdLink: null, dashboardLink: 'analysis/skin-vault-dashboard.html', stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/skin-vault-dashboard.html' }, { label: 'Legal — LEGD-8213', url: 'https://efgcloud.atlassian.net/browse/LEGD-8213' }] }
 ];
 
     // State Variables
@@ -1227,6 +1490,7 @@
     function saveData() {
       localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
       localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
+      localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
       updateTimestamp();
     }
 
@@ -1236,7 +1500,8 @@
         seedVersion: parseInt(localStorage.getItem('roadmap_seed_version')) || SEED_VERSION,
         lastUpdated: localStorage.getItem('roadmap_last_updated') || new Date().toLocaleString(),
         sprintData: sprintData,
-        stakeholderData: stakeholderData
+        stakeholderData: stakeholderData,
+        holidays: HOLIDAYS
       };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -1263,6 +1528,10 @@
           if (!confirm(`Restore roadmap from backup?\n\nBackup date: ${data.exportedAt || 'unknown'}\nThis will overwrite your current data.`)) return;
           sprintData = data.sprintData;
           stakeholderData = data.stakeholderData;
+          if (data.holidays) {
+            HOLIDAYS = data.holidays;
+            localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
+          }
           localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
           localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
           if (data.seedVersion) localStorage.setItem('roadmap_seed_version', data.seedVersion);
@@ -1422,7 +1691,7 @@
           if (!active) {
             cellHtml = `<div class="inactive-cell">Not yet started</div>`;
           } else if (isHol) {
-            cellHtml = `<div class="holiday-cell">🌴 Holiday</div>`;
+            cellHtml = `<div class="holiday-cell" style="cursor:pointer;" onclick="openHolidayModal()" title="Click to manage holidays">🌴 Holiday</div>`;
           } else {
             let chipsHtml = cellData.map(chip => 
               `<div class="chip" draggable="true" ondragstart="handleDragStart(event, '${member.id}', '${sprint.id}', '${chip.id}')" ondragend="handleDragEnd(event)" style="background-color: ${chip.color}">${chip.name}</div>`
@@ -1540,12 +1809,103 @@
       document.getElementById(modalId).classList.remove('active');
     }
 
+    // --- HOLIDAY MANAGEMENT --- //
+
+    function openHolidayModal() {
+      const select = document.getElementById('holiday-member');
+      select.innerHTML = TEAM_MEMBERS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+      renderHolidayList();
+      document.getElementById('holiday-modal').classList.add('active');
+    }
+
+    function renderHolidayList() {
+      const container = document.getElementById('holiday-list');
+      if (!HOLIDAYS.length) {
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 13px; padding: 12px;">No holidays scheduled.</p>';
+        return;
+      }
+      const sorted = [...HOLIDAYS].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+      container.innerHTML = sorted.map((h, idx) => {
+        const member = TEAM_MEMBERS.find(m => m.id === h.memberId);
+        const memberName = member ? member.name : h.memberId;
+        const realIdx = HOLIDAYS.indexOf(h);
+        const fmt = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        return `<div class="holiday-item">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: ${member?.color || '#94a3b8'}; display: inline-block;"></span>
+            <strong style="font-size: 13px;">${memberName}</strong>
+          </div>
+          <span style="font-size: 13px; color: var(--text-muted);">${fmt(h.startDate)} — ${fmt(h.endDate)}</span>
+          <span style="font-size: 13px;">${h.label || '—'}</span>
+          <button type="button" onclick="deleteHoliday(${realIdx})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 16px; padding: 4px 8px;" title="Delete">&times;</button>
+        </div>`;
+      }).join('');
+    }
+
+    function addHoliday() {
+      const memberId = document.getElementById('holiday-member').value;
+      const startDate = document.getElementById('holiday-start').value;
+      const endDate = document.getElementById('holiday-end').value;
+      const label = document.getElementById('holiday-label').value.trim();
+
+      if (!memberId || !startDate || !endDate) {
+        alert('Please fill in team member, start date, and end date.');
+        return;
+      }
+      if (new Date(endDate) < new Date(startDate)) {
+        alert('End date must be on or after start date.');
+        return;
+      }
+
+      HOLIDAYS.push({ memberId, startDate, endDate, label: label || '' });
+      saveHolidays();
+      renderHolidayList();
+      renderSprintGrid();
+
+      // Clear form
+      document.getElementById('holiday-start').value = '';
+      document.getElementById('holiday-end').value = '';
+      document.getElementById('holiday-label').value = '';
+    }
+
+    function deleteHoliday(idx) {
+      if (!confirm('Delete this holiday?')) return;
+      HOLIDAYS.splice(idx, 1);
+      saveHolidays();
+      renderHolidayList();
+      renderSprintGrid();
+    }
+
+    function saveHolidays() {
+      localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
+      updateTimestamp();
+    }
+
     // --- STAKEHOLDER ROADMAP LOGIC --- //
 
     function setShFilter(filter, btn) {
       currentShFilter = filter;
       document.querySelectorAll('#sh-filters .tab-btn').forEach(el => { el.classList.remove('active'); });
       btn.classList.add('active');
+      
+      let totalAll = 0, totalBrand = 0, totalAds = 0;
+      stakeholderData.forEach(item => {
+        const imp = parseMoney(item.impact);
+        totalAll += imp;
+        if (item.area === 'brand_integrations') totalBrand += imp;
+        if (item.area === 'advertising') totalAds += imp;
+      });
+      const fmt = v => v >= 1000000 ? `€${(v/1000000).toFixed(1)}M` : `€${Math.round(v/1000)}K`;
+      
+      const badgeAll = document.getElementById('badge-all');
+      if(badgeAll) badgeAll.textContent = fmt(totalAll);
+      
+      const badgeBrand = document.getElementById('badge-brand');
+      if(badgeBrand) badgeBrand.textContent = fmt(totalBrand);
+      
+      const badgeAds = document.getElementById('badge-ads');
+      if(badgeAds) badgeAds.textContent = fmt(totalAds);
+
       renderStakeholderTable();
     }
 
@@ -1805,7 +2165,28 @@
       </div>`;
     }
 
+    function updateFilterBadges() {
+      let totalAll = 0, totalBrand = 0, totalAds = 0;
+      stakeholderData.forEach(item => {
+        const imp = parseMoney(item.impact);
+        totalAll += imp;
+        if (item.area === 'brand_integrations') totalBrand += imp;
+        if (item.area === 'advertising') totalAds += imp;
+      });
+      const fmt = v => v >= 1000000 ? `€${(v/1000000).toFixed(1)}M` : `€${Math.round(v/1000)}K`;
+      
+      const badgeAll = document.getElementById('badge-all');
+      if(badgeAll) badgeAll.textContent = fmt(totalAll);
+      
+      const badgeBrand = document.getElementById('badge-brand');
+      if(badgeBrand) badgeBrand.textContent = fmt(totalBrand);
+      
+      const badgeAds = document.getElementById('badge-ads');
+      if(badgeAds) badgeAds.textContent = fmt(totalAds);
+    }
+
     function renderStakeholderTable() {
+      updateFilterBadges();
       const ganttContainer = document.getElementById('sh-timeline-container');
       
       let filtered = stakeholderData.filter(item => {
@@ -1854,6 +2235,35 @@
       } else {
         input.style.display = 'none';
       }
+    }
+
+    function openMdPreview(url, title) {
+      var modal = document.getElementById('md-preview-modal');
+      var content = document.getElementById('md-preview-content');
+      var titleEl = document.getElementById('md-preview-title');
+      var openLink = document.getElementById('md-preview-open-link');
+
+      titleEl.textContent = title || url.split('/').pop();
+      openLink.href = url;
+      content.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Loading document...</p>';
+      modal.classList.add('active');
+
+      fetch(url)
+        .then(function(response) {
+          if (!response.ok) throw new Error('Failed to load document');
+          return response.text();
+        })
+        .then(function(md) {
+          content.innerHTML = marked.parse(md);
+          // Make all links open in new tabs
+          content.querySelectorAll('a').forEach(function(a) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener');
+          });
+        })
+        .catch(function(err) {
+          content.innerHTML = '<p style="color:#ef4444;">Could not load document: ' + err.message + '</p><p style="color:var(--text-muted);font-size:13px;">Try the "Open file" link above instead.</p>';
+        });
     }
 
     let briefClickTimer = null;
@@ -1912,15 +2322,42 @@
       }
 
       let links = [];
-      if (item.jiraKey) links.push(`<a href="${JIRA_BASE_URL}${item.jiraKey}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">${item.jiraKey} &rarr;</a>`);
-      if (item.dashboardLink) links.push(`<a href="${item.dashboardLink}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">Open Dashboard &rarr;</a>`);
-      if (item.prdLink) links.push(`<a href="${item.prdLink}" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">View PRD &rarr;</a>`);
+      if (item.jiraKey) links.push('<a href="' + JIRA_BASE_URL + item.jiraKey + '" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">' + item.jiraKey + ' &rarr;</a>');
 
-      if (links.length > 0) {
-        html += `<div style="display:flex;gap:16px;padding-top:12px;border-top:1px solid var(--border);">${links.join('')}</div>`;
+      var pillLinks = [];
+      if (item.links && item.links.length > 0) {
+        pillLinks = item.links;
+      } else {
+        if (item.prdLink) pillLinks.push({ label: 'PRD', url: item.prdLink });
+        if (item.dashboardLink) pillLinks.push({ label: 'Dashboard', url: item.dashboardLink });
       }
 
-      if (!item.notes && !item.impact && !item.effort && dates.length === 0 && links.length === 0) {
+      var pillsHtml = '';
+      if (pillLinks.length > 0) {
+        pillsHtml = '<div class="sh-links-row">' + pillLinks.map(function(l) {
+          var isFigma = l.url.indexOf('figma.com') !== -1;
+          var isAnalytics = l.url.indexOf('mixpanel.com') !== -1;
+          var isDash = l.url.indexOf('analysis/') !== -1 || l.url.indexOf('dashboard') !== -1;
+          var isLegal = l.url.indexOf('LEGD-') !== -1 || l.label === 'Legal';
+          var cls = isFigma ? 'figma' : (isAnalytics ? 'analytics' : (isLegal ? 'legal' : (isDash ? 'dashboard' : 'doc')));
+          var icon = isFigma ? '◆' : (isAnalytics ? '📈' : (isLegal ? '⚖️' : (isDash ? '📊' : '📄')));
+          var isMd = l.url.indexOf('.md') === l.url.length - 3;
+          if (isMd) {
+            return '<a class="sh-link-pill ' + cls + '" href="javascript:void(0)" onclick="openMdPreview(\'' + l.url.replace(/'/g, "\\'") + '\', \'' + l.label.replace(/'/g, "\\'") + '\')" title="' + l.label + '">' + icon + ' ' + l.label + '</a>';
+          } else {
+            return '<a class="sh-link-pill ' + cls + '" href="' + l.url + '" target="_blank" title="' + l.label + '">' + icon + ' ' + l.label + '</a>';
+          }
+        }).join('') + '</div>';
+      }
+
+      if (links.length > 0 || pillsHtml) {
+        html += '<div style="padding-top:12px;border-top:1px solid var(--border);">';
+        if (links.length > 0) html += '<div style="display:flex;gap:16px;margin-bottom:' + (pillsHtml ? '8px' : '0') + ';">' + links.join('') + '</div>';
+        if (pillsHtml) html += pillsHtml;
+        html += '</div>';
+      }
+
+      if (!item.notes && !item.impact && !item.effort && dates.length === 0 && links.length === 0 && !pillsHtml) {
         html += `<div style="color:var(--text-muted);font-size:13px;font-style:italic;">No details available yet. Double-click to edit.</div>`;
       }
 
@@ -1968,7 +2405,35 @@
       document.getElementById('sh-edit-notes').value = item.notes || '';
       document.getElementById('sh-edit-jira').value = item.jiraKey || '';
 
+      renderShEditLinks(item.links || []);
+
       document.getElementById('sh-edit-modal').classList.add('active');
+    }
+
+    var shEditLinks = [];
+
+    function renderShEditLinks(links) {
+      shEditLinks = links ? links.slice() : [];
+      var container = document.getElementById('sh-edit-links-list');
+      if (!container) return;
+      container.innerHTML = shEditLinks.map(function(l, i) {
+        return '<span class="sh-edit-link-chip">' + l.label + ' <span class="remove-link" onclick="removeShEditLink(' + i + ')">&times;</span></span>';
+      }).join('');
+    }
+
+    function addShEditLink() {
+      var label = document.getElementById('sh-edit-link-label').value.trim();
+      var url = document.getElementById('sh-edit-link-url').value.trim();
+      if (!label || !url) return;
+      shEditLinks.push({ label: label, url: url });
+      renderShEditLinks(shEditLinks);
+      document.getElementById('sh-edit-link-label').value = '';
+      document.getElementById('sh-edit-link-url').value = '';
+    }
+
+    function removeShEditLink(index) {
+      shEditLinks.splice(index, 1);
+      renderShEditLinks(shEditLinks);
     }
 
     function saveShEdit() {
@@ -1993,7 +2458,8 @@
           status: document.getElementById('sh-edit-status').value,
           eta: etaVal || null,
           notes: document.getElementById('sh-edit-notes').value,
-          jiraKey: document.getElementById('sh-edit-jira').value
+          jiraKey: document.getElementById('sh-edit-jira').value,
+          links: shEditLinks.slice()
         };
         
         saveData();
@@ -2026,6 +2492,7 @@
         jiraKey: null,
         prdLink: null,
         dashboardLink: null,
+        links: [],
         stage: 'scoping',
         requiresExperiment: false,
         startDate: null,

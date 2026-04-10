@@ -9,6 +9,7 @@
         :root {
             --bg-color: #EEF2F3;
             --surface: #ffffff;
+            --accent: #2563eb;
             --text-main: #1A1A2E;
             --text-muted: #6B7280;
             --border: #E2E8F0;
@@ -40,44 +41,118 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Navigation */
-        .top-nav {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 24px;
-            font-weight: 500;
-            font-size: 0.9rem;
+        /* Layout Structure */
+        .dashboard-layout {
+            display: flex;
+            max-width: 1440px;
+            margin: 0 auto;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: var(--sidebar-width, 260px);
+            flex-shrink: 0;
+            padding: 24px 16px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid var(--border);
+            background-color: var(--bg-color);
+            transition: width 0.3s ease, padding 0.3s ease;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 200;
+        }
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed-width, 64px);
+            padding: 24px 8px;
+        }
+        .sidebar-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             color: var(--text-muted);
+            margin-bottom: 24px;
+            align-self: flex-end;
+            transition: transform 0.3s ease, background-color 0.2s ease;
+            flex-shrink: 0;
+        }
+        .sidebar-toggle:hover {
+            background-color: var(--surface);
+            color: var(--text-main);
+        }
+        .sidebar.collapsed .sidebar-toggle {
+            transform: rotate(180deg);
+            align-self: center;
+        }
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .nav-btn {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 10px 12px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .nav-btn svg { flex-shrink: 0; }
+        .nav-btn:hover { color: var(--text-main); background: var(--surface); box-shadow: var(--shadow-base); }
+        .nav-btn.active { background-color: var(--accent); color: #fff; }
+        .sidebar.collapsed .btn-label { opacity: 0; width: 0; overflow: hidden; }
+        .sidebar.collapsed .month-links { display: none; }
+        .sidebar.collapsed .stats { display: none; }
+        .sidebar.collapsed .divider { display: none; }
+        .sidebar.collapsed .export-actions { display: none; }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 0;
+            min-width: 0;
+            background-color: var(--bg-color);
+        }
+        
+        .sticky-header {
             position: sticky;
             top: 0;
             z-index: 100;
-        }
-        .top-nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color var(--transition);
-        }
-        .top-nav a:hover { color: var(--text-main); }
-
-        /* Layout Structure */
-        .container {
+            background: rgba(238, 242, 243, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
             display: flex;
-            gap: 2rem;
-            max-width: 1060px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-brand {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 220px;
-            position: sticky;
-            top: 60px;
-            align-self: flex-start;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
         .month-links {
             display: flex;
             flex-direction: column;
@@ -100,13 +175,14 @@
         .divider {
             border: 0;
             border-top: 1px solid var(--border);
-            margin: 0;
+            margin: 24px 0;
         }
 
         .stats {
             font-size: 0.85rem;
             color: var(--text-muted);
             line-height: 1.6;
+            margin-bottom: 24px;
         }
 
         .export-actions {
@@ -124,22 +200,27 @@
             font-size: 0.85rem;
             color: var(--text-main);
             cursor: pointer;
-            transition: all var(--transition);
+            transition: all 0.15s ease;
             text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
         }
+        .btn svg { flex-shrink: 0; }
         .btn:hover {
             border-color: #cbd5e1;
             box-shadow: var(--shadow-base);
             transform: translateY(-1px);
         }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
+        
+        .content-area {
             max-width: 720px;
+            margin: 2rem auto;
             display: flex;
             flex-direction: column;
             gap: 3rem;
+            padding: 0 2rem;
         }
 
         /* Monthly Section */
@@ -337,16 +418,14 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .sidebar {
-                width: 100%;
-                position: static;
-                gap: 1rem;
-            }
+        @media (max-width: 900px) {
+            .dashboard-layout { flex-direction: column; }
+            .sidebar { width: 100% !important; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; flex-direction: row; align-items: center; justify-content: space-between; }
+            .sidebar-toggle { display: none; }
+            .sidebar-nav { flex-direction: row; flex-wrap: wrap; width: 100%; gap: 8px; margin-bottom: 0; }
+            .nav-btn { width: auto; padding: 8px 16px; }
+            .sidebar.collapsed .btn-label { opacity: 1; width: auto; overflow: visible; }
+            .main-content { padding: 0; width: 100%; }
             .month-links {
                 flex-direction: row;
                 overflow-x: auto;
@@ -358,32 +437,52 @@
                 flex-direction: row;
                 flex-wrap: wrap;
             }
+            .divider, .stats { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="top-nav">
-        <a href="index.html">← Hub</a> · Monthly Releases & Experiments
-    </nav>
-
-    <div class="container">
-        <aside class="sidebar">
-            <div class="month-links" id="sidebar-links">
-            </div>
+    <div class="dashboard-layout">
+        <aside class="sidebar" id="sidebar">
+            <button type="button" class="sidebar-toggle" aria-label="Toggle Sidebar" onclick="toggleSidebar()">
+                <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <nav class="sidebar-nav">
+                <button type="button" class="nav-btn active" aria-label="Overview" onclick="scrollToTop()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <span class="btn-label">Overview</span>
+                </button>
+            </nav>
+            
+            <div class="month-links" id="sidebar-links"></div>
             
             <hr class="divider">
             
-            <div class="stats" id="sidebar-stats">
-            </div>
+            <div class="stats" id="sidebar-stats"></div>
             
             <div class="export-actions">
-                <button type="button" class="btn" onclick="copySlackSummary()">Copy Slack Summary</button>
-                <button type="button" class="btn" onclick="downloadJSON()">Download JSON</button>
+                <button type="button" class="btn" aria-label="Copy Slack Summary" onclick="copySlackSummary()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span class="btn-label">Copy Slack Summary</span>
+                </button>
+                <button type="button" class="btn" aria-label="Download JSON" onclick="downloadJSON()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span class="btn-label">Download JSON</span>
+                </button>
             </div>
         </aside>
 
-        <main class="main-content" id="main-content">
+        <main class="main-content">
+            <header class="sticky-header">
+                <div class="header-brand">
+                    <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-weight: 500;">← Hub</a>
+                    <span style="color: var(--border); margin: 0 8px;">·</span>
+                    Monthly Releases & Experiments
+                </div>
+            </header>
+            <div class="content-area" id="main-content">
+            </div>
         </main>
     </div>
 
@@ -757,12 +856,12 @@
                 `;
                 
                 if (group.releases.length > 0) {
-                    html += `<div class="sub-section-header">🚀 RELEASES (${group.releases.length})</div>`;
+                    html += `<div class="sub-section-header"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg> RELEASES (${group.releases.length})</div>`;
                     html += group.releases.map(renderReleaseCard).join('');
                 }
                 
                 if (group.experiments.length > 0) {
-                    html += `<div class="sub-section-header">🔬 EXPERIMENTS (${group.experiments.length})</div>`;
+                    html += `<div class="sub-section-header"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> EXPERIMENTS (${group.experiments.length})</div>`;
                     html += group.experiments.map(renderExperimentCard).join('');
                 }
                 
@@ -856,6 +955,23 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+            localStorage.setItem('releases-sidebar-collapsed', sidebar.classList.contains('collapsed'));
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        (function() {
+            if (localStorage.getItem('releases-sidebar-collapsed') === 'true') {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) sidebar.classList.add('collapsed');
+            }
+        })();
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', init);
