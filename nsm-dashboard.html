@@ -42,6 +42,56 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
 
+        
+        /* Sidebar Toggle Logic */
+        .sidebar {
+            transition: width 0.3s ease, padding 0.3s ease;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .sidebar.collapsed {
+            width: 64px;
+            padding: 2rem 0.5rem;
+        }
+        .sidebar-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            align-self: flex-end;
+            transition: transform 0.3s ease, background-color 0.2s ease;
+        }
+        .sidebar-toggle:hover {
+            background-color: var(--surface);
+            color: var(--text);
+        }
+        .sidebar.collapsed .sidebar-toggle {
+            transform: rotate(180deg);
+            align-self: center;
+        }
+        .sidebar.collapsed .btn-label {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            display: none;
+        }
+        .sidebar .partner-btn {
+            gap: 12px;
+            white-space: nowrap;
+        }
+        .sidebar .partner-btn svg {
+            flex-shrink: 0;
+        }
+
         /* Dashboard Layout */
         .dashboard-layout {
             display: flex;
@@ -287,15 +337,40 @@
       <span style="color:#6B7280;">NSM Dashboard</span>
     </nav>
     <div class="dashboard-layout">
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">
+                <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
             <div class="partner-selector-wrapper">
                 <div class="partner-selector">
-                    <button type="button" id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">📊 Portfolio</button>
-                    <button type="button" id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">🎯 Tradeit</button>
-                    <button type="button" id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">🎲 Winline</button>
-                    <button type="button" id="btn-whitemarket" class="partner-btn" onclick="switchPartner('whitemarket')">🛒 WhiteMarket</button>
-                    <button type="button" id="btn-paysafe" class="partner-btn" onclick="switchPartner('paysafe')">💳 PaySafe</button>
-                    <button type="button" id="btn-roadmap" class="partner-btn roadmap-btn" onclick="switchPartner('roadmap')">📋 Roadmap</button>
+                    <button type="button" id="btn-combined" class="partner-btn active" onclick="switchPartner('combined')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
+                        <span class="btn-label">Portfolio</span>
+                    </button>
+                    <button type="button" id="btn-tradeit" class="partner-btn" onclick="switchPartner('tradeit')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                        <span class="btn-label">Tradeit</span>
+                    </button>
+                    <button type="button" id="btn-winline" class="partner-btn" onclick="switchPartner('winline')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="15.5" cy="15.5" r="1.5"></circle></svg>
+                        <span class="btn-label">Winline</span>
+                    </button>
+                    <button type="button" id="btn-whitemarket" class="partner-btn" onclick="switchPartner('whitemarket')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <span class="btn-label">WhiteMarket</span>
+                    </button>
+                    <button type="button" id="btn-paysafe" class="partner-btn" onclick="switchPartner('paysafe')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        <span class="btn-label">PaySafe</span>
+                    </button>
+                    <button type="button" id="btn-logitechg" class="partner-btn" onclick="switchPartner('logitechg')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>
+                        <span class="btn-label">Logitech G</span>
+                    </button>
+                    <button type="button" id="btn-roadmap" class="partner-btn roadmap-btn" onclick="switchPartner('roadmap')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span class="btn-label">Roadmap</span>
+                    </button>
                 </div>
             </div>
         </aside>
@@ -304,7 +379,6 @@
             <header class="header">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 0.5rem;">
                 <span class="badge">FOR INTERNAL USE</span>
-                <a href="roadmap-dashboard.html" style="color: #60a5fa; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.35rem; opacity: 0.85; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">📋 Roadmap <span style="font-size: 0.75rem;">→</span></a>
             </div>
             <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
                 <img id="header-logo" src="" alt="" style="height: 40px; width: auto; display: none; border-radius: 6px;">
@@ -318,9 +392,9 @@
         <!-- COMBINED CONTAINER -->
         <div id="combined-container">
             <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'combined', 'nsm')">📊 NSM Analysis</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'audience')">👥 Audience</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'combined', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'combined', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
             </div>
             <div id="combined-tab-nsm" class="tab-content active">
                 <div class="section" id="combined-section-1">
@@ -509,7 +583,7 @@
 
             <div id="combined-tab-audience" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Cross-partner audience analysis — overlap, reach, and portfolio-level segmentation.</p>
                 </div>
@@ -517,7 +591,7 @@
 
             <div id="combined-tab-funnel" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Portfolio-level funnel — aggregate conversion rates across all partners.</p>
                 </div>
@@ -528,13 +602,13 @@
         <div id="tradeit-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">976fe92b-0998-4a2a-86a6-f655bbab8f07</code></div>
             <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')">📊 NSM Analysis</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')">🔗 CDP Data</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'missions')">🎯 Missions</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'experiments')">🧪 Experiments</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'rewards')">🎁 Rewards</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'audience')">👥 Audience</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'tradeit', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'cdp')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> CDP Data</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'missions')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'experiments')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'rewards')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'tradeit', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
             </div>
 
             <!-- TRADEIT NSM TAB -->
@@ -1079,16 +1153,57 @@
                 </div>
 
                 <div class="section">
-                    <h2 class="section-title">D. Segment Performance</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted);">See NSM Analysis tab for detailed €/1K <span class="term" data-tip="Eligible Brand Integration Users">EBU</span> breakdown. TOFU = General, MOFU = AL&NoTrade, BOFU = AL&Trade.</p>
+                    <h2 class="section-title">D. Funnel Stage Performance</h2>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Funnel Stage</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>TOFU (General)</td><td class="number">€5,796</td><td class="number">€7,320</td><td class="number">€66,112</td></tr>
+                                        <tr><td>MOFU (AL&amp;NoTrade)</td><td class="number">€424</td><td class="number">€340</td><td class="number">€350</td></tr>
+                                        <tr><td>BOFU (AL&amp;Trade)</td><td class="number">€6,038</td><td class="number">€5,783</td><td class="number">€2,258</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="tradeitMissionsFunnelChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">E. Key Insights</h2>
                     <div class="insight-card">
-                        <h3>Segment Value Generation</h3>
-                        <p>BOFU (AL&Trade) consistently drives the highest conversion value per user despite having the smallest audience size, confirming that re-engaging already linked users is highly efficient for generating C2 actions.</p>
+                        <h3>1. BOFU Drives Highest Per-User Value</h3>
+                        <p>BOFU (AL&amp;Trade) consistently generates the highest conversion value per user despite the smallest audience size. Re-engaging already linked users who have traded is the most efficient path to C2 conversions.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>2. March EU Launch Transformed TOFU</h3>
+                        <p>TOFU value exploded from €7,320 (Feb) to €66,112 (Mar) — a 9x increase driven by the EU regional launch and Mystery Box activation. This proves geographic expansion is the single biggest lever for top-of-funnel growth.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>3. MOFU Remains Under-Optimised</h3>
+                        <p>AL&amp;NoTrade users generate only €340–€424/month — the smallest funnel stage by far. These are users who linked accounts but never traded. Targeted nudges (trade incentives, onboarding flows) could unlock significant value from this warm audience.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>4. BOFU Value Declining Despite Growth Elsewhere</h3>
+                        <p>BOFU dropped from €6,038 (Jan) to €2,258 (Mar) — a 63% decline. As new EU/LATAM users enter, BOFU hasn't kept pace. This suggests the new geo users haven't yet progressed through the funnel to repeat trading.</p>
                     </div>
                 </div>
 
                 <div class="section" id="weekly-performance-section">
-                    <h2 class="section-title">E. Weekly Performance Trend</h2>
+                    <h2 class="section-title">F. Weekly Performance Trend</h2>
                     <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">Weekly conversion breakdown for operational monitoring. The headline NSM uses a 30-day rolling window.</p>
                     <div class="insight-card">
                         <canvas id="weeklyPerformanceChart" height="100"></canvas>
@@ -1145,123 +1260,6 @@
                     </div>
                 </div>
 
-                <div class="section">
-                    <h2 class="section-title">F. March Mission Performance Review</h2>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
-                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #059669; display: inline-block;"></span>
-                        Updated: Apr 5, 2026 | Data source: BigQuery (full month)
-                    </div>
-                    
-                    <h3 style="margin-top: 1.5rem; margin-bottom: 0.5rem;">F.1 Mission Completion Rates (March 2026)</h3>
-                    <div class="table-wrapper">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Mission</th>
-                                    <th>Type</th>
-                                    <th class="number">Users Joined</th>
-                                    <th class="number">Completed</th>
-                                    <th class="number">Completion %</th>
-                                    <th class="number">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Play 1 game on FACEIT (EN)</td><td>Gaming</td><td class="number">678,524</td><td class="number">596,965</td><td class="number">87.6%</td><td class="number" style="color: var(--green);">Good</td></tr>
-                                <tr><td>Play 1 game (RU)</td><td>Gaming</td><td class="number">554,576</td><td class="number">512,398</td><td class="number">92.4%</td><td class="number" style="color: var(--green);">Good</td></tr>
-                                <tr><td>Trade any item (EN)</td><td>Partner</td><td class="number">583,298</td><td class="number">14,198</td><td class="number">2.4%</td><td class="number" style="color: var(--red);">Poor</td></tr>
-                                <tr><td>Trade any item (RU)</td><td>Partner</td><td class="number">490,824</td><td class="number">8,170</td><td class="number">1.7%</td><td class="number" style="color: var(--red);">Poor</td></tr>
-                                <tr><td>Trade $250+ (EN)</td><td>Partner</td><td class="number">20,472</td><td class="number">1,242</td><td class="number">6.1%</td><td class="number" style="color: #f39c12;">Warning</td></tr>
-                                <tr><td>Trade &gt;20000 RUB (RU)</td><td>Partner</td><td class="number">28,017</td><td class="number">364</td><td class="number">1.3%</td><td class="number" style="color: var(--red);">Poor</td></tr>
-                                <tr><td>Trade $250+ (RU high-value)</td><td>Partner</td><td class="number">815</td><td class="number">25</td><td class="number">3.1%</td><td class="number" style="color: var(--red);">Poor</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 0.5rem;">F.2 Funnel Summary KPIs</h3>
-                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
-                        <div class="kpi-card">
-                            <div class="kpi-value" style="color: var(--green);">90.0%</div>
-                            <div class="kpi-title">Gaming Missions Avg Completion</div>
-                            <div class="kpi-sub">Play 1 game missions across EN + RU</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" style="color: var(--red);">2.1%</div>
-                            <div class="kpi-title">Partner Conversion Rate</div>
-                            <div class="kpi-sub">Trade missions (basic tier)</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" style="color: #f39c12;">6.1%</div>
-                            <div class="kpi-title">High-Value Tier ($250+)</div>
-                            <div class="kpi-sub">2.5x better than basic tier</div>
-                        </div>
-                        <div class="kpi-card">
-                            <div class="kpi-value" style="color: var(--red);">2.9%</div>
-                            <div class="kpi-title">Reward Claim Rate</div>
-                            <div class="kpi-sub">40,761 claimed / 1,398,044 total users</div>
-                        </div>
-                    </div>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 0.5rem;">F.3 Reward Status Breakdown</h3>
-                    <div class="table-wrapper">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Status</th>
-                                    <th class="number">Unique Users</th>
-                                    <th class="number">Total Claims</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>in_progress</td><td class="number">1,222,265</td><td class="number">2,471,821</td></tr>
-                                <tr><td>expired</td><td class="number">294,380</td><td class="number">1,177,524</td></tr>
-                                <tr><td>completed</td><td class="number">138,094</td><td class="number">159,587</td></tr>
-                                <tr><td>available</td><td class="number">60,546</td><td class="number">302,666</td></tr>
-                                <tr><td>claimed</td><td class="number">40,761</td><td class="number">40,824</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="insight-card" style="margin-top: 1rem;">
-                        <p style="margin: 0;">294K users had rewards expire — a 7:1 expiration-to-claim ratio. This is the single largest funnel leak. Implementing expiration reminders (push notification 24h + 2h before expiry) could recover significant conversion value.</p>
-                    </div>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 0.5rem;">F.4 Cross-Partner Comparison (March)</h3>
-                    <div class="table-wrapper">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Partner</th>
-                                    <th class="number">Gaming Completion</th>
-                                    <th class="number">Partner Conversion</th>
-                                    <th>Key Bottleneck</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Tradeit</td><td class="number">~90%</td><td class="number">1.7–2.4%</td><td>Trade action (account linked but no trade)</td></tr>
-                                <tr><td>Winline</td><td class="number">~93%</td><td class="number">1.7% (account connect)</td><td>Account connection step</td></tr>
-                                <tr><td>Winline_KZ</td><td class="number">96.3%</td><td class="number">0.4% (deposit)</td><td>Direct-to-deposit jump too steep</td></tr>
-                                <tr><td>WhiteMarket</td><td class="number">90.6%</td><td class="number">0.9% (buy)</td><td>Marketplace purchase friction</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 style="margin-top: 2rem; margin-bottom: 0.5rem;">F.5 April Recommendations</h3>
-                    <div class="insight-card" style="margin-bottom: 1rem;">
-                        <h3 style="margin-top: 0;">Reward Expiration Reminders</h3>
-                        <p style="margin: 0;">Push notification 24h and 2h before reward expiry. 294K users with expired rewards represent the lowest-hanging optimization. Est. impact: even 5% recovery = 14,700 additional conversions.</p>
-                    </div>
-                    <div class="insight-card" style="margin-bottom: 1rem;">
-                        <h3 style="margin-top: 0;">Add Intermediate Funnel Steps</h3>
-                        <p style="margin: 0;">The jump from 'play a game' (90% completion) to 'trade on partner site' (2%) is too steep. Consider adding a browse/wishlist/account-create step to warm users up before asking for a transaction.</p>
-                    </div>
-                    <div class="insight-card" style="margin-bottom: 1rem;">
-                        <h3 style="margin-top: 0;">Keep &amp; Expand Tiered Missions</h3>
-                        <p style="margin: 0;">The $250+ tier converts at 6.1% vs 2.4% for basic trades (2.5x). Self-selecting engaged users into higher tiers works. Consider adding a mid-tier ($50–$100) to capture the gap.</p>
-                    </div>
-                    <div class="insight-card">
-                        <h3 style="margin-top: 0;">Optimise the Account Connection UX</h3>
-                        <p style="margin: 0;">Winline data proves: once users connect accounts, late-funnel completion is 67–78%. The partner account connection step (1.7% across partners) is the universal lever. Deep-linking with pre-filled credentials could significantly improve this.</p>
-                    </div>
-                </div>
             </div>
 
             <div id="tradeit-tab-experiments" class="tab-content">
@@ -1337,7 +1335,7 @@
                 </div>
 
                 <div class="section" data-exp-month="ongoing">
-                    <h2 class="section-title">4. AL Flow — Trust Modal A/B Test <span style="font-size: 0.75rem; font-weight: 400; color: var(--green); margin-left: 0.5rem;">✅ CONCLUDED</span></h2>
+                    <h2 class="section-title">4. AL Flow — Trust Modal A/B Test <span style="font-size: 0.75rem; font-weight: 400; color: var(--green); margin-left: 0.5rem;"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M20 6 9 17l-5-5"/></svg> CONCLUDED</span></h2>
                     <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Does showing the trust modal during Account Linkage improve conversion? Control group sees the trust modal; Variant skips it entirely. Feature flag: <code>exp_TRADEIT_NO_AGE_STEP_EXPERIMENT</code>.</p>
 
                     <!-- Metric 2: Linkage-Step Completion (original analysis) -->
@@ -1365,7 +1363,7 @@
                     <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
                         <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--accent);">Statistical Significance (Linkage Step)</h3>
                         <div class="ab-stat"><span>Z-Score</span> <span>17.98</span></div>
-                        <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">< 0.001 (highly significant)</span></div>
+                        <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">&lt; 0.001 (highly significant)</span></div>
                         <div class="ab-stat"><span>Relative Lift (Variant vs Control)</span> <span style="color: var(--red);">−48.4%</span></div>
                         <div class="ab-stat"><span>Absolute Difference</span> <span style="color: var(--red);">−2.59 pp</span></div>
                     </div>
@@ -1389,7 +1387,7 @@
                     <div style="margin-top: 1.5rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
                         <h3 style="margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--accent);">Statistical Significance (Full Population)</h3>
                         <div class="ab-stat"><span>Z-Score</span> <span>3.46</span></div>
-                        <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">< 0.001</span></div>
+                        <div class="ab-stat"><span>p-value</span> <span style="color: var(--green);">&lt; 0.001</span></div>
                         <div class="ab-stat"><span>Relative Lift (Variant vs Control)</span> <span style="color: var(--accent);">+12.8%</span></div>
                         <div class="ab-stat"><span>95% CI</span> <span>[+0.010 pp, +0.037 pp]</span></div>
                         <div class="ab-stat"><span>Traffic Split</span> <span>70.2% control / 29.8% variant</span></div>
@@ -1402,7 +1400,7 @@
                     </div>
 
                     <div style="margin-top: 1.25rem; padding: 1.25rem; background: color-mix(in srgb, var(--green) 8%, transparent); border: 1px solid var(--green); border-radius: var(--radius-md);">
-                        <strong style="color: var(--green);">✓ Recommendation: Keep the Trust Modal</strong>
+                        <strong style="color: var(--green);">Recommendation: Keep the Trust Modal</strong>
                         <p style="margin: 0.5rem 0 0 0; color: var(--text-muted); font-size: 0.95rem;">Removing the trust modal cuts linkage-step completion nearly in half (5.34% → 2.75%, z=17.98, p &lt; 0.001). While the full-population variant shows +12.8% raw AL rate, this marginal volume gain (~462 incremental ALs over 2M users) is far outweighed by the 48% quality loss at the conversion step. The trust modal generates €416 more value per cohort and €9.82 more per 1K users. The modal should remain as the permanent default for all partner AL flows. Full write-up: <a href="../docs/product_briefs/trust-modal-experiment-conclusion.md" style="color: var(--accent);">trust-modal-experiment-conclusion.md</a></p>
                     </div>
                 </div>
@@ -1581,14 +1579,14 @@
             </div>
             <div id="tradeit-tab-audience" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Audience segmentation — user demographics, engagement tiers, and targeting insights.</p>
                 </div>
             </div>
             <div id="tradeit-tab-funnel" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
                 </div>
@@ -1601,14 +1599,14 @@
         <div id="winline-container" style="display: none;">
             <div class="org-id-bar" id="winline-org-id-bar">Organiser IDs: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Russia">397f5239-ab93-484d-9f94-4231b0cfa48e</code> <span style="opacity:0.4">|</span> <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Belarus">a8f12da7-d377-4b9f-aedf-a33cb1283b20</code> <span style="opacity:0.4">|</span> <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy — Kazakhstan">b5efeb75-4f23-494e-bc85-9319c1a87c75</code></div>
             <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')">📊 NSM Analysis</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')">🔗 CDP Data</button>
-<button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'missions')">🎯 Missions</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'takeovers')">📺 Brand Takeovers</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'experiments')">🧪 Experiments</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'rewards')">🎁 Rewards</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'audience')">👥 Audience</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'winline', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'cdp')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> CDP Data</button>
+<button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'missions')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'takeovers')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> Brand Takeovers</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'experiments')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'rewards')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'winline', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
             </div>
 
             <!-- WINLINE NSM TAB -->
@@ -1918,6 +1916,11 @@
 
             <!-- WINLINE MISSIONS TAB -->
             <div id="winline-tab-missions" class="tab-content">
+                <div id="winline-missions-refresh-badge" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #059669; display: inline-block;"></span>
+                    Data refreshed: <span id="winline-missions-refresh-date">—</span>
+                </div>
+
                 <div class="section">
                     <h2 class="section-title">A. Conversion KPIs (Mission Data)</h2>
                     <div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
@@ -1937,25 +1940,48 @@
                             <div class="kpi-sub">Jan: 241 | Feb: 280 | Mar: 285</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">2nd Dep</div>
-                            <div class="kpi-value">39,762</div>
-                            <div class="kpi-sub">Jan: 11,440 | Feb: 13,394 | Mar: 14,928</div>
+                            <div class="kpi-title">2nd Dep + Bet</div>
+                            <div class="kpi-value">69,486</div>
+                            <div class="kpi-sub">2nd Dep: 39,762 | Bet: 29,724</div>
                         </div>
-                        <div class="kpi-card">
-                            <div class="kpi-title">Bet</div>
-                            <div class="kpi-value">29,724</div>
-                            <div class="kpi-sub">Jan: 8,335 | Feb: 10,047 | Mar: 11,342</div>
+                        <div class="kpi-card" style="border-color: #f39c12;">
+                            <div class="kpi-title">Total € Value</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">€474,013</div>
+                            <div class="kpi-sub" style="color: #f39c12;">Jan: €138,422 | Feb: €158,499 | Mar: €177,092</div>
                         </div>
-                    </div>
-                    <div class="insight-card" style="margin-top: 1.5rem; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); text-align: center;">
-                        <span style="font-weight: 600; color: var(--text);">Total € Value: €474,013</span> 
-                        <span style="color: var(--text-muted); font-size: 0.9rem; margin-left: 0.5rem;">(Jan: €138,422 | Feb: €158,499 | Mar: €177,092)</span>
                     </div>
                 </div>
 
                 <div class="section">
-                    <h2 class="section-title">B. Mission Breakdown (All Months)</h2>
-                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">All € values rounded to whole numbers.</p>
+                    <h2 class="section-title">B. Mission Breakdown — RU · BY · KZ (All Months)</h2>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">All € values rounded to whole numbers. Bet treated as €4.33 (same rate as 2nd Deposit). Winline is CIS-only — no regional breakdown needed.</p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; align-items: center;">
+                        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Filters</span>
+                        <div class="multi-dropdown" id="wlMissionMonthFilter">
+                            <div class="multi-dropdown-trigger" onclick="toggleDropdown('wlMissionMonthFilter')">
+                                Month <span class="dd-badge" id="wlMissionMonthFilter-badge">All</span> <span class="dd-arrow">▾</span>
+                            </div>
+                            <div class="multi-dropdown-panel">
+                                <label class="dd-select-all"><input type="checkbox" checked onchange="toggleAllCheckboxes('wlMissionMonthFilter', this.checked)"> Select All</label>
+                                <label><input type="checkbox" checked value="Jan" onchange="onFilterCheckChange('wlMissionMonthFilter')"> Jan</label>
+                                <label><input type="checkbox" checked value="Feb" onchange="onFilterCheckChange('wlMissionMonthFilter')"> Feb</label>
+                                <label><input type="checkbox" checked value="Mar" onchange="onFilterCheckChange('wlMissionMonthFilter')"> Mar</label>
+                            </div>
+                        </div>
+                        <div class="multi-dropdown" id="wlMissionFunnelFilter">
+                            <div class="multi-dropdown-trigger" onclick="toggleDropdown('wlMissionFunnelFilter')">
+                                Funnel <span class="dd-badge" id="wlMissionFunnelFilter-badge">All</span> <span class="dd-arrow">▾</span>
+                            </div>
+                            <div class="multi-dropdown-panel">
+                                <label class="dd-select-all"><input type="checkbox" checked onchange="toggleAllCheckboxes('wlMissionFunnelFilter', this.checked)"> Select All</label>
+                                <label><input type="checkbox" checked value="TOFU" onchange="onFilterCheckChange('wlMissionFunnelFilter')"> TOFU</label>
+                                <label><input type="checkbox" checked value="MOFU" onchange="onFilterCheckChange('wlMissionFunnelFilter')"> MOFU</label>
+                                <label><input type="checkbox" checked value="BOFU" onchange="onFilterCheckChange('wlMissionFunnelFilter')"> BOFU</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="table-wrapper" style="max-height: 600px; overflow-y: auto;">
                         <table>
                             <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
@@ -1971,7 +1997,7 @@
                                     <th class="number">€ Value</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="wl-mission-breakdown-body">
                                 <tr><td>Jan</td><td>Agnostic 1 (General)</td><td>TOFU</td><td class="number">1,854</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€8,028</td></tr>
                                 <tr><td>Jan</td><td>Agnostic 2 (Mystery Box)</td><td>TOFU</td><td class="number">2,955</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number">—</td><td class="number highlight">€12,795</td></tr>
                                 <tr><td>Jan</td><td>Mission 3 (No KYC)</td><td>MOFU</td><td class="number">—</td><td class="number">322</td><td class="number">72</td><td class="number">—</td><td class="number">0</td><td class="number highlight">€11,508</td></tr>
@@ -1997,7 +2023,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">Bet treated as €4.33 (same rate as 2nd Deposit). Winline is CIS-only — no regional breakdown needed.</p>
                 </div>
 
 
@@ -2124,7 +2149,7 @@
 
             <div id="winline-tab-takeovers" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Brand Takeover performance — engagement metrics and brand impressions from Winline match takeovers. € value TBD.</p>
                 </div>
@@ -2305,14 +2330,14 @@
             </div>
             <div id="winline-tab-audience" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Audience segmentation — user demographics, engagement tiers, and targeting insights.</p>
                 </div>
             </div>
             <div id="winline-tab-funnel" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
                 </div>
@@ -2323,12 +2348,12 @@
         <div id="whitemarket-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">db18537b-4172-4813-b089-36490c1553b7</code></div>
             <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')">📊 NSM Analysis</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')">🎯 Missions</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'experiments')">🧪 Experiments</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'rewards')">🎁 Rewards</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'audience')">👥 Audience</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'whitemarket', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'missions')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'experiments')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'rewards')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'whitemarket', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
             </div>
 
             <!-- WHITEMARKET NSM TAB -->
@@ -2484,47 +2509,85 @@
 
             <!-- WHITEMARKET MISSIONS TAB -->
             <div id="whitemarket-tab-missions" class="tab-content">
+                <div id="wm-missions-refresh-badge" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #059669; display: inline-block;"></span>
+                    Data refreshed: <span id="wm-missions-refresh-date">—</span>
+                </div>
+
                 <div class="section" id="wm-missions-a">
-                    <h2 class="section-title">A. Mission KPIs</h2>
-                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                    <h2 class="section-title">A. Conversion KPIs (Mission Data)</h2>
+                    <div class="kpi-grid" style="grid-template-columns: repeat(5, 1fr);">
                         <div class="kpi-card">
-                            <div class="kpi-title">Total ALs</div>
+                            <div class="kpi-title">AL Count</div>
                             <div class="kpi-value">5,510</div>
-                            <div class="kpi-sub">Account Linkages</div>
+                            <div class="kpi-sub">Jan: 1,871 | Feb: 1,715 | Mar: 1,924</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">C1 Completions</div>
+                            <div class="kpi-title">C1 (Buy Any)</div>
                             <div class="kpi-value">1,522</div>
-                            <div class="kpi-sub">Buy any amount</div>
+                            <div class="kpi-sub">Jan: 619 | Feb: 338 | Mar: 565</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">C2 Completions</div>
+                            <div class="kpi-title">C2 (Buy $100+)</div>
                             <div class="kpi-value">138</div>
-                            <div class="kpi-sub">Buy $100+</div>
+                            <div class="kpi-sub">Jan: 44 | Feb: 55 | Mar: 39</div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-title">C3 Completions</div>
+                            <div class="kpi-title">C3 (Buy $300+)</div>
                             <div class="kpi-value">13</div>
-                            <div class="kpi-sub">Buy $300+</div>
+                            <div class="kpi-sub">Jan: 5 | Feb: 5 | Mar: 3</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #f39c12;">
+                            <div class="kpi-title">Total € Value</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">€2,451</div>
+                            <div class="kpi-sub" style="color: #f39c12;">Jan: €831 | Feb: €955 | Mar: €665</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="section" id="wm-missions-b">
                     <h2 class="section-title">B. Campaign Breakdown</h2>
-                    <div class="table-wrapper">
+
+                    <!-- Section B Filters (Multi-Select Dropdowns) -->
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem; align-items: center;">
+                        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Filters</span>
+                        <div class="multi-dropdown" id="wmMissionMonthFilter">
+                            <div class="multi-dropdown-trigger" onclick="toggleDropdown('wmMissionMonthFilter')">
+                                Month <span class="dd-badge" id="wmMissionMonthFilter-badge">All</span> <span class="dd-arrow">▾</span>
+                            </div>
+                            <div class="multi-dropdown-panel">
+                                <label class="dd-select-all"><input type="checkbox" checked onchange="toggleAllCheckboxes('wmMissionMonthFilter', this.checked)"> Select All</label>
+                                <label><input type="checkbox" checked value="Jan" onchange="onFilterCheckChange('wmMissionMonthFilter')"> Jan</label>
+                                <label><input type="checkbox" checked value="Feb" onchange="onFilterCheckChange('wmMissionMonthFilter')"> Feb</label>
+                                <label><input type="checkbox" checked value="Mar" onchange="onFilterCheckChange('wmMissionMonthFilter')"> Mar</label>
+                            </div>
+                        </div>
+                        <div class="multi-dropdown" id="wmMissionSegmentFilter">
+                            <div class="multi-dropdown-trigger" onclick="toggleDropdown('wmMissionSegmentFilter')">
+                                Segment <span class="dd-badge" id="wmMissionSegmentFilter-badge">All</span> <span class="dd-arrow">▾</span>
+                            </div>
+                            <div class="multi-dropdown-panel">
+                                <label class="dd-select-all"><input type="checkbox" checked onchange="toggleAllCheckboxes('wmMissionSegmentFilter', this.checked)"> Select All</label>
+                                <label><input type="checkbox" checked value="M1 TOFU (NO AL)" onchange="onFilterCheckChange('wmMissionSegmentFilter')"> TOFU (No AL)</label>
+                                <label><input type="checkbox" checked value="M2 MOFU (AL+NO BUY)" onchange="onFilterCheckChange('wmMissionSegmentFilter')"> MOFU (AL+No Buy)</label>
+                                <label><input type="checkbox" checked value="M3 BOFU (AL+BUY)" onchange="onFilterCheckChange('wmMissionSegmentFilter')"> BOFU (AL+Buy)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper" style="max-height: 500px; overflow-y: auto;">
                         <table>
-                            <thead>
+                            <thead style="position: sticky; top: 0; background-color: var(--surface); z-index: 1;">
                                 <tr>
                                     <th>Segment</th>
                                     <th>Month</th>
-                                    <th class="number">C1</th>
-                                    <th class="number">C2</th>
-                                    <th class="number">C3</th>
+                                    <th class="number"><span class="term" data-tip="Buy any amount (€0.05)">C1</span></th>
+                                    <th class="number"><span class="term" data-tip="Buy $100+ (€12.50)">C2</span></th>
+                                    <th class="number"><span class="term" data-tip="Buy $300+ (€50.00)">C3</span></th>
                                     <th class="number">€ Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="whitemarket-weekly-trend-body">
+                            <tbody id="wm-campaign-breakdown-body">
                                 <tr><td>M1 TOFU (NO AL)</td><td>Jan</td><td class="number">69</td><td class="number">5</td><td class="number">0</td><td class="number">€66</td></tr>
                                 <tr><td>M1 TOFU (NO AL)</td><td>Feb</td><td class="number">63</td><td class="number">12</td><td class="number">0</td><td class="number">€153</td></tr>
                                 <tr><td>M1 TOFU (NO AL)</td><td>Mar</td><td class="number">83</td><td class="number">6</td><td class="number">0</td><td class="number">€79</td></tr>
@@ -2535,7 +2598,7 @@
                                 <tr><td>M3 BOFU (AL+BUY)</td><td>Feb</td><td class="number">212</td><td class="number">32</td><td class="number">5</td><td class="number highlight">€661</td></tr>
                                 <tr><td>M3 BOFU (AL+BUY)</td><td>Mar</td><td class="number">385</td><td class="number">30</td><td class="number">3</td><td class="number highlight">€544</td></tr>
                             </tbody>
-                            <tfoot id="whitemarket-weekly-trend-foot">
+                            <tfoot id="wm-campaign-breakdown-foot">
                                 <tr style="font-weight: bold; border-top: 2px solid var(--border);">
                                     <td colspan="2">TOTAL</td>
                                     <td class="number">1,522</td>
@@ -2550,15 +2613,51 @@
 
                 <div class="section" id="wm-missions-c">
                     <h2 class="section-title">C. Funnel Stage Performance</h2>
-                    <div class="chart-container">
-                        <canvas id="whiteMarketFunnelChart"></canvas>
+                    <div class="grid-2">
+                        <div>
+                            <div class="table-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Funnel Stage</th>
+                                            <th class="number">Jan '26</th>
+                                            <th class="number">Feb '26</th>
+                                            <th class="number">Mar '26</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>TOFU (No AL)</td><td class="number">€66</td><td class="number">€153</td><td class="number">€79</td></tr>
+                                        <tr><td>MOFU (AL+No Buy)</td><td class="number">€106</td><td class="number">€141</td><td class="number">€42</td></tr>
+                                        <tr><td>BOFU (AL+Buy)</td><td class="number">€659</td><td class="number">€661</td><td class="number">€544</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="chart-container">
+                                <canvas id="whiteMarketFunnelChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="section" id="wm-missions-d">
                     <h2 class="section-title">D. Key Insights</h2>
                     <div class="insight-card">
-                        <p>BOFU (AL+BUY) dominates with 79% of trade value. C2 ($100+ trades) is the biggest value driver at €1,725. C3 ($300+) is rare (13 total) but high-value at €50 each. TOFU+MOFU primarily generate AL volume for downstream conversion.</p>
+                        <h3>1. BOFU Dominates Value Generation</h3>
+                        <p>BOFU (AL+BUY) generates 79% of total trade value (€1,864 of €2,451). These are users who already linked accounts and traded before — re-engaging them is the most efficient conversion path.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>2. C2 is the Primary Value Driver</h3>
+                        <p>C2 ($100+ trades) accounts for €1,725 of total value despite only 138 completions (€12.50 each). C3 ($300+) is rare (13 total) but at €50 each contributes €650. Increasing C2 volume is the highest-leverage play.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>3. TOFU+MOFU Serve as AL Feeders</h3>
+                        <p>TOFU and MOFU segments primarily generate AL volume for downstream conversion. Combined €587 value vs BOFU's €1,864 — their role is pipeline building, not direct monetisation.</p>
+                    </div>
+                    <div class="insight-card">
+                        <h3>4. March Shows Volume Growth but Value Decline</h3>
+                        <p>Mar C1 volume (565) exceeds Jan (619) and Feb (338) averages, but Mar € value (€665) dropped vs Feb (€955). Fewer high-value C2/C3 conversions in March drove this gap — suggesting campaign targeting may need refinement.</p>
                     </div>
                 </div>
 
@@ -2626,7 +2725,7 @@
             
             <div id="whitemarket-tab-experiments" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Per-partner experiment tracking — A/B tests, reward variants, and mission optimisation results.</p>
                 </div>
@@ -2691,14 +2790,14 @@
             </div>
             <div id="whitemarket-tab-audience" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Audience segmentation — user demographics, engagement tiers, and targeting insights.</p>
                 </div>
             </div>
             <div id="whitemarket-tab-funnel" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
                 </div>
@@ -2708,60 +2807,336 @@
         <div id="paysafe-container" style="display: none;">
             <div class="org-id-bar">Organiser ID: <code>TBD — onboarding May 2026</code></div>
             <div class="tabs">
-                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'paysafe', 'nsm')">📊 NSM Analysis</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'cdp')">🔗 CDP Data</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'missions')">🎯 Missions</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'experiments')">🧪 Experiments</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'rewards')">🎁 Rewards</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'audience')">👥 Audience</button>
-                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'funnel')">🔄 Funnel</button>
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'paysafe', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'cdp')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> CDP Data</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'missions')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'experiments')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'rewards')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'paysafe', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
             </div>
 
             <div id="paysafe-tab-nsm" class="tab-content active">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">PaySafe onboarding in May 2026. NSM tracking will begin once missions are live.</p>
                 </div>
             </div>
             <div id="paysafe-tab-cdp" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">PaySafe onboarding in May 2026. NSM tracking will begin once missions are live.</p>
                 </div>
             </div>
             <div id="paysafe-tab-missions" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">PaySafe onboarding in May 2026. NSM tracking will begin once missions are live.</p>
                 </div>
             </div>
             <div id="paysafe-tab-experiments" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Per-partner experiment tracking — A/B tests, reward variants, and mission optimisation results.</p>
                 </div>
             </div>
             <div id="paysafe-tab-rewards" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
                 </div>
             </div>
             <div id="paysafe-tab-audience" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Audience segmentation — user demographics, engagement tiers, and targeting insights.</p>
                 </div>
             </div>
             <div id="paysafe-tab-funnel" class="tab-content">
                 <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚧</div>
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGITECH G CONTAINER -->
+        <div id="logitechg-container" style="display: none;">
+            <div class="org-id-bar">Organiser ID: <code onclick="navigator.clipboard.writeText(this.textContent)" title="Click to copy">5d5644c7-ca99-4129-8334-33b11fda2f64</code></div>
+
+            <div class="tabs">
+                <button type="button" class="tab-btn active" onclick="switchPartnerTab(event, 'logitechg', 'nsm')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> NSM Analysis</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'cdp')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> CDP Data</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'missions')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Missions</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'takeovers')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg> Brand Takeovers</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'experiments')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M9 3h6v5.172a2 2 0 0 1-.586 1.414l-2 2"/><path d="M14.5 12.5L18 19a2 2 0 0 1-1.72 3H7.72A2 2 0 0 1 6 19l3.5-6.5"/><line x1="9" y1="3" x2="15" y2="3"/></svg> Experiments</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'rewards')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Rewards</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'audience')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Audience</button>
+                <button type="button" class="tab-btn" onclick="switchPartnerTab(event, 'logitechg', 'funnel')"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Funnel</button>
+            </div>
+
+            <div id="logitechg-tab-nsm" class="tab-content active">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Brand Impressions Only</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">No account linkage or conversion tracking. NSM analysis requires CDP integration.</p>
+                </div>
+            </div>
+            <div id="logitechg-tab-cdp" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Brand Impressions Only</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">No CDP integration for Logitech G — brand takeover campaigns only.</p>
+                </div>
+            </div>
+            <div id="logitechg-tab-missions" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Brand Impressions Only</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">No missions configured for Logitech G — brand takeover campaigns only.</p>
+                </div>
+            </div>
+
+            <div id="logitechg-tab-takeovers" class="tab-content">
+                <div style="background: #fef9ee; border-left: 4px solid #f59e0b; padding: 12px 16px; margin-bottom: 24px; border-radius: 0 4px 4px 0; color: #b45309; font-weight: 500;">
+                    Brand impressions only — no account linkage or CDP integration. € NSM value not applicable.
+                </div>
+
+                <div class="kpi-hero-wrapper">
+                    <div class="kpi-card">
+                        <div class="kpi-label">Total Brand Impressions</div>
+                        <div class="kpi-value">12,865,302</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Total Unique Players</div>
+                        <div class="kpi-value">807,083</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Total Page Interactions</div>
+                        <div class="kpi-value">16,522,114</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">Avg Brand Imp/UU</div>
+                        <div class="kpi-value">16</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem;">US Region</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th class="number">Uniq Players</th>
+                                    <th class="number">Brand Impressions</th>
+                                    <th class="number">Imp/UU</th>
+                                    <th class="number">Page Interactions</th>
+                                    <th class="number">Drops Pool</th>
+                                    <th class="number">Drops Completed</th>
+                                    <th class="number">Claim Rate</th>
+                                    <th class="number">RV Completion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Feb 20–27</td>
+                                    <td class="number">27,971</td>
+                                    <td class="number">798,818</td>
+                                    <td class="number">29</td>
+                                    <td class="number">719,999</td>
+                                    <td class="number">55,053</td>
+                                    <td class="number">25,861</td>
+                                    <td class="number">46.97%</td>
+                                    <td class="number">95%</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb 27–Mar 6</td>
+                                    <td class="number">26,132</td>
+                                    <td class="number">738,813</td>
+                                    <td class="number">28</td>
+                                    <td class="number">608,976</td>
+                                    <td class="number">55,053</td>
+                                    <td class="number">19,636</td>
+                                    <td class="number">35.67%</td>
+                                    <td class="number">94%</td>
+                                </tr>
+                                <tr>
+                                    <td>Mar 6–13</td>
+                                    <td class="number">26,157</td>
+                                    <td class="number">741,876</td>
+                                    <td class="number">28</td>
+                                    <td class="number">628,003</td>
+                                    <td class="number">55,053</td>
+                                    <td class="number">19,252</td>
+                                    <td class="number">34.97%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Mar 13–20</td>
+                                    <td class="number">26,386</td>
+                                    <td class="number">712,131</td>
+                                    <td class="number">27</td>
+                                    <td class="number">649,164</td>
+                                    <td class="number">55,053</td>
+                                    <td class="number">20,669</td>
+                                    <td class="number">37.54%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr style="font-weight: 700; border-top: 2px solid var(--border);">
+                                    <td>Total</td>
+                                    <td class="number">106,646</td>
+                                    <td class="number">2,991,638</td>
+                                    <td class="number">28</td>
+                                    <td class="number">2,606,142</td>
+                                    <td class="number">—</td>
+                                    <td class="number">85,418</td>
+                                    <td class="number">38.5%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem;">EU Region</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th class="number">Uniq Players</th>
+                                    <th class="number">Brand Impressions</th>
+                                    <th class="number">Imp/UU</th>
+                                    <th class="number">Page Interactions</th>
+                                    <th class="number">Drops Pool</th>
+                                    <th class="number">Drops Completed</th>
+                                    <th class="number">Claim Rate</th>
+                                    <th class="number">RV Completion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Feb 20–27</td>
+                                    <td class="number">188,628</td>
+                                    <td class="number">2,731,477</td>
+                                    <td class="number">14</td>
+                                    <td class="number">4,015,230</td>
+                                    <td class="number">96,173</td>
+                                    <td class="number">88,980</td>
+                                    <td class="number">92.52%</td>
+                                    <td class="number">96%</td>
+                                </tr>
+                                <tr style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.02);">
+                                    <td colspan="9" style="padding-left: 2rem;">↳ UK 15,413 | Germany 28,405 | France 21,114 | Poland 123,616</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb 27–Mar 6</td>
+                                    <td class="number">169,332</td>
+                                    <td class="number">2,345,733</td>
+                                    <td class="number">14</td>
+                                    <td class="number">3,018,341</td>
+                                    <td class="number">96,173</td>
+                                    <td class="number">77,465</td>
+                                    <td class="number">80.55%</td>
+                                    <td class="number">95%</td>
+                                </tr>
+                                <tr style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.02);">
+                                    <td colspan="9" style="padding-left: 2rem;">↳ UK 13,977 | Germany 25,015 | France 19,148 | Poland 110,024</td>
+                                </tr>
+                                <tr>
+                                    <td>Mar 6–13</td>
+                                    <td class="number">173,889</td>
+                                    <td class="number">2,645,731</td>
+                                    <td class="number">15</td>
+                                    <td class="number">3,218,330</td>
+                                    <td class="number">96,173</td>
+                                    <td class="number">93,924</td>
+                                    <td class="number">97.66%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.02);">
+                                    <td colspan="9" style="padding-left: 2rem;">↳ UK 14,362 | Germany 30,822 | France 17,057 | Poland 99,630</td>
+                                </tr>
+                                <tr>
+                                    <td>Mar 13–20</td>
+                                    <td class="number">169,589</td>
+                                    <td class="number">2,145,723</td>
+                                    <td class="number">13</td>
+                                    <td class="number">3,664,071</td>
+                                    <td class="number">96,173</td>
+                                    <td class="number">83,253</td>
+                                    <td class="number">86.57%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                                <tr style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.02);">
+                                    <td colspan="9" style="padding-left: 2rem;">↳ UK 14,870 | Germany 33,299 | France 17,410 | Poland 104,010</td>
+                                </tr>
+                                <tr style="font-weight: 700; border-top: 2px solid var(--border);">
+                                    <td>Total</td>
+                                    <td class="number">701,438</td>
+                                    <td class="number">9,868,664</td>
+                                    <td class="number">14</td>
+                                    <td class="number">13,915,972</td>
+                                    <td class="number">—</td>
+                                    <td class="number">343,622</td>
+                                    <td class="number">89.3%</td>
+                                    <td class="number">—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section" style="margin-top: 24px;">
+                    <details style="font-size: 0.85rem; color: var(--text-muted);">
+                        <summary style="cursor: pointer;">Event IDs Reference</summary>
+                        <ul style="margin-top: 8px; list-style-type: none; padding-left: 0;">
+                            <li>Feb 20–27 US: <code>693837eb9e910d37589b937b</code></li>
+                            <li>Feb 20–27 EU: <code>6985b00416c4af632f7fbb82</code></li>
+                            <li>Feb 27–Mar 6 US: <code>699d7453225f98169218ae92</code></li>
+                            <li>Feb 27–Mar 6 EU: <code>699d75a17ea7310f7248baf7</code></li>
+                            <li>Mar 6–13 US: <code>699d74fa7ea7310f7248b302</code></li>
+                            <li>Mar 6–13 EU: <code>699d75e7260bcc6088b02c30</code></li>
+                            <li>Mar 13–20 US: <code>699d7539260bcc6088b02394</code></li>
+                            <li>Mar 13–20 EU: <code>699d7629260bcc6088b02efc</code></li>
+                        </ul>
+                    </details>
+                </div>
+            </div>
+
+            <div id="logitechg-tab-experiments" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Per-partner experiment tracking — A/B tests, reward variants, and mission optimisation results.</p>
+                </div>
+            </div>
+            <div id="logitechg-tab-rewards" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Reward distribution analysis — FACEIT Points allocation, claim rates, and cost per conversion.</p>
+                </div>
+            </div>
+            <div id="logitechg-tab-audience" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
+                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
+                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Audience segmentation — user demographics, engagement tiers, and targeting insights.</p>
+                </div>
+            </div>
+            <div id="logitechg-tab-funnel" class="tab-content">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
+                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
                     <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
                     <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
                 </div>
@@ -2806,52 +3181,52 @@
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Hero KPI</td>
                                 <td style="padding: 0.5rem 0.75rem;">NSM (Total Value YTD → eventually Total Advertiser Value)</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #f59e0b;">⚠ Needs hierarchy fix</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Needs hierarchy fix</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Secondary KPIs</td>
                                 <td style="padding: 0.5rem 0.75rem;">Unique EBU + €/1K EBU</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">✓ Implemented</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">Implemented</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Funnel View</td>
                                 <td style="padding: 0.5rem 0.75rem;">TOFU → MOFU → BOFU with user counts + CDP segment names</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">✗ Not built</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">Not built</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Monthly Summary</td>
                                 <td style="padding: 0.5rem 0.75rem;">Monthly breakdown table + chart</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">✓ Implemented</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">Implemented</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Weekly Trends</td>
                                 <td style="padding: 0.5rem 0.75rem;">Weekly value + EBU charts</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">✓ Implemented</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">Implemented</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Experiments</td>
                                 <td style="padding: 0.5rem 0.75rem;">Per-partner experiment tracking + results</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">✗ Not built</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">Not built</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Audience</td>
                                 <td style="padding: 0.5rem 0.75rem;">1P data audience profiles per funnel stage</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">✗ Not built</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">Not built</span></td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Missions</td>
                                 <td style="padding: 0.5rem 0.75rem;">Mission-level data by campaign</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">✓ Implemented</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #22c55e;">Implemented</span></td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Reward Distribution</td>
                                 <td style="padding: 0.5rem 0.75rem;">Rewards claimed/expired per partner + type breakdown (section in Missions tab)</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">✗ Not built</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">Not built</span></td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.5rem 0.75rem; font-weight: 600;">Mission Lifecycle</td>
                                 <td style="padding: 0.5rem 0.75rem;">Completion curve by campaign week + engagement half-life + weekly €/1K active EBU</td>
-                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">✗ Not built</span></td>
+                                <td style="padding: 0.5rem 0.75rem;"><span style="color: #ef4444;">Not built</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -2970,27 +3345,27 @@
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem; font-weight: 600;">Phase 1</td>
                                 <td style="padding: 0.5rem;">Manual refresh → BQ queries + build script → GitHub Pages</td>
-                                <td style="padding: 0.5rem;"><span style="color: #22c55e;">✓ Done</span></td>
+                                <td style="padding: 0.5rem;"><span style="color: #22c55e;">Done</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem; font-weight: 600;">Phase 2</td>
                                 <td style="padding: 0.5rem;">Replace VERIFIED_MONTHLY with live CDP/advertiser-verified data from BQ</td>
-                                <td style="padding: 0.5rem;"><span style="color: #f59e0b;">⚠ Blocked — need CDP tables in BQ</span></td>
+                                <td style="padding: 0.5rem;"><span style="color: #f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Blocked — need CDP tables in BQ</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem; font-weight: 600;">Phase 3</td>
                                 <td style="padding: 0.5rem;">Add cost data → compute true Total Advertiser Value (NSM = Value − Costs)</td>
-                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">✗ Blocked — finance data access</span></td>
+                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">Blocked — finance data access</span></td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border);">
                                 <td style="padding: 0.5rem; font-weight: 600;">Phase 4</td>
                                 <td style="padding: 0.5rem;">Active player base data (30d activity) for TOFU funnel sizing</td>
-                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">✗ Need BQ table</span></td>
+                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">Need BQ table</span></td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.5rem; font-weight: 600;">Phase 5</td>
                                 <td style="padding: 0.5rem;">Audience enrichment — 1P, CDP cross-partner, Steam API integration</td>
-                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">✗ Future</span></td>
+                                <td style="padding: 0.5rem;"><span style="color: #ef4444;">Future</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -3200,20 +3575,27 @@
         };
 
         // CDP AL overlay — Account Linkage events from BQ event table (not mission completions).
-        // KZ has no AL mission challenge, but users still link accounts via CDP.
-        // Source: faceit-events-prod-2.user.account_linkage_operation_v1 (2026-03-22)
-        // Campaign IDs: KZ NO AL USERS — Jan 694186bd, Feb 697c82c2, Mar 69a1893c
-        // Weekly counts = sum of all 3 campaigns per calendar week (campaigns overlap at boundaries)
-        const CDP_AL_OVERLAY = {
-            winline_kz: {
-                weekly: {
-                    '2026-01-05': 206, '2026-01-12': 228, '2026-01-19': 211, '2026-01-26': 139,
-                    '2026-02-02': 364, '2026-02-09': 201, '2026-02-16': 227, '2026-02-23': 217,
-                    '2026-03-02': 361, '2026-03-09': 316, '2026-03-16': 151
-                },
-                monthly: { jan: 784, feb: 1009, mar: 828, total: 2621 }
-            }
-        };
+        // Built dynamically from BQ_DATA.accountLinkages (Q7 output).
+        // Covers ALL partners, including geos without AL mission challenges (e.g. KZ).
+        function buildAlOverlay() {
+            const rows = (BQ_DATA && BQ_DATA.accountLinkages) || [];
+            const overlay = {};
+            rows.forEach((row) => {
+                const pk = (row.partner || '').toLowerCase();
+                if (!pk) return;
+                if (!overlay[pk]) overlay[pk] = { weekly: {}, monthly: { jan: 0, feb: 0, mar: 0, total: 0 } };
+                const count = parseInt(row.al_count, 10) || 0;
+                const weekKey = (row.week_start || '').slice(0, 10);
+                if (weekKey) overlay[pk].weekly[weekKey] = (overlay[pk].weekly[weekKey] || 0) + count;
+                const monthKey = MONTH_ALIAS[row.month];
+                if (monthKey) overlay[pk].monthly[monthKey] += count;
+            });
+            Object.values(overlay).forEach((p) => {
+                p.monthly.total = p.monthly.jan + p.monthly.feb + p.monthly.mar;
+            });
+            return overlay;
+        }
+        const CDP_AL_OVERLAY = buildAlOverlay();
 
         // Tradeit NSM values by region — derived from BQ mission completions proportionally
         // distributed to match VERIFIED_MONTHLY totals. Source: tradeit_missions_by_region_2026.csv
@@ -3302,7 +3684,6 @@
             }
 
             if (partnerKey === 'winline' || partnerKey === 'winline_by' || partnerKey === 'winline_kz') {
-                if (c.includes('подключите свой аккаунт winline')) return 'al';
                 if (c.includes('пройдите идентификацию')) return 'kyc';
                 if (c.includes('внесите депозит на сумму 5000')) return 'dep2';
                 if (c.includes('внесите депозит на сумму 3000') || c.includes('внесите депозит от 500') || c.includes('внесите депозит')) return 'ftd';
@@ -3374,14 +3755,105 @@
             };
 
             if (!BQ_DATA) {
-                if (refreshDateEl) refreshDateEl.textContent = placeholder;
-                setKpiPlaceholder();
-                setTablePlaceholder();
+                // Fallback: compute from static missionsData when pipeline is offline
+                if (refreshDateEl) refreshDateEl.textContent = 'Static data (pipeline offline)';
+
+                const monthMap = { Jan: 'jan', Feb: 'feb', Mar: 'mar' };
+                const fallbackCounts = {
+                    jan: { al: 0, c1: 0, c2: 0 },
+                    feb: { al: 0, c1: 0, c2: 0 },
+                    mar: { al: 0, c1: 0, c2: 0 }
+                };
+                const fallbackRegionValues = {};
+
+                missionsData.forEach((row) => {
+                    const alias = monthMap[row.month];
+                    if (!alias) return;
+                    fallbackCounts[alias].al += row.al || 0;
+                    fallbackCounts[alias].c1 += row.c1 || 0;
+                    fallbackCounts[alias].c2 += row.c2 || 0;
+
+                    if (!fallbackRegionValues[row.region]) fallbackRegionValues[row.region] = { jan: 0, feb: 0, mar: 0 };
+                    fallbackRegionValues[row.region][alias] += row.value || 0;
+                });
+
+                const alTotal = fallbackCounts.jan.al + fallbackCounts.feb.al + fallbackCounts.mar.al;
+                const c1Total = fallbackCounts.jan.c1 + fallbackCounts.feb.c1 + fallbackCounts.mar.c1;
+                const c2Total = fallbackCounts.jan.c2 + fallbackCounts.feb.c2 + fallbackCounts.mar.c2;
+                const totalConv = alTotal + c1Total + c2Total;
+                const totalValue = (VERIFIED_MONTHLY.tradeit.jan || 0) + (VERIFIED_MONTHLY.tradeit.feb || 0) + (VERIFIED_MONTHLY.tradeit.mar || 0);
+
+                if (kpiEls.alCount) kpiEls.alCount.textContent = formatInt(alTotal);
+                if (kpiEls.alSub) kpiEls.alSub.textContent = `Jan: ${formatInt(fallbackCounts.jan.al)} | Feb: ${formatInt(fallbackCounts.feb.al)} | Mar: ${formatInt(fallbackCounts.mar.al)}`;
+                if (kpiEls.c1Count) kpiEls.c1Count.textContent = formatInt(c1Total);
+                if (kpiEls.c1Sub) kpiEls.c1Sub.textContent = `Jan: ${formatInt(fallbackCounts.jan.c1)} | Feb: ${formatInt(fallbackCounts.feb.c1)} | Mar: ${formatInt(fallbackCounts.mar.c1)}`;
+                if (kpiEls.c2Count) kpiEls.c2Count.textContent = formatInt(c2Total);
+                if (kpiEls.c2Sub) kpiEls.c2Sub.textContent = `Jan: ${formatInt(fallbackCounts.jan.c2)} | Feb: ${formatInt(fallbackCounts.feb.c2)} | Mar: ${formatInt(fallbackCounts.mar.c2)}`;
+                if (kpiEls.totalCount) kpiEls.totalCount.textContent = formatInt(totalConv);
+                if (kpiEls.totalSub) kpiEls.totalSub.textContent = `Jan: ${formatInt(fallbackCounts.jan.al + fallbackCounts.jan.c1 + fallbackCounts.jan.c2)} | Feb: ${formatInt(fallbackCounts.feb.al + fallbackCounts.feb.c1 + fallbackCounts.feb.c2)} | Mar: ${formatInt(fallbackCounts.mar.al + fallbackCounts.mar.c1 + fallbackCounts.mar.c2)}`;
+                if (kpiEls.totalValue) kpiEls.totalValue.textContent = formatEuro(totalValue);
+                if (kpiEls.totalValueSub) kpiEls.totalValueSub.textContent = `Jan: ${formatEuro(VERIFIED_MONTHLY.tradeit.jan)} | Feb: ${formatEuro(VERIFIED_MONTHLY.tradeit.feb)} | Mar: ${formatEuro(VERIFIED_MONTHLY.tradeit.mar)}`;
+
+                // Populate regional breakdown table from missionsData
+                const segmentLabel = { General: 'General', 'AL&amp;NoTrade': 'AL&NoTrade', 'AL&amp;Trade': 'AL&Trade' };
+                const monthOrder = ['Jan', 'Feb', 'Mar'];
+                const sortedMissions = [...missionsData].sort((a, b) => {
+                    const mCmp = monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
+                    if (mCmp !== 0) return mCmp;
+                    return a.region.localeCompare(b.region);
+                });
+
+                if (regionalBody) {
+                    let html = '';
+                    let currentMonth = null;
+                    sortedMissions.forEach((row) => {
+                        const monthStart = currentMonth !== row.month;
+                        currentMonth = row.month;
+                        const monthTop = monthStart ? ' style="border-top: 2px solid var(--accent);"' : '';
+                        const alCell = row.al > 0 ? formatInt(row.al) : '—';
+                        const c1Cell = row.c1 > 0 ? formatInt(row.c1) : '—';
+                        const c2Cell = row.c2 > 0 ? formatInt(row.c2) : '—';
+                        html += `<tr>` +
+                            `<td${monthTop}>${row.month}</td>` +
+                            `<td${monthTop}>${row.region}</td>` +
+                            `<td${monthTop}>${row.segment}</td>` +
+                            `<td class="number"${monthTop}>—</td>` +
+                            `<td class="number"${monthTop}>${alCell}</td>` +
+                            `<td class="number"${monthTop}>${c1Cell}</td>` +
+                            `<td class="number"${monthTop}>${c2Cell}</td>` +
+                            `<td class="number"${monthTop}>${formatEuro(row.value)}</td>` +
+                            `</tr>`;
+                    });
+                    regionalBody.innerHTML = html;
+                }
+
+                // Populate regional summary table
+                const regionOrder = ['EU', 'CIS EXC', 'CIS', 'LATAM', 'NA', 'MENA', 'APAC'];
+                if (regionalSummaryBody) {
+                    let html = '';
+                    regionOrder.forEach((region) => {
+                        const data = fallbackRegionValues[region];
+                        if (!data) return;
+                        const jan = data.jan || 0;
+                        const feb = data.feb || 0;
+                        const mar = data.mar || 0;
+                        if (jan === 0 && feb === 0 && mar === 0) return;
+                        html += `<tr>` +
+                            `<td>${region}</td>` +
+                            `<td class="number">${jan > 0 ? formatEuro(jan) : '—'}</td>` +
+                            `<td class="number">${feb > 0 ? formatEuro(feb) : '—'}</td>` +
+                            `<td class="number${mar > 0 ? ' highlight' : ''}">${mar > 0 ? formatEuro(mar) : '—'}</td>` +
+                            `</tr>`;
+                    });
+                    regionalSummaryBody.innerHTML = html;
+                }
+
+                // Set chart data for regional summary
                 tradeitMissionsRegionalChartData = {
-                    labels: ['No data'],
-                    jan: [0],
-                    feb: [0],
-                    mar: [0]
+                    labels: regionOrder.filter((r) => fallbackRegionValues[r]),
+                    jan: regionOrder.filter((r) => fallbackRegionValues[r]).map((r) => fallbackRegionValues[r]?.jan || null),
+                    feb: regionOrder.filter((r) => fallbackRegionValues[r]).map((r) => fallbackRegionValues[r]?.feb || null),
+                    mar: regionOrder.filter((r) => fallbackRegionValues[r]).map((r) => fallbackRegionValues[r]?.mar || null)
                 };
                 return;
             }
@@ -3859,11 +4331,6 @@
                 dash[key].weeklyEbu[idx] = toInt(row.weekly_ebu);
             });
 
-            const monthlyAlCounts = {
-                tradeit: { '2026-01': 0, '2026-02': 0, '2026-03': 0 },
-                whitemarket: { '2026-01': 0, '2026-02': 0, '2026-03': 0 }
-            };
-
             (BQ_DATA.missionCompletions || []).forEach((row) => {
                 const partnerKey = normalize(row.partner);
                 if (!dash[partnerKey] || !MONTH_ALIAS[row.month]) return;
@@ -3892,48 +4359,6 @@
                 dash[partnerKey].weeklyByConversion[conv].counts[idx] += count;
                 dash[partnerKey].weeklyByConversion[conv].values[idx] += count * rate;
             });
-
-            (BQ_DATA.rewardClaims || []).forEach((row) => {
-                if (normalize(row.reward_status) !== 'completed') return;
-                if (!MONTH_ALIAS[row.month]) return;
-                const campaign = normalize(row.campaign_technical_name);
-                const count = toInt(row.cnt);
-                const m = MONTH_ALIAS[row.month];
-                const monthKey = row.month;
-
-                if (normalize(row.partner) === 'tradeit' && campaign.includes('general mission')) {
-                    const value = count * CONVERSION_RATES.tradeit.al;
-                    dash.tradeit.monthlyByConversion.al[m] += value;
-                    dash.tradeit.monthlyByConversion.al.total += value;
-                    dash.tradeit.monthlyByConversion.al.counts[m] += count;
-                    monthlyAlCounts.tradeit[monthKey] += count;
-                }
-
-                if (normalize(row.partner) === 'whitemarket' && campaign.includes('general')) {
-                    const value = count * CONVERSION_RATES.whitemarket.al;
-                    dash.whitemarket.monthlyByConversion.al[m] += value;
-                    dash.whitemarket.monthlyByConversion.al.total += value;
-                    dash.whitemarket.monthlyByConversion.al.counts[m] += count;
-                    monthlyAlCounts.whitemarket[monthKey] += count;
-                }
-            });
-
-            distributeMonthlyALtoWeeks(
-                dash,
-                'tradeit',
-                monthlyAlCounts.tradeit,
-                (challenge) => {
-                    const c = normalize(challenge);
-                    return c.includes('play 1 game on faceit') || c.includes('сыграй 1 матч');
-                }
-            );
-
-            distributeMonthlyALtoWeeks(
-                dash,
-                'whitemarket',
-                monthlyAlCounts.whitemarket,
-                (challenge) => normalize(challenge).includes('зіграй 1 матч')
-            );
 
             ['tradeit', 'winline', 'winline_by', 'winline_kz', 'whitemarket'].forEach((partnerKey) => {
                 const partner = dash[partnerKey];
@@ -4028,8 +4453,8 @@
                 });
             });
 
-            // CDP AL overlay — add account linkage events from CDP for geos without AL mission challenges.
-            // Applied AFTER verified overrides so mission-based data stays untouched.
+            // CDP AL overlay — single source of truth for Account Linkage counts across ALL partners.
+            // Applied AFTER verified overrides. Adds AL counts + € values to monthlyByConversion and weeklyByConversion.
             Object.entries(CDP_AL_OVERLAY).forEach(([pk, overlay]) => {
                 const partner = dash[pk];
                 if (!partner) return;
@@ -4434,7 +4859,21 @@
         // Core Functions
         let currentPartner = '';
 
-        function switchPartner(partner) {
+        
+    // Sidebar logic
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('collapsed');
+        localStorage.setItem('nsm-sidebar-collapsed', sidebar.classList.contains('collapsed'));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('nsm-sidebar-collapsed') === 'true') {
+            document.getElementById('sidebar').classList.add('collapsed');
+        }
+    });
+
+    function switchPartner(partner) {
             if (currentPartner === partner) return;
             currentPartner = partner;
             
@@ -4455,6 +4894,7 @@
                 winline: { src: 'https://winline.ru/favicon.ico', alt: 'Winline logo', show: true },
                 whitemarket: { src: 'https://white.market/favicon.ico', alt: 'WhiteMarket logo', show: true },
                 paysafe: { src: '', alt: '', show: false },
+                logitechg: { src: 'assets/logitechg-logo.png', alt: 'Logitech G logo', show: true },
                 roadmap: { src: '', alt: '', show: false }
             };
             const l = logos[partner];
@@ -4470,6 +4910,7 @@
                 document.getElementById('winline-container').style.display = 'none';
                 document.getElementById('whitemarket-container').style.display = 'none';
                 document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'none';
                 document.getElementById('roadmap-container').style.display = 'none';
                 
                 destroyCharts('tradeit');
@@ -4484,6 +4925,7 @@
                 document.getElementById('winline-container').style.display = 'none';
                 document.getElementById('whitemarket-container').style.display = 'none';
                 document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'none';
                 document.getElementById('roadmap-container').style.display = 'none';
                 
                 destroyCharts('combined');
@@ -4498,6 +4940,7 @@
                 document.getElementById('winline-container').style.display = 'block';
                 document.getElementById('whitemarket-container').style.display = 'none';
                 document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'none';
                 document.getElementById('roadmap-container').style.display = 'none';
                 
                 destroyCharts('combined');
@@ -4513,6 +4956,7 @@
                 document.getElementById('winline-container').style.display = 'none';
                 document.getElementById('whitemarket-container').style.display = 'block';
                 document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'none';
                 document.getElementById('roadmap-container').style.display = 'none';
                 
                 destroyCharts('combined');
@@ -4527,6 +4971,22 @@
                 document.getElementById('winline-container').style.display = 'none';
                 document.getElementById('whitemarket-container').style.display = 'none';
                 document.getElementById('paysafe-container').style.display = 'block';
+                document.getElementById('logitechg-container').style.display = 'none';
+                document.getElementById('roadmap-container').style.display = 'none';
+                
+                destroyCharts('combined');
+                destroyCharts('tradeit');
+                destroyCharts('winline');
+                destroyCharts('whitemarket');
+            } else if (partner === 'logitechg') {
+                h1.textContent = 'Logitech G';
+                h2.textContent = 'Brand Takeovers | Feb–Mar 2026';
+                document.getElementById('combined-container').style.display = 'none';
+                document.getElementById('tradeit-container').style.display = 'none';
+                document.getElementById('winline-container').style.display = 'none';
+                document.getElementById('whitemarket-container').style.display = 'none';
+                document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'block';
                 document.getElementById('roadmap-container').style.display = 'none';
                 
                 destroyCharts('combined');
@@ -4542,6 +5002,7 @@
                 document.getElementById('winline-container').style.display = 'none';
                 document.getElementById('whitemarket-container').style.display = 'none';
                 document.getElementById('paysafe-container').style.display = 'none';
+                document.getElementById('logitechg-container').style.display = 'none';
                 document.getElementById('roadmap-container').style.display = 'block';
                 
                 destroyCharts('combined');
@@ -5002,6 +5463,33 @@
                         plugins: {
                             legend: { display: false },
                             tooltip: { callbacks: { label: c => '€' + c.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0}) } }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
+                            y: { grid: { color: gridColor }, ticks: { color: '#1a1a2e', callback: v => '€' + v.toLocaleString() }, beginAtZero: true }
+                        }
+                    }
+                });
+            }
+
+            // Missions Funnel Stage Chart (TOFU / MOFU / BOFU)
+            const ctxTdFunnel = document.getElementById('tradeitMissionsFunnelChart');
+            if (ctxTdFunnel) {
+                charts.tradeit.missionsFunnel = new Chart(ctxTdFunnel.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['TOFU', 'MOFU', 'BOFU'],
+                        datasets: [
+                            { label: 'Jan', data: [5796, 424, 6038], backgroundColor: '#e2e4e9', borderColor: '#6b7280', borderWidth: 1, borderRadius: 4 },
+                            { label: 'Feb', data: [7320, 340, 5783], backgroundColor: 'rgba(37, 99, 235, 0.4)', borderRadius: 4 },
+                            { label: 'Mar', data: [66112, 350, 2258], backgroundColor: '#2563eb', borderRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top', labels: { color: '#1a1a2e' } },
+                            tooltip: { callbacks: { label: c => ` ${c.dataset.label}: €${c.parsed.y.toLocaleString()}` } }
                         },
                         scales: {
                             x: { grid: { display: false }, ticks: { color: '#1a1a2e' } },
@@ -5673,7 +6161,7 @@
             if (!panel) return;
             panel.querySelectorAll('label:not(.dd-select-all) input[type="checkbox"]').forEach((cb) => { cb.checked = checked; });
             updateDropdownBadge(containerId);
-            populateTradeitMissions();
+            dispatchFilterUpdate(containerId);
         }
 
         function onFilterCheckChange(containerId) {
@@ -5684,7 +6172,111 @@
             const selectAllCb = panel.querySelector('.dd-select-all input[type="checkbox"]');
             if (selectAllCb) selectAllCb.checked = allChecked;
             updateDropdownBadge(containerId);
-            populateTradeitMissions();
+            dispatchFilterUpdate(containerId);
+        }
+
+        function dispatchFilterUpdate(containerId) {
+            if (containerId.startsWith('wm')) { filterWmCampaignBreakdown(); }
+            else if (containerId.startsWith('wl')) { filterWlMissionBreakdown(); }
+            else { populateTradeitMissions(); }
+        }
+
+        const wmCampaignData = [
+            {segment:'M1 TOFU (NO AL)', month:'Jan', c1:69, c2:5, c3:0, value:66},
+            {segment:'M1 TOFU (NO AL)', month:'Feb', c1:63, c2:12, c3:0, value:153},
+            {segment:'M1 TOFU (NO AL)', month:'Mar', c1:83, c2:6, c3:0, value:79},
+            {segment:'M2 MOFU (AL+NO BUY)', month:'Jan', c1:115, c2:8, c3:0, value:106},
+            {segment:'M2 MOFU (AL+NO BUY)', month:'Feb', c1:63, c2:11, c3:0, value:141},
+            {segment:'M2 MOFU (AL+NO BUY)', month:'Mar', c1:97, c2:3, c3:0, value:42},
+            {segment:'M3 BOFU (AL+BUY)', month:'Jan', c1:435, c2:31, c3:5, value:659},
+            {segment:'M3 BOFU (AL+BUY)', month:'Feb', c1:212, c2:32, c3:5, value:661},
+            {segment:'M3 BOFU (AL+BUY)', month:'Mar', c1:385, c2:30, c3:3, value:544}
+        ];
+
+        function getSelectedValues(containerId) {
+            const panel = document.querySelector(`#${containerId} .multi-dropdown-panel`);
+            if (!panel) return new Set();
+            const items = panel.querySelectorAll('label:not(.dd-select-all) input[type="checkbox"]');
+            const selected = new Set();
+            items.forEach((cb) => { if (cb.checked) selected.add(cb.value); });
+            return selected;
+        }
+
+        function filterWmCampaignBreakdown() {
+            const fMonth = getSelectedValues('wmMissionMonthFilter');
+            const fSegment = getSelectedValues('wmMissionSegmentFilter');
+            const body = document.getElementById('wm-campaign-breakdown-body');
+            const foot = document.getElementById('wm-campaign-breakdown-foot');
+            if (!body) return;
+
+            const filtered = wmCampaignData.filter((r) => {
+                if (fMonth.size > 0 && !fMonth.has(r.month)) return false;
+                if (fSegment.size > 0 && !fSegment.has(r.segment)) return false;
+                return true;
+            });
+
+            let html = '';
+            let totC1 = 0, totC2 = 0, totC3 = 0, totVal = 0;
+            let currentMonth = null;
+            filtered.forEach((r) => {
+                const monthStart = currentMonth !== r.month;
+                currentMonth = r.month;
+                const border = monthStart && filtered.indexOf(r) > 0 ? ' style="border-top: 2px solid var(--accent);"' : '';
+                const highlight = r.segment.includes('BOFU') ? ' highlight' : '';
+                html += `<tr><td${border}>${r.segment}</td><td${border}>${r.month}</td><td class="number"${border}>${r.c1.toLocaleString()}</td><td class="number"${border}>${r.c2.toLocaleString()}</td><td class="number"${border}>${r.c3}</td><td class="number${highlight}"${border}>€${r.value.toLocaleString()}</td></tr>`;
+                totC1 += r.c1; totC2 += r.c2; totC3 += r.c3; totVal += r.value;
+            });
+            body.innerHTML = html || '<tr><td colspan="6" style="color: var(--text-muted);">No data matches selected filters</td></tr>';
+            if (foot) {
+                foot.innerHTML = `<tr style="font-weight: bold; border-top: 2px solid var(--border);"><td colspan="2">TOTAL</td><td class="number">${totC1.toLocaleString()}</td><td class="number">${totC2.toLocaleString()}</td><td class="number">${totC3}</td><td class="number">€${totVal.toLocaleString()}</td></tr>`;
+            }
+        }
+
+        const wlMissionData = [
+            {month:'Jan', mission:'Agnostic 1 (General)', funnel:'TOFU', al:1854, kyc:0, ftd:0, dep2:0, bet:0, value:8028},
+            {month:'Jan', mission:'Agnostic 2 (Mystery Box)', funnel:'TOFU', al:2955, kyc:0, ftd:0, dep2:0, bet:0, value:12795},
+            {month:'Jan', mission:'Mission 3 (No KYC)', funnel:'MOFU', al:0, kyc:322, ftd:72, dep2:0, bet:0, value:11508},
+            {month:'Jan', mission:'Mission 4 (No FTD)', funnel:'MOFU', al:0, kyc:0, ftd:169, dep2:0, bet:0, value:20466},
+            {month:'Jan', mission:'Mission 5 (FTD)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:8119, bet:6040, value:61308},
+            {month:'Jan', mission:'Mission 6 (Whale)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:3321, bet:2295, value:24317},
+            {month:'Feb', mission:'Agnostic 1 (Main Group)', funnel:'TOFU', al:4621, kyc:0, ftd:0, dep2:0, bet:0, value:20009},
+            {month:'Feb', mission:'Agnostic 2 (Test Group)', funnel:'TOFU', al:24, kyc:0, ftd:0, dep2:0, bet:0, value:104},
+            {month:'Feb', mission:'Mission 3 (No KYC Main)', funnel:'MOFU', al:0, kyc:315, ftd:58, dep2:0, bet:19, value:9834},
+            {month:'Feb', mission:'Mission 4 (No KYC Test)', funnel:'MOFU', al:0, kyc:29, ftd:9, dep2:0, bet:6, value:1367},
+            {month:'Feb', mission:'Mission 5 (No FTD Main)', funnel:'MOFU', al:0, kyc:0, ftd:189, dep2:0, bet:63, value:23161},
+            {month:'Feb', mission:'Mission 6 (No FTD Test)', funnel:'MOFU', al:0, kyc:0, ftd:24, dep2:0, bet:4, value:2924},
+            {month:'Feb', mission:'Mission 7 (FTD Main)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:9250, bet:7071, value:70670},
+            {month:'Feb', mission:'Mission 8 (FTD Test)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:69, bet:35, value:450},
+            {month:'Feb', mission:'Mission 9 (Whale)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:4075, bet:2849, value:29981},
+            {month:'Mar', mission:'Agnostic 1 (General)', funnel:'TOFU', al:5890, kyc:0, ftd:0, dep2:0, bet:0, value:25504},
+            {month:'Mar', mission:'Mission 2 (No KYC)', funnel:'MOFU', al:0, kyc:384, ftd:82, dep2:0, bet:27, value:13372},
+            {month:'Mar', mission:'Mission 3 (No FTD)', funnel:'MOFU', al:0, kyc:0, ftd:203, dep2:0, bet:79, value:24925},
+            {month:'Mar', mission:'Mission 4 (FTD)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:10195, bet:7944, value:78542},
+            {month:'Mar', mission:'Mission 5 (Whale)', funnel:'BOFU', al:0, kyc:0, ftd:0, dep2:4733, bet:3292, value:34748}
+        ];
+
+        function filterWlMissionBreakdown() {
+            const fMonth = getSelectedValues('wlMissionMonthFilter');
+            const fFunnel = getSelectedValues('wlMissionFunnelFilter');
+            const body = document.getElementById('wl-mission-breakdown-body');
+            if (!body) return;
+
+            const filtered = wlMissionData.filter((r) => {
+                if (fMonth.size > 0 && !fMonth.has(r.month)) return false;
+                if (fFunnel.size > 0 && !fFunnel.has(r.funnel)) return false;
+                return true;
+            });
+
+            const fmt = (v) => v > 0 ? v.toLocaleString() : '—';
+            let html = '';
+            let currentMonth = null;
+            filtered.forEach((r, i) => {
+                const monthStart = currentMonth !== r.month;
+                currentMonth = r.month;
+                const border = monthStart && i > 0 ? ' style="border-top: 2px solid var(--accent);"' : '';
+                html += `<tr><td${border}>${r.month}</td><td${border}>${r.mission}</td><td${border}>${r.funnel}</td><td class="number"${border}>${fmt(r.al)}</td><td class="number"${border}>${fmt(r.kyc)}</td><td class="number"${border}>${fmt(r.ftd)}</td><td class="number"${border}>${fmt(r.dep2)}</td><td class="number"${border}>${fmt(r.bet)}</td><td class="number highlight"${border}>€${r.value.toLocaleString()}</td></tr>`;
+            });
+            body.innerHTML = html || '<tr><td colspan="9" style="color: var(--text-muted);">No data matches selected filters</td></tr>';
         }
 
         function updateDropdownBadge(containerId) {
