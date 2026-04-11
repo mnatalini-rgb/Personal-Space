@@ -328,6 +328,31 @@
         .multi-dropdown-panel input[type="checkbox"] {
             accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer;
         }
+
+        /* Horizontal Flowing Funnel */
+        .funnel-container { width: 100%; margin: 0 auto 1.5rem; }
+        .funnel-stages { display: flex; gap: 0.75rem; position: relative; z-index: 2; }
+        .funnel-stage-card {
+            flex: 1; background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 1rem 0.75rem; text-align: center;
+            cursor: pointer; transition: all 0.25s ease; box-shadow: var(--shadow);
+        }
+        .funnel-stage-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+        .funnel-stage-card.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 16px rgba(37,99,235,0.25); }
+        .funnel-stage-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-muted); }
+        .funnel-stage-card.active .funnel-stage-label { color: rgba(255,255,255,0.85); }
+        .funnel-stage-value { font-size: 1.6rem; font-weight: 700; }
+        .funnel-stage-explore { font-size: 0.72rem; font-weight: 600; margin-top: 0.5rem; opacity: 0; max-height: 0; overflow: hidden; transition: opacity 0.2s ease, max-height 0.2s ease; }
+        .funnel-stage-card.active .funnel-stage-explore { opacity: 1; max-height: 2rem; color: rgba(255,255,255,0.9); }
+        .funnel-flow { width: 100%; position: relative; z-index: 1; }
+        .funnel-flow svg { width: 100%; height: 80px; margin-top: -6px; display: block; }
+        .funnel-percentages { position: relative; z-index: 3; margin-top: -50px; margin-bottom: 20px; height: 24px; pointer-events: none; }
+        .funnel-percentage { position: absolute; transform: translateX(-50%); text-align: center; font-size: 0.78rem; font-weight: 700; color: var(--accent); background: var(--surface); padding: 0.15rem 0.5rem; border-radius: 12px; border: 1px solid rgba(37,99,235,0.15); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .enrichment-section { display: none; animation: fadeIn 0.3s ease; }
+        .enrichment-section.active { display: block; }
+        .enrichment-placeholder { text-align: center; padding: 3.5rem 2rem; background: var(--surface); border: 1.5px dashed var(--border); border-radius: var(--radius-md); margin-top: 1rem; }
+        .enrichment-placeholder h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 0.4rem; }
+        .enrichment-placeholder p { color: var(--text-muted); font-size: 0.88rem; max-width: 380px; margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -590,12 +615,332 @@
             </div>
 
             <div id="combined-tab-funnel" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Portfolio-level funnel — aggregate conversion rates across all partners.</p>
+                <div style="padding: 1.5rem 0;">
+                    <h2 class="section-title">Portfolio Conversion Funnel</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">YTD Jan–Mar 2026 · Deduplicated unique users across Winline, Tradeit &amp; WhiteMarket (excl. Kazakhstan)</p>
+
+                    <div class="funnel-container">
+    <div class="funnel-stages">
+        <div id="card-combined-ebu" class="funnel-stage-card" onclick="selectFunnelStage('combined', 'ebu')">
+            <div class="funnel-stage-label">EBU</div>
+            <div class="funnel-stage-value">2,602,164</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-combined-al" class="funnel-stage-card" onclick="selectFunnelStage('combined', 'al')">
+            <div class="funnel-stage-label">AL</div>
+            <div class="funnel-stage-value">41,211</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-combined-c2" class="funnel-stage-card active" onclick="selectFunnelStage('combined', 'c2')">
+            <div class="funnel-stage-label">C2</div>
+            <div class="funnel-stage-value">20,989</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+    </div>
+    <div class="funnel-flow">
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="flow-gradient-comb" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#93c5fd" stop-opacity="0.8"/>
+                </linearGradient>
+            </defs>
+            <path d="M 166 0 C 333 0, 333 20, 500 20 C 666 20, 666 40, 833 40 L 833 100 C 666 100, 666 80, 500 80 C 333 80, 333 100, 166 100 Z" fill="url(#flow-gradient-comb)"/>
+        </svg>
+        <div class="funnel-percentages">
+            <div class="funnel-percentage" style="left: 33.33%;">1.6%</div>
+            <div class="funnel-percentage" style="left: 66.66%;">50.9%</div>
+        </div>
+    </div>
+</div>
+
+                    <div style="max-width: 700px; margin: 1.5rem auto 0; background: rgba(37, 99, 235, 0.06); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: var(--radius-sm); padding: 1rem 1.25rem;">
+                        <p style="font-size: 0.85rem; color: var(--text);"><strong>Methodology:</strong> Users are deduplicated across all three partners. A user active in both Winline and Tradeit missions is counted once at each stage. C2 is defined per partner: 2nd Deposit / Bet (Winline), Trade $250+ (Tradeit), Buy $100+ (WhiteMarket). KZ campaigns excluded.</p>
+                    </div>
+
+                    <div style="max-width: 700px; margin: 1.25rem auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; text-align: center;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 0.25rem;">Winline</div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text);">685,181</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">26.3% of EBU</div>
+                        </div>
+                        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; text-align: center;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 0.25rem;">Tradeit</div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text);">1,809,569</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">69.5% of EBU</div>
+                        </div>
+                        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; text-align: center;">
+                            <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 0.25rem;">WhiteMarket</div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text);">116,533</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">4.5% of EBU</div>
+                        </div>
+                    </div>
+
+                                        <h2 id="enrichment-title-combined" class="section-title" style="margin-top: 2.5rem;">Stage Enrichment — C2 User Profile</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">First-party data enrichment of 20,989 deduplicated C2 users across all partners</p>
+
+        <div id="enrichment-combined-ebu" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for EBU users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-combined-al" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for AL users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-combined-c2" class="enrichment-section active" style="display: block;">
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Active (Last 30d)</div>
+                            <div class="kpi-value" style="color: var(--green);">17,861</div>
+                            <div class="kpi-sub">85.1% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Subscribers</div>
+                            <div class="kpi-value" style="color: var(--accent);">4,663</div>
+                            <div class="kpi-sub">22.2% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Multi-Partner AL</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">240</div>
+                            <div class="kpi-sub">1.1% cross-partner overlap</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Non-Subscribers</div>
+                            <div class="kpi-value" style="color: var(--yellow);">16,326</div>
+                            <div class="kpi-sub">77.8% — upsell opportunity</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Account Age</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Veteran (3yr+)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">12,758</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">60.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 60.8%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (1–3yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">4,565</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">21.7%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 21.7%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">New (&lt;1yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,666</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">17.5%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 17.5%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Points Balance</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg FACEIT Points</div>
+                            <div class="kpi-value" style="color: var(--accent);">6,434</div>
+                            <div class="kpi-sub">Range: 0 – 348,093</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">FP Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">0 FP</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,581</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1.2%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 1.2%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1 – 999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">30,623</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">22.5%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 22.5%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1,000 – 4,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">68,236</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">50.1%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 50.1%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">5,000 – 9,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">22,908</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">16.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 16.8%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">10,000 – 24,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">10,589</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #8b5cf6; height: 8px; border-radius: 4px; width: 7.8%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">25,000 – 49,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,727</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 1.3%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">50,000+</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">451</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 0.3%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">Skill Level</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Avg Skill Level</div>
+                            <div class="kpi-value" style="color: var(--green);">7.3</div>
+                            <div class="kpi-sub">Scale 1–10 (max across games)</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Skill Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">High (7–10)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">21,021</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">64.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 64.0%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (4–6)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">8,533</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">26.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 26.0%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Low (1–3)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,277</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">10.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 10.0%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Shop Activity</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Lifetime Buyers</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">32,606</div>
+                            <div class="kpi-sub">99.3% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg Orders (Lifetime)</div>
+                            <div class="kpi-value" style="color: var(--accent);">18.1</div>
+                            <div class="kpi-sub">Avg 14,643 FP spent</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Recent Buyers (90d)</div>
+                            <div class="kpi-value" style="color: var(--green);">31,120</div>
+                            <div class="kpi-sub">94.7% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Avg Orders (90d)</div>
+                            <div class="kpi-value" style="color: var(--yellow);">5.4</div>
+                            <div class="kpi-sub">Avg 2,430 FP spent</div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin: 1.5rem 0 0.75rem; text-align: center;">Top 5 Purchased Items <span style="font-weight: 400; font-size: 0.85rem;">(excl. nickname changes)</span></h4>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">#</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Item</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Category</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Orders</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Avg FP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">1</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Super Match Token (Packs)</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,753</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,460</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">2</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">TradeIt Balance Card 5 USD</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">code</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">5,092</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,600</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">3</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Tagged B</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,626</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">4</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Smoke</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,525</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">5</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Rose Mist</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,942</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- TRADEIT CONTAINER -->
@@ -1592,15 +1937,315 @@
                 </div>
             </div>
             <div id="tradeit-tab-funnel" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
-                </div>
+                <div style="padding: 1.5rem 0;">
+                    <h2 class="section-title">Tradeit Conversion Funnel</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">YTD Jan–Mar 2026 · Unique users at each conversion stage</p>
+
+                    <div class="funnel-container">
+    <div class="funnel-stages">
+        <div id="card-tradeit-ebu" class="funnel-stage-card" onclick="selectFunnelStage('tradeit', 'ebu')">
+            <div class="funnel-stage-label">EBU</div>
+            <div class="funnel-stage-value">1,809,569</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-tradeit-al" class="funnel-stage-card" onclick="selectFunnelStage('tradeit', 'al')">
+            <div class="funnel-stage-label">AL</div>
+            <div class="funnel-stage-value">28,226</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-tradeit-c2" class="funnel-stage-card active" onclick="selectFunnelStage('tradeit', 'c2')">
+            <div class="funnel-stage-label">C2</div>
+            <div class="funnel-stage-value">11,133</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+    </div>
+    <div class="funnel-flow">
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="flow-gradient-trade" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#93c5fd" stop-opacity="0.8"/>
+                </linearGradient>
+            </defs>
+            <path d="M 166 0 C 333 0, 333 20, 500 20 C 666 20, 666 40, 833 40 L 833 100 C 666 100, 666 80, 500 80 C 333 80, 333 100, 166 100 Z" fill="url(#flow-gradient-trade)"/>
+        </svg>
+        <div class="funnel-percentages">
+            <div class="funnel-percentage" style="left: 33.33%;">1.6%</div>
+            <div class="funnel-percentage" style="left: 66.66%;">39.5%</div>
+        </div>
+    </div>
+</div>
+
+                    <div style="max-width: 700px; margin: 1.5rem auto 0; background: rgba(37, 99, 235, 0.06); border: 1px solid rgba(37, 99, 235, 0.15); border-radius: var(--radius-sm); padding: 1rem 1.25rem;">
+                        <p style="font-size: 0.85rem; color: var(--text);"><strong>Note:</strong> C1 (First Trade) is not tracked as a mission step. The funnel jumps from AL directly to C2 (Trade $250+). C1 conversion happens organically outside of the mission flow.</p>
+                    </div>
+
+                                        <h2 id="enrichment-title-tradeit" class="section-title" style="margin-top: 2.5rem;">Stage Enrichment — C2 User Profile</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">First-party data enrichment of 9,653 Tradeit C2 users</p>
+
+        <div id="enrichment-tradeit-ebu" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for EBU users</p>
             </div>
         </div>
 
-        
+        <div id="enrichment-tradeit-al" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for AL users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-tradeit-c2" class="enrichment-section active" style="display: block;">
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Active (Last 30d)</div>
+                            <div class="kpi-value" style="color: var(--green);">8,153</div>
+                            <div class="kpi-sub">84.5% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Subscribers</div>
+                            <div class="kpi-value" style="color: var(--accent);">2,504</div>
+                            <div class="kpi-sub">25.9% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Multi-Partner AL</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">240</div>
+                            <div class="kpi-sub">2.5% cross-partner overlap</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Non-Subscribers</div>
+                            <div class="kpi-value" style="color: var(--yellow);">7,149</div>
+                            <div class="kpi-sub">74.1% — upsell opportunity</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Account Age</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Veteran (3yr+)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">5,147</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">53.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 53.3%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (1–3yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,037</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">21.1%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 21.1%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">New (&lt;1yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,469</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">25.6%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 25.6%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Points Balance</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg FACEIT Points</div>
+                            <div class="kpi-value" style="color: var(--accent);">4,376</div>
+                            <div class="kpi-sub">Range: 0 – 218,459</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">FP Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">0 FP</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,358</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1.4%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 1.4%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1 – 999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">27,188</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">28.9%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 28.9%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1,000 – 4,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">48,627</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">51.7%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 51.7%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">5,000 – 9,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">11,040</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">11.7%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 11.7%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">10,000 – 24,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">4,718</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">5.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #8b5cf6; height: 8px; border-radius: 4px; width: 5.0%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">25,000 – 49,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">855</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.9%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 0.9%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">50,000+</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">234</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.2%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 0.2%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">Skill Level</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Avg Skill Level</div>
+                            <div class="kpi-value" style="color: var(--green);">6.8</div>
+                            <div class="kpi-sub">Scale 1–10 (max across games)</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Skill Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">High (7–10)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">8,900</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">56.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 56.3%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (4–6)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">4,871</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">30.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 30.8%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Low (1–3)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,024</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">12.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 12.8%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Shop Activity</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Lifetime Buyers</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">15,768</div>
+                            <div class="kpi-sub">99.8% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg Orders (Lifetime)</div>
+                            <div class="kpi-value" style="color: var(--accent);">10.8</div>
+                            <div class="kpi-sub">Avg 11,063 FP spent</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Recent Buyers (90d)</div>
+                            <div class="kpi-value" style="color: var(--green);">15,347</div>
+                            <div class="kpi-sub">97.1% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Avg Orders (90d)</div>
+                            <div class="kpi-value" style="color: var(--yellow);">3.9</div>
+                            <div class="kpi-sub">Avg 2,635 FP spent</div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin: 1.5rem 0 0.75rem; text-align: center;">Top 5 Purchased Items <span style="font-weight: 400; font-size: 0.85rem;">(excl. nickname changes)</span></h4>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">#</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Item</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Category</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Orders</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Avg FP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">1</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">TradeIt Balance Card 5 USD</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">code</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,913</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,600</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">2</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Super Match Token (Packs)</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,527</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,348</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">3</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Tagged B</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,985</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">4</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Smoke</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,410</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">5</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">TradeIt Balance Card 10 USD</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">code</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,194</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">15,200</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
 
             <!-- WINLINE CONTAINER -->
         <div id="winline-container" style="display: none;">
@@ -2355,12 +3000,350 @@
                 </div>
             </div>
             <div id="winline-tab-funnel" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
+                <div style="padding: 1.5rem 0;">
+                    <h2 class="section-title">Winline Conversion Funnel</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">YTD Jan–Mar 2026 · Unique users at each conversion stage (excl. Kazakhstan)</p>
+
+                    <!-- Vertical Stepped Funnel -->
+                    <div class="funnel-container">
+    <div class="funnel-stages">
+        <div id="card-winline-ebu" class="funnel-stage-card" onclick="selectFunnelStage('winline', 'ebu')">
+            <div class="funnel-stage-label">EBU</div>
+            <div class="funnel-stage-value">685,181</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-winline-al" class="funnel-stage-card" onclick="selectFunnelStage('winline', 'al')">
+            <div class="funnel-stage-label">AL</div>
+            <div class="funnel-stage-value">15,308</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-winline-kyc" class="funnel-stage-card" onclick="selectFunnelStage('winline', 'kyc')">
+            <div class="funnel-stage-label">KYC</div>
+            <div class="funnel-stage-value">1,021</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-winline-ftd" class="funnel-stage-card" onclick="selectFunnelStage('winline', 'ftd')">
+            <div class="funnel-stage-label">FTD</div>
+            <div class="funnel-stage-value">561</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-winline-bet" class="funnel-stage-card active" onclick="selectFunnelStage('winline', 'bet')">
+            <div class="funnel-stage-label">BET</div>
+            <div class="funnel-stage-value">10,499</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+    </div>
+    <div class="funnel-flow">
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="flow-gradient-win" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#93c5fd" stop-opacity="0.8"/>
+                </linearGradient>
+            </defs>
+            <path d="M 100 0 C 200 0, 200 12, 300 12 C 400 12, 400 25, 500 25 C 600 25, 600 38, 700 38 C 800 38, 800 50, 900 50 L 900 100 C 800 100, 800 88, 700 88 C 600 88, 600 75, 500 75 C 400 75, 400 62, 300 62 C 200 62, 200 100, 100 100 Z" fill="url(#flow-gradient-win)"/>
+        </svg>
+        <div class="funnel-percentages">
+            <div class="funnel-percentage" style="left: 20%;">2.2%</div>
+            <div class="funnel-percentage" style="left: 40%;">6.7%</div>
+            <div class="funnel-percentage" style="left: 60%;">54.9%</div>
+            <div class="funnel-percentage" style="left: 80%;">N/A</div>
+        </div>
+    </div>
+</div>
+
+                    <!-- Caveats -->
+                    <div style="max-width: 700px; margin: 1.5rem auto 0; background: rgba(217, 119, 6, 0.06); border: 1px solid rgba(217, 119, 6, 0.2); border-radius: var(--radius-sm); padding: 1rem 1.25rem;">
+                        <p style="font-size: 0.85rem; color: var(--text); margin-bottom: 0.5rem;"><strong style="color: var(--yellow);">⚠ Note on Bet > FTD:</strong> Bet users (10,499) exceed FTD users (561) because each mission segment targets users at different funnel stages. FTD and WHALE missions target users who <em>already deposited</em>, so their Bet completions are not downstream of the NO FTD segment's FTD completions. These are parallel cohorts, not a strict sequential flow.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Step conversion rates are calculated stage-to-stage. Bet step conversion is not shown due to the cohort overlap described above.</p>
+                    </div>
+
+                    <!-- KZ Callout -->
+                    <div style="max-width: 700px; margin: 1.25rem auto 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem 1.25rem;">
+                        <p style="font-size: 0.85rem; color: var(--text);"><strong>🇰🇿 Kazakhstan (separate):</strong> KZ campaigns are excluded from the main funnel above. KZ operates with dedicated AL and KYC+ missions under separate organiser IDs.</p>
+                    </div>
+
+                                        <h2 id="enrichment-title-winline" class="section-title" style="margin-top: 2.5rem;">Stage Enrichment — C2 User Profile</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">First-party data enrichment of 11,032 Winline C2 users</p>
+
+        <div id="enrichment-winline-ebu" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for EBU users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-winline-al" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for AL users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-winline-kyc" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for KYC users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-winline-ftd" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for FTD users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-winline-bet" class="enrichment-section active" style="display: block;">
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Active (Last 30d)</div>
+                            <div class="kpi-value" style="color: var(--green);">9,455</div>
+                            <div class="kpi-sub">85.7% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Subscribers</div>
+                            <div class="kpi-value" style="color: var(--accent);">1,970</div>
+                            <div class="kpi-sub">17.9% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Multi-Partner AL</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">240</div>
+                            <div class="kpi-sub">2.2% cross-partner overlap</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Non-Subscribers</div>
+                            <div class="kpi-value" style="color: var(--yellow);">9,062</div>
+                            <div class="kpi-sub">82.1% — upsell opportunity</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Account Age</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Veteran (3yr+)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,495</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">67.9%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 67.9%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (1–3yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,430</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">22.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 22.0%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">New (&lt;1yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,107</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">10.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 10.0%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Points Balance</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg FACEIT Points</div>
+                            <div class="kpi-value" style="color: var(--accent);">8,556</div>
+                            <div class="kpi-sub">Range: 0 – 348,093</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">FP Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">0 FP</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">193</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.5%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 0.5%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1 – 999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,800</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 7.0%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1,000 – 4,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">18,835</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">47.1%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 47.1%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">5,000 – 9,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">11,521</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">28.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 28.8%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">10,000 – 24,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">5,623</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">14.1%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #8b5cf6; height: 8px; border-radius: 4px; width: 14.1%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">25,000 – 49,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">800</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 2.0%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">50,000+</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">204</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.5%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 0.5%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">Skill Level</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Avg Skill Level</div>
+                            <div class="kpi-value" style="color: var(--green);">7.8</div>
+                            <div class="kpi-sub">Scale 1–10 (max across games)</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Skill Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">High (7–10)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">11,930</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">72.7%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 72.7%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (4–6)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3,350</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">20.4%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 20.4%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Low (1–3)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,131</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">6.9%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 6.9%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Shop Activity</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Lifetime Buyers</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">16,267</div>
+                            <div class="kpi-sub">99.0% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg Orders (Lifetime)</div>
+                            <div class="kpi-value" style="color: var(--accent);">26.3</div>
+                            <div class="kpi-sub">Avg 18,276 FP spent</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Recent Buyers (90d)</div>
+                            <div class="kpi-value" style="color: var(--green);">15,585</div>
+                            <div class="kpi-sub">94.9% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Avg Orders (90d)</div>
+                            <div class="kpi-value" style="color: var(--yellow);">7.1</div>
+                            <div class="kpi-sub">Avg 2,324 FP spent</div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin: 1.5rem 0 0.75rem; text-align: center;">Top 5 Purchased Items <span style="font-weight: 400; font-size: 0.85rem;">(excl. nickname changes)</span></h4>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">#</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Item</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Category</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Orders</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Avg FP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">1</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Super Match Token (Packs)</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">4,133</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,529</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">2</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Tagged B</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,569</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">3</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">TradeIt Balance Card 5 USD</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">code</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,179</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,600</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">4</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Smoke</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1,063</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">5</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Rose Mist</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">970</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- WHITEMARKET CONTAINER -->
@@ -2827,10 +3810,328 @@
                 </div>
             </div>
             <div id="whitemarket-tab-funnel" class="tab-content">
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; padding: 3rem; text-align: center;">
-                    <div style="margin-bottom: 1rem;"><svg width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9CA3AF" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M5 20V9l7-5 7 5v11"/><rect x="9" y="13" width="6" height="7"/><path d="M3 20l2-2m14 2l2-2"/></svg></div>
-                    <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem;">Coming Soon</h3>
-                    <p style="color: var(--text-muted); font-size: 1rem; max-width: 400px;">Conversion funnel visualisation — from mission activation through to final conversion.</p>
+                <div style="padding: 1.5rem 0;">
+                    <h2 class="section-title">WhiteMarket Conversion Funnel</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">YTD Jan–Mar 2026 · Unique users at each conversion stage</p>
+
+                    <div class="funnel-container">
+    <div class="funnel-stages">
+        <div id="card-whitemarket-ebu" class="funnel-stage-card" onclick="selectFunnelStage('whitemarket', 'ebu')">
+            <div class="funnel-stage-label">EBU</div>
+            <div class="funnel-stage-value">116,533</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-whitemarket-al" class="funnel-stage-card" onclick="selectFunnelStage('whitemarket', 'al')">
+            <div class="funnel-stage-label">AL</div>
+            <div class="funnel-stage-value">649</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-whitemarket-c2" class="funnel-stage-card active" onclick="selectFunnelStage('whitemarket', 'c2')">
+            <div class="funnel-stage-label">C2</div>
+            <div class="funnel-stage-value">189</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+        <div id="card-whitemarket-c3" class="funnel-stage-card" onclick="selectFunnelStage('whitemarket', 'c3')">
+            <div class="funnel-stage-label">C3</div>
+            <div class="funnel-stage-value">651</div>
+            <div class="funnel-stage-explore">Explore ▸</div>
+        </div>
+    </div>
+    <div class="funnel-flow">
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="flow-gradient-white" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#93c5fd" stop-opacity="0.8"/>
+                </linearGradient>
+            </defs>
+            <path d="M 125 0 C 250 0, 250 15, 375 15 C 500 15, 500 30, 625 30 C 750 30, 750 45, 875 45 L 875 100 C 750 100, 750 85, 625 85 C 500 85, 500 70, 375 70 C 250 70, 250 100, 125 100 Z" fill="url(#flow-gradient-white)"/>
+        </svg>
+        <div class="funnel-percentages">
+            <div class="funnel-percentage" style="left: 25%;">0.56%</div>
+            <div class="funnel-percentage" style="left: 50%;">29.1%</div>
+            <div class="funnel-percentage" style="left: 75%;">N/A</div>
+        </div>
+    </div>
+</div>
+
+                    <div style="max-width: 700px; margin: 1.5rem auto 0; background: rgba(217, 119, 6, 0.06); border: 1px solid rgba(217, 119, 6, 0.2); border-radius: var(--radius-sm); padding: 1rem 1.25rem;">
+                        <p style="font-size: 0.85rem; color: var(--text);"><strong style="color: var(--yellow);">⚠ Note on C3 > C2:</strong> C3 users (651) exceed C2 users (189) because WhiteMarket runs three parallel mission types with different entry points. Mission 1 (NO AL) starts users pre-linkage, Mission 2 (AL + NO BUY) targets linked non-buyers, and Mission 3 (AL + BUY) targets existing buyers. C3 completions come primarily from Mission 3 users who already had purchases, bypassing the C2 step in other missions.</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">Step conversion for C3 is not shown due to the cohort overlap described above.</p>
+                    </div>
+
+                                        <h2 id="enrichment-title-whitemarket" class="section-title" style="margin-top: 2.5rem;">Stage Enrichment — C2 User Profile</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">First-party data enrichment of 544 WhiteMarket C2 users</p>
+
+        <div id="enrichment-whitemarket-ebu" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for EBU users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-whitemarket-al" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for AL users</p>
+            </div>
+        </div>
+
+        <div id="enrichment-whitemarket-c2" class="enrichment-section active" style="display: block;">
+<div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Active (Last 30d)</div>
+                            <div class="kpi-value" style="color: var(--green);">472</div>
+                            <div class="kpi-sub">86.8% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Subscribers</div>
+                            <div class="kpi-value" style="color: var(--accent);">247</div>
+                            <div class="kpi-sub">45.4% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Multi-Partner AL</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">0</div>
+                            <div class="kpi-sub">0% cross-partner overlap</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Non-Subscribers</div>
+                            <div class="kpi-value" style="color: var(--yellow);">297</div>
+                            <div class="kpi-sub">54.6% — upsell opportunity</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Account Age</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Veteran (3yr+)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">294</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">54.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 54.0%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (1–3yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">135</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">24.8%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 24.8%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">New (&lt;1yr)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">115</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">21.1%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 21.1%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Points Balance</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg FACEIT Points</div>
+                            <div class="kpi-value" style="color: var(--accent);">5,011</div>
+                            <div class="kpi-sub">Range: 0 – 82,221</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">FP Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">0 FP</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">30</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">1.4%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 1.4%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1 – 999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">635</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">30.0%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 30.0%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">1,000 – 4,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">774</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">36.5%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--accent); height: 8px; border-radius: 4px; width: 36.5%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">5,000 – 9,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">347</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">16.4%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #6366f1; height: 8px; border-radius: 4px; width: 16.4%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">10,000 – 24,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">248</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">11.7%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #8b5cf6; height: 8px; border-radius: 4px; width: 11.7%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">25,000 – 49,999</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">72</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">3.4%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: #a855f7; height: 8px; border-radius: 4px; width: 3.4%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">50,000+</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">13</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">0.6%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 0.6%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">Skill Level</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 260px; margin: 1rem auto;">
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Avg Skill Level</div>
+                            <div class="kpi-value" style="color: var(--green);">6.6</div>
+                            <div class="kpi-sub">Scale 1–10 (max across games)</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Skill Tier</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Users</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">% of C2</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Distribution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">High (7–10)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">560</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">51.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--green); height: 8px; border-radius: 4px; width: 51.3%;"></div></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Mid (4–6)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">384</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">35.2%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--yellow); height: 8px; border-radius: 4px; width: 35.2%;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Low (1–3)</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">145</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">13.3%</td>
+                                    <td style="padding: 0.6rem 0.75rem;"><div style="background: var(--red); height: 8px; border-radius: 4px; width: 13.3%;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title" style="margin-top: 2rem; font-size: 1.1rem;">FACEIT Shop Activity</h3>
+
+                    <div class="kpi-grid" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="kpi-card" style="border-color: #8b5cf6;">
+                            <div class="kpi-title" style="color: #8b5cf6;">Lifetime Buyers</div>
+                            <div class="kpi-value" style="color: #8b5cf6;">1,035</div>
+                            <div class="kpi-sub">94.8% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--accent);">
+                            <div class="kpi-title" style="color: var(--accent);">Avg Orders (Lifetime)</div>
+                            <div class="kpi-value" style="color: var(--accent);">10.7</div>
+                            <div class="kpi-sub">Avg 18,741 FP spent</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--green);">
+                            <div class="kpi-title" style="color: var(--green);">Recent Buyers (90d)</div>
+                            <div class="kpi-value" style="color: var(--green);">652</div>
+                            <div class="kpi-sub">59.7% of C2 users</div>
+                        </div>
+                        <div class="kpi-card" style="border-color: var(--yellow);">
+                            <div class="kpi-title" style="color: var(--yellow);">Avg Orders (90d)</div>
+                            <div class="kpi-value" style="color: var(--yellow);">3.9</div>
+                            <div class="kpi-sub">Avg 2,947 FP spent</div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin: 1.5rem 0 0.75rem; text-align: center;">Top 5 Purchased Items <span style="font-weight: 400; font-size: 0.85rem;">(excl. nickname changes)</span></h4>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border);">
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">#</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Item</th>
+                                    <th style="text-align: left; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Category</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Orders</th>
+                                    <th style="text-align: right; padding: 0.6rem 0.75rem; color: var(--text-muted); font-weight: 600;">Avg FP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">1</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Super Match Token (Packs)</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">93</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,710</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">2</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Tagged B</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">72</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">3</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Smoke</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">52</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border);">
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">4</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Subzero Case</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">game_items</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">50</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">7,750</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">5</td>
+                                    <td style="padding: 0.6rem 0.75rem; font-weight: 600;">Storm</td>
+                                    <td style="padding: 0.6rem 0.75rem; color: var(--text-muted);">profile</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">33</td>
+                                    <td style="text-align: right; padding: 0.6rem 0.75rem;">2,850</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+        <div id="enrichment-whitemarket-c3" class="enrichment-section" style="display: none;">
+            <div style="text-align: center; padding: 4rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-md); margin-bottom: 2rem;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem; opacity: 0.5;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <h3 style="font-size: 1.1rem; color: var(--text); margin-bottom: 0.5rem;">Stage Enrichment — Coming Soon</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 400px; margin: 0 auto;">Run BQ query to populate enrichment data for C3 users</p>
+            </div>
+        </div>
+
+
                 </div>
             </div>
         </div>
@@ -6499,6 +7800,35 @@
             }
             }
         });
+    function selectFunnelStage(partner, stageId) {
+        var cards = document.querySelectorAll('#' + partner + '-tab-funnel .funnel-stage-card');
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('active');
+        }
+
+        var activeCard = document.getElementById('card-' + partner + '-' + stageId);
+        if (activeCard) {
+            activeCard.classList.add('active');
+        }
+
+        var sections = document.querySelectorAll('#' + partner + '-tab-funnel .enrichment-section');
+        for (var j = 0; j < sections.length; j++) {
+            sections[j].classList.remove('active');
+            sections[j].style.display = 'none';
+        }
+
+        var activeSection = document.getElementById('enrichment-' + partner + '-' + stageId);
+        if (activeSection) {
+            activeSection.classList.add('active');
+            activeSection.style.display = 'block';
+        }
+
+        var titleEl = document.getElementById('enrichment-title-' + partner);
+        if (titleEl) {
+            var stageName = stageId.toUpperCase();
+            titleEl.innerText = 'Stage Enrichment — ' + stageName + ' User Profile';
+        }
+    }
     </script>
 </body>
 </html>

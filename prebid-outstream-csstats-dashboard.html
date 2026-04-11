@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prebid Outstream CSStats Experiment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --border: #e2e4e9;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+            --radius-lg: 12px;
+            --radius-md: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-weight: 600; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #f1f3f5; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* Highlights & Insights */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        /* Decision Panel */
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+        .status-grey { background-color: var(--text-muted); box-shadow: 0 0 8px rgba(107, 114, 128, 0.3); }
+
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        @media (max-width: 900px) { 
+            .kpi-grid, .grid-2, .grid-3, .grid-4, .decision-grid { grid-template-columns: 1fr; } 
+        }
+        
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        
+        h3 { font-weight: 600; color: var(--text); }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+      <a href="../index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
+      <span style="color:#CBD5E1;">·</span>
+      <span style="color:#6B7280;">Prebid Outstream CSStats</span>
+    </nav>
+    <div class="container">
+        
+        <header class="header">
+            <span class="badge">Experiment · A/B Test</span>
+            <h1>Prebid Outstream CSStats Experiment Dashboard</h1>
+            <h2>A/B test: Prebid (Mobalytics) vs Primis · Started Mar 27, 2026 · Updated Apr 9</h2>
+            <p>Moritz Natalini · Ads &amp; Partnerships · EFG</p>
+        </header>
+
+        <div class="section" id="overview">
+            <h2 class="section-title">1. Experiment Overview</h2>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Total Page Views</div>
+                    <div class="kpi-value">6,463,153</div>
+                    <div class="kpi-sub">Total views across variants</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Prebid (Moba) Views</div>
+                    <div class="kpi-value" style="color: #2563eb;">2,403,348</div>
+                    <div class="kpi-sub">37.2% share</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Primis Views</div>
+                    <div class="kpi-value" style="color: #f59e0b;">2,342,763</div>
+                    <div class="kpi-sub">36.2% share</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Traffic Split Δ</div>
+                    <div class="kpi-value" style="color: var(--green); font-size: 2rem;">2.6%</div>
+                    <div class="kpi-sub"><span style="color: var(--green); font-weight: 600;">✓ Valid</span> (Core A/B balanced)</div>
+                </div>
+            </div>
+
+            <div class="insight-card">
+                <p>CSStats.gg A/B test comparing Prebid (Mobalytics) outstream video vs Primis outstream. Prebid variant receives 37.2% of traffic, Primis 36.2%. The remaining traffic falls to Publift (1.5%) and (not set) (24.6% — predominantly Russia at 1.57M views, likely consent/ad-blocker related). The core A/B comparison between Prebid and Primis shows a balanced 50.6%/49.4% split when excluding noise.</p>
+            </div>
+        </div>
+
+        <div class="section" id="traffic">
+            <h2 class="section-title">2. Traffic Split Analysis</h2>
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Variant Views Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="variantBarChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Prebid vs Primis Split (Excl. Noise)</h3>
+                    <div class="chart-container">
+                        <canvas id="variantDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="geo">
+            <h2 class="section-title">3. Top 25 Countries by Traffic</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Excludes Russia and (not set) due to dominance of non-test traffic.</p>
+            
+            <div class="chart-container" style="margin-bottom: 2rem;">
+                <canvas id="countryChart"></canvas>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th class="number">Prebid Views</th>
+                            <th class="number">Primis Views</th>
+                            <th class="number">Total Views</th>
+                            <th class="number">Prebid %</th>
+                            <th class="number">Primis %</th>
+                            <th class="number">Split Δ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="countryTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="revenue">
+            <h2 class="section-title">4. Revenue Analysis — Awaiting Data</h2>
+            <div class="insight-card" style="border-left-color: var(--yellow);">
+                <p>Revenue CSVs from Mobalytics (Prebid) and Primis are pending. Once received, this section will include: RPV by variant (the primary decision metric), eCPM comparison, fill rate analysis, and geo-level revenue breakdown.</p>
+            </div>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Prebid RPV</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">—</div>
+                    <div class="kpi-sub">Pending Moba Data</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Primis RPV</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">—</div>
+                    <div class="kpi-sub">Pending Primis Data</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">RPV Delta</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">—</div>
+                    <div class="kpi-sub">Comparison</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Decision</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">—</div>
+                    <div class="kpi-sub">Awaiting Data</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">5. Experiment Decision Framework</h2>
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is the traffic split valid?</strong></p>
+                        <p>Yes. The Prebid vs Primis comparison is balanced at 50.6% vs 49.4% (Δ 2.6%) when isolating the two variants.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Which variant delivers higher RPV?</strong></p>
+                        <p>Pending revenue data integration.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Are there geo-specific performance variations?</strong></p>
+                        <p>Pending revenue data integration to analyze eCPM and fill rate by top tier regions.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item"><strong style="color: var(--yellow);">Pending:</strong> Import Mobalytics revenue CSV</li>
+                        <li class="list-item"><strong style="color: var(--yellow);">Pending:</strong> Import Primis revenue CSV</li>
+                        <li class="list-item">Calculate RPV per variant based on matched geo traffic</li>
+                        <li class="list-item">Review viewability and fill rate metrics</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN (Winner)</strong></p>
+                        <p>Higher RPV (+5% uplift vs control)<br>Equal or better user experience (fill/latency)</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>YELLOW (Inconclusive)</strong></p>
+                        <p>RPV parity within ±5% margin<br>Needs further segmentation</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>RED (Loser)</strong></p>
+                        <p>Lower RPV (&lt;-5% vs control)<br>Noticeable UX degradation</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic Validity (Confirmed valid split)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Revenue Data (Pending CSVs)</p>
+                        <p><span class="status-indicator status-grey"></span> Overall Decision (Awaiting Data)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data source: Google Analytics · CSStats.gg Prebid Experiment · Data: Mar 27 – Apr 9, 2026 | Internal PM Tool
+        </div>
+    </div>
+
+    <script>
+        const chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
+            Chart.defaults.color = '#6b7280';
+            Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
+            const gridColor = '#e2e4e9';
+            const tooltipBg = '#ffffff';
+            const tooltipBorder = '#e2e4e9';
+            const tooltipTitleColor = '#1a1a2e';
+            const tooltipBodyColor = '#6b7280';
+
+            // Traffic Distribution (Bar)
+            const variantBarCtx = document.getElementById('variantBarChart').getContext('2d');
+            new Chart(variantBarCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Prebid', 'Primis', 'Publift', '(not set)'],
+                    datasets: [{
+                        label: 'Total Views',
+                        data: [2403348, 2342763, 98775, 1589026],
+                        backgroundColor: ['#2563eb', '#f59e0b', '#10b981', '#94a3b8'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, beginAtZero: true },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Prebid vs Primis (Doughnut)
+            const variantDoughnutCtx = document.getElementById('variantDoughnutChart').getContext('2d');
+            new Chart(variantDoughnutCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Prebid', 'Primis'],
+                    datasets: [{
+                        data: [2403348, 2342763],
+                        backgroundColor: ['#2563eb', '#f59e0b'],
+                        borderWidth: 1,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { color: '#6b7280', boxWidth: 12 } },
+                        tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            // Extracted data for top 25 countries (excluding Russia and not set)
+            const countryData = [
+                { c: "Poland", prebid: 279374, primis: 279954 },
+                { c: "Brazil", prebid: 216069, primis: 205781 },
+                { c: "Germany", prebid: 170255, primis: 172590 },
+                { c: "Ukraine", prebid: 159005, primis: 145213 },
+                { c: "Türkiye", prebid: 137298, primis: 126794 },
+                { c: "France", prebid: 80292, primis: 73482 },
+                { c: "Argentina", prebid: 76138, primis: 79633 },
+                { c: "United Kingdom", prebid: 66600, primis: 62309 },
+                { c: "Canada", prebid: 57859, primis: 55689 },
+                { c: "Taiwan", prebid: 52801, primis: 48141 },
+                { c: "Romania", prebid: 52658, primis: 51615 },
+                { c: "Spain", prebid: 50219, primis: 51067 },
+                { c: "Portugal", prebid: 50155, primis: 44415 },
+                { c: "Finland", prebid: 50096, primis: 49769 },
+                { c: "South Korea", prebid: 48679, prebid_orig: 48679, primis: 46135 },
+                { c: "Belarus", prebid: 48726, primis: 46081 },
+                { c: "Czechia", prebid: 47929, primis: 46730 },
+                { c: "Sweden", prebid: 41306, primis: 43294 },
+                { c: "Kazakhstan", prebid: 34618, primis: 35070 },
+                { c: "Australia", prebid: 34699, primis: 40507 },
+                { c: "Vietnam", prebid: 34950, primis: 34490 },
+                { c: "Hong Kong", prebid: 32968, primis: 31329 },
+                { c: "Denmark", prebid: 30714, primis: 33387 },
+                { c: "Lithuania", prebid: 25886, primis: 24219 },
+                { c: "Hungary", prebid: 24531, primis: 21012 }
+            ];
+
+            // Process and format table
+            const tbody = document.getElementById('countryTableBody');
+            countryData.forEach(row => {
+                const total = row.prebid + row.primis;
+                const pPct = (row.prebid / total * 100).toFixed(1);
+                const prPct = (row.primis / total * 100).toFixed(1);
+                const delta = Math.abs(pPct - prPct).toFixed(1);
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = "<td>" + row.c + "</td>" +
+                    "<td class='number' style='color: #2563eb;'>" + row.prebid.toLocaleString() + "</td>" +
+                    "<td class='number' style='color: #d97706;'>" + row.primis.toLocaleString() + "</td>" +
+                    "<td class='number highlight'>" + total.toLocaleString() + "</td>" +
+                    "<td class='number'>" + pPct + "%</td>" +
+                    "<td class='number'>" + prPct + "%</td>" +
+                    "<td class='number'>" + delta + "%</td>";
+                tbody.appendChild(tr);
+            });
+
+            // Top 15 Countries Chart (Stacked Bar)
+            const top15 = countryData.slice(0, 15);
+            const countryCtx = document.getElementById('countryChart').getContext('2d');
+            new Chart(countryCtx, {
+                type: 'bar',
+                data: {
+                    labels: top15.map(d => d.c),
+                    datasets: [
+                        {
+                            label: 'Prebid Views',
+                            data: top15.map(d => d.prebid),
+                            backgroundColor: '#2563eb',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Primis Views',
+                            data: top15.map(d => d.primis),
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#6b7280' } },
+                        tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1, mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        x: { stacked: true, grid: { display: false } },
+                        y: { stacked: true, grid: { color: gridColor }, beginAtZero: true }
+                    }
+                }
+            });
+
+            // TODO: Populate with Moba revenue CSV
+            const mobaRevenueData = [];
+            // TODO: Populate with Primis revenue CSV
+            const primisRevenueData = [];
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+- generic [ref=e1]:
+  - navigation [ref=e2]:
+    - link "← Hub" [ref=e3] [cursor=pointer]:
+      - /url: index.html
+    - generic [ref=e4]: ·
+    - generic [ref=e5]: NSM Dashboard
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - generic [ref=e9]:
+        - button "📊 Portfolio" [ref=e10] [cursor=pointer]
+        - button "🎯 Tradeit" [ref=e11] [cursor=pointer]
+        - button "🎲 Winline" [active] [ref=e12] [cursor=pointer]
+        - button "🛒 WhiteMarket" [ref=e13] [cursor=pointer]
+        - button "💳 PaySafe" [ref=e14] [cursor=pointer]
+        - button "📋 Roadmap" [ref=e15] [cursor=pointer]
+    - main [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: FOR INTERNAL USE
+          - link "📋 Roadmap →" [ref=e20] [cursor=pointer]:
+            - /url: roadmap-dashboard.html
+            - text: 📋 Roadmap
+            - generic [ref=e21]: →
+        - generic [ref=e22]:
+          - img "Winline logo" [ref=e843]
+          - heading "Winline" [level=1] [ref=e844]
+        - heading "NSM Analysis | Jan–Mar 2026" [level=2] [ref=e304]
+        - paragraph [ref=e25]: "North Star Metric: Total Partners Value (30-Day Rolling)"
+        - paragraph [ref=e26]: EBU = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.
+      - generic [ref=e845]:
+        - generic [ref=e846]:
+          - text: "Organiser IDs:"
+          - code [ref=e847] [cursor=pointer]: 397f5239-ab93-484d-9f94-4231b0cfa48e
+          - generic [ref=e848]: "|"
+          - code [ref=e849] [cursor=pointer]: a8f12da7-d377-4b9f-aedf-a33cb1283b20
+          - generic [ref=e850]: "|"
+          - code [ref=e851] [cursor=pointer]: b5efeb75-4f23-494e-bc85-9319c1a87c75
+        - generic [ref=e852]:
+          - button "📊 NSM Analysis" [ref=e853] [cursor=pointer]
+          - button "🔗 CDP Data" [ref=e854] [cursor=pointer]
+          - button "🎯 Missions" [ref=e855] [cursor=pointer]
+          - button "📺 Brand Takeovers" [ref=e856] [cursor=pointer]
+          - button "🧪 Experiments" [ref=e857] [cursor=pointer]
+          - button "🎁 Rewards" [ref=e858] [cursor=pointer]
+          - button "👥 Audience" [ref=e859] [cursor=pointer]
+          - button "🔄 Funnel" [ref=e860] [cursor=pointer]
+        - generic [ref=e861]:
+          - generic [ref=e862]:
+            - generic [ref=e863]:
+              - button "All" [ref=e864] [cursor=pointer]
+              - button "Russia" [ref=e865] [cursor=pointer]
+              - button "Belarus" [ref=e866] [cursor=pointer]
+              - button "Kazakhstan" [ref=e867] [cursor=pointer]
+            - generic [ref=e868]:
+              - generic [ref=e869]:
+                - generic [ref=e870]: North Star Metric
+                - generic [ref=e871]:
+                  - text: Total Value
+                  - generic [ref=e872]: i
+                - generic [ref=e873]: €596,524
+                - generic [ref=e874]: 30-day rolling
+              - generic [ref=e875]:
+                - generic [ref=e876]:
+                  - generic [ref=e877]:
+                    - text: Unique EBU
+                    - generic [ref=e878]: i
+                  - generic [ref=e879]: 682K
+                  - generic [ref=e880]: 30-day rolling
+                - generic [ref=e881]:
+                  - generic [ref=e882]:
+                    - text: Efficiency
+                    - generic [ref=e883]: i
+                  - generic [ref=e884]: €874
+                  - generic [ref=e885]: 30-day rolling
+          - generic [ref=e886]:
+            - heading "2. Monthly NSM Summary (All geos)" [level=2] [ref=e887]
+            - table [ref=e891]:
+              - rowgroup [ref=e892]:
+                - row "Conversion Jan '26 Feb '26 Mar '26 Total" [ref=e893]:
+                  - columnheader "Conversion" [ref=e894]
+                  - columnheader "Jan '26" [ref=e895]
+                  - columnheader "Feb '26" [ref=e896]
+                  - columnheader "Mar '26" [ref=e897]
+                  - columnheader "Total" [ref=e898]
+              - rowgroup [ref=e899]:
+                - row "AL (€4.33) €20,823 €20,113 €17,779 €58,715" [ref=e900]:
+                  - cell "AL (€4.33)" [ref=e901]
+                  - cell "€20,823" [ref=e902]
+                  - cell "€20,113" [ref=e903]
+                  - cell "€17,779" [ref=e904]
+                  - cell "€58,715" [ref=e905]
+                - row "KYC (€8.66) €2,789 €2,979 €1,931 €7,699" [ref=e906]:
+                  - cell "KYC (€8.66)" [ref=e907]
+                  - cell "€2,789" [ref=e908]
+                  - cell "€2,979" [ref=e909]
+                  - cell "€1,931" [ref=e910]
+                  - cell "€7,699" [ref=e911]
+                - row "FTD (€121.10) €48,630 €52,664 €31,813 €133,107" [ref=e912]:
+                  - cell "FTD (€121.10)" [ref=e913]
+                  - cell "€48,630" [ref=e914]
+                  - cell "€52,664" [ref=e915]
+                  - cell "€31,813" [ref=e916]
+                  - cell "€133,107" [ref=e917]
+                - row "2nd Dep (€4.33) €49,535 €57,996 €46,344 €153,875" [ref=e918]:
+                  - cell "2nd Dep (€4.33)" [ref=e919]
+                  - cell "€49,535" [ref=e920]
+                  - cell "€57,996" [ref=e921]
+                  - cell "€46,344" [ref=e922]
+                  - cell "€153,875" [ref=e923]
+                - row "Bet (€4.33) €57,639 €65,983 €62,830 €186,452" [ref=e924]:
+                  - cell "Bet (€4.33)" [ref=e925]
+                  - cell "€57,639" [ref=e926]
+                  - cell "€65,983" [ref=e927]
+                  - cell "€62,830" [ref=e928]
+                  - cell "€186,452" [ref=e929]
+                - row "Total €179,416 €199,735 €217,373 €596,524" [ref=e930]:
+                  - cell "Total" [ref=e931]
+                  - cell "€179,416" [ref=e932]
+                  - cell "€199,735" [ref=e933]
+                  - cell "€217,373" [ref=e934]
+                  - cell "€596,524" [ref=e935]
+          - generic [ref=e939]:
+            - heading "3. NSM Trend — 30-Day Rolling" [level=2] [ref=e940]
+            - paragraph [ref=e941]: "Headline metric: 30-day rolling Total Partner Value. Weekly breakdown below for operational monitoring. Data from verified CDP constants."
+            - table [ref=e945]:
+              - rowgroup [ref=e946]:
+                - row "Week € Value WoW %" [ref=e947]:
+                  - columnheader "Week" [ref=e948]
+                  - columnheader "€ Value" [ref=e949]
+                  - columnheader "WoW %" [ref=e950]
+              - rowgroup [ref=e951]:
+                - row "Dec 29 €42,562 —" [ref=e952]:
+                  - cell "Dec 29" [ref=e953]
+                  - cell "€42,562" [ref=e954]
+                  - cell "—" [ref=e955]
+                - row "Jan 5 €36,779 -14%" [ref=e956]:
+                  - cell "Jan 5" [ref=e957]
+                  - cell "€36,779" [ref=e958]
+                  - cell "-14%" [ref=e959]
+                - row "Jan 12 €30,771 -16%" [ref=e960]:
+                  - cell "Jan 12" [ref=e961]
+                  - cell "€30,771" [ref=e962]
+                  - cell "-16%" [ref=e963]
+                - row "Jan 19 €19,852 -35%" [ref=e964]:
+                  - cell "Jan 19" [ref=e965]
+                  - cell "€19,852" [ref=e966]
+                  - cell "-35%" [ref=e967]
+                - row "Jan 26 €8,458 -57%" [ref=e968]:
+                  - cell "Jan 26" [ref=e969]
+                  - cell "€8,458" [ref=e970]
+                  - cell "-57%" [ref=e971]
+                - row "Feb 2 €89,586 +959%" [ref=e972]:
+                  - cell "Feb 2" [ref=e973]
+                  - cell "€89,586" [ref=e974]
+                  - cell "+959%" [ref=e975]
+                - row "Feb 9 €34,876 -61%" [ref=e976]:
+                  - cell "Feb 9" [ref=e977]
+                  - cell "€34,876" [ref=e978]
+                  - cell "-61%" [ref=e979]
+                - row "Feb 16 €23,926 -31%" [ref=e980]:
+                  - cell "Feb 16" [ref=e981]
+                  - cell "€23,926" [ref=e982]
+                  - cell "-31%" [ref=e983]
+                - row "Feb 23 €41,130 +72%" [ref=e984]:
+                  - cell "Feb 23" [ref=e985]
+                  - cell "€41,130" [ref=e986]
+                  - cell "+72%" [ref=e987]
+                - row "Mar 2 €57,191 +39%" [ref=e988]:
+                  - cell "Mar 2" [ref=e989]
+                  - cell "€57,191" [ref=e990]
+                  - cell "+39%" [ref=e991]
+                - row "Mar 9 €26,430 -54%" [ref=e992]:
+                  - cell "Mar 9" [ref=e993]
+                  - cell "€26,430" [ref=e994]
+                  - cell "-54%" [ref=e995]
+                - row "Mar 16 €5,779 -78%" [ref=e996]:
+                  - cell "Mar 16" [ref=e997]
+                  - cell "€5,779" [ref=e998]
+                  - cell "-78%" [ref=e999]
+              - rowgroup [ref=e1000]:
+                - row "TOTAL €596,524 —" [ref=e1001]:
+                  - cell "TOTAL" [ref=e1002]
+                  - cell "€596,524" [ref=e1003]
+                  - cell "—" [ref=e1004]
+          - heading "4. Value Breakdown by Conversion Type" [level=2] [ref=e1006]
+          - generic [ref=e1009]:
+            - heading "5. Winline Conversion Funnel" [level=2] [ref=e1010]
+            - generic [ref=e1012]:
+              - generic [ref=e1013]:
+                - generic [ref=e1014]: EBU
+                - generic [ref=e1015]: Total Eligible
+              - generic [ref=e1016]: →
+              - generic [ref=e1017]:
+                - generic [ref=e1018]: AL
+                - generic [ref=e1019]: Account Linkage (€4.33)
+              - generic [ref=e1020]: →
+              - generic [ref=e1021]:
+                - generic [ref=e1022]: KYC
+                - generic [ref=e1023]: Identification (€8.66)
+              - generic [ref=e1024]: →
+              - generic [ref=e1025]:
+                - generic [ref=e1026]: FTD
+                - generic [ref=e1027]: First Deposit (€121.10)
+              - generic [ref=e1028]: →
+              - generic [ref=e1029]:
+                - generic [ref=e1030]: 2nd Dep
+                - generic [ref=e1031]: 2+ Deposit (€4.33)
+          - generic [ref=e1032]:
+            - heading "6. Key Insights" [level=2] [ref=e1033]
+            - generic [ref=e1034]:
+              - heading "1. Consistent Monthly Growth" [level=3] [ref=e1035]
+              - paragraph [ref=e1036]: Jan €138,422 → Feb €158,499 → Mar €177,092 (+14.5% Jan→Feb, +11.7% Feb→Mar). Sustained growth across all three months.
+            - generic [ref=e1037]:
+              - heading "2. BOFU Drives Majority of Value" [level=3] [ref=e1038]
+              - paragraph [ref=e1039]: FTD + Deposit missions (Missions 5-6 Jan, 7-9 Feb, 4-5 Mar) generate 62-64% of total monthly value through repeat deposit and bet activity.
+            - generic [ref=e1040]:
+              - heading "3. KYC Remains the Bottleneck" [level=3] [ref=e1041]
+              - paragraph [ref=e1042]: "KYC conversion consistently low: 322 (Jan), 344 (Feb), 384 (Mar). Only ~1% of eligible users pass KYC, limiting FTD pipeline."
+          - generic [ref=e1043]:
+            - heading "7. NSM Trend (Historical)" [level=2] [ref=e1044]
+            - paragraph [ref=e1045]: Sep–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Mar 2026 uses actual mission data.
+          - generic [ref=e1048]:
+            - heading "8. Mission Breakdown" [level=2] [ref=e1049]
+            - table [ref=e1051]:
+              - rowgroup [ref=e1052]:
+                - row "Month Mission Funnel AL KYC FTD 2nd Dep Bet € Value" [ref=e1053]:
+                  - columnheader "Month" [ref=e1054]
+                  - columnheader "Mission" [ref=e1055]
+                  - columnheader "Funnel" [ref=e1056]
+                  - columnheader "AL" [ref=e1057]
+                  - columnheader "KYC" [ref=e1058]
+                  - columnheader "FTD" [ref=e1059]
+                  - columnheader "2nd Dep" [ref=e1060]
+                  - columnheader "Bet" [ref=e1061]
+                  - columnheader "€ Value" [ref=e1062]
+              - rowgroup [ref=e1063]:
+                - row "Jan Agnostic 1 (General) TOFU 1,854 — — — — €8,028" [ref=e1064]:
+                  - cell "Jan" [ref=e1065]
+                  - cell "Agnostic 1 (General)" [ref=e1066]
+                  - cell "TOFU" [ref=e1067]
+                  - cell "1,854" [ref=e1068]
+                  - cell "—" [ref=e1069]
+                  - cell "—" [ref=e1070]
+                  - cell "—" [ref=e1071]
+                  - cell "—" [ref=e1072]
+                  - cell "€8,028" [ref=e1073]
+                - row "Jan Agnostic 2 (Mystery Box) TOFU 2,955 — — — — €12,795" [ref=e1074]:
+                  - cell "Jan" [ref=e1075]
+                  - cell "Agnostic 2 (Mystery Box)" [ref=e1076]
+                  - cell "TOFU" [ref=e1077]
+                  - cell "2,955" [ref=e1078]
+                  - cell "—" [ref=e1079]
+                  - cell "—" [ref=e1080]
+                  - cell "—" [ref=e1081]
+                  - cell "—" [ref=e1082]
+                  - cell "€12,795" [ref=e1083]
+                - row "Jan Mission 3 (No KYC) MOFU — 322 72 — 0 €11,508" [ref=e1084]:
+                  - cell "Jan" [ref=e1085]
+                  - cell "Mission 3 (No KYC)" [ref=e1086]
+                  - cell "MOFU" [ref=e1087]
+                  - cell "—" [ref=e1088]
+                  - cell "322" [ref=e1089]
+                  - cell "72" [ref=e1090]
+                  - cell "—" [ref=e1091]
+                  - cell "0" [ref=e1092]
+                  - cell "€11,508" [ref=e1093]
+                - row "Jan Mission 4 (No FTD) MOFU — — 169 — 0 €20,466" [ref=e1094]:
+                  - cell "Jan" [ref=e1095]
+                  - cell "Mission 4 (No FTD)" [ref=e1096]
+                  - cell "MOFU" [ref=e1097]
+                  - cell "—" [ref=e1098]
+                  - cell "—" [ref=e1099]
+                  - cell "169" [ref=e1100]
+                  - cell "—" [ref=e1101]
+                  - cell "0" [ref=e1102]
+                  - cell "€20,466" [ref=e1103]
+                - row "Jan Mission 5 (FTD) BOFU — — — 8,119 6,040 €61,308" [ref=e1104]:
+                  - cell "Jan" [ref=e1105]
+                  - cell "Mission 5 (FTD)" [ref=e1106]
+                  - cell "BOFU" [ref=e1107]
+                  - cell "—" [ref=e1108]
+                  - cell "—" [ref=e1109]
+                  - cell "—" [ref=e1110]
+                  - cell "8,119" [ref=e1111]
+                  - cell "6,040" [ref=e1112]
+                  - cell "€61,308" [ref=e1113]
+                - row "Jan Mission 6 (Whale) BOFU — — — 3,321 2,295 €24,317" [ref=e1114]:
+                  - cell "Jan" [ref=e1115]
+                  - cell "Mission 6 (Whale)" [ref=e1116]
+                  - cell "BOFU" [ref=e1117]
+                  - cell "—" [ref=e1118]
+                  - cell "—" [ref=e1119]
+                  - cell "—" [ref=e1120]
+                  - cell "3,321" [ref=e1121]
+                  - cell "2,295" [ref=e1122]
+                  - cell "€24,317" [ref=e1123]
+                - row "Feb Agnostic 1 (Main Group) TOFU 4,621 — — — — €20,009" [ref=e1124]:
+                  - cell "Feb" [ref=e1125]
+                  - cell "Agnostic 1 (Main Group)" [ref=e1126]
+                  - cell "TOFU" [ref=e1127]
+                  - cell "4,621" [ref=e1128]
+                  - cell "—" [ref=e1129]
+                  - cell "—" [ref=e1130]
+                  - cell "—" [ref=e1131]
+                  - cell "—" [ref=e1132]
+                  - cell "€20,009" [ref=e1133]
+                - row "Feb Agnostic 2 (Test Group) TOFU 24 — — — — €104" [ref=e1134]:
+                  - cell "Feb" [ref=e1135]
+                  - cell "Agnostic 2 (Test Group)" [ref=e1136]
+                  - cell "TOFU" [ref=e1137]
+                  - cell "24" [ref=e1138]
+                  - cell "—" [ref=e1139]
+                  - cell "—" [ref=e1140]
+                  - cell "—" [ref=e1141]
+                  - cell "—" [ref=e1142]
+                  - cell "€104" [ref=e1143]
+                - row "Feb Mission 3 (No KYC Main) MOFU — 315 58 — 19 €9,834" [ref=e1144]:
+                  - cell "Feb" [ref=e1145]
+                  - cell "Mission 3 (No KYC Main)" [ref=e1146]
+                  - cell "MOFU" [ref=e1147]
+                  - cell "—" [ref=e1148]
+                  - cell "315" [ref=e1149]
+                  - cell "58" [ref=e1150]
+                  - cell "—" [ref=e1151]
+                  - cell "19" [ref=e1152]
+                  - cell "€9,834" [ref=e1153]
+                - row "Feb Mission 4 (No KYC Test) MOFU — 29 9 — 6 €1,367" [ref=e1154]:
+                  - cell "Feb" [ref=e1155]
+                  - cell "Mission 4 (No KYC Test)" [ref=e1156]
+                  - cell "MOFU" [ref=e1157]
+                  - cell "—" [ref=e1158]
+                  - cell "29" [ref=e1159]
+                  - cell "9" [ref=e1160]
+                  - cell "—" [ref=e1161]
+                  - cell "6" [ref=e1162]
+                  - cell "€1,367" [ref=e1163]
+                - row "Feb Mission 5 (No FTD Main) MOFU — — 189 — 63 €23,161" [ref=e1164]:
+                  - cell "Feb" [ref=e1165]
+                  - cell "Mission 5 (No FTD Main)" [ref=e1166]
+                  - cell "MOFU" [ref=e1167]
+                  - cell "—" [ref=e1168]
+                  - cell "—" [ref=e1169]
+                  - cell "189" [ref=e1170]
+                  - cell "—" [ref=e1171]
+                  - cell "63" [ref=e1172]
+                  - cell "€23,161" [ref=e1173]
+                - row "Feb Mission 6 (No FTD Test) MOFU — — 24 — 4 €2,924" [ref=e1174]:
+                  - cell "Feb" [ref=e1175]
+                  - cell "Mission 6 (No FTD Test)" [ref=e1176]
+                  - cell "MOFU" [ref=e1177]
+                  - cell "—" [ref=e1178]
+                  - cell "—" [ref=e1179]
+                  - cell "24" [ref=e1180]
+                  - cell "—" [ref=e1181]
+                  - cell "4" [ref=e1182]
+                  - cell "€2,924" [ref=e1183]
+                - row "Feb Mission 7 (FTD Main) BOFU — — — 9,250 7,071 €70,670" [ref=e1184]:
+                  - cell "Feb" [ref=e1185]
+                  - cell "Mission 7 (FTD Main)" [ref=e1186]
+                  - cell "BOFU" [ref=e1187]
+                  - cell "—" [ref=e1188]
+                  - cell "—" [ref=e1189]
+                  - cell "—" [ref=e1190]
+                  - cell "9,250" [ref=e1191]
+                  - cell "7,071" [ref=e1192]
+                  - cell "€70,670" [ref=e1193]
+                - row "Feb Mission 8 (FTD Test) BOFU — — — 69 35 €450" [ref=e1194]:
+                  - cell "Feb" [ref=e1195]
+                  - cell "Mission 8 (FTD Test)" [ref=e1196]
+                  - cell "BOFU" [ref=e1197]
+                  - cell "—" [ref=e1198]
+                  - cell "—" [ref=e1199]
+                  - cell "—" [ref=e1200]
+                  - cell "69" [ref=e1201]
+                  - cell "35" [ref=e1202]
+                  - cell "€450" [ref=e1203]
+                - row "Feb Mission 9 (Whale) BOFU — — — 4,075 2,849 €29,981" [ref=e1204]:
+                  - cell "Feb" [ref=e1205]
+                  - cell "Mission 9 (Whale)" [ref=e1206]
+                  - cell "BOFU" [ref=e1207]
+                  - cell "—" [ref=e1208]
+                  - cell "—" [ref=e1209]
+                  - cell "—" [ref=e1210]
+                  - cell "4,075" [ref=e1211]
+                  - cell "2,849" [ref=e1212]
+                  - cell "€29,981" [ref=e1213]
+                - row "Mar Agnostic 1 (General) TOFU 5,890 — — — — €25,504" [ref=e1214]:
+                  - cell "Mar" [ref=e1215]
+                  - cell "Agnostic 1 (General)" [ref=e1216]
+                  - cell "TOFU" [ref=e1217]
+                  - cell "5,890" [ref=e1218]
+                  - cell "—" [ref=e1219]
+                  - cell "—" [ref=e1220]
+                  - cell "—" [ref=e1221]
+                  - cell "—" [ref=e1222]
+                  - cell "€25,504" [ref=e1223]
+                - row "Mar Mission 2 (No KYC) MOFU — 384 82 — 27 €13,372" [ref=e1224]:
+                  - cell "Mar" [ref=e1225]
+                  - cell "Mission 2 (No KYC)" [ref=e1226]
+                  - cell "MOFU" [ref=e1227]
+                  - cell "—" [ref=e1228]
+                  - cell "384" [ref=e1229]
+                  - cell "82" [ref=e1230]
+                  - cell "—" [ref=e1231]
+                  - cell "27" [ref=e1232]
+                  - cell "€13,372" [ref=e1233]
+                - row "Mar Mission 3 (No FTD) MOFU — — 203 — 79 €24,925" [ref=e1234]:
+                  - cell "Mar" [ref=e1235]
+                  - cell "Mission 3 (No FTD)" [ref=e1236]
+                  - cell "MOFU" [ref=e1237]
+                  - cell "—" [ref=e1238]
+                  - cell "—" [ref=e1239]
+                  - cell "203" [ref=e1240]
+                  - cell "—" [ref=e1241]
+                  - cell "79" [ref=e1242]
+                  - cell "€24,925" [ref=e1243]
+                - row "Mar Mission 4 (FTD) BOFU — — — 10,195 7,944 €78,542" [ref=e1244]:
+                  - cell "Mar" [ref=e1245]
+                  - cell "Mission 4 (FTD)" [ref=e1246]
+                  - cell "BOFU" [ref=e1247]
+                  - cell "—" [ref=e1248]
+                  - cell "—" [ref=e1249]
+                  - cell "—" [ref=e1250]
+                  - cell "10,195" [ref=e1251]
+                  - cell "7,944" [ref=e1252]
+                  - cell "€78,542" [ref=e1253]
+                - row "Mar Mission 5 (Whale) BOFU — — — 4,733 3,292 €34,748" [ref=e1254]:
+                  - cell "Mar" [ref=e1255]
+                  - cell "Mission 5 (Whale)" [ref=e1256]
+                  - cell "BOFU" [ref=e1257]
+                  - cell "—" [ref=e1258]
+                  - cell "—" [ref=e1259]
+                  - cell "—" [ref=e1260]
+                  - cell "4,733" [ref=e1261]
+                  - cell "3,292" [ref=e1262]
+                  - cell "€34,748" [ref=e1263]
+            - paragraph [ref=e1264]: All values rounded to whole €. Bet treated as €4.33 (same as 2nd Deposit).
+          - generic [ref=e1265]: "Data source: Sponsored Competitions - Winline - Custom Missions'26.numbers | Generated by AI PM Assistant"

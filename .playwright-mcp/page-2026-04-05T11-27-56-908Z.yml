@@ -1,0 +1,405 @@
+- generic [ref=e1]:
+  - navigation [ref=e2]:
+    - link "← Hub" [ref=e3] [cursor=pointer]:
+      - /url: index.html
+    - generic [ref=e4]: ·
+    - generic [ref=e5]: NSM Dashboard
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - generic [ref=e9]:
+        - button "📊 Portfolio" [ref=e10] [cursor=pointer]
+        - button "🎯 Tradeit" [active] [ref=e11] [cursor=pointer]
+        - button "🎲 Winline" [ref=e12] [cursor=pointer]
+        - button "🛒 WhiteMarket" [ref=e13] [cursor=pointer]
+        - button "💳 PaySafe" [ref=e14] [cursor=pointer]
+        - button "📋 Roadmap" [ref=e15] [cursor=pointer]
+    - main [ref=e16]:
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e19]: FOR INTERNAL USE
+          - link "📋 Roadmap →" [ref=e20] [cursor=pointer]:
+            - /url: roadmap-dashboard.html
+            - text: 📋 Roadmap
+            - generic [ref=e21]: →
+        - generic [ref=e22]:
+          - img "Tradeit logo" [ref=e302]
+          - heading "Tradeit" [level=1] [ref=e303]
+        - heading "NSM Analysis | Jan–Mar 2026" [level=2] [ref=e304]
+        - paragraph [ref=e25]: "North Star Metric: Total Partners Value (30-Day Rolling)"
+        - paragraph [ref=e26]: EBU = Eligible Brand Integration Users — the total audience pool eligible for a partner's missions in a given period.
+      - generic [ref=e305]:
+        - generic [ref=e306]:
+          - text: "Organiser ID:"
+          - code [ref=e307] [cursor=pointer]: 976fe92b-0998-4a2a-86a6-f655bbab8f07
+        - generic [ref=e308]:
+          - button "📊 NSM Analysis" [ref=e309] [cursor=pointer]
+          - button "🔗 CDP Data" [ref=e310] [cursor=pointer]
+          - button "🎯 Missions" [ref=e311] [cursor=pointer]
+          - button "🧪 Experiments" [ref=e312] [cursor=pointer]
+          - button "🎁 Rewards" [ref=e313] [cursor=pointer]
+          - button "👥 Audience" [ref=e314] [cursor=pointer]
+          - button "🔄 Funnel" [ref=e315] [cursor=pointer]
+        - generic [ref=e316]:
+          - generic [ref=e318]:
+            - button "All Regions" [ref=e319] [cursor=pointer]
+            - button "EU" [ref=e320] [cursor=pointer]
+            - button "CIS" [ref=e321] [cursor=pointer]
+            - button "CIS EXC" [ref=e322] [cursor=pointer]
+            - button "LATAM" [ref=e323] [cursor=pointer]
+            - button "NA" [ref=e324] [cursor=pointer]
+            - button "MENA" [ref=e325] [cursor=pointer]
+            - button "APAC" [ref=e326] [cursor=pointer]
+          - generic [ref=e328]:
+            - generic [ref=e329]:
+              - generic [ref=e330]: North Star Metric
+              - generic [ref=e331]:
+                - text: Total Value
+                - generic [ref=e332]: i
+              - generic [ref=e333]: €554,649
+              - generic [ref=e334]: 30-day rolling
+            - generic [ref=e335]:
+              - generic [ref=e336]:
+                - generic [ref=e337]:
+                  - text: Unique EBU
+                  - generic [ref=e338]: i
+                - generic [ref=e339]: 1.53M
+                - generic [ref=e340]: 30-day rolling
+              - generic [ref=e341]:
+                - generic [ref=e342]:
+                  - text: Efficiency
+                  - generic [ref=e343]: i
+                - generic [ref=e344]: €361
+                - generic [ref=e345]: 30-day rolling
+          - generic [ref=e346]:
+            - heading "2. Monthly NSM Summary" [level=2] [ref=e347]
+            - generic [ref=e349]:
+              - table [ref=e351]:
+                - rowgroup [ref=e352]:
+                  - row "Conversion Jan '26 Feb '26 Mar '26 Total" [ref=e353]:
+                    - columnheader "Conversion" [ref=e354]
+                    - columnheader "Jan '26" [ref=e355]
+                    - columnheader "Feb '26" [ref=e356]
+                    - columnheader "Mar '26" [ref=e357]
+                    - columnheader "Total" [ref=e358]
+                - rowgroup [ref=e359]:
+                  - row "AL (€0.38) €4,553 €5,637 €504,912 €515,102" [ref=e360]:
+                    - cell "AL (€0.38)" [ref=e361]
+                    - cell "€4,553" [ref=e362]
+                    - cell "€5,637" [ref=e363]
+                    - cell "€504,912" [ref=e364]
+                    - cell "€515,102" [ref=e365]
+                  - row "C1 (€0.04) €108 €142 €1,174 €1,424" [ref=e366]:
+                    - cell "C1 (€0.04)" [ref=e367]
+                    - cell "€108" [ref=e368]
+                    - cell "€142" [ref=e369]
+                    - cell "€1,174" [ref=e370]
+                    - cell "€1,424" [ref=e371]
+                  - row "C2 (€8.75) €7,595 €7,665 €22,864 €38,124" [ref=e372]:
+                    - cell "C2 (€8.75)" [ref=e373]
+                    - cell "€7,595" [ref=e374]
+                    - cell "€7,665" [ref=e375]
+                    - cell "€22,864" [ref=e376]
+                    - cell "€38,124" [ref=e377]
+                  - row "Total €12,255 €13,444 €528,950 €554,649" [ref=e378]:
+                    - cell "Total" [ref=e379]
+                    - cell "€12,255" [ref=e380]
+                    - cell "€13,444" [ref=e381]
+                    - cell "€528,950" [ref=e382]
+                    - cell "€554,649" [ref=e383]
+              - paragraph [ref=e384]: "*Mar includes new regions: EU, LATAM, CIS EXC."
+          - generic [ref=e388]:
+            - heading "3. NSM Trend — 30-Day Rolling" [level=2] [ref=e389]
+            - paragraph [ref=e390]: "Headline metric: 30-day rolling Total Partner Value. Weekly breakdown below for operational monitoring. Data from BQ mission completions × verified € per conversion."
+            - table [ref=e394]:
+              - rowgroup [ref=e395]:
+                - row "Week € Value WoW %" [ref=e396]:
+                  - columnheader "Week" [ref=e397]
+                  - columnheader "€ Value" [ref=e398]
+                  - columnheader "WoW %" [ref=e399]
+              - rowgroup [ref=e400]:
+                - row "Dec 29 €5,265 —" [ref=e401]:
+                  - cell "Dec 29" [ref=e402]
+                  - cell "€5,265" [ref=e403]
+                  - cell "—" [ref=e404]
+                - row "Jan 5 €2,696 -49%" [ref=e405]:
+                  - cell "Jan 5" [ref=e406]
+                  - cell "€2,696" [ref=e407]
+                  - cell "-49%" [ref=e408]
+                - row "Jan 12 €1,698 -37%" [ref=e409]:
+                  - cell "Jan 12" [ref=e410]
+                  - cell "€1,698" [ref=e411]
+                  - cell "-37%" [ref=e412]
+                - row "Jan 19 €1,577 -7%" [ref=e413]:
+                  - cell "Jan 19" [ref=e414]
+                  - cell "€1,577" [ref=e415]
+                  - cell "-7%" [ref=e416]
+                - row "Jan 26 €908 -42%" [ref=e417]:
+                  - cell "Jan 26" [ref=e418]
+                  - cell "€908" [ref=e419]
+                  - cell "-42%" [ref=e420]
+                - row "Feb 2 €7,714 +749%" [ref=e421]:
+                  - cell "Feb 2" [ref=e422]
+                  - cell "€7,714" [ref=e423]
+                  - cell "+749%" [ref=e424]
+                - row "Feb 9 €2,532 -67%" [ref=e425]:
+                  - cell "Feb 9" [ref=e426]
+                  - cell "€2,532" [ref=e427]
+                  - cell "-67%" [ref=e428]
+                - row "Feb 16 €1,967 -22%" [ref=e429]:
+                  - cell "Feb 16" [ref=e430]
+                  - cell "€1,967" [ref=e431]
+                  - cell "-22%" [ref=e432]
+                - row "Feb 23 €1,179 -40%" [ref=e433]:
+                  - cell "Feb 23" [ref=e434]
+                  - cell "€1,179" [ref=e435]
+                  - cell "-40%" [ref=e436]
+                - row "Mar 2 €94 -92%" [ref=e437]:
+                  - cell "Mar 2" [ref=e438]
+                  - cell "€94" [ref=e439]
+                  - cell "-92%" [ref=e440]
+                - row "Mar 9 €58,907 +62,567%" [ref=e441]:
+                  - cell "Mar 9" [ref=e442]
+                  - cell "€58,907" [ref=e443]
+                  - cell "+62,567%" [ref=e444]
+                - row "Mar 16 €10,002 -83%" [ref=e445]:
+                  - cell "Mar 16" [ref=e446]
+                  - cell "€10,002" [ref=e447]
+                  - cell "-83%" [ref=e448]
+              - rowgroup [ref=e449]:
+                - row "TOTAL €94,539 —" [ref=e450]:
+                  - cell "TOTAL" [ref=e451]
+                  - cell "€94,539" [ref=e452]
+                  - cell "—" [ref=e453]
+          - heading "4. Value Breakdown by Conversion Type" [level=2] [ref=e455]
+          - generic [ref=e461]:
+            - heading "5. Tradeit Conversion Funnel" [level=2] [ref=e462]
+            - generic [ref=e464]:
+              - generic [ref=e465]:
+                - generic [ref=e466]: EBU
+                - generic [ref=e467]: Total Eligible
+              - generic [ref=e468]: →
+              - generic [ref=e469]:
+                - generic [ref=e470]: AL
+                - generic [ref=e471]: Account Linkage (€0.38)
+              - generic [ref=e472]: →
+              - generic [ref=e473]:
+                - generic [ref=e474]: C1
+                - generic [ref=e475]: First Trade (€0.04)
+              - generic [ref=e476]: →
+              - generic [ref=e477]:
+                - generic [ref=e478]: C2
+                - generic [ref=e479]: Trade $250+ (€8.75)
+          - generic [ref=e480]:
+            - heading "6. Key Insights" [level=2] [ref=e481]
+            - generic [ref=e482]:
+              - heading "1. C2 Dominates Value" [level=3] [ref=e483]
+              - paragraph [ref=e484]: The C2 conversion (Trade $250+) is the primary driver of value, accounting for 61-66% of the total € generated across both months.
+            - generic [ref=e485]:
+              - heading "2. CIS Volume vs Efficiency" [level=3] [ref=e486]
+              - paragraph [ref=e487]: CIS represents 79% of the total EBU audience, but suffers from a low AL rate (1.6-2.3% compared to NA's 4-5%), keeping its efficiency down.
+            - generic [ref=e488]:
+              - heading "3. Shifting Regional Momentum" [level=3] [ref=e489]
+              - paragraph [ref=e490]: "MoM efficiency diverged significantly: NA's €/1K EBU declined by -18.4%, whereas CIS saw substantial growth of +24.0%."
+            - generic [ref=e491]:
+              - heading "4. BOFU is the C2 Engine" [level=3] [ref=e492]
+              - paragraph [ref=e493]: The BOFU segment yields the highest €/1K EBU by far, operating as a pure C2 generation engine, though constrained by a small audience size.
+            - generic [ref=e494]:
+              - heading "5. Untracked Opportunities" [level=3] [ref=e495]
+              - paragraph [ref=e496]: High-value actions like Trade $1,000+ (€35.00) and frequent actions like Trade 5 (€0.18) remain untracked in current missions, representing untapped potential.
+          - generic [ref=e497]:
+            - heading "7. NSM Trend (Historical)" [level=2] [ref=e498]
+            - paragraph [ref=e499]: Apr–Dec 2025 values are estimates derived from CDP unique user counts × € per conversion. Jan–Feb 2026 use actual mission data.
+          - generic [ref=e502]:
+            - heading "8. Region-Level Summary" [level=2] [ref=e503]
+            - table [ref=e507]:
+              - rowgroup [ref=e508]:
+                - row "Month Region EBU € Value €/1K EBU" [ref=e509]:
+                  - columnheader "Month" [ref=e510]
+                  - columnheader "Region" [ref=e511]
+                  - columnheader "EBU" [ref=e512]
+                  - columnheader "€ Value" [ref=e513]
+                  - columnheader "€/1K EBU" [ref=e514]
+              - rowgroup [ref=e515]:
+                - row "Jan North America 53,497 €3,377.05 €63.13" [ref=e516]:
+                  - cell "Jan" [ref=e517]
+                  - cell "North America" [ref=e518]
+                  - cell "53,497" [ref=e519]
+                  - cell "€3,377.05" [ref=e520]
+                  - cell "€63.13" [ref=e521]
+                - row "Jan CIS 464,261 €6,534.67 €14.08" [ref=e522]:
+                  - cell "Jan" [ref=e523]
+                  - cell "CIS" [ref=e524]
+                  - cell "464,261" [ref=e525]
+                  - cell "€6,534.67" [ref=e526]
+                  - cell "€14.08" [ref=e527]
+                - row "Jan MENA 18,057 €965.36 €53.46" [ref=e528]:
+                  - cell "Jan" [ref=e529]
+                  - cell "MENA" [ref=e530]
+                  - cell "18,057" [ref=e531]
+                  - cell "€965.36" [ref=e532]
+                  - cell "€53.46" [ref=e533]
+                - row "Jan APAC 54,899 €1,378.30 €25.11" [ref=e534]:
+                  - cell "Jan" [ref=e535]
+                  - cell "APAC" [ref=e536]
+                  - cell "54,899" [ref=e537]
+                  - cell "€1,378.30" [ref=e538]
+                  - cell "€25.11" [ref=e539]
+                - row "Feb North America 57,385 €3,021.59 €52.65" [ref=e540]:
+                  - cell "Feb" [ref=e541]
+                  - cell "North America" [ref=e542]
+                  - cell "57,385" [ref=e543]
+                  - cell "€3,021.59" [ref=e544]
+                  - cell "€52.65" [ref=e545]
+                - row "Feb CIS 473,938 €8,004.27 €16.89" [ref=e546]:
+                  - cell "Feb" [ref=e547]
+                  - cell "CIS" [ref=e548]
+                  - cell "473,938" [ref=e549]
+                  - cell "€8,004.27" [ref=e550]
+                  - cell "€16.89" [ref=e551]
+                - row "Feb MENA 18,611 €1,023.21 €54.98" [ref=e552]:
+                  - cell "Feb" [ref=e553]
+                  - cell "MENA" [ref=e554]
+                  - cell "18,611" [ref=e555]
+                  - cell "€1,023.21" [ref=e556]
+                  - cell "€54.98" [ref=e557]
+                - row "Feb APAC 50,593 €1,395.09 €27.57" [ref=e558]:
+                  - cell "Feb" [ref=e559]
+                  - cell "APAC" [ref=e560]
+                  - cell "50,593" [ref=e561]
+                  - cell "€1,395.09" [ref=e562]
+                  - cell "€27.57" [ref=e563]
+          - generic [ref=e567]:
+            - heading "9. Month-over-Month Comparison" [level=2] [ref=e568]
+            - paragraph [ref=e569]: NA declined -16.6% in efficiency while CIS grew +20.0%.
+          - generic [ref=e572]:
+            - heading "11. Segment Performance (€/1K EBU)" [level=2] [ref=e573]
+            - generic [ref=e574]:
+              - table [ref=e576]:
+                - rowgroup [ref=e577]:
+                  - row "JANUARY" [ref=e578]:
+                    - columnheader "JANUARY" [ref=e579]
+                  - row "Region TOFU MOFU BOFU" [ref=e580]:
+                    - columnheader "Region" [ref=e581]
+                    - columnheader "TOFU" [ref=e582]
+                    - columnheader "MOFU" [ref=e583]
+                    - columnheader "BOFU" [ref=e584]
+                - rowgroup [ref=e585]:
+                  - row "North America €23.69 €21.96 €445.21" [ref=e586]:
+                    - cell "North America" [ref=e587]
+                    - cell "€23.69" [ref=e588]
+                    - cell "€21.96" [ref=e589]
+                    - cell "€445.21" [ref=e590]
+                  - row "CIS €7.80 €3.20 €123.16" [ref=e591]:
+                    - cell "CIS" [ref=e592]
+                    - cell "€7.80" [ref=e593]
+                    - cell "€3.20" [ref=e594]
+                    - cell "€123.16" [ref=e595]
+                  - row "MENA €24.02 €14.18 €352.72" [ref=e596]:
+                    - cell "MENA" [ref=e597]
+                    - cell "€24.02" [ref=e598]
+                    - cell "€14.18" [ref=e599]
+                    - cell "€352.72" [ref=e600]
+                  - row "APAC €11.79 €22.85 €243.93" [ref=e601]:
+                    - cell "APAC" [ref=e602]
+                    - cell "€11.79" [ref=e603]
+                    - cell "€22.85" [ref=e604]
+                    - cell "€243.93" [ref=e605]
+              - table [ref=e607]:
+                - rowgroup [ref=e608]:
+                  - row "FEBRUARY" [ref=e609]:
+                    - columnheader "FEBRUARY" [ref=e610]
+                  - row "Region TOFU MOFU BOFU" [ref=e611]:
+                    - columnheader "Region" [ref=e612]
+                    - columnheader "TOFU" [ref=e613]
+                    - columnheader "MOFU" [ref=e614]
+                    - columnheader "BOFU" [ref=e615]
+                - rowgroup [ref=e616]:
+                  - row "North America €23.57 €17.34 €344.76" [ref=e617]:
+                    - cell "North America" [ref=e618]
+                    - cell "€23.57" [ref=e619]
+                    - cell "€17.34" [ref=e620]
+                    - cell "€344.76" [ref=e621]
+                  - row "CIS €11.47 €3.16 €121.83" [ref=e622]:
+                    - cell "CIS" [ref=e623]
+                    - cell "€11.47" [ref=e624]
+                    - cell "€3.16" [ref=e625]
+                    - cell "€121.83" [ref=e626]
+                  - row "MENA €19.71 €0.98 €381.37" [ref=e627]:
+                    - cell "MENA" [ref=e628]
+                    - cell "€19.71" [ref=e629]
+                    - cell "€0.98" [ref=e630]
+                    - cell "€381.37" [ref=e631]
+                  - row "APAC €12.56 €14.03 €257.59" [ref=e632]:
+                    - cell "APAC" [ref=e633]
+                    - cell "€12.56" [ref=e634]
+                    - cell "€14.03" [ref=e635]
+                    - cell "€257.59" [ref=e636]
+          - generic [ref=e637]:
+            - heading "12. Funnel Conversion Rates" [level=2] [ref=e638]
+            - table [ref=e640]:
+              - rowgroup [ref=e641]:
+                - row "Month Region TOFU AL% TOFU C1% MOFU C1% BOFU C2%" [ref=e642]:
+                  - columnheader "Month" [ref=e643]
+                  - columnheader "Region" [ref=e644]
+                  - columnheader "TOFU AL%" [ref=e645]
+                  - columnheader "TOFU C1%" [ref=e646]
+                  - columnheader "MOFU C1%" [ref=e647]
+                  - columnheader "BOFU C2%" [ref=e648]
+              - rowgroup [ref=e649]:
+                - row "Jan North America 4.22% 0.92% 1.70% 5.09%" [ref=e650]:
+                  - cell "Jan" [ref=e651]
+                  - cell "North America" [ref=e652]
+                  - cell "4.22%" [ref=e653]
+                  - cell "0.92%" [ref=e654]
+                  - cell "1.70%" [ref=e655]
+                  - cell "5.09%" [ref=e656]
+                - row "Jan CIS 1.63% 0.31% 0.88% 1.41%" [ref=e657]:
+                  - cell "Jan" [ref=e658]
+                  - cell "CIS" [ref=e659]
+                  - cell "1.63%" [ref=e660]
+                  - cell "0.31%" [ref=e661]
+                  - cell "0.88%" [ref=e662]
+                  - cell "1.41%" [ref=e663]
+                - row "Jan MENA 4.16% 1.12% 2.93% 4.03%" [ref=e664]:
+                  - cell "Jan" [ref=e665]
+                  - cell "MENA" [ref=e666]
+                  - cell "4.16%" [ref=e667]
+                  - cell "1.12%" [ref=e668]
+                  - cell "2.93%" [ref=e669]
+                  - cell "4.03%" [ref=e670]
+                - row "Jan APAC 2.16% 0.42% 1.89% 2.79%" [ref=e671]:
+                  - cell "Jan" [ref=e672]
+                  - cell "APAC" [ref=e673]
+                  - cell "2.16%" [ref=e674]
+                  - cell "0.42%" [ref=e675]
+                  - cell "1.89%" [ref=e676]
+                  - cell "2.79%" [ref=e677]
+                - row "Feb North America 4.09% 1.04% 1.61% 3.94%" [ref=e678]:
+                  - cell "Feb" [ref=e679]
+                  - cell "North America" [ref=e680]
+                  - cell "4.09%" [ref=e681]
+                  - cell "1.04%" [ref=e682]
+                  - cell "1.61%" [ref=e683]
+                  - cell "3.94%" [ref=e684]
+                - row "Feb CIS 2.31% 0.47% 1.11% 1.39%" [ref=e685]:
+                  - cell "Feb" [ref=e686]
+                  - cell "CIS" [ref=e687]
+                  - cell "2.31%" [ref=e688]
+                  - cell "0.47%" [ref=e689]
+                  - cell "1.11%" [ref=e690]
+                  - cell "1.39%" [ref=e691]
+                - row "Feb MENA 4.12% 1.21% 2.46% 4.36%" [ref=e692]:
+                  - cell "Feb" [ref=e693]
+                  - cell "MENA" [ref=e694]
+                  - cell "4.12%" [ref=e695]
+                  - cell "1.21%" [ref=e696]
+                  - cell "2.46%" [ref=e697]
+                  - cell "4.36%" [ref=e698]
+                - row "Feb APAC 2.17% 0.47% 1.48% 2.94%" [ref=e699]:
+                  - cell "Feb" [ref=e700]
+                  - cell "APAC" [ref=e701]
+                  - cell "2.17%" [ref=e702]
+                  - cell "0.47%" [ref=e703]
+                  - cell "1.48%" [ref=e704]
+                  - cell "2.94%" [ref=e705]
+          - generic [ref=e706]: "Data source: Sponsored Competitions - Tradeit - Custom Missions 26.csv | Generated by AI PM Assistant"
