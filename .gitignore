@@ -4,6 +4,12 @@
 # OpenCode session data
 .opencode/
 
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Sisyphus working files
+.sisyphus/
+
 # Screenshots (verification artifacts, not source files)
 *.png
 

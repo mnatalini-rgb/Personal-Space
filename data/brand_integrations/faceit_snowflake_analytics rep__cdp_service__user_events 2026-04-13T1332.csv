@@ -1,0 +1,12 @@
+Event Type,Total Distinct Users,Total Unique Events
+trade,"160,697","851,564"
+trade_5_dollars,"55,732","169,804"
+trade_250_dollars,"16,465","33,816"
+buy,"10,147","28,879"
+sell_or_buy,"6,523","25,485"
+trade_50_dollars,"6,511","7,837"
+sell,"5,544","6,267"
+trade_1000_dollars,"2,076","2,943"
+sell_or_buy_200_dollars,518,644
+trade_500_dollars,41,44
+trade_5_dollar,1,1
