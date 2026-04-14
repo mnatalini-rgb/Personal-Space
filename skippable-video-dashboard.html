@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skippable Video Interstitial — Experiment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #8b5cf6;
+            --accent-light: #ede9fe;
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+        .chart-container.tall { height: 450px; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* Highlights & Insights */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        /* Funnel specifics */
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+
+        /* Decision Panel */
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+        @media (max-width: 900px) {
+            .kpi-grid, .kpi-grid-3, .grid-2, .grid-3, .decision-grid { grid-template-columns: 1fr; }
+            .funnel-wrapper { flex-direction: column; }
+            .funnel-arrow { transform: rotate(90deg); }
+        }
+
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+
+        h3 { font-weight: 600; color: var(--text); }
+
+        /* Experiment comparison boxes */
+        .experiment-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; }
+        .experiment-box.control { border-top: 4px solid var(--text-muted); }
+        .experiment-box.variant { border-top: 4px solid var(--accent); }
+        .experiment-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .experiment-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .experiment-delta { font-size: 1rem; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+      <span style="color:#CBD5E1;">&middot;</span>
+      <span style="color:#6B7280;">Skippable Video Interstitial Dashboard</span>
+    </nav>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Experiment &middot; A/B Test</span>
+            <h1>Skippable Video Interstitial</h1>
+            <h2>House Ad for Premium Subscription &middot; Launched Mar 16, 2026 &middot; Updated Apr 14</h2>
+            <p>Moritz Natalini &middot; Ads &amp; Partnerships &middot; EFG</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
+                <strong>Decision:</strong> Should we move the skippable video interstitial to production and begin go-to-market preparation?
+            </p>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- VERDICT — Executive Summary (F-pattern: first thing you read) -->
+        <!-- ============================================================ -->
+        <div class="section" style="border-left: 4px solid var(--green); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Verdict</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Retention guardrail passed</strong> &mdash; variant tracks within &plusmn;1K of control across 31 days (+0.3% delta, not significant)</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>70.4% video completion rate</strong> &mdash; weighted avg across 184 countries (GAM); 83.3% full-15s completion on front-end events</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>0.37% CTR</strong> &mdash; 23,698 clicks to Premium purchase page across 6.47M impressions, driving 320 subscriptions</p>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 1. EXPERIMENT DESIGN (Product Preview + Spec) -->
+        <!-- ============================================================ -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Experiment Design</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Background</h3>
+                <div class="insight-card" style="border-left-color: var(--accent);">
+                    <p><strong>Problem:</strong> Interstitial ads deliver our highest CPMs due to strong visibility and CTR, but they are highly intrusive. Increasing interstitial volume risks user frustration, reduced session depth, and long-term CPM degradation. We cannot safely grow revenue by increasing frequency.</p>
+                    <p><strong>Solution:</strong> Maintain the same inventory size but increase CPMs by upgrading the creative format &mdash; replace static image interstitials with video. Video drives stronger advertiser outcomes (viewability, CTR, brand lift) at the same impression count.</p>
+                    <p><strong>Why skippable:</strong> Given the format&rsquo;s intrusiveness, skippable video (3s unskippable, then skip available) balances revenue uplift with user experience. This aligns with established user expectations (YouTube-like behaviour) and preserves advertiser impact in the opening seconds.</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2rem; text-align: center;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem; text-align: left;">Product Preview</h3>
+                <img src="assets/skippable-video-interstitial-preview.png" alt="Skippable video interstitial as seen on FACEIT — modal overlay with video player, skip timer, and Premium upsell CTA" style="max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">Video interstitial overlay on the FACEIT platform. Header shows &ldquo;GO AD FREE WITH PREMIUM&rdquo; upsell. Top-right: skip countdown timer with circular progress ring (3s). Bottom-right: mute toggle (autoplay sound-off).</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Format Specification</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Value</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Type</td><td>A/B test</td></tr>
+                                <tr><td>Duration</td><td>15 seconds</td></tr>
+                                <tr><td>Autoplay</td><td>Sound off</td></tr>
+                                <tr><td>Skip available</td><td>After 3 seconds</td></tr>
+                                <tr><td>Trigger</td><td>User return after inactivity</td></tr>
+                                <tr><td>Placement</td><td>Guaranteed in-view interstitial</td></tr>
+                                <tr><td>Fallback logic</td><td>Video only shows if no display interstitial fills</td></tr>
+                                <tr><td>Creative</td><td>House ad &mdash; Premium subscription CTA</td></tr>
+                                <tr><td>Click destination</td><td>Premium purchase page</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Test Groups</h3>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Control</h3>
+                        <p>Standard display interstitial (existing behaviour)</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3>Variant</h3>
+                        <p>Skippable video interstitial: 3s unskippable, then skip button appears. 15s total duration.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Success Metrics</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Type</th><th>Metric</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Primary</strong></td><td>CPM uplift vs static interstitial baseline</td></tr>
+                                <tr><td><strong>Primary</strong></td><td>Viewability &amp; CTR</td></tr>
+                                <tr><td><strong>Guardrail</strong></td><td>Games played / matchmaking uniques (no negative impact)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Key Design Choice</h3>
+                    <div class="insight-card" style="border-left-color: var(--blue);">
+                        <h3>No Paid Cannibalisation</h3>
+                        <p>The video interstitial only fires when <strong>no display interstitial fills</strong> from the programmatic waterfall. This means every video impression is <em>incremental</em> &mdash; it monetises previously unfilled inventory rather than displacing higher-CPM paid ads.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2. OVERVIEW KPIs -->
+        <!-- ============================================================ -->
+        <div class="section" id="overview">
+            <h2 class="section-title">2. Overview</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">GAM Impressions</div>
+                    <div class="kpi-value">6.47M</div>
+                    <div class="kpi-sub">Mar 26 &ndash; Apr 14 (20 days)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">GAM Clicks</div>
+                    <div class="kpi-value">23,698</div>
+                    <div class="kpi-sub">Click &rarr; Premium purchase page</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">CTR</div>
+                    <div class="kpi-value">0.37%</div>
+                    <div class="kpi-sub">Clicks / Impressions</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">GAM Completion Rate</div>
+                    <div class="kpi-value">70.4%</div>
+                    <div class="kpi-sub">Weighted avg across 184 countries</div>
+                </div>
+            </div>
+
+            <div class="kpi-grid-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Completed</div>
+                    <div class="kpi-value" style="color: var(--green);">4.26M</div>
+                    <div class="kpi-sub">83.3% of FE interactions &middot; Full 15s watched</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Closed / Skipped</div>
+                    <div class="kpi-value" style="color: var(--yellow);">810K</div>
+                    <div class="kpi-sub">15.9% of FE interactions</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Outside Click</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">39K</div>
+                    <div class="kpi-sub">0.8% of FE interactions</div>
+                </div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -0.5rem;">
+                <strong>Note:</strong> FE events (5.11M total) cover ~79% of GAM impressions (6.47M). Gap is expected &mdash; GAM fires on ad request, FE fires on user interaction with the player UI.
+            </p>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text);">Premium Subscription Conversions (Affiliate Link)</h3>
+            <div class="kpi-grid-3">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Direct Subs</div>
+                    <div class="kpi-value" style="color: var(--green);">46</div>
+                    <div class="kpi-sub">Clicked video CTA &rarr; subscribed immediately</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--blue);">
+                    <div class="kpi-title">Assisted Subs</div>
+                    <div class="kpi-value" style="color: var(--blue);">274</div>
+                    <div class="kpi-sub">Saw ad, subscribed later (view-through)</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Total Attributed</div>
+                    <div class="kpi-value">320</div>
+                    <div class="kpi-sub">Direct + assisted &middot; via affiliate link tracking</div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                <strong>Direct:</strong> user clicked the video ad CTA and purchased Premium in the same session.
+                <strong>Assisted:</strong> user was exposed to the ad but converted later without a direct click (view-through attribution via affiliate link).
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 3. EXPERIMENT GUARDRAIL (Mixpanel) -->
+        <!-- ============================================================ -->
+        <div class="section" id="guardrail">
+            <h2 class="section-title">3. Experiment Guardrail &mdash; Retention Impact</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                A/B test: <strong>exp_VIDEO_INTERSTITIAL_AD</strong> &middot; Mar 14 &ndash; Apr 13, 2026 &middot;
+                Metric: <em>Uniques of CS2 Active Matchmaking Player</em> (free users only &mdash; memberships filter excludes csgo, plus, etc.)
+            </p>
+
+            <div class="grid-2" style="margin-bottom: 1.5rem;">
+                <div class="experiment-box variant">
+                    <div class="experiment-label">Variant &mdash; with_video_interstitial</div>
+                    <div class="experiment-value" style="color: var(--accent);">173.3K</div>
+                    <div class="funnel-sub">Avg daily uniques (past avg: 172.4K)</div>
+                </div>
+                <div class="experiment-box control">
+                    <div class="experiment-label">Control</div>
+                    <div class="experiment-value" style="color: var(--text);">172.8K</div>
+                    <div class="funnel-sub">Avg daily uniques (past avg: 171.8K)</div>
+                </div>
+            </div>
+
+            <div style="max-width: 280px; margin-bottom: 2rem;">
+                <div class="kpi-card">
+                    <div class="kpi-title">Delta</div>
+                    <div class="kpi-value" style="font-size: 2rem; color: var(--green);">+0.3%</div>
+                    <div class="kpi-sub">Variant vs Control</div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Daily Active Matchmaking Players &mdash; Variant vs Control</h3>
+            <div class="chart-container">
+                <canvas id="guardrailChart"></canvas>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">
+                Source: Mixpanel &middot; Mar 14 &ndash; Apr 13, 2026 &middot; Experiment launched Mar 16 (data includes 2-day pre-period). Both lines track near-identically throughout, confirming no retention divergence.
+            </p>
+
+            <div class="grid-2" style="margin-top: 2rem;">
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3><span class="status-indicator status-green"></span> Guardrail Passed</h3>
+                    <p>Variant tracks <strong>within &plusmn;1K</strong> of control on all 31 days. The +0.3% aggregate delta is not statistically significant &mdash; both groups show identical weekly seasonality (Sat/Sun peaks at ~190&ndash;197K, midweek troughs at ~151&ndash;165K). No retention divergence detected at any point in the experiment window.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--blue);">
+                    <h3>Weekly Pattern</h3>
+                    <p>Both groups exhibit a strong <strong>7-day cycle</strong>: matchmaking uniques peak on weekends (Sat 190K+) and trough midweek (Tue/Wed ~151&ndash;165K). The video interstitial does not dampen or shift this natural engagement rhythm.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 4. USER BEHAVIOUR FUNNEL -->
+        <!-- ============================================================ -->
+        <div class="section" id="funnel">
+            <h2 class="section-title">4. User Behaviour Funnel</h2>
+
+            <div class="insight-card" style="padding: 2rem; border-left-color: var(--accent);">
+                <h3 style="margin-bottom: 1rem;">Impression &rarr; Conversion Path</h3>
+                <div class="funnel-wrapper">
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">GAM Impression</div>
+                        <div class="funnel-value">6,469,233</div>
+                        <div class="funnel-sub">100%</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">FE Completed</div>
+                        <div class="funnel-value">4,260,935</div>
+                        <div class="funnel-sub">65.9% of impressions</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">GAM Click (CTA)</div>
+                        <div class="funnel-value">23,698</div>
+                        <div class="funnel-sub">0.37% CTR</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1; border-top: 3px solid var(--green);">
+                        <div class="funnel-title">Premium Subs</div>
+                        <div class="funnel-value" style="color: var(--green);">320</div>
+                        <div class="funnel-sub">46 direct + 274 assisted</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">FE Interaction Breakdown</h3>
+                    <div class="chart-container small">
+                        <canvas id="feInteractionChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Funnel Drop-off</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Step</th>
+                                    <th class="number">Volume</th>
+                                    <th class="number">% of Impressions</th>
+                                    <th class="number">Step Conv.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>GAM Impression</td>
+                                    <td class="number highlight">6,469,233</td>
+                                    <td class="number">100%</td>
+                                    <td class="number">&mdash;</td>
+                                </tr>
+                                <tr>
+                                    <td>FE Completed (full 15s)</td>
+                                    <td class="number">4,260,935</td>
+                                    <td class="number">65.9%</td>
+                                    <td class="number">65.9%</td>
+                                </tr>
+                                <tr>
+                                    <td>FE Closed / Skipped</td>
+                                    <td class="number">810,455</td>
+                                    <td class="number">12.5%</td>
+                                    <td class="number" style="color: var(--text-muted);">&mdash;</td>
+                                </tr>
+                                <tr>
+                                    <td>FE Outside Click</td>
+                                    <td class="number">39,057</td>
+                                    <td class="number">0.6%</td>
+                                    <td class="number" style="color: var(--text-muted);">&mdash;</td>
+                                </tr>
+                                <tr>
+                                    <td>GAM Click (CTA)</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">23,698</td>
+                                    <td class="number">0.37%</td>
+                                    <td class="number">0.56%</td>
+                                </tr>
+                                <tr style="background-color: #f0fdf4;">
+                                    <td><strong>Premium Subscription</strong></td>
+                                    <td class="number" style="color: var(--green); font-weight: 700;">320</td>
+                                    <td class="number">0.005%</td>
+                                    <td class="number">1.35%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Step Conv. for CTA = clicks / FE completed. Subscription step conv. = 320 total subs / 23,698 clicks = 1.35%. Includes 46 direct (clicked &rarr; subscribed) + 274 assisted (view-through).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 5. AD DELIVERY BY COUNTRY -->
+        <!-- ============================================================ -->
+        <div class="section" id="geo">
+            <h2 class="section-title">5. Ad Delivery by Country</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                GAM data: 184 countries &middot; Mar 26 &ndash; Apr 14, 2026 &middot; ~323K impressions/day avg
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top 20 Countries by Impressions</h3>
+                    <div class="chart-container tall">
+                        <canvas id="countryChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top 20 Countries &mdash; Detail</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th class="number">Impressions</th>
+                                    <th class="number">Share</th>
+                                    <th class="number">CTR</th>
+                                    <th class="number">Completion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Poland</td><td class="number highlight">925,776</td><td class="number">14.3%</td><td class="number">0.30%</td><td class="number">71.9%</td></tr>
+                                <tr><td>Kazakhstan</td><td class="number highlight">494,768</td><td class="number">7.6%</td><td class="number">0.45%</td><td class="number">59.4%</td></tr>
+                                <tr><td>T&uuml;rkiye</td><td class="number">465,820</td><td class="number">7.2%</td><td class="number">0.36%</td><td class="number">73.2%</td></tr>
+                                <tr><td>Ukraine</td><td class="number">383,490</td><td class="number">5.9%</td><td class="number">0.40%</td><td class="number">71.0%</td></tr>
+                                <tr><td>United States</td><td class="number">281,027</td><td class="number">4.3%</td><td class="number">0.24%</td><td class="number">76.2%</td></tr>
+                                <tr><td>Romania</td><td class="number">249,026</td><td class="number">3.8%</td><td class="number">0.35%</td><td class="number">70.6%</td></tr>
+                                <tr><td>Germany</td><td class="number">240,921</td><td class="number">3.7%</td><td class="number">0.30%</td><td class="number">72.1%</td></tr>
+                                <tr><td>Brazil</td><td class="number">191,978</td><td class="number">3.0%</td><td class="number">0.26%</td><td class="number">76.3%</td></tr>
+                                <tr><td>Uzbekistan</td><td class="number">191,135</td><td class="number">3.0%</td><td class="number">0.47%</td><td class="number">63.8%</td></tr>
+                                <tr><td>Belarus</td><td class="number">188,082</td><td class="number">2.9%</td><td class="number">0.43%</td><td class="number">64.3%</td></tr>
+                                <tr><td>Mongolia</td><td class="number">168,985</td><td class="number">2.6%</td><td class="number">0.59%</td><td class="number">68.1%</td></tr>
+                                <tr><td>France</td><td class="number">141,589</td><td class="number">2.2%</td><td class="number">0.26%</td><td class="number">74.8%</td></tr>
+                                <tr><td>Portugal</td><td class="number">133,978</td><td class="number">2.1%</td><td class="number">0.28%</td><td class="number">70.4%</td></tr>
+                                <tr><td>Denmark</td><td class="number">127,066</td><td class="number">2.0%</td><td class="number">0.34%</td><td class="number">72.7%</td></tr>
+                                <tr><td>Argentina</td><td class="number">126,730</td><td class="number">2.0%</td><td class="number">0.33%</td><td class="number">72.9%</td></tr>
+                                <tr><td>Sweden</td><td class="number">122,742</td><td class="number">1.9%</td><td class="number">0.35%</td><td class="number">74.1%</td></tr>
+                                <tr><td>Finland</td><td class="number">122,564</td><td class="number">1.9%</td><td class="number">0.27%</td><td class="number">68.6%</td></tr>
+                                <tr><td>United Kingdom</td><td class="number">115,742</td><td class="number">1.8%</td><td class="number">0.26%</td><td class="number">75.0%</td></tr>
+                                <tr><td>Czechia</td><td class="number">89,406</td><td class="number">1.4%</td><td class="number">0.33%</td><td class="number">74.4%</td></tr>
+                                <tr><td>Kosovo</td><td class="number">85,534</td><td class="number">1.3%</td><td class="number">0.89%</td><td class="number">50.8%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 6. COMPLETION RATE ANALYSIS -->
+        <!-- ============================================================ -->
+        <div class="section" id="completion">
+            <h2 class="section-title">6. Completion Rate Analysis</h2>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Completion Rate by Country (Top 20)</h3>
+                    <div class="chart-container tall">
+                        <canvas id="completionChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Lowest Completion Rates (&ge;10K impressions)</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th class="number">Completion</th>
+                                    <th class="number">Impressions</th>
+                                    <th class="number">CTR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td style="color: var(--red);">Kosovo</td><td class="number" style="color: var(--red); font-weight: 600;">50.8%</td><td class="number">85,534</td><td class="number">0.89%</td></tr>
+                                <tr><td style="color: var(--red);">Pakistan</td><td class="number" style="color: var(--red); font-weight: 600;">55.2%</td><td class="number">27,118</td><td class="number">0.37%</td></tr>
+                                <tr><td style="color: var(--yellow);">Albania</td><td class="number" style="color: var(--yellow); font-weight: 600;">56.6%</td><td class="number">30,575</td><td class="number">0.77%</td></tr>
+                                <tr><td style="color: var(--yellow);">Tajikistan</td><td class="number" style="color: var(--yellow); font-weight: 600;">57.3%</td><td class="number">18,928</td><td class="number">0.72%</td></tr>
+                                <tr><td style="color: var(--yellow);">Kazakhstan</td><td class="number" style="color: var(--yellow); font-weight: 600;">59.4%</td><td class="number">494,768</td><td class="number">0.45%</td></tr>
+                                <tr><td>North Macedonia</td><td class="number">60.8%</td><td class="number">47,324</td><td class="number">0.59%</td></tr>
+                                <tr><td>Uzbekistan</td><td class="number">63.8%</td><td class="number">191,135</td><td class="number">0.47%</td></tr>
+                                <tr><td>Belarus</td><td class="number">64.3%</td><td class="number">188,082</td><td class="number">0.43%</td></tr>
+                                <tr><td>Kyrgyzstan</td><td class="number">64.3%</td><td class="number">36,835</td><td class="number">0.36%</td></tr>
+                                <tr><td>Azerbaijan</td><td class="number">65.5%</td><td class="number">14,037</td><td class="number">0.45%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Highest Completion Rates (&ge;10K impressions)</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th class="number">Completion</th>
+                                    <th class="number">Impressions</th>
+                                    <th class="number">CTR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Taiwan</td><td class="number" style="color: var(--green); font-weight: 600;">81.2%</td><td class="number">21,069</td><td class="number">0.30%</td></tr>
+                                <tr><td>South Africa</td><td class="number" style="color: var(--green); font-weight: 600;">80.3%</td><td class="number">1,881</td><td class="number">0.43%</td></tr>
+                                <tr><td>Malaysia</td><td class="number" style="color: var(--green); font-weight: 600;">77.3%</td><td class="number">29,072</td><td class="number">0.29%</td></tr>
+                                <tr><td>Thailand</td><td class="number" style="color: var(--green); font-weight: 600;">77.1%</td><td class="number">27,451</td><td class="number">0.40%</td></tr>
+                                <tr><td>Hong Kong</td><td class="number" style="color: var(--green); font-weight: 600;">77.2%</td><td class="number">17,225</td><td class="number">0.32%</td></tr>
+                                <tr><td>China</td><td class="number" style="color: var(--green); font-weight: 600;">77.2%</td><td class="number">18,091</td><td class="number">0.46%</td></tr>
+                                <tr><td>Brazil</td><td class="number" style="color: var(--green); font-weight: 600;">76.3%</td><td class="number">191,978</td><td class="number">0.26%</td></tr>
+                                <tr><td>United States</td><td class="number" style="color: var(--green); font-weight: 600;">76.2%</td><td class="number">281,027</td><td class="number">0.24%</td></tr>
+                                <tr><td>Canada</td><td class="number" style="color: var(--green); font-weight: 600;">75.7%</td><td class="number">68,042</td><td class="number">0.27%</td></tr>
+                                <tr><td>United Kingdom</td><td class="number" style="color: var(--green); font-weight: 600;">75.0%</td><td class="number">115,742</td><td class="number">0.26%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3>Regional Pattern</h3>
+                        <p>Central Asian / Balkan countries show notably lower completion rates (50&ndash;65%), while APAC and Americas consistently achieve 75&ndash;81%. This likely reflects device quality and connection speed differences rather than content relevance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 7. DECISION FRAMEWORK -->
+        <!-- ============================================================ -->
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">7. Decision Framework</h2>
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Does the video hurt retention?</strong></p>
+                        <p>No. Variant (+0.3% daily active matchmaking players) is flat to marginally positive vs control. Guardrail passed.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Do users watch the full video?</strong></p>
+                        <p>83.3% of FE interactions are "completed" (full 15s). GAM weighted completion rate is 70.4% across 184 countries. Strong engagement signal.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Do users click the CTA?</strong></p>
+                        <p>0.37% CTR across 6.47M impressions = 23,698 clicks to the Premium purchase page. These clicks drove <strong>320 Premium subscriptions</strong> (46 direct, 274 assisted via view-through), a <strong>1.35% click-to-subscription conversion rate</strong>.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is completion rate consistent globally?</strong></p>
+                        <p>71 countries achieve &ge;70% completion. Central Asia / Balkans dip to 50&ndash;65% (likely device/connectivity). APAC and Americas consistently 75&ndash;81%.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item"><strong style="color: var(--green);">Guardrail passed</strong> &mdash; no retention regression detected. Safe to proceed.</li>
+                        <li class="list-item">Validate CPM uplift: compare video eCPM vs display interstitial eCPM for the same unfilled inventory.</li>
+                        <li class="list-item">Explore replacing house ad with programmatic demand (VAST tags from SSPs) &mdash; revenue opportunity.</li>
+                        <li class="list-item">Monitor low-completion geos (Kosovo, Pakistan, Albania) &mdash; consider geo-targeting adjustments if video CPM &lt; display CPM in those markets.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN</strong></p>
+                        <p>Guardrail flat/positive<br>Completion rate &gt;65%<br>CTR &gt;0.2%<br>No user complaints</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>YELLOW</strong></p>
+                        <p>Guardrail marginally negative (&lt;1%)<br>Completion 50&ndash;65%<br>CTR 0.1&ndash;0.2%</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>RED</strong></p>
+                        <p>Guardrail shows retention drop &gt;1%<br>Completion &lt;50%<br>Negative user feedback / CS escalations</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Retention Guardrail (+0.3%)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Completion Rate (70.4% GAM / 83.3% FE)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> CTR (0.37%)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Premium Conversions (320 subs &mdash; 46 direct + 274 assisted)</p>
+                        <p><span class="status-indicator status-yellow"></span> CPM Uplift (pending &mdash; house ad, no revenue comparison yet)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data sources: Google Ad Manager (Mar 26 &ndash; Apr 14, 2026), Mixpanel (Mar 14 &ndash; Apr 13, 2026), FE Events (all-time through Apr 14, 2026) | Internal PM Tool
+        </div>
+    </div>
+
+    <script>
+        // Guard for Chart.js availability (handles file:// protocol)
+        var chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
+        // Common Chart Defaults
+        Chart.defaults.color = '#6B7280';
+        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        var gridColor = '#E2E8F0';
+        var tooltipBg = '#ffffff';
+        var tooltipBorder = '#E2E8F0';
+        var tooltipTitleColor = '#1a1a2e';
+        var tooltipBodyColor = '#6b7280';
+
+        var guardrailCtx = document.getElementById('guardrailChart').getContext('2d');
+        new Chart(guardrailCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mar 14','Mar 15','Mar 16','Mar 17','Mar 18','Mar 19','Mar 20','Mar 21','Mar 22','Mar 23','Mar 24','Mar 25','Mar 26','Mar 27','Mar 28','Mar 29','Mar 30','Mar 31','Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13'],
+                datasets: [
+                    {
+                        label: 'Variant (with_video_interstitial)',
+                        data: [173.6,181.9,165.4,165.3,151.6,151.6,167.3,172,183,170,173,160,164,176,185,194,181,176,171,181,189,191,196,188,180,170,180,189,191,197,185],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'Control',
+                        data: [172.6,181.1,165.1,165.1,150.9,151.0,166.0,171,181,168,172,160,164,175,184,193,181,175,171,181,189,190,195,188,180,161,173,182,179,196,185],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.05)',
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        borderWidth: 2,
+                        borderDash: [6, 3]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#6b7280', usePointStyle: true } },
+                    tooltip: {
+                        backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1,
+                        callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + 'K'; } }
+                    }
+                },
+                scales: {
+                    x: { grid: { color: gridColor } },
+                    y: { grid: { color: gridColor }, min: 140, max: 210, ticks: { callback: function(v) { return v + 'K'; } } }
+                }
+            }
+        });
+
+        var feCtx = document.getElementById('feInteractionChart').getContext('2d');
+        new Chart(feCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed (full 15s)', 'Closed / Skipped', 'Outside Click'],
+                datasets: [{
+                    data: [4260935, 810455, 39057],
+                    backgroundColor: ['#059669', '#d97706', '#94a3b8'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#6b7280', boxWidth: 12 } },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                cutout: '65%'
+            }
+        });
+
+        // 2. Top 20 Countries by Impressions (Horizontal Bar)
+        var countryCtx = document.getElementById('countryChart').getContext('2d');
+        new Chart(countryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Poland', 'Kazakhstan', 'Türkiye', 'Ukraine', 'United States', 'Romania', 'Germany', 'Brazil', 'Uzbekistan', 'Belarus', 'Mongolia', 'France', 'Portugal', 'Denmark', 'Argentina', 'Sweden', 'Finland', 'United Kingdom', 'Czechia', 'Kosovo'],
+                datasets: [{
+                    label: 'Impressions',
+                    data: [925776, 494768, 465820, 383490, 281027, 249026, 240921, 191978, 191135, 188082, 168985, 141589, 133978, 127066, 126730, 122742, 122564, 115742, 89406, 85534],
+                    backgroundColor: '#8b5cf6',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1 }
+                },
+                scales: {
+                    x: { grid: { color: gridColor }, ticks: { callback: function(v) { return (v / 1000) + 'K'; } } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 3. Completion Rate by Top 20 Countries (Horizontal Bar)
+        var completionCtx = document.getElementById('completionChart').getContext('2d');
+        var completionLabels = ['Poland', 'Kazakhstan', 'Türkiye', 'Ukraine', 'United States', 'Romania', 'Germany', 'Brazil', 'Uzbekistan', 'Belarus', 'Mongolia', 'France', 'Portugal', 'Denmark', 'Argentina', 'Sweden', 'Finland', 'United Kingdom', 'Czechia', 'Kosovo'];
+        var completionData = [71.9, 59.4, 73.2, 71.0, 76.2, 70.6, 72.1, 76.3, 63.8, 64.3, 68.1, 74.8, 70.4, 72.7, 72.9, 74.1, 68.6, 75.0, 74.4, 50.8];
+        var completionColors = completionData.map(function(v) {
+            if (v >= 70) return '#059669';
+            if (v >= 60) return '#d97706';
+            return '#dc2626';
+        });
+        new Chart(completionCtx, {
+            type: 'bar',
+            data: {
+                labels: completionLabels,
+                datasets: [{
+                    label: 'Completion Rate (%)',
+                    data: completionData,
+                    backgroundColor: completionColors,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: tooltipBg, titleColor: tooltipTitleColor, bodyColor: tooltipBodyColor, borderColor: tooltipBorder, borderWidth: 1,
+                        callbacks: { label: function(ctx) { return ctx.parsed.x + '%'; } }
+                    }
+                },
+                scales: {
+                    x: { grid: { color: gridColor }, min: 0, max: 85, ticks: { callback: function(v) { return v + '%'; } } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        } // end chartAvailable guard
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+Action,Inventory Item Type,Total Unique Users,Total Events
+tab_click,,"10,989","16,976"
+inventory_card_click,INVENTORY_ITEM_TYPE_KNIFE,594,787
+stat_widget_click,INVENTORY_ITEM_TYPE_KNIFE,464,578
+inventory_card_click,INVENTORY_ITEM_TYPE_RIFLE,418,724
+inventory_card_click,INVENTORY_ITEM_TYPE_PISTOL,280,457
+stat_widget_click,INVENTORY_ITEM_TYPE_RIFLE,221,295
+stat_widget_click,INVENTORY_ITEM_TYPE_PISTOL,183,253
+inventory_card_click,INVENTORY_ITEM_TYPE_STICKER,58,78
+stat_widget_click,INVENTORY_ITEM_TYPE_SMG,50,60
+inventory_card_click,INVENTORY_ITEM_TYPE_SMG,40,42
+stat_widget_click,INVENTORY_ITEM_TYPE_STICKER,33,46
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_KNIFE,18,20
+inventory_card_click,INVENTORY_ITEM_TYPE_HEAVY,17,22
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_RIFLE,13,19
+stat_widget_click,INVENTORY_ITEM_TYPE_HEAVY,12,17
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_PISTOL,7,28
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_HEAVY,2,3
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_STICKER,1,1
+inspect_in_steam_click,INVENTORY_ITEM_TYPE_SMG,1,3

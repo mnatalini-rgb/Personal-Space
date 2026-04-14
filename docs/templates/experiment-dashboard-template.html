@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{EXPERIMENT_NAME}} — Experiment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /*
+         * FACEIT Experiment Dashboard — Design System
+         *
+         * Principles (from motherduck.com/blog/vibecoding-dashboards-best-practices):
+         *   1. Start with a question, not a chart — every dashboard answers "should we ship this?"
+         *   2. Match chart type to question type (From Data to Viz decision tree)
+         *      - Evolution → line chart
+         *      - Ranking  → horizontal bar chart
+         *      - Part-to-whole → doughnut (max 5 slices) or stacked bar
+         *      - Correlation → scatter
+         *      - NEVER: pie with 5+ categories, 3D, dual unrelated axes, spaghetti (20+ lines)
+         *   3. Design with intention
+         *      - Color = meaning (green=safe, yellow=caution, red=danger, accent=brand)
+         *      - Max 5 colors per palette; pass hex codes explicitly
+         *      - Tufte: maximise data-ink ratio — no chart borders, no shadows, light grey gridlines
+         *      - F-pattern visual hierarchy: KPIs → primary chart → supporting → detail tables
+         *      - Add context: reference lines, event annotations, data source, time period
+         *      - Bar charts always start at zero
+         *   4. Build a narrative arc (Storytelling with Data — Knaflic)
+         *      - Setup   → What is the experiment? (Section 1: Experiment Design)
+         *      - Tension → What's the risk?       (Section 2: Overview KPIs)
+         *      - Insight → What did we learn?      (Sections 3-6: Guardrail, Funnel, Deep-dives)
+         *      - Action  → Ship / iterate / kill?  (Section 7: Decision Framework)
+         *   5. Interactivity last — start static, add filters only when follow-up questions arise
+         *
+         * References:
+         *   - From Data to Viz: https://www.data-to-viz.com/
+         *   - Storytelling with Data: https://www.storytellingwithdata.com/
+         *   - Edward Tufte: The Visual Display of Quantitative Information
+         *   - ColorBrewer 2.0: https://colorbrewer2.org/
+         */
+
+        :root {
+            /* Surface */
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+
+            /* Typography */
+            --text: #1A1A2E;
+            --text-muted: #6B7280;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Brand accent — change per experiment/product area */
+            --accent: #8b5cf6;        /* Purple (Advertising) */
+            --accent-light: #ede9fe;
+            /* Alt accents:
+               --accent: #2563eb; --accent-light: #dbeafe;   Blue (Brand Integrations)
+               --accent: #059669; --accent-light: #d1fae5;   Green (Growth)
+               --accent: #d97706; --accent-light: #fef3c7;   Amber (Revenue)
+            */
+
+            /* Semantic — NEVER change these; color = meaning */
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+
+            /* Chart palette (max 5 — ordered by meaning) */
+            --chart-1: var(--accent);
+            --chart-2: #ef4444;
+            --chart-3: var(--green);
+            --chart-4: var(--yellow);
+            --chart-5: var(--blue);
+
+            /* Radii */
+            --radius-lg: 20px;
+            --radius-md: 14px;
+
+            /* Shadows */
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* ── Header ─────────────────────────────────── */
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        /* ── Sections ───────────────────────────────── */
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        /* ── KPI Cards (F-pattern: top row) ──────────── */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        /* ── Grid Layouts ───────────────────────────── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+        .chart-container.tall { height: 450px; }
+
+        /* ── Tables (Tufte: minimal borders) ─────────── */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* ── Insight Cards ──────────────────────────── */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        /* ── Funnel ──────────────────────────────────── */
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; }
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+
+        /* ── Decision Panel ─────────────────────────── */
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+
+        /* ── Experiment Comparison Boxes ─────────────── */
+        .experiment-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; }
+        .experiment-box.control { border-top: 4px solid var(--text-muted); }
+        .experiment-box.variant { border-top: 4px solid var(--accent); }
+        .experiment-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .experiment-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .experiment-delta { font-size: 1rem; font-weight: 600; }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        h3 { font-weight: 600; color: var(--text); }
+
+        /* ── Responsive ─────────────────────────────── */
+        @media (max-width: 900px) {
+            .kpi-grid, .kpi-grid-3, .grid-2, .grid-3, .decision-grid { grid-template-columns: 1fr; }
+            .funnel-wrapper { flex-direction: column; }
+            .funnel-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+      <span style="color:#CBD5E1;">&middot;</span>
+      <span style="color:#6B7280;">{{EXPERIMENT_NAME}} Dashboard</span>
+    </nav>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Experiment &middot; {{EXPERIMENT_TYPE}}</span>
+            <!-- ▸ EXPERIMENT_TYPE: "A/B Test", "Phase 1", "Rollout", "Beta", etc. -->
+            <h1>{{EXPERIMENT_NAME}}</h1>
+            <h2>{{SUBTITLE}} &middot; Launched {{LAUNCH_DATE}} &middot; Updated {{UPDATE_DATE}}</h2>
+            <!-- ▸ SUBTITLE: brief descriptor, e.g. "House Ad for Premium Subscription" or "300 Top-Viewed Player Profiles" -->
+            <p>{{AUTHOR}} &middot; {{TEAM}} &middot; EFG</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
+                <!-- ▸ DECISION_QUESTION: The single decision this dashboard should inform.
+                     e.g. "Should we move the skippable video interstitial to production and begin GTM preparation?" -->
+                <strong>Decision:</strong> {{DECISION_QUESTION}}
+            </p>
+        </header>
+
+        <!--
+        ╔══════════════════════════════════════════════════════════════╗
+        ║  VERDICT — Executive Summary                                ║
+        ║                                                             ║
+        ║  F-pattern: this is the first thing the reader sees after   ║
+        ║  the header. 2-4 bullet points with status indicators.      ║
+        ║  Each bullet = one key takeaway with a green/yellow/red     ║
+        ║  verdict. Keep it scannable — one line per takeaway.        ║
+        ╚══════════════════════════════════════════════════════════════╝
+        -->
+        <div class="section" style="border-left: 4px solid var(--green); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Verdict</h2>
+            <!-- ▸ Change border-left color to match overall verdict: green=go, yellow=iterate, red=kill -->
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <!-- ▸ Use status-green / status-yellow / status-red per takeaway -->
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>{{VERDICT_1_TITLE}}</strong> &mdash; {{VERDICT_1_DETAIL}}</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>{{VERDICT_2_TITLE}}</strong> &mdash; {{VERDICT_2_DETAIL}}</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>{{VERDICT_3_TITLE}}</strong> &mdash; {{VERDICT_3_DETAIL}}</p>
+                <!-- ▸ Add/remove verdict lines as needed. Keep to 2-4 max. -->
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  1. SETUP — Experiment Design                -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Experiment Design</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Background</h3>
+                <!--
+                ▸ Audience context: explain WHY this experiment exists.
+                ▸ Assume the reader may not be familiar with the product.
+                ▸ Structure: Problem → Solution → Why this specific approach.
+                -->
+                <div class="insight-card" style="border-left-color: var(--accent);">
+                    <p><strong>Problem:</strong> {{BACKGROUND_PROBLEM}}</p>
+                    <p><strong>Solution:</strong> {{BACKGROUND_SOLUTION}}</p>
+                    <p><strong>Why {{APPROACH_NAME}}:</strong> {{BACKGROUND_WHY}}</p>
+                </div>
+            </div>
+
+            <!--
+            ▸ OPTIONAL: Product preview image
+            <div style="margin-bottom: 2rem; text-align: center;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem; text-align: left;">Product Preview</h3>
+                <img src="assets/{{IMAGE_FILENAME}}" alt="{{IMAGE_ALT}}" style="max-width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.12);">
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem;">{{IMAGE_CAPTION}}</p>
+            </div>
+            -->
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Format Specification</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Value</th></tr>
+                            </thead>
+                            <tbody>
+                                <!-- ▸ Fill in experiment parameters. Common rows: -->
+                                <tr><td>Type</td><td>{{EXPERIMENT_TYPE}}</td></tr>
+                                <tr><td>Audience</td><td>{{AUDIENCE}}</td></tr>
+                                <tr><td>Duration</td><td>{{EXPERIMENT_DURATION}}</td></tr>
+                                <tr><td>Trigger</td><td>{{TRIGGER_CONDITION}}</td></tr>
+                                <tr><td>Placement</td><td>{{PLACEMENT}}</td></tr>
+                                <!-- ▸ Add/remove rows as needed -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Test Groups</h3>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Control</h3>
+                        <p>{{CONTROL_DESCRIPTION}}</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3>Variant</h3>
+                        <p>{{VARIANT_DESCRIPTION}}</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Success Metrics</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Type</th><th>Metric</th></tr>
+                            </thead>
+                            <tbody>
+                                <!-- ▸ Primary = what we're trying to move. Guardrail = what must not regress. -->
+                                <tr><td><strong>Primary</strong></td><td>{{PRIMARY_METRIC_1}}</td></tr>
+                                <tr><td><strong>Primary</strong></td><td>{{PRIMARY_METRIC_2}}</td></tr>
+                                <tr><td><strong>Guardrail</strong></td><td>{{GUARDRAIL_METRIC}}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--
+                    ▸ OPTIONAL: Key design choice callout
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Key Design Choice</h3>
+                    <div class="insight-card" style="border-left-color: var(--blue);">
+                        <h3>{{DESIGN_CHOICE_TITLE}}</h3>
+                        <p>{{DESIGN_CHOICE_DESCRIPTION}}</p>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  2. TENSION — Overview KPIs                  -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="overview">
+            <h2 class="section-title">2. Overview</h2>
+
+            <!--
+            ▸ F-PATTERN: KPI cards sit at the top — the first thing the reader sees.
+            ▸ Each card: one number, one label, one context line.
+            ▸ Use kpi-grid (4 cols) or kpi-grid-3 (3 cols). Pick based on your metric count.
+            ▸ Color the .kpi-value with semantic color when the number has a verdict:
+              style="color: var(--green);"   → good
+              style="color: var(--yellow);"  → caution
+              style="color: var(--red);"     → bad
+              (default accent color = neutral/informational)
+            -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">{{KPI_1_LABEL}}</div>
+                    <div class="kpi-value">{{KPI_1_VALUE}}</div>
+                    <div class="kpi-sub">{{KPI_1_CONTEXT}}</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">{{KPI_2_LABEL}}</div>
+                    <div class="kpi-value">{{KPI_2_VALUE}}</div>
+                    <div class="kpi-sub">{{KPI_2_CONTEXT}}</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">{{KPI_3_LABEL}}</div>
+                    <div class="kpi-value">{{KPI_3_VALUE}}</div>
+                    <div class="kpi-sub">{{KPI_3_CONTEXT}}</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">{{KPI_4_LABEL}}</div>
+                    <div class="kpi-value">{{KPI_4_VALUE}}</div>
+                    <div class="kpi-sub">{{KPI_4_CONTEXT}}</div>
+                </div>
+            </div>
+
+            <!--
+            ▸ OPTIONAL: Second row of KPIs (e.g. conversion data, secondary metrics)
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text);">{{SECONDARY_KPI_GROUP_TITLE}}</h3>
+            <div class="kpi-grid-3">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">{{SEC_KPI_1_LABEL}}</div>
+                    <div class="kpi-value" style="color: var(--green);">{{SEC_KPI_1_VALUE}}</div>
+                    <div class="kpi-sub">{{SEC_KPI_1_CONTEXT}}</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--blue);">
+                    <div class="kpi-title">{{SEC_KPI_2_LABEL}}</div>
+                    <div class="kpi-value" style="color: var(--blue);">{{SEC_KPI_2_VALUE}}</div>
+                    <div class="kpi-sub">{{SEC_KPI_2_CONTEXT}}</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">{{SEC_KPI_3_LABEL}}</div>
+                    <div class="kpi-value">{{SEC_KPI_3_VALUE}}</div>
+                    <div class="kpi-sub">{{SEC_KPI_3_CONTEXT}}</div>
+                </div>
+            </div>
+            -->
+
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -0.5rem;">
+                <!-- ▸ ALWAYS include data source + time period (article principle #3) -->
+                <strong>Source:</strong> {{DATA_SOURCE}} &middot; {{DATE_RANGE}}
+            </p>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  3. INSIGHT — Experiment Guardrail           -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="guardrail">
+            <h2 class="section-title">3. Experiment Guardrail &mdash; {{GUARDRAIL_TITLE}}</h2>
+            <!-- ▸ GUARDRAIL_TITLE: e.g. "Retention Impact", "Matchmaking Activity", "Revenue Impact" -->
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                A/B test: <strong>{{EXPERIMENT_FLAG}}</strong> &middot; {{GUARDRAIL_DATE_RANGE}} &middot;
+                Metric: <em>{{GUARDRAIL_METRIC_DESCRIPTION}}</em>
+            </p>
+
+            <div class="grid-2" style="margin-bottom: 1.5rem;">
+                <div class="experiment-box variant">
+                    <div class="experiment-label">Variant &mdash; {{VARIANT_NAME}}</div>
+                    <div class="experiment-value" style="color: var(--accent);">{{VARIANT_VALUE}}</div>
+                    <div class="funnel-sub">{{VARIANT_CONTEXT}}</div>
+                </div>
+                <div class="experiment-box control">
+                    <div class="experiment-label">Control</div>
+                    <div class="experiment-value" style="color: var(--text);">{{CONTROL_VALUE}}</div>
+                    <div class="funnel-sub">{{CONTROL_CONTEXT}}</div>
+                </div>
+            </div>
+
+            <div class="kpi-grid-3" style="margin-bottom: 2rem;">
+                <div class="kpi-card">
+                    <div class="kpi-title">Delta</div>
+                    <!-- ▸ Color the delta: green if positive/neutral, red if negative -->
+                    <div class="kpi-value" style="font-size: 2rem; color: var(--green);">{{DELTA_VALUE}}</div>
+                    <div class="kpi-sub">Variant vs Control</div>
+                </div>
+                <!-- ▸ Add additional guardrail KPI cards as needed -->
+            </div>
+
+            <!--
+            ▸ CHART: Evolution → Line chart (article principle #2)
+            ▸ Daily variant vs control — the primary guardrail visualisation.
+            ▸ Both lines should be clearly distinguishable: solid vs dashed, distinct colors.
+            ▸ Add reference lines or event annotations if relevant (e.g. "experiment started" vertical line).
+            -->
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{{GUARDRAIL_CHART_TITLE}}</h3>
+            <div class="chart-container">
+                <canvas id="guardrailChart"></canvas>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">
+                Source: {{GUARDRAIL_SOURCE}} &middot; {{GUARDRAIL_DATE_RANGE}}
+            </p>
+
+            <!--
+            ▸ Guardrail verdict insight cards.
+            ▸ Use green border-left for "passed", red for "failed", yellow for "inconclusive".
+            -->
+            <div class="grid-2" style="margin-top: 2rem;">
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3><span class="status-indicator status-green"></span> {{GUARDRAIL_VERDICT_TITLE}}</h3>
+                    <p>{{GUARDRAIL_VERDICT_BODY}}</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--blue);">
+                    <h3>{{GUARDRAIL_PATTERN_TITLE}}</h3>
+                    <p>{{GUARDRAIL_PATTERN_BODY}}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  4. INSIGHT — User Behaviour / Funnel        -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="funnel">
+            <h2 class="section-title">4. {{FUNNEL_SECTION_TITLE}}</h2>
+            <!-- ▸ FUNNEL_SECTION_TITLE: e.g. "User Behaviour Funnel", "Conversion Path", "Engagement Flow" -->
+
+            <div class="insight-card" style="padding: 2rem; border-left-color: var(--accent);">
+                <h3 style="margin-bottom: 1rem;">{{FUNNEL_TITLE}}</h3>
+                <!--
+                ▸ Funnel steps: add/remove .funnel-step blocks as needed.
+                ▸ The last step can have a green top border to highlight the conversion goal:
+                  style="flex: 1; border-top: 3px solid var(--green);"
+                -->
+                <div class="funnel-wrapper">
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">{{STEP_1_TITLE}}</div>
+                        <div class="funnel-value">{{STEP_1_VALUE}}</div>
+                        <div class="funnel-sub">{{STEP_1_CONTEXT}}</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">{{STEP_2_TITLE}}</div>
+                        <div class="funnel-value">{{STEP_2_VALUE}}</div>
+                        <div class="funnel-sub">{{STEP_2_CONTEXT}}</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">{{STEP_3_TITLE}}</div>
+                        <div class="funnel-value">{{STEP_3_VALUE}}</div>
+                        <div class="funnel-sub">{{STEP_3_CONTEXT}}</div>
+                    </div>
+                    <!-- ▸ Add more steps as needed -->
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div>
+                    <!--
+                    ▸ CHART: Part-to-whole → Doughnut (max 5 slices, 65% cutout)
+                    ▸ Or use a horizontal bar for ranking if more appropriate.
+                    -->
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{{FUNNEL_CHART_TITLE}}</h3>
+                    <div class="chart-container small">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{{FUNNEL_TABLE_TITLE}}</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Step</th>
+                                    <th class="number">Volume</th>
+                                    <th class="number">% of Total</th>
+                                    <th class="number">Step Conv.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- ▸ Fill with funnel data rows -->
+                                <tr>
+                                    <td>{{ROW_1_NAME}}</td>
+                                    <td class="number highlight">{{ROW_1_VOLUME}}</td>
+                                    <td class="number">100%</td>
+                                    <td class="number">&mdash;</td>
+                                </tr>
+                                <!-- ▸ Add more rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  5. INSIGHT — Deep-dive (Ranking / Geo / Breakdown) -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="deepdive">
+            <h2 class="section-title">5. {{DEEPDIVE_TITLE}}</h2>
+            <!--
+            ▸ This section is flexible. Use it for:
+              - Geographic breakdown (horizontal bar chart + country table)
+              - Segment analysis (by device, by user tier, by locale)
+              - Time-series deep-dive (daily breakdown chart)
+            ▸ CHART TYPE GUIDE (from the article):
+              - Ranking → horizontal bar chart
+              - Evolution → line chart
+              - Correlation → scatter plot
+              - NEVER: pie chart with 5+ categories
+            -->
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                {{DEEPDIVE_SOURCE_NOTE}}
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{{DEEPDIVE_CHART_TITLE}}</h3>
+                    <div class="chart-container tall">
+                        <canvas id="deepdiveChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">{{DEEPDIVE_TABLE_TITLE}}</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <!-- ▸ Adapt columns to your data -->
+                                    <th>{{COL_1}}</th>
+                                    <th class="number">{{COL_2}}</th>
+                                    <th class="number">{{COL_3}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- ▸ Fill with data rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!--
+                    ▸ OPTIONAL: Pattern / insight callout
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3>{{PATTERN_TITLE}}</h3>
+                        <p>{{PATTERN_DESCRIPTION}}</p>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+
+        <!--
+        ▸ OPTIONAL: Section 6 — Additional deep-dive
+        ▸ Duplicate the section 5 block above if you need a second breakdown
+        ▸ (e.g. Section 5 = Geographic, Section 6 = Completion Rate / Device split / etc.)
+        ▸ Renumber accordingly.
+        -->
+
+        <!-- ════════════════════════════════════════════ -->
+        <!--  7. ACTION — Decision Framework              -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">7. Decision Framework</h2>
+            <!--
+            ▸ This is the "action" part of the narrative arc.
+            ▸ Structure: Key Questions (left, 2fr) + Go/No-Go Criteria (right, 1fr)
+            ▸ Each key question should have a concrete data-backed answer.
+            -->
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
+
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>{{QUESTION_1}}</strong></p>
+                        <p>{{ANSWER_1}}</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>{{QUESTION_2}}</strong></p>
+                        <p>{{ANSWER_2}}</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>{{QUESTION_3}}</strong></p>
+                        <p>{{ANSWER_3}}</p>
+                    </div>
+                    <!-- ▸ Add more questions as needed -->
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item">{{NEXT_STEP_1}}</li>
+                        <li class="list-item">{{NEXT_STEP_2}}</li>
+                        <li class="list-item">{{NEXT_STEP_3}}</li>
+                        <!-- ▸ Add more steps as needed -->
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN</strong></p>
+                        <p>{{GREEN_CRITERIA}}</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>YELLOW</strong></p>
+                        <p>{{YELLOW_CRITERIA}}</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>RED</strong></p>
+                        <p>{{RED_CRITERIA}}</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <!--
+                        ▸ One line per metric. Use status-green / status-yellow / status-red.
+                        ▸ Format: indicator + metric name + (current value)
+                        -->
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> {{STATUS_LINE_1}}</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> {{STATUS_LINE_2}}</p>
+                        <p><span class="status-indicator status-yellow"></span> {{STATUS_LINE_3}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <!-- ▸ ALWAYS list data sources + date ranges (article principle #3: context) -->
+            Data sources: {{SOURCE_1}} ({{SOURCE_1_DATES}}), {{SOURCE_2}} ({{SOURCE_2_DATES}}) | Internal PM Tool
+        </div>
+    </div>
+
+    <script>
+        var chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
+
+        /*
+         * Chart.js Defaults — Tufte-clean
+         * - No chart borders or shadows
+         * - Light grey gridlines only (#E2E8F0)
+         * - Direct labels when possible; legend at top with point-style
+         * - Tooltips: white background, subtle border
+         */
+        Chart.defaults.color = '#6B7280';
+        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        var gridColor = '#E2E8F0';
+        var tooltipBg = '#ffffff';
+        var tooltipBorder = '#E2E8F0';
+        var tooltipTitleColor = '#1A1A2E';
+        var tooltipBodyColor = '#6B7280';
+
+        var tooltipDefaults = {
+            backgroundColor: tooltipBg,
+            titleColor: tooltipTitleColor,
+            bodyColor: tooltipBodyColor,
+            borderColor: tooltipBorder,
+            borderWidth: 1
+        };
+
+        /*
+         * ── Chart 1: Guardrail Line Chart ──────────────
+         * Evolution → line chart (article principle #2)
+         * Two datasets: variant (solid, accent) vs control (dashed, red)
+         */
+        var guardrailCtx = document.getElementById('guardrailChart').getContext('2d');
+        new Chart(guardrailCtx, {
+            type: 'line',
+            data: {
+                labels: [/* ▸ Date labels: ['Mar 14','Mar 15', ...] */],
+                datasets: [
+                    {
+                        label: 'Variant',
+                        data: [/* ▸ Daily variant values */],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'Control',
+                        data: [/* ▸ Daily control values */],
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.05)',
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        borderWidth: 2,
+                        borderDash: [6, 3]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#6b7280', usePointStyle: true } },
+                    tooltip: tooltipDefaults
+                },
+                scales: {
+                    x: { grid: { color: gridColor } },
+                    y: {
+                        grid: { color: gridColor },
+                        /* ▸ Set min/max to avoid truncated axes — but don't start at zero for large-value metrics */
+                        ticks: { callback: function(v) { return v + 'K'; } }
+                    }
+                }
+            }
+        });
+
+        /*
+         * ── Chart 2: Funnel / Breakdown Chart ──────────
+         * Part-to-whole → doughnut (max 5 slices, 65% cutout)
+         * Or swap to type: 'bar' with indexAxis: 'y' for ranking
+         */
+        var funnelCtx = document.getElementById('funnelChart').getContext('2d');
+        new Chart(funnelCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [/* ▸ Category labels */],
+                datasets: [{
+                    data: [/* ▸ Values */],
+                    backgroundColor: ['#059669', '#d97706', '#94a3b8'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#6b7280', boxWidth: 12 } },
+                    tooltip: tooltipDefaults
+                },
+                cutout: '65%'
+            }
+        });
+
+        /*
+         * ── Chart 3: Deep-dive Chart ───────────────────
+         * Ranking → horizontal bar (indexAxis: 'y')
+         * Bar charts ALWAYS start at zero (article principle #3)
+         */
+        var deepdiveCtx = document.getElementById('deepdiveChart').getContext('2d');
+        new Chart(deepdiveCtx, {
+            type: 'bar',
+            data: {
+                labels: [/* ▸ Category labels (e.g. country names) */],
+                datasets: [{
+                    label: '{{DEEPDIVE_METRIC_LABEL}}',
+                    data: [/* ▸ Values */],
+                    backgroundColor: '#8b5cf6',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipDefaults
+                },
+                scales: {
+                    x: { grid: { color: gridColor }, ticks: { callback: function(v) { return (v / 1000) + 'K'; } } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        /*
+         * ── Additional Charts ──────────────────────────
+         * ▸ Add more Chart.js instances here as needed.
+         * ▸ Follow the same pattern:
+         *   1. Get canvas context
+         *   2. Pick chart type matching the question (line/bar/doughnut/scatter)
+         *   3. Use tooltipDefaults and gridColor for consistency
+         *   4. NEVER use 3D, dual unrelated axes, or 20+ line spaghetti
+         */
+
+        } // end chartAvailable guard
+    </script>
+</body>
+</html>

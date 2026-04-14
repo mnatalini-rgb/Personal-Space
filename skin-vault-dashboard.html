@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skin Vault Experiment Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f8f9fa;
+            --bg: #EEF2F3;
             --surface: #ffffff;
-            --border: #e2e4e9;
+            --border: #E2E8F0;
             --text: #1a1a2e;
             --text-muted: #6b7280;
             --accent: #2563eb;
@@ -17,9 +20,11 @@
             --green: #059669;
             --yellow: #d97706;
             --red: #dc2626;
-            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
-            --radius-lg: 12px;
-            --radius-md: 8px;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,17 +41,18 @@
         .container { max-width: 1200px; margin: 0 auto; }
 
         .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
-        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
         .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
         .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
         .header p { color: var(--text-muted); font-size: 1rem; }
 
-        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .section-title { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-weight: 600; }
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
 
         /* KPIs */
         .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
-        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
         .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
         .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
         .kpi-sub { font-size: 0.9rem; color: var(--text); }
@@ -58,10 +64,10 @@
         .chart-container.small { height: 250px; }
 
         /* Tables */
-        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; }
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
         table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
         th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
-        th { background-color: #f1f3f5; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
         tr:hover td { background-color: #f8f9fa; }
         tr:last-child td { border-bottom: none; }
         td.number { text-align: right; font-variant-numeric: tabular-nums; }
@@ -69,14 +75,14 @@
 
         /* Highlights & Insights */
         .highlight { color: var(--accent); font-weight: 600; }
-        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
         .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
 
         .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 
         /* Funnel specifics */
-        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
         .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
         .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
         .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
@@ -113,7 +119,7 @@
         <header class="header">
             <span class="badge">Experiment · Phase 1</span>
             <h1>Skin Vault Experiment Dashboard</h1>
-            <h2>300 Top-Viewed Player Profiles · Launched Mar 17, 2026 · Updated Mar 30</h2>
+            <h2>300 Top-Viewed Player Profiles · Launched Mar 17, 2026 · Updated Apr 14</h2>
             <p>Moritz Natalini · Ads &amp; Partnerships · EFG</p>
         </header>
 
@@ -123,22 +129,22 @@
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-title">Total Page Views</div>
-                    <div class="kpi-value">6,927</div>
+                    <div class="kpi-value">16,976</div>
                     <div class="kpi-sub">All-time tab clicks</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Unique Profiles Viewed</div>
-                    <div class="kpi-value" style="font-size: 2rem;">305 <span style="font-size: 1.25rem; color: var(--text-muted);">/ 300</span></div>
-                    <div class="kpi-sub">102% of cohort — users navigating beyond experiment profiles</div>
+                    <div class="kpi-value" style="font-size: 2rem;">353 <span style="font-size: 1.25rem; color: var(--text-muted);">/ 300</span></div>
+                    <div class="kpi-sub">118% of cohort — users navigating beyond experiment profiles</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Unique Tab Clickers</div>
-                    <div class="kpi-value">4,734</div>
+                    <div class="kpi-value">10,989</div>
                     <div class="kpi-sub">Unique users engaging with tab</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Feedback Submissions</div>
-                            <div class="kpi-value">28</div>
+                            <div class="kpi-value">15</div>
                     <div class="kpi-sub">Via sentiment widget</div>
                 </div>
             </div>
@@ -148,25 +154,25 @@
                 <div class="funnel-wrapper">
                     <div class="funnel-step" style="flex: 1;">
                         <div class="funnel-title">Tab Click</div>
-                        <div class="funnel-value">4,734</div>
+                        <div class="funnel-value">10,989</div>
                         <div class="funnel-sub">100%</div>
                     </div>
                     <div class="funnel-arrow">→</div>
                     <div class="funnel-step" style="flex: 1;">
                         <div class="funnel-title">Inventory Card Click</div>
-                        <div class="funnel-value">492</div>
-                        <div class="funnel-sub">10.4% of total</div>
+                        <div class="funnel-value">1,407</div>
+                        <div class="funnel-sub">12.8% of total</div>
                     </div>
                     <div class="funnel-arrow">→</div>
                     <div class="funnel-step" style="flex: 1;">
                         <div class="funnel-title">Stat Widget Click</div>
-                        <div class="funnel-value">350</div>
-                        <div class="funnel-sub">7.4% of total</div>
+                        <div class="funnel-value">963</div>
+                        <div class="funnel-sub">8.8% of total</div>
                     </div>
                     <div class="funnel-arrow">→</div>
                     <div class="funnel-step" style="flex: 1;">
                         <div class="funnel-title">Inspect in Steam</div>
-                        <div class="funnel-value">17</div>
+                        <div class="funnel-value">42</div>
                         <div class="funnel-sub">0.4% conversion</div>
                     </div>
                 </div>
@@ -180,7 +186,7 @@
                 <div class="chart-container">
                     <canvas id="dailyViewsChart"></canvas>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">Mar 30 is partial day (data as of query time). <span style="color: var(--red); font-weight: 600;">Red dashed line</span> = Mar 24: "BETA" badge added to the Skin Vault tab, explaining the ~3x traffic spike.</p>
+                <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">Data through Apr 14, 2026. <span style="color: var(--red); font-weight: 600;">Red dashed line</span> = Mar 24: "BETA" badge added to the Skin Vault tab, explaining the ~3x traffic spike.</p>
             </div>
             <div class="grid-2">
                 <div>
@@ -197,30 +203,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>CEMEN_BAKIN</td><td class="number highlight">695</td><td class="number">513</td><td class="number">1.4</td><td class="number">11</td></tr>
-                                <tr><td>StRoGo</td><td class="number highlight">465</td><td class="number">311</td><td class="number">1.5</td><td class="number">6</td></tr>
-                                <tr><td>s-chilla</td><td class="number highlight">327</td><td class="number">234</td><td class="number">1.4</td><td class="number">7</td></tr>
-                                <tr><td>b1st-</td><td class="number">295</td><td class="number">236</td><td class="number">1.3</td><td class="number">11</td></tr>
-                                <tr><td>nocries</td><td class="number">254</td><td class="number">165</td><td class="number">1.5</td><td class="number">12</td></tr>
-                                <tr><td>m3wsu</td><td class="number">217</td><td class="number">146</td><td class="number">1.5</td><td class="number">4</td></tr>
-                                <tr><td>SzeliS</td><td class="number">214</td><td class="number">156</td><td class="number">1.4</td><td class="number">3</td></tr>
-                                <tr><td>zibert1715</td><td class="number">208</td><td class="number">163</td><td class="number">1.3</td><td class="number">3</td></tr>
-                                <tr><td>h4RN1zanami</td><td class="number">181</td><td class="number">130</td><td class="number">1.4</td><td class="number">8</td></tr>
-                                <tr><td>auraeater</td><td class="number">160</td><td class="number">110</td><td class="number">1.5</td><td class="number">9</td></tr>
-                                <tr><td>gwizdakk</td><td class="number">140</td><td class="number">100</td><td class="number">1.4</td><td class="number">6</td></tr>
-                                <tr><td>ct0m</td><td class="number">136</td><td class="number">97</td><td class="number">1.4</td><td class="number">4</td></tr>
-                                <tr><td>baz</td><td class="number">103</td><td class="number">79</td><td class="number">1.3</td><td class="number">5</td></tr>
-                                <tr><td>Recrent</td><td class="number">96</td><td class="number">77</td><td class="number">1.2</td><td class="number">3</td></tr>
-                                <tr><td>-SYPH0</td><td class="number">87</td><td class="number">68</td><td class="number">1.3</td><td class="number">7</td></tr>
-                                <tr><td>Magnojezzz</td><td class="number">86</td><td class="number">72</td><td class="number">1.2</td><td class="number">7</td></tr>
-                                <tr><td>t3ns1on</td><td class="number">74</td><td class="number">55</td><td class="number">1.3</td><td class="number">4</td></tr>
-                                <tr><td>hhakuu</td><td class="number">73</td><td class="number">48</td><td class="number">1.5</td><td class="number">3</td></tr>
-                                <tr><td>jresy</td><td class="number">72</td><td class="number">52</td><td class="number">1.4</td><td class="number">3</td></tr>
-                                <tr><td>Murzofix</td><td class="number">72</td><td class="number">55</td><td class="number">1.3</td><td class="number">4</td></tr>
+                                <tr><td>CEMEN_BAKIN</td><td class="number highlight">1,941</td><td class="number">1,408</td><td class="number">1.4</td><td class="number">16</td></tr>
+                                <tr><td>StRoGo</td><td class="number highlight">901</td><td class="number">647</td><td class="number">1.4</td><td class="number">6</td></tr>
+                                <tr><td>zibert1715</td><td class="number highlight">685</td><td class="number">509</td><td class="number">1.3</td><td class="number">6</td></tr>
+                                <tr><td>s-chilla</td><td class="number">655</td><td class="number">456</td><td class="number">1.4</td><td class="number">8</td></tr>
+                                <tr><td>nocries</td><td class="number">582</td><td class="number">405</td><td class="number">1.4</td><td class="number">15</td></tr>
+                                <tr><td>SzeliS</td><td class="number">521</td><td class="number">376</td><td class="number">1.4</td><td class="number">5</td></tr>
+                                <tr><td>b1st-</td><td class="number">490</td><td class="number">389</td><td class="number">1.3</td><td class="number">14</td></tr>
+                                <tr><td>m3wsu</td><td class="number">443</td><td class="number">306</td><td class="number">1.4</td><td class="number">7</td></tr>
+                                <tr><td>auraeater</td><td class="number">427</td><td class="number">302</td><td class="number">1.4</td><td class="number">10</td></tr>
+                                <tr><td>baz</td><td class="number">408</td><td class="number">318</td><td class="number">1.3</td><td class="number">8</td></tr>
+                                <tr><td>h4RN1zanami</td><td class="number">401</td><td class="number">303</td><td class="number">1.3</td><td class="number">12</td></tr>
+                                <tr><td>ct0m</td><td class="number">398</td><td class="number">289</td><td class="number">1.4</td><td class="number">7</td></tr>
+                                <tr><td>gwizdakk</td><td class="number">349</td><td class="number">257</td><td class="number">1.4</td><td class="number">7</td></tr>
+                                <tr><td>hEAVENACHE11</td><td class="number">255</td><td class="number">190</td><td class="number">1.3</td><td class="number">6</td></tr>
+                                <tr><td>Murzofix</td><td class="number">238</td><td class="number">177</td><td class="number">1.3</td><td class="number">5</td></tr>
+                                <tr><td>kelieN</td><td class="number">209</td><td class="number">166</td><td class="number">1.3</td><td class="number">7</td></tr>
+                                <tr><td>-SYPH0</td><td class="number">203</td><td class="number">160</td><td class="number">1.3</td><td class="number">9</td></tr>
+                                <tr><td>xKacpersky</td><td class="number">201</td><td class="number">150</td><td class="number">1.3</td><td class="number">11</td></tr>
+                                <tr><td>jresy</td><td class="number">195</td><td class="number">141</td><td class="number">1.4</td><td class="number">8</td></tr>
+                                <tr><td>Magnojezzz</td><td class="number">191</td><td class="number">156</td><td class="number">1.2</td><td class="number">8</td></tr>
                             </tbody>
                         </table>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">Note: 305 unique profiles viewed — exceeds 300 cohort, meaning users are navigating to non-experiment profiles</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">Note: 353 unique profiles viewed — exceeds 300 cohort, meaning users are navigating to non-experiment profiles</p>
                 </div>
                 <div>
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top 15 Profiles (Views)</h3>
@@ -255,10 +261,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>tab_click</td><td class="number highlight">4,734</td><td class="number">6,927</td></tr>
-                                <tr><td>inventory_card_click</td><td class="number">492</td><td class="number">918</td></tr>
-                                <tr><td>stat_widget_click</td><td class="number">350</td><td class="number">546</td></tr>
-                                <tr><td>inspect_in_steam_click</td><td class="number">17</td><td class="number">37</td></tr>
+                                <tr><td>tab_click</td><td class="number highlight">10,989</td><td class="number">16,976</td></tr>
+                                <tr><td>inventory_card_click</td><td class="number">1,407</td><td class="number">2,110</td></tr>
+                                <tr><td>stat_widget_click</td><td class="number">963</td><td class="number">1,249</td></tr>
+                                <tr><td>inspect_in_steam_click</td><td class="number">42</td><td class="number">74</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -279,12 +285,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td>KNIFE</td><td class="number">253</td><td class="number">206</td><td class="number">7</td></tr>
-                                <tr><td>RIFLE</td><td class="number">187</td><td class="number">102</td><td class="number">3</td></tr>
-                                <tr><td>PISTOL</td><td class="number">113</td><td class="number">55</td><td class="number">4</td></tr>
-                                <tr><td>STICKER</td><td class="number">31</td><td class="number">21</td><td class="number">0</td></tr>
-                                <tr><td>SMG</td><td class="number">18</td><td class="number">24</td><td class="number">1</td></tr>
-                                <tr><td>HEAVY</td><td class="number">6</td><td class="number">7</td><td class="number">2</td></tr>
+                                <tr><td>KNIFE</td><td class="number">594</td><td class="number">464</td><td class="number">18</td></tr>
+                                <tr><td>RIFLE</td><td class="number">418</td><td class="number">221</td><td class="number">13</td></tr>
+                                <tr><td>PISTOL</td><td class="number">280</td><td class="number">183</td><td class="number">7</td></tr>
+                                <tr><td>STICKER</td><td class="number">58</td><td class="number">33</td><td class="number">1</td></tr>
+                                <tr><td>SMG</td><td class="number">40</td><td class="number">50</td><td class="number">1</td></tr>
+                                <tr><td>HEAVY</td><td class="number">17</td><td class="number">12</td><td class="number">2</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -299,11 +305,11 @@
                     <div class="kpi-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1rem;">
                         <div class="kpi-card">
                             <div class="kpi-title">Total Submissions</div>
-                    <div class="kpi-value">28</div>
+                    <div class="kpi-value">15</div>
                         </div>
                         <div class="kpi-card">
                             <div class="kpi-title">Viewer Breakdown</div>
-                            <div class="kpi-value" style="font-size: 1.5rem;">Owner (5) <br> Visitor (23)</div>
+                            <div class="kpi-value" style="font-size: 1.5rem;">Owner (2) <br> Visitor (13)</div>
                         </div>
                     </div>
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Sentiment Breakdown</h3>
@@ -314,12 +320,20 @@
                 <div>
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Free Text Responses</h3>
                     <div class="insight-card">
-                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
-                        <p style="color: var(--text); font-style: italic;">"LOWEST FLOAT Sticker | biguzera | Budapest 2025 High Grade, how sticker may had float?"</p>
+                        <p><strong>Visitor (curious)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"how the rarity works, highest rarity on fl0m brings up etchlord"</p>
                     </div>
                     <div class="insight-card">
-                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
-                        <p style="color: var(--text); font-style: italic;">"What exactly it is"</p>
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"seeing the skins someone uses, but it is missing the actual price of the skins"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"would be a amazing feature"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (loveIt)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"great"</p>
                     </div>
                     <div class="insight-card">
                         <p><strong>Visitor (loveIt)</strong></p>
@@ -330,8 +344,12 @@
                         <p style="color: var(--text); font-style: italic;">"i just love to browse other ppl's skins, please make it official!"</p>
                     </div>
                     <div class="insight-card">
-                        <p><strong>Visitor (loveIt)</strong></p>
-                        <p style="color: var(--text); font-style: italic;">"idk"</p>
+                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"What exactly it is"</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><strong>Visitor (stillFiguringItOut)</strong></p>
+                        <p style="color: var(--text); font-style: italic;">"LOWEST FLOAT Sticker | biguzera | Budapest 2025 High Grade, how sticker may had float?"</p>
                     </div>
                 </div>
             </div>
@@ -344,26 +362,26 @@
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
                     <div class="insight-card" style="border-left-color: var(--border);">
                         <p><strong>Is organic traffic sufficient?</strong></p>
-                        <p>Current: 6,927 views in 18 days (~385/day, ~780/day since Mar 24)</p>
+                        <p>Current: 16,976 views in 33 days (~515/day avg, sustained post-BETA badge)</p>
                     </div>
                     <div class="insight-card" style="border-left-color: var(--border);">
                         <p><strong>Do users engage beyond the tab click?</strong></p>
-                        <p>10.4% click inventory items (492 of 4,734).</p>
+                        <p>12.8% click inventory items (1,407 of 10,989).</p>
                     </div>
                     <div class="insight-card" style="border-left-color: var(--border);">
                         <p><strong>Is sentiment positive?</strong></p>
-                        <p>100% non-negative so far (n=28).</p>
+                        <p>93% non-negative (n=15). First "notMyThing" received (1 of 15).</p>
                     </div>
                     <div class="insight-card" style="border-left-color: var(--border);">
                         <p><strong>Weekend traffic spike?</strong></p>
-                        <p>Weekend traffic strong — Mar 29 (Sat): 812 views. The ~3x spike from Mar 24 (253→782/day) is explained by the addition of a "BETA" badge on the Skin Vault tab, which increased discoverability.</p>
+                        <p>Weekend traffic strong — sustained ~3x uplift from BETA badge (Mar 24). Traffic now averaging ~515 views/day across the full experiment period.</p>
                     </div>
 
                     <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
                     <ol style="margin-left: 1rem;">
-                        <li class="list-item"><strong style="color: var(--green);">Resolved:</strong> Mar 24 traffic spike — caused by "BETA" badge added to the Skin Vault tab, increasing discoverability (~3x uplift sustained)</li>
+                        <li class="list-item"><strong style="color: var(--green);">Resolved:</strong> Mar 24 traffic spike — caused by "BETA" badge added to the Skin Vault tab, increasing discoverability (~3x uplift sustained through Apr 14)</li>
                         <li class="list-item">Talk to Karen about promotion options</li>
-                        <li class="list-item">Feedback target exceeded (28/20 — 140%). Analyse qualitative themes.</li>
+                        <li class="list-item">Feedback sample still growing (15 submissions). Analyse qualitative themes — first "notMyThing" response received.</li>
                         <li class="list-item">Monitor Steam API rate limiting (Isabel's dashboard)</li>
                         <li class="list-item">Decide: expand to more profiles or iterate on UX</li>
                     </ol>
@@ -385,9 +403,9 @@
 
                     <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
                     <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic (~2.7k/week, 780/day since BETA badge on Mar 24)</p>
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Click Rate (10.4%)</p>
-                        <p><span class="status-indicator status-green"></span> Sentiment (100% non-neg, n=28)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic (~3.6k/week, 515/day avg over 33 days)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Click Rate (12.8%)</p>
+                        <p><span class="status-indicator status-green"></span> Sentiment (93% non-neg, n=15)</p>
                     </div>
                 </div>
             </div>
@@ -427,7 +445,7 @@
         </div>
 
         <div class="footer">
-            Data source: FACEIT Skin Vault Experiment · Data: Mar 13-30, 2026 | Internal PM Tool
+            Data source: FACEIT Skin Vault Experiment · Data: Mar 13 – Apr 14, 2026 | Internal PM Tool
         </div>
     </div>
 
@@ -437,11 +455,11 @@
 
         if (chartAvailable) {
         // Common Chart Defaults
-        Chart.defaults.color = '#6b7280';
-        Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif";
-        const gridColor = '#e2e4e9';
+        Chart.defaults.color = '#6B7280';
+        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        const gridColor = '#E2E8F0';
         const tooltipBg = '#ffffff';
-        const tooltipBorder = '#e2e4e9';
+        const tooltipBorder = '#E2E8F0';
         const tooltipTitleColor = '#1a1a2e';
         const tooltipBodyColor = '#6b7280';
 
@@ -483,28 +501,28 @@
         new Chart(dailyCtx, {
             type: 'line',
             data: {
-                labels: ['Mar 13', 'Mar 14', 'Mar 16', 'Mar 17', 'Mar 18', 'Mar 19', 'Mar 20', 'Mar 21', 'Mar 22', 'Mar 23', 'Mar 24', 'Mar 25', 'Mar 26', 'Mar 27', 'Mar 28', 'Mar 29', 'Mar 30*'],
+                labels: ['Mar 13', 'Mar 14', 'Mar 16', 'Mar 17', 'Mar 18', 'Mar 19', 'Mar 20', 'Mar 21', 'Mar 22', 'Mar 23', 'Mar 24', 'Mar 25', 'Mar 26', 'Mar 27', 'Mar 28', 'Mar 29', 'Mar 30', 'Mar 31', 'Apr 1', 'Apr 2', 'Apr 3', 'Apr 4', 'Apr 5', 'Apr 6', 'Apr 7', 'Apr 8', 'Apr 9', 'Apr 10', 'Apr 11', 'Apr 12', 'Apr 13', 'Apr 14*'],
                 datasets: [
                     {
                         label: 'Total Page Views',
-                        data: [16, 1, 253, 320, 255, 253, 241, 198, 227, 203, 782, 883, 803, 759, 674, 812, 247],
+                        data: [31, 3, 176, 229, 149, 161, 146, 123, 139, 118, 703, 744, 723, 670, 617, 763, 807, 568, 669, 725, 530, 594, 520, 560, 608, 607, 502, 497, 574, 552, 466, 31],
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37, 99, 235, 0.1)',
                         fill: true,
                         tension: 0.3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
                         borderWidth: 2
                     },
                     {
                         label: 'Unique Users',
-                        data: [7, 1, 197, 247, 186, 198, 180, 155, 170, 168, 649, 685, 645, 638, 548, 657, 179],
+                        data: [6, 1, 122, 161, 110, 115, 99, 93, 107, 81, 533, 565, 563, 525, 477, 588, 599, 412, 531, 576, 411, 453, 414, 441, 497, 468, 418, 396, 428, 440, 369, 26],
                         borderColor: '#059669',
                         backgroundColor: 'rgba(5, 150, 105, 0.1)',
                         fill: true,
                         tension: 0.3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
                         borderWidth: 2
                     }
                 ]
@@ -530,10 +548,10 @@
         new Chart(profileCtx, {
             type: 'bar',
             data: {
-                labels: ['CEMEN_BAKIN', 'StRoGo', 's-chilla', 'b1st-', 'nocries', 'm3wsu', 'SzeliS', 'zibert1715', 'h4RN1zanami', 'auraeater', 'gwizdakk', 'ct0m', 'baz', 'Recrent', '-SYPH0'],
+                labels: ['CEMEN_BAKIN', 'StRoGo', 'zibert1715', 's-chilla', 'nocries', 'SzeliS', 'b1st-', 'm3wsu', 'auraeater', 'baz', 'h4RN1zanami', 'ct0m', 'gwizdakk', 'hEAVENACHE11', 'Murzofix'],
                 datasets: [{
                     label: 'Total Views',
-                    data: [695, 465, 327, 295, 254, 217, 214, 208, 181, 160, 140, 136, 103, 96, 87],
+                    data: [1941, 901, 685, 655, 582, 521, 490, 443, 427, 408, 401, 398, 349, 255, 238],
                     backgroundColor: '#2563eb',
                     borderRadius: 4
                 }]
@@ -558,9 +576,9 @@
         new Chart(localeCtx, {
             type: 'doughnut',
             data: {
-                labels: ['RU', 'EN', 'PL', 'TR', 'UK', 'FR', 'ZH', 'FI', 'Other'],
+                labels: ['RU', 'EN', 'PL', 'TR', 'UK', 'FR', 'DE', 'ZH', 'Other'],
                 datasets: [{
-                    data: [4605, 2212, 553, 260, 144, 85, 70, 44, 158],
+                    data: [11199, 5329, 1364, 628, 308, 210, 117, 116, 507],
                     backgroundColor: ['#2563eb', '#059669', '#dc2626', '#d97706', '#8b5cf6', '#64748b', '#0ea5e9', '#f59e0b', '#94a3b8'],
                     borderWidth: 1,
                     borderColor: '#ffffff',
@@ -585,7 +603,7 @@
             data: {
                 labels: ['tab_click', 'inventory_card_click', 'stat_widget_click', 'inspect_in_steam_click'],
                 datasets: [{
-                    data: [4734, 492, 350, 17],
+                    data: [10989, 1407, 963, 42],
                     backgroundColor: ['#2563eb', '#059669', '#d97706', '#dc2626'],
                     borderWidth: 1,
                     borderColor: '#ffffff',
@@ -610,9 +628,9 @@
             data: {
                 labels: ['KNIFE', 'RIFLE', 'PISTOL', 'STICKER', 'SMG', 'HEAVY'],
                 datasets: [
-                    { label: 'Card Clicks', data: [253, 187, 113, 31, 18, 6], backgroundColor: '#2563eb', borderRadius: 4 },
-                    { label: 'Stat Clicks', data: [206, 102, 55, 21, 24, 7], backgroundColor: '#059669', borderRadius: 4 },
-                    { label: 'Inspect', data: [7, 3, 4, 0, 1, 2], backgroundColor: '#dc2626', borderRadius: 4 }
+                    { label: 'Card Clicks', data: [594, 418, 280, 58, 40, 17], backgroundColor: '#2563eb', borderRadius: 4 },
+                    { label: 'Stat Clicks', data: [464, 221, 183, 33, 50, 12], backgroundColor: '#059669', borderRadius: 4 },
+                    { label: 'Inspect', data: [18, 13, 7, 1, 1, 2], backgroundColor: '#dc2626', borderRadius: 4 }
                 ]
             },
             options: {
@@ -637,7 +655,7 @@
                 labels: ['loveIt', 'curious', 'stillFiguringItOut', 'notMyThing'],
                 datasets: [{
                     label: 'Submissions',
-                    data: [22, 2, 4, 0],
+                    data: [7, 3, 3, 1],
                     backgroundColor: ['#059669', '#2563eb', '#d97706', '#dc2626'],
                     borderRadius: 4
                 }]
