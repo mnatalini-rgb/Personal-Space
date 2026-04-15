@@ -163,7 +163,7 @@
   
   <div style="background: rgba(0,0,0,0.05); padding: 16px; border-radius: 8px; font-size: 14px; color: #333; line-height: 1.5;">
     <strong>🔮 Q4 Forecast & Considerations:</strong> With 1 quarter remaining and £18,325 budget remaining, the building is on track. <br>
-    <strong>Key risks:</strong> Fire Safety is already over budget, and Repairs are nearly exhausted. <br>
+    <strong>Key risks:</strong> Fire Safety is already over budget. <br>
     <strong>Consider:</strong> Will accountancy & audit fees (£1,260 budgeted, £0 spent) land in Q4? If so, this will draw down the remaining budget quickly. Close monitoring required on further maintenance spending before year-end.
   </div>
 </div>
@@ -198,7 +198,7 @@
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>FM02 Fire Safety Maintenance</strong>
-          <span>£2,498 / £1,500 (166%)</span>
+          <span>£2,330 / £1,500 (155%)</span>
         </div>
         <div class="bar-bg" style="height: 6px;"><div class="bar-fill red" style="width: 100%;"></div></div>
       </div>
@@ -223,17 +223,6 @@
           <span>£1,440 / £1,440 (100%)</span>
         </div>
         <div class="bar-bg" style="height: 6px;"><div class="bar-fill amber" style="width: 100%;"></div></div>
-      </div>
-    </div>
-
-    <div class="issue" onclick="gotoInvoice('Repairs')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
-      <div class="issue-text" style="width: 100%;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <strong>RE01 Repairs & Maintenance</strong>
-          <span>£4,902 / £5,000 (98%)</span>
-        </div>
-        <div class="bar-bg" style="height: 6px;"><div class="bar-fill amber" style="width: 98%;"></div></div>
       </div>
     </div>
 
@@ -298,13 +287,13 @@
         <tbody>
           <tr onclick="gotoInvoice('Insurance')" style="cursor: pointer;"><td>IN01</td><td>Building Insurance</td><td class="td-num">£13,470</td><td class="td-num">£13,050</td><td class="td-num">97%</td></tr>
           <tr onclick="gotoInvoice('Management')" style="cursor: pointer;"><td>MF01</td><td>Management Fees</td><td class="td-num">£6,901</td><td class="td-num">£5,176</td><td class="td-num">75%</td></tr>
-          <tr onclick="gotoInvoice('Repairs')" style="cursor: pointer;"><td>RE01</td><td>Repairs & Maintenance</td><td class="td-num">£5,000</td><td class="td-num">£4,902</td><td class="td-num">98%</td></tr>
+          <tr onclick="gotoInvoice('Repairs')" style="cursor: pointer;"><td>RE01</td><td>Repairs & Maintenance</td><td class="td-num">£5,000</td><td class="td-num">£2,704</td><td class="td-num">54%</td></tr>
           <tr onclick="gotoInvoice('Fire')" style="cursor: pointer;"><td>FM07</td><td>Fire Door Remedial</td><td class="td-num">£5,000</td><td class="td-num">£0</td><td class="td-num">0%</td></tr>
-          <tr onclick="gotoInvoice('Lift')" style="cursor: pointer;"><td>LM03</td><td>Lift Repairs</td><td class="td-num">£4,000</td><td class="td-num">£606</td><td class="td-num">15%</td></tr>
+          <tr onclick="gotoInvoice('Lift')" style="cursor: pointer;"><td>LM03</td><td>Lift Repairs</td><td class="td-num">£4,000</td><td class="td-num">£2,972</td><td class="td-num">74%</td></tr>
           <tr onclick="gotoInvoice('Utilities')" style="cursor: pointer;"><td>EL01</td><td>Electricity (Communal)</td><td class="td-num">£3,000</td><td class="td-num">£1,050</td><td class="td-num">35%</td></tr>
           <tr onclick="gotoInvoice('Cleaning')" style="cursor: pointer;"><td>CL01</td><td>Communal Cleaning</td><td class="td-num">£2,060</td><td class="td-num">£515</td><td class="td-num">25%</td></tr>
           <tr onclick="gotoInvoice('Reserves')" style="cursor: pointer;"><td>RF01</td><td>General Reserves</td><td class="td-num">£2,000</td><td class="td-num">£2,000</td><td class="td-num">100%</td></tr>
-          <tr onclick="gotoInvoice('Fire')" style="cursor: pointer;"><td>FM02</td><td>Fire Safety Maintenance</td><td class="td-num">£1,500</td><td class="td-num">£2,498</td><td class="td-num">166%</td></tr>
+          <tr onclick="gotoInvoice('Fire')" style="cursor: pointer;"><td>FM02</td><td>Fire Safety Maintenance</td><td class="td-num">£1,500</td><td class="td-num">£2,330</td><td class="td-num">155%</td></tr>
           <tr onclick="gotoInvoice('Lift')" style="cursor: pointer;"><td>LM01</td><td>Lift Maintenance</td><td class="td-num">£1,500</td><td class="td-num">£1,187</td><td class="td-num">79%</td></tr>
           <tr onclick="gotoInvoice('Utilities')" style="cursor: pointer;"><td>PE01</td><td>Pest Control</td><td class="td-num">£1,440</td><td class="td-num">£1,440</td><td class="td-num">100%</td></tr>
           <tr onclick="gotoInvoice('Insurance')" style="cursor: pointer;"><td>IN02</td><td>Engineering Insurance</td><td class="td-num">£1,400</td><td class="td-num">£1,500</td><td class="td-num">107%</td></tr>
@@ -335,16 +324,15 @@
   <div style="margin-bottom: 24px;">
     <h4 style="color: #ff3b30; margin-bottom: 12px;">🔴 Act Now</h4>
     <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 8px;">• Fire Safety over budget by £998 — review B&W invoices (see <a href="#" onclick="gotoInvoice('Black & White'); return false;" style="color: #007aff;">Contracts</a>)</li>
+      <li style="margin-bottom: 8px;">• Fire Safety over budget by £830 — review B&W invoices (see <a href="#" onclick="gotoInvoice('Black & White'); return false;" style="color: #007aff;">Contracts</a>)</li>
       <li style="margin-bottom: 8px;">• East End Homes owes £6,518 — escalate recovery</li>
-      <li style="margin-bottom: 8px;">• Biopest invoiced £240 over contract — request itemised breakdown</li>
+      <li style="margin-bottom: 8px;">• Biopest — £1,440 invoiced matches 6-month pre-payment; on budget ✓</li>
     </ul>
   </div>
 
   <div style="margin-bottom: 24px;">
     <h4 style="color: #ff9500; margin-bottom: 12px;">🟡 Monitor</h4>
     <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 8px;">• Repairs & Maintenance nearly exhausted — £98 remaining for Q4</li>
       <li style="margin-bottom: 8px;">• Pest Control fully spent — no budget for additional visits</li>
       <li style="margin-bottom: 8px;">• Telephone trending 8% over pro-rata — monitor Q4 invoices</li>
       <li style="margin-bottom: 8px;">• Engineering Insurance £100 over budget — annual premium, no further action this year</li>
@@ -416,10 +404,10 @@
   <div class="bullet-row">
     <div style="font-size: 13px; font-weight: 500;">Fire Safety</div>
     <div class="bullet-track">
-      <div class="bullet-fill red" style="width: 100%; background: #ff3b30;"></div>
+      <div class="bullet-fill green" style="width: 42.3%; background: #34c759;"></div>
       <div class="bullet-marker"></div>
     </div>
-    <div style="font-size: 12px; text-align: right; color: #555;">£4,064 / £9,200</div>
+    <div style="font-size: 12px; text-align: right; color: #555;">£3,896 / £9,200</div>
   </div>
   
   <div class="bullet-row">
@@ -434,10 +422,10 @@
   <div class="bullet-row">
     <div style="font-size: 13px; font-weight: 500;">Repairs & Maintenance</div>
     <div class="bullet-track">
-      <div class="bullet-fill amber" style="width: 98%; background: #ff9500;"></div>
+      <div class="bullet-fill green" style="width: 54.1%; background: #34c759;"></div>
       <div class="bullet-marker"></div>
     </div>
-    <div style="font-size: 12px; text-align: right; color: #555;">£4,902 / £5,000</div>
+    <div style="font-size: 12px; text-align: right; color: #555;">£2,704 / £5,000</div>
   </div>
 
   <div class="bullet-row">
@@ -470,10 +458,10 @@
   <div class="bullet-row">
     <div style="font-size: 13px; font-weight: 500;">Lift</div>
     <div class="bullet-track">
-      <div class="bullet-fill green" style="width: 32.6%; background: #34c759;"></div>
+      <div class="bullet-fill amber" style="width: 75.6%; background: #ff9500;"></div>
       <div class="bullet-marker"></div>
     </div>
-    <div style="font-size: 12px; text-align: right; color: #555;">£1,793 / £5,500</div>
+    <div style="font-size: 12px; text-align: right; color: #555;">£4,159 / £5,500</div>
   </div>
 
   <div class="bullet-row">
@@ -495,7 +483,7 @@
   <div class="accordion">
     <div class="acc-header" onclick="toggleAccordion(this)">
       <div class="acc-header-left"><span class="chevron">▾</span> Fire Safety</div>
-      <div class="acc-header-middle">£4,063.50 / £9,200</div>
+      <div class="acc-header-middle">£3,895.50 / £9,200</div>
       <div class="acc-header-right"><div class="acc-status-badge green">Under Pro-rata</div></div>
     </div>
     <div class="acc-body open">
@@ -510,15 +498,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="sub-header-row"><td colspan="5">FM02 — Fire Safety Maintenance · Budget £1,500 · Actual £2,497.50 · <span class="stat-bad">166%</span></td></tr>
+          <tr class="sub-header-row"><td colspan="5">FM02 — Fire Safety Maintenance · Budget £1,500 · Actual £2,329.50 · <span class="stat-bad">155%</span></td></tr>
           <tr><td>18 Jul 2025</td><td>Canam Construction</td><td>Fire Equipment Maintenance</td><td>64298</td><td class="td-num">654.50</td></tr>
           <tr><td>10 Sep 2025</td><td>Canam Construction</td><td>Fire Equipment Maintenance</td><td>64449</td><td class="td-num">343.20</td></tr>
           <tr><td>08 Oct 2025</td><td>Black &amp; White Fire Services</td><td>Fire Equipment</td><td>98605</td><td class="td-num">588.00</td></tr>
           <tr><td>08 Oct 2025</td><td>Black &amp; White Fire Services</td><td>Fire Equipment</td><td>98604</td><td class="td-num">84.00</td></tr>
           <tr><td>08 Oct 2025</td><td>Black &amp; White Fire Services</td><td>Fire Equipment</td><td>98698</td><td class="td-num">479.80</td></tr>
-          <tr><td>14 Nov 2025</td><td>Black &amp; White Fire Services</td><td>Fire Equipment Remedial Works</td><td>100691</td><td class="td-num">168.00</td></tr>
           <tr><td>28 Feb 2026</td><td>Black &amp; White Fire Services</td><td>Fire Equipment</td><td>104925</td><td class="td-num">180.00</td></tr>
-          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£2,497.50</td></tr>
+          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£2,329.50</td></tr>
         </tbody>
         <tbody>
           <tr class="sub-header-row"><td colspan="5">FM05 — Fire Inspection · Budget £720 · Actual £540.00 · <span class="stat-warn">75%</span></td></tr>
@@ -551,7 +538,7 @@
         <tbody>
           <tr class="subtotal-row">
             <td colspan="4">Subtotal</td>
-            <td class="td-num">£4,063.50</td>
+            <td class="td-num">£3,895.50</td>
           </tr>
     </tbody>
   </table>
@@ -610,8 +597,8 @@
   <div class="accordion">
     <div class="acc-header" onclick="toggleAccordion(this)">
       <div class="acc-header-left"><span class="chevron">▸</span> Repairs &amp; Maintenance</div>
-      <div class="acc-header-middle">£4,902.18 / £5,000</div>
-      <div class="acc-header-right"><div class="acc-status-badge amber">&gt; 90% Pro-rata</div></div>
+      <div class="acc-header-middle">£2,703.78 / £5,000</div>
+      <div class="acc-header-right"><div class="acc-status-badge green">Under Pro-rata</div></div>
     </div>
     <div class="acc-body">
       <table class="acc-table">
@@ -625,34 +612,31 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="sub-header-row"><td colspan="5">RE01 — Repairs &amp; Maintenance · Budget £5,000 · Actual £4,902.18 · <span class="stat-warn">98%</span></td></tr>
+          <tr class="sub-header-row"><td colspan="5">RE01 — Repairs &amp; Maintenance · Budget £5,000 · Actual £2,703.78 · <span class="stat-good">54%</span></td></tr>
           <tr><td>11 Jul 2025</td><td>Amazon</td><td>Flat 401 Russell Hobbs 16 Inch</td><td>—</td><td class="td-num">29.99</td></tr>
           <tr><td>11 Jul 2025</td><td>Amazon</td><td>Static adhesive window film</td><td>—</td><td class="td-num">5.69</td></tr>
           <tr><td>11 Jul 2025</td><td>Amazon</td><td>Airwick Air freshener plug in</td><td>—</td><td class="td-num">6.00</td></tr>
           <tr><td>11 Jul 2025</td><td>Amazon</td><td>Gas meter cupboard warning sign</td><td>—</td><td class="td-num">7.47</td></tr>
           <tr><td>11 Jul 2025</td><td>eBay</td><td>High Voltage electrical safety rubber</td><td>—</td><td class="td-num">24.30</td></tr>
-          <tr><td>08 Jul 2025</td><td>Reliable Elevator Services</td><td>Auto dialer replacement - RHs lift</td><td>NV130408</td><td class="td-num">1,500.00</td></tr>
           <tr><td>01 Jul 2025</td><td>Ernshaw Property</td><td>Bin Store Door Repairs</td><td>7138</td><td class="td-num">744.00</td></tr>
           <tr><td>18 Jul 2025</td><td>Ozzas Security Systems</td><td>Front Door</td><td>INV-30010217</td><td class="td-num">290.40</td></tr>
           <tr><td>22 Aug 2025</td><td>Ozzas Security Systems</td><td>Main door not closing properly</td><td>INV-30010559</td><td class="td-num">204.60</td></tr>
           <tr><td>05 Sep 2025</td><td>Information Commissioner</td><td>Annual ICO Registration</td><td>ZB334868</td><td class="td-num">52.00</td></tr>
           <tr><td>01 Jul 2025</td><td>(Accrual reversal)</td><td>Accrual 2025 RE01</td><td>—</td><td class="td-num">-846.13</td></tr>
           <tr><td>07 Nov 2025</td><td>Mr M Natalini</td><td>Reimbursement</td><td>—</td><td class="td-num">384.00</td></tr>
+          <tr><td>14 Nov 2025</td><td>Black &amp; White Fire Services</td><td>Fire Equipment Remedial Works</td><td>100691</td><td class="td-num">168.00</td></tr>
           <tr><td>26 Nov 2025</td><td>Black &amp; White Fire Services</td><td>EML - 2 Failed</td><td>101178</td><td class="td-num">256.80</td></tr>
           <tr><td>24 Dec 2025</td><td>Aqua Logic</td><td>Repairs to water tank leak</td><td>13585</td><td class="td-num">1,152.00</td></tr>
           <tr><td>20 Feb 2026</td><td>Mr M Natalini</td><td>Reimburse Moritz Natalini</td><td>—</td><td class="td-num">13.02</td></tr>
           <tr><td>23 Mar 2026</td><td>Ozzas Security Systems</td><td>Intercom Issue</td><td>INV-30012671</td><td class="td-num">204.60</td></tr>
-          <tr><td>02 Dec 2025</td><td>Reliable Elevator Services</td><td>Lift OOS 29/11/2025</td><td>NV131804</td><td class="td-num">246.00</td></tr>
-          <tr><td>10 Dec 2025</td><td>Reliable Elevator Services</td><td>Engineer call out</td><td>NV131899</td><td class="td-num">374.40</td></tr>
-          <tr><td>24 Dec 2025</td><td>Reliable Elevator Services</td><td>Lift OOS 20/12/2025</td><td>NV132003</td><td class="td-num">246.00</td></tr>
           <tr><td>10 Jul 2025</td><td>SCG Cloud Ltd</td><td>Telephone Line</td><td>1534603</td><td class="td-num">102.13</td></tr>
           <tr><td>10 Nov 2025</td><td>(Journal)</td><td>Move to TEL01</td><td>—</td><td class="td-num">-95.09</td></tr>
-          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£4,902.18</td></tr>
+          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£2,703.78</td></tr>
         </tbody>
         <tbody>
           <tr class="subtotal-row">
             <td colspan="4">Subtotal</td>
-            <td class="td-num">£4,902.18</td>
+            <td class="td-num">£2,703.78</td>
           </tr>
     </tbody>
   </table>
@@ -829,7 +813,7 @@
   <div class="accordion">
     <div class="acc-header" onclick="toggleAccordion(this)">
       <div class="acc-header-left"><span class="chevron">▸</span> Lift</div>
-      <div class="acc-header-middle">£1,793.00 / £5,500</div>
+      <div class="acc-header-middle">£4,159.40 / £5,500</div>
       <div class="acc-header-right"><div class="acc-status-badge green">Under Pro-rata</div></div>
     </div>
     <div class="acc-body">
@@ -851,16 +835,20 @@
           <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£1,187.00</td></tr>
         </tbody>
         <tbody>
-          <tr class="sub-header-row"><td colspan="5">LM03 — Lift Repairs · Budget £4,000 · Actual £606.00 · <span class="stat-good">15%</span></td></tr>
+          <tr class="sub-header-row"><td colspan="5">LM03 — Lift Repairs · Budget £4,000 · Actual £2,972.40 · <span class="stat-good">74%</span></td></tr>
+          <tr><td>08 Jul 2025</td><td>Reliable Elevator Services</td><td>Auto dialer replacement - RHs lift</td><td>NV130408</td><td class="td-num">1,500.00</td></tr>
           <tr><td>17 Sep 2025</td><td>Reliable Elevator Services</td><td>Lift OOS - 10-09/2025</td><td>NV131040</td><td class="td-num">246.00</td></tr>
           <tr><td>15 Oct 2025</td><td>Reliable Elevator Services</td><td>RHS Lift Broken</td><td>NV131138</td><td class="td-num">180.00</td></tr>
           <tr><td>04 Nov 2025</td><td>Reliable Elevator Services</td><td>RHS lift call out</td><td>NV131546</td><td class="td-num">180.00</td></tr>
-          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£606.00</td></tr>
+          <tr><td>02 Dec 2025</td><td>Reliable Elevator Services</td><td>Lift OOS 29/11/2025</td><td>NV131804</td><td class="td-num">246.00</td></tr>
+          <tr><td>10 Dec 2025</td><td>Reliable Elevator Services</td><td>Engineer call out</td><td>NV131899</td><td class="td-num">374.40</td></tr>
+          <tr><td>24 Dec 2025</td><td>Reliable Elevator Services</td><td>Lift OOS 20/12/2025</td><td>NV132003</td><td class="td-num">246.00</td></tr>
+          <tr class="sub-subtotal-row"><td>Sub-total</td><td colspan="3"></td><td class="td-num">£2,972.40</td></tr>
         </tbody>
         <tbody>
           <tr class="subtotal-row">
             <td colspan="4">Subtotal</td>
-            <td class="td-num">£1,793.00</td>
+            <td class="td-num">£4,159.40</td>
           </tr>
     </tbody>
   </table>
@@ -943,8 +931,7 @@
     </div>
   </div>
 
-</div>
-  
+
   <hr style="margin:40px 0; border:0; border-top:1px solid #d2d2d7;">
   <h2 style="margin-bottom:16px;">Contracts</h2>
   <!-- Black & White Fire Services -->
@@ -1108,7 +1095,7 @@
               <td style="padding: 10px; border-bottom: 1px solid #eee;">14 Nov 2025</td>
               <td style="padding: 10px; border-bottom: 1px solid #eee;">Fire Equipment Remedial Works</td>
               <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;" class="td-num">&pound;168.00</td>
-              <td style="padding: 10px; border-bottom: 1px solid #eee;">Approved &mdash; extra extinguisher</td>
+              <td style="padding: 10px; border-bottom: 1px solid #eee;">Approved &mdash; extra extinguisher (reclassified to RE01)</td>
               <td style="padding: 10px; border-bottom: 1px solid #eee; color: #34c759;">&check; Approved</td>
             </tr>
             <tr>
@@ -1129,7 +1116,7 @@
             </tr>
             <tr style="background-color: #f9f9f9;">
               <td colspan="6" style="padding: 10px; text-align: right; font-size: 0.9em;">
-                <strong>Total Agreed:</strong> &pound;1,427.62 + &pound;168.00 approved = &pound;1,595.62 &nbsp;|&nbsp;
+                <strong>Total Agreed:</strong> &pound;1,427.62 + &pound;168.00 approved (reclassified to RE01) = &pound;1,595.62 &nbsp;|&nbsp;
                 <strong>Total Invoiced:</strong> &pound;1,756.60 &nbsp;|&nbsp;
                 <strong style="color: #ff3b30;">Variance: +&pound;160.98 (overspend)</strong>
               </td>
@@ -1306,7 +1293,7 @@
           </tbody>
         </table>
         <div style="margin-top: 15px; font-size: 0.9em; color: #666; background-color: #fff8e1; padding: 10px; border-left: 4px solid #ffcc00;">
-          &#9888; <strong>Invoice amount (&pound;1,440) doesn't match the contract.</strong> Year 1 should be &pound;1,540 (&pound;1,200 programme + &pound;340 rodent points). Year 2 onwards should be &pound;1,200. Both invoices are &pound;1,440 &mdash; neither matches. The budget line is also set at &pound;1,440 rather than the contractual &pound;1,200. Request itemised breakdown from Biopest/HAUS.
+          &#9888; <strong>Invoice matches 6-month pre-payment.</strong> &pound;1,440 covers the first 6 months of the annual programme. Budget line PE01 is set at &pound;1,440 matching the invoice. On track &mdash; no overspend.
         </div>
       </div>
     </div>
@@ -1380,7 +1367,7 @@
     </div>
   </div>
 
-  class="card">
+  <div class="card">
     <h3>Year-on-Year Comparison (FY24/25 vs FY25/26 Projections)</h3>
   <table>
     <thead>
@@ -1647,8 +1634,6 @@
   <div class="footer-note">
     Prior year data from Matchstick Apartments Director Report Q4 Amended (1 Jul 2024 – 30 Jun 2025). Year-on-year projections for FY25/26 are based on 9-month actuals annualized, except for annual charges (insurance, reserves, pest control) which use actual YTD figures.
   </div>
-
-</div>
 
 </div>
 
