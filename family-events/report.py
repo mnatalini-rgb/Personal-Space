@@ -16,23 +16,23 @@ CATEGORY_ORDER = [
 ]
 
 CATEGORY_COLORS = {
-    "Theatre & Shows": "#7c3aed",
-    "Museums & Learning": "#2563eb",
-    "Outdoor & Parks": "#16a34a",
-    "Sports & Swimming": "#0891b2",
-    "Soft Play & Indoor": "#f97316",
-    "Farms & Animals": "#65a30d",
-    "Seasonal": "#db2777",
+    "Theatre & Shows": "139, 92, 246",
+    "Museums & Learning": "59, 130, 246",
+    "Outdoor & Parks": "16, 185, 129",
+    "Sports & Swimming": "14, 165, 233",
+    "Soft Play & Indoor": "245, 158, 11",
+    "Farms & Animals": "132, 204, 22",
+    "Seasonal": "236, 72, 153",
 }
 
-CATEGORY_EMOJIS = {
-    "Theatre & Shows": "🎭",
-    "Museums & Learning": "🏛️",
-    "Outdoor & Parks": "🌳",
-    "Sports & Swimming": "🏊",
-    "Soft Play & Indoor": "🎪",
-    "Farms & Animals": "🐄",
-    "Seasonal": "🎃",
+CATEGORY_SVGS = {
+    "Theatre & Shows": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 7.5 2 12 2z"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M10 15c.67.67 1.33 1 2 1s1.33-.33 2-1"/></svg>',
+    "Museums & Learning": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>',
+    "Outdoor & Parks": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"/><path d="M12 16a6 6 0 0 1-6-6c0-3.3 2.7-6 6-6s6 2.7 6 6a6 6 0 0 1-6 6z"/></svg>',
+    "Sports & Swimming": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5 0 5 2 7.5 2s5-2 7.5-2 5 2 7.5 2"/><path d="M2 17c2.5 0 5 2 7.5 2s5-2 7.5-2 5 2 7.5 2"/><path d="M12 7c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>',
+    "Soft Play & Indoor": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="8" y="13" width="8" height="8" rx="2"/></svg>',
+    "Farms & Animals": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10z"/><path d="M3 10V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>',
+    "Seasonal": '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M2 12h20"/><path d="m4.9 4.9 14.2 14.2"/><path d="m19.1 4.9-14.2 14.2"/></svg>',
 }
 
 def _fmt_dt(value: str | None) -> str:
@@ -77,8 +77,8 @@ def _get_age_tags(age_str: str | None) -> str:
 
 def _row(event: dict) -> str:
     cat = event.get("category", "Museums & Learning")
-    color = CATEGORY_COLORS.get(cat, "#2563eb")
-    emoji = CATEGORY_EMOJIS.get(cat, "📌")
+    color = CATEGORY_COLORS.get(cat, "59, 130, 246")
+    svg = CATEGORY_SVGS.get(cat, CATEGORY_SVGS["Museums & Learning"])
     
     title = escape(event.get("title") or "Untitled")
     venue = escape(event.get("venue") or "Unknown")
@@ -96,21 +96,36 @@ def _row(event: dict) -> str:
     age_classes = _get_age_tags(event.get("age"))
     
     return f"""
-    <details class="event-row {age_classes}" data-cat="{escape(cat)}" data-new="{is_new}" data-date="{start_raw}">
+    <details class="event-row {age_classes}" data-cat="{escape(cat)}" data-new="{is_new}" data-date="{start_raw}" style="--c: {color};">
       <summary class="row-main">
-        <div class="r-cat" title="{escape(cat)}" style="background-color: {color}">{emoji}</div>
-        <div class="r-title">{title}</div>
-        <div class="r-venue">{venue}</div>
-        <div class="r-date">{date_str}</div>
-        <div class="r-age">{age}</div>
-        <a href="{link}" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book &rarr;</a>
+        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="{escape(cat)}">
+          {svg}
+        </div>
+        <div class="r-content">
+          <div class="r-title">{title}</div>
+          <div class="r-venue">{venue}</div>
+        </div>
+        <div class="r-meta">
+          <div class="r-date">{date_str}</div>
+          <div class="r-age">{age}</div>
+        </div>
+        <a href="{link}" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
       </summary>
       <div class="row-details">
         <p class="d-desc">{desc}</p>
         <div class="d-meta">
-          <span>📍 {address}</span>
-          <span>💷 {price}</span>
-          <span>🚇 {distance} from E3</span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            {address}
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            {price}
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            {distance}
+          </span>
           <span class="d-source">Source: {source}</span>
         </div>
       </div>
@@ -125,7 +140,6 @@ def build_html_report(
     end_range: datetime,
     failed_sources: list[str],
 ) -> None:
-    # Summary banner prep
     new_events = [e for e in events if e.get("is_new")]
     new_count = len(new_events)
     
@@ -138,7 +152,6 @@ def build_html_report(
         summary_parts.append(f"{count} {cat.split('&')[0].strip().lower()}")
     summary_text = f"{new_count} new events this week: " + ", ".join(summary_parts) if new_count else "No new events this week."
 
-    # Group ALL events by category
     grouped_all = defaultdict(list)
     for event in sorted(events, key=lambda x: x.get("start") or ""):
         grouped_all[event.get("category", "Museums & Learning")].append(event)
@@ -151,39 +164,39 @@ def build_html_report(
         rows = "\n".join([_row(e) for e in cat_events])
         all_sections.append(f"""
             <div class="cat-group" data-cat="{escape(category)}">
-                <h3>{escape(category)} <span class="count">{len(cat_events)}</span></h3>
+                <h3 class="section-header">{escape(category).upper()} &middot; {len(cat_events)}</h3>
                 <div class="rows-container">{rows}</div>
             </div>
         """)
 
-    # New events rows
     new_rows_html = "\n".join([_row(e) for e in sorted(new_events, key=lambda x: x.get("start") or "")])
 
-    # Static events grid
     static_items = []
     for e in static_events:
         cat = e.get("category", "Museums & Learning")
-        color = CATEGORY_COLORS.get(cat, "#2563eb")
-        emoji = CATEGORY_EMOJIS.get(cat, "📌")
+        color = CATEGORY_COLORS.get(cat, "59, 130, 246")
+        svg = CATEGORY_SVGS.get(cat, CATEGORY_SVGS["Museums & Learning"])
         venue = escape(e.get("venue") or e.get("title") or "Unknown")
         link = escape(e.get("url") or "#")
         static_items.append(f"""
-            <a href="{link}" class="static-item" target="_blank" rel="noopener" data-cat="{escape(cat)}">
-                <span class="s-icon" style="background-color: {color}">{emoji}</span>
-                <span class="s-venue">{venue}</span>
+            <a href="{link}" class="static-item" target="_blank" rel="noopener" data-cat="{escape(cat)}" style="--c:{color};">
+                <div class="s-icon" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));">{svg}</div>
+                <div class="s-info">
+                    <span class="s-venue">{venue}</span>
+                    <span class="s-cat-pill" style="color: rgb(var(--c)); border-color: rgba(var(--c), 0.2)">{escape(cat)}</span>
+                </div>
             </a>
         """)
     static_grid = f"<div class=\"static-grid\">{''.join(static_items)}</div>"
 
     failed_note = (
-        f"<div class='warning'>⚠️ <strong>Warning:</strong> Failed to fetch from: {escape(', '.join(failed_sources))}</div>"
+        f"<div class='warning'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'></path><line x1='12' y1='9' x2='12' y2='13'></line><line x1='12' y1='17' x2='12.01' y2='17'></line></svg> Failed to fetch from: {escape(', '.join(failed_sources))}</div>"
         if failed_sources else ""
     )
 
-    # Filter pills
     pills = []
     for cat in CATEGORY_ORDER:
-        color = CATEGORY_COLORS.get(cat, "#000")
+        color = CATEGORY_COLORS.get(cat, "0, 0, 0")
         pills.append(f'<button class="pill active" data-cat="{escape(cat)}" style="--c:{color}">{escape(cat)}</button>')
 
     html = f"""<!doctype html>
@@ -194,152 +207,172 @@ def build_html_report(
   <title>Family Events Digest</title>
   <style>
     :root {{
-      --bg: #f4f4f5; --surface: #ffffff; --text: #18181b; --muted: #71717a; 
-      --border: #e4e4e7; --accent: #2563eb; --radius: 8px;
+      --bg: #f5f5f5; 
+      --surface: #ffffff; 
+      --text: #171717; 
+      --muted: #737373; 
+      --border: #e5e5e5; 
+      --radius: 12px;
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg); color: var(--text); line-height: 1.5;
-      -webkit-font-smoothing: antialiased; padding: 16px;
+      -webkit-font-smoothing: antialiased; padding: 24px 16px;
     }}
-    .container {{ max-width: 1000px; margin: 0 auto; }}
+    .container {{ max-width: 900px; margin: 0 auto; }}
     
     /* Header & Summary */
     .summary-banner {{
-      background: #18181b; color: #fff; padding: 16px 20px; border-radius: var(--radius);
-      margin-bottom: 20px; font-weight: 500; font-size: 1.1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: var(--surface); color: var(--text); padding: 16px 20px; border-radius: var(--radius);
+      margin-bottom: 24px; font-weight: 500; font-size: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      display: flex; align-items: center; gap: 12px;
     }}
+    .summary-banner svg {{ color: var(--muted); }}
+    
     .warning {{
-      background: #fef2f2; color: #991b1b; padding: 12px 16px; border-radius: var(--radius);
-      border: 1px solid #f87171; margin-bottom: 20px; font-size: 0.95rem;
+      background: #fff1f2; color: #be123c; padding: 12px 16px; border-radius: var(--radius);
+      border: 1px solid #fda4af; margin-bottom: 24px; font-size: 0.95rem;
+      display: flex; align-items: center; gap: 8px;
     }}
     
     /* Filters */
     .filters {{
-      background: var(--surface); padding: 16px; border-radius: var(--radius);
-      border: 1px solid var(--border); margin-bottom: 24px;
+      background: var(--surface); padding: 20px; border-radius: var(--radius);
+      border: 1px solid var(--border); margin-bottom: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }}
-    .filter-group {{ margin-bottom: 16px; }}
+    .filter-group {{ margin-bottom: 20px; }}
     .filter-group:last-child {{ margin-bottom: 0; }}
-    .filter-title {{ font-size: 0.85rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }}
+    .filter-title {{ 
+      font-size: 0.75rem; font-weight: 600; color: var(--muted); 
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; 
+    }}
     
     .pills {{ display: flex; flex-wrap: wrap; gap: 8px; }}
     .pill {{
       appearance: none; background: transparent; border: 1px solid var(--border);
-      padding: 6px 12px; border-radius: 99px; font-size: 0.9rem; font-weight: 500;
+      padding: 6px 14px; border-radius: 99px; font-size: 0.85rem; font-weight: 500;
       color: var(--muted); cursor: pointer; transition: all 0.2s;
     }}
-    .pill.active {{ background: var(--c); border-color: var(--c); color: #fff; }}
+    .pill.active {{ background: rgba(var(--c), 0.1); border-color: rgba(var(--c), 0.3); color: rgb(var(--c)); }}
     
-    .age-toggles {{ display: flex; gap: 8px; background: #f4f4f5; padding: 4px; border-radius: 99px; width: fit-content; }}
+    .age-toggles {{ display: flex; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 99px; width: fit-content; border: 1px solid var(--border); }}
     .age-btn {{
       appearance: none; border: none; background: transparent; padding: 6px 16px;
-      border-radius: 99px; font-size: 0.95rem; font-weight: 600; color: var(--muted);
+      border-radius: 99px; font-size: 0.85rem; font-weight: 600; color: var(--muted);
       cursor: pointer; transition: 0.2s;
     }}
-    .age-btn.active {{ background: #fff; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }}
+    .age-btn.active {{ background: #fff; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
     
     /* Sections */
-    section {{ margin-bottom: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }}
-    section.transparent {{ background: transparent; border: none; overflow: visible; }}
-    section > summary {{
-      font-size: 1.25rem; font-weight: 700; padding: 16px; cursor: pointer;
-      list-style: none; display: flex; align-items: center; gap: 8px;
-      background: #fafafa; border-bottom: 1px solid var(--border); margin-bottom: 0;
+    section {{ margin-bottom: 40px; }}
+    details.transparent > summary.main-summary {{ 
+      font-size: 0.8rem; font-weight: 600; padding: 0; margin-bottom: 16px; 
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+      list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer;
     }}
-    section.transparent > summary {{ background: transparent; border: none; padding: 0; margin-bottom: 16px; font-size: 1.4rem; }}
+    details.transparent > summary.main-summary::-webkit-details-marker {{ display: none; }}
+    details.transparent > summary.main-summary::before {{ content: '▸'; transition: transform 0.2s; font-size: 1rem; }}
+    details[open].transparent > summary.main-summary::before {{ transform: rotate(90deg); }}
     
-    section > summary::-webkit-details-marker {{ display: none; }}
-    section > summary::before {{ content: '▸'; font-size: 1.2rem; transition: transform 0.2s; }}
-    section[open] > summary::before {{ transform: rotate(90deg); }}
-    
-    .section-content {{ padding: 16px; }}
-    section.transparent .section-content {{ padding: 0; }}
-    
-    h3.bucket-title {{ font-size: 1.1rem; color: var(--muted); margin: 24px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }}
-    h3.bucket-title:first-child {{ margin-top: 0; }}
-    
-    .cat-group h3 {{ font-size: 1.1rem; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }}
-    .cat-group:first-child h3 {{ margin-top: 0; }}
-    .count {{ background: var(--border); font-size: 0.8rem; padding: 2px 8px; border-radius: 99px; color: var(--muted); font-weight: 600; }}
+    .section-header {{ 
+      font-size: 0.75rem; color: var(--muted); margin: 32px 0 16px; 
+      text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+    }}
+    .cat-group:first-child .section-header {{ margin-top: 0; }}
     
     /* Rows */
-    .rows-container {{ background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }}
-    .event-row {{ border-bottom: 1px solid var(--border); transition: background 0.15s; }}
-    .event-row:last-child {{ border-bottom: none; }}
-    .event-row:hover {{ background: #fafafa; }}
+    .rows-container {{ display: flex; flex-direction: column; gap: 12px; }}
+    .event-row {{ 
+      background: linear-gradient(135deg, rgba(var(--c), 0.03) 0%, #ffffff 100%);
+      border: 1px solid var(--border); border-radius: var(--radius); 
+      overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }}
+    .event-row:hover {{ box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: translateY(-1px); }}
     
     .row-main {{
-      display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; padding: 12px 16px;
+      display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; padding: 16px;
       cursor: pointer; list-style: none; align-items: center;
     }}
     .row-main::-webkit-details-marker {{ display: none; }}
     
-    .r-cat {{
-      width: 28px; height: 28px; border-radius: 6px; display: flex;
-      align-items: center; justify-content: center; font-size: 0.9rem; grid-row: span 2;
+    .r-cat-circle {{
+      width: 44px; height: 44px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; grid-row: span 2;
     }}
-    .r-title {{ font-weight: 600; font-size: 1.05rem; grid-column: 2; line-height: 1.2; }}
-    .r-venue {{ color: var(--muted); font-size: 0.9rem; grid-column: 2; }}
-    .r-date {{ font-size: 0.9rem; color: #059669; font-weight: 500; grid-column: 2; }}
-    .r-age {{ font-size: 0.85rem; color: var(--muted); background: var(--bg); padding: 2px 8px; border-radius: 4px; justify-self: start; grid-column: 2; }}
-    .r-book {{
-      background: var(--text); color: #fff; text-decoration: none; padding: 6px 12px;
-      border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-align: center;
-      grid-column: 2; justify-self: start; transition: opacity 0.2s;
-    }}
-    .r-book:hover {{ opacity: 0.8; }}
+    .r-content {{ grid-column: 2; display: flex; flex-direction: column; gap: 4px; }}
+    .r-title {{ font-weight: 600; font-size: 1rem; line-height: 1.2; color: var(--text); }}
+    .r-venue {{ color: var(--muted); font-size: 0.85rem; }}
     
-    /* Desktop Row Layout */
+    .r-meta {{ grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }}
+    .r-date {{ font-size: 0.8rem; color: var(--muted); display: flex; align-items: center; gap: 4px; }}
+    .r-date::before {{ content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: rgb(var(--c)); }}
+    .r-age {{ font-size: 0.75rem; font-weight: 500; color: var(--muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; }}
+    
+    .r-book {{
+      background: var(--surface); color: var(--text); text-decoration: none; padding: 6px 12px;
+      border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-align: center;
+      grid-column: 2; border: 1px solid var(--border); transition: all 0.2s; width: fit-content;
+    }}
+    .r-book:hover {{ background: #fafafa; border-color: #d4d4d8; }}
+    
     @media (min-width: 768px) {{
       .row-main {{
-        grid-template-columns: 28px minmax(200px, 1.5fr) minmax(150px, 1fr) 140px 80px 80px;
-        gap: 16px;
+        grid-template-columns: 44px minmax(200px, 1fr) minmax(120px, auto) 80px;
+        gap: 20px;
       }}
-      .r-cat {{ grid-row: 1; }}
-      .r-title, .r-venue, .r-date, .r-age, .r-book {{ grid-column: auto; grid-row: 1; align-self: center; }}
-      .r-venue {{ color: var(--text); font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
-      .r-age {{ justify-self: center; }}
+      .r-cat-circle {{ grid-row: 1; }}
+      .r-content, .r-meta, .r-book {{ grid-column: auto; grid-row: 1; }}
+      .r-meta {{ flex-direction: column; align-items: flex-start; gap: 4px; }}
       .r-book {{ justify-self: end; }}
     }}
     
-    .row-details {{ padding: 16px; background: #fafafa; border-top: 1px dashed var(--border); font-size: 0.95rem; }}
-    .d-desc {{ margin-bottom: 12px; color: #3f3f46; max-width: 800px; }}
-    .d-meta {{ display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--muted); }}
-    .d-source {{ margin-left: auto; font-style: italic; }}
+    .row-details {{ padding: 16px 16px 20px; background: rgba(0,0,0,0.01); border-top: 1px solid var(--border); font-size: 0.9rem; }}
+    .d-desc {{ margin-bottom: 16px; color: #52525b; max-width: 800px; line-height: 1.6; }}
+    .d-meta {{ display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: var(--muted); align-items: center; }}
+    .d-pill {{ display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; }}
+    .d-pill svg {{ color: var(--muted); }}
+    .d-source {{ margin-left: auto; font-style: italic; opacity: 0.7; }}
     
     /* Static Grid */
-    .static-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }}
+    .static-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }}
     .static-item {{
-      display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface);
+      display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--surface);
       border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none;
-      color: var(--text); font-weight: 500; font-size: 0.95rem; transition: border-color 0.2s;
+      color: var(--text); transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
     }}
-    .static-item:hover {{ border-color: var(--muted); }}
-    .s-icon {{ width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; color: #fff; }}
+    .static-item:hover {{ transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #d4d4d8; }}
+    .s-icon {{ width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }}
+    .s-info {{ display: flex; flex-direction: column; gap: 4px; overflow: hidden; }}
+    .s-venue {{ font-weight: 500; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+    .s-cat-pill {{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; border: 1px solid; padding: 2px 6px; border-radius: 4px; width: fit-content; }}
     
-    footer {{ text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }}
+    footer {{ text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border); }}
   </style>
 </head>
 <body>
   <main class="container">
     <div class="summary-banner">
-      ✨ {summary_text}
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      {summary_text}
     </div>
     
     {failed_note}
     
     <div class="filters">
       <div class="filter-group">
-        <div class="filter-title">Filter by Category</div>
+        <div class="filter-title">Categories</div>
         <div class="pills" id="cat-pills">
           {''.join(pills)}
         </div>
       </div>
       <div class="filter-group">
-        <div class="filter-title">Filter by Age</div>
+        <div class="filter-title">Ages</div>
         <div class="age-toggles" id="age-toggles">
           <button class="age-btn active" data-age="all">Both Kids</button>
           <button class="age-btn" data-age="5">Julian (5)</button>
@@ -349,18 +382,18 @@ def build_html_report(
     </div>
     
     <details class="transparent" id="sec-new" open>
-      <summary>🔥 New This Week</summary>
+      <summary class="main-summary">NEW THIS WEEK &middot; {new_count}</summary>
       <div class="section-content" id="new-buckets">
         <div id="b-weekend">
-          <h3 class="bucket-title">This Weekend</h3>
+          <div class="section-header">THIS WEEKEND</div>
           <div class="rows-container"></div>
         </div>
         <div id="b-next">
-          <h3 class="bucket-title">Next Week</h3>
+          <div class="section-header">NEXT WEEK</div>
           <div class="rows-container"></div>
         </div>
         <div id="b-later">
-          <h3 class="bucket-title">Later / Undated</h3>
+          <div class="section-header">LATER / UNDATED</div>
           <div class="rows-container"></div>
         </div>
       </div>
@@ -369,27 +402,26 @@ def build_html_report(
     </details>
     
     <details class="transparent" id="sec-all">
-      <summary>📚 All Events ({len(events)})</summary>
+      <summary class="main-summary">ALL EVENTS &middot; {len(events)}</summary>
       <div class="section-content" id="all-events">
         {''.join(all_sections)}
       </div>
     </details>
     
     <details class="transparent" id="sec-static">
-      <summary>📌 Always Available ({len(static_events)})</summary>
+      <summary class="main-summary">ALWAYS AVAILABLE &middot; {len(static_events)}</summary>
       <div class="section-content">
         {static_grid}
       </div>
     </details>
     
     <footer>
-      Auto-generated • Last updated: {datetime.now().strftime('%d %b %Y %H:%M')}
+      Auto-generated &middot; Last updated: {datetime.now().strftime('%d %b %Y %H:%M')}
     </footer>
   </main>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {{
-      // 1. Group NEW events by time
       const now = new Date();
       const saturday = new Date(now);
       saturday.setDate(now.getDate() + (6 - now.getDay()) % 7);
@@ -426,9 +458,8 @@ def build_html_report(
       if(!bWeekend.children.length) document.getElementById('b-weekend').style.display = 'none';
       if(!bNext.children.length) document.getElementById('b-next').style.display = 'none';
       if(!bLater.children.length) document.getElementById('b-later').style.display = 'none';
-      if(!rawRows.length) document.getElementById('new-buckets').innerHTML = '<p style="color:var(--muted)">No new events this week.</p>';
+      if(!rawRows.length) document.getElementById('new-buckets').innerHTML = '<p style="color:var(--muted); font-size:0.9rem;">No new events this week.</p>';
       
-      // 2. Filtering Logic
       const pills = document.querySelectorAll('.pill');
       const ageBtns = document.querySelectorAll('.age-btn');
       
@@ -449,14 +480,12 @@ def build_html_report(
           row.style.display = (isCatMatch && isAgeMatch) ? '' : 'none';
         }});
         
-        // Hide empty category groups in All Events
         document.querySelectorAll('.cat-group').forEach(group => {{
           const cat = group.getAttribute('data-cat');
           const hasVisibleRows = Array.from(group.querySelectorAll('.event-row')).some(r => r.style.display !== 'none');
           group.style.display = (!activeCats.has(cat) || !hasVisibleRows) ? 'none' : '';
         }});
         
-        // Filter static items by category
         document.querySelectorAll('.static-item').forEach(item => {{
           const cat = item.getAttribute('data-cat');
           item.style.display = activeCats.has(cat) ? '' : 'none';
