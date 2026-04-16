@@ -132,6 +132,57 @@ def _row(event: dict) -> str:
     </details>
     """
 
+def _sub_row(event: dict) -> str:
+    cat = event.get("category", "Museums & Learning")
+    color = CATEGORY_COLORS.get(cat, "59, 130, 246")
+    
+    title = escape(event.get("title") or "Untitled")
+    date_str = _fmt_dt(event.get("start"))
+    age = escape(event.get("age") or "All ages")
+    link = escape(event.get("url") or "#")
+    price = escape(event.get("cost") or "Unknown")
+    address = escape(event.get("address") or "")
+    distance = escape(event.get("distance") or "")
+    source = escape(event.get("source") or "")
+    desc = escape(event.get("description") or "No description provided.")
+    
+    is_new = str(event.get("is_new", False)).lower()
+    start_raw = event.get("start") or ""
+    age_classes = _get_age_tags(event.get("age"))
+    
+    return f"""
+    <details class="event-row {age_classes}" data-cat="{escape(cat)}" data-new="{is_new}" data-date="{start_raw}" style="--c: {color};">
+      <summary class="sub-row-main">
+        <div class="r-content">
+          <div class="r-title">{title}</div>
+        </div>
+        <div class="r-meta">
+          <div class="r-date">{date_str}</div>
+          <div class="r-age">{age}</div>
+        </div>
+        <a href="{link}" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
+      </summary>
+      <div class="row-details">
+        <p class="d-desc">{desc}</p>
+        <div class="d-meta">
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            {address}
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            {price}
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            {distance}
+          </span>
+          <span class="d-source">Source: {source}</span>
+        </div>
+      </div>
+    </details>
+    """
+
 def build_html_report(
     events: list[dict],
     static_events: list[dict],
@@ -161,11 +212,37 @@ def build_html_report(
         cat_events = grouped_all.get(category, [])
         if not cat_events:
             continue
-        rows = "\n".join([_row(e) for e in cat_events])
+            
+        events_by_venue = defaultdict(list)
+        for e in cat_events:
+            v = e.get("venue") or "Unknown"
+            events_by_venue[v].append(e)
+            
+        color = CATEGORY_COLORS.get(category, "59, 130, 246")
+        svg = CATEGORY_SVGS.get(category, CATEGORY_SVGS["Museums & Learning"])
+        
+        venue_html_parts = []
+        for venue_name in sorted(events_by_venue.keys()):
+            v_events = events_by_venue[venue_name]
+            sub_rows_html = "\n".join([_sub_row(e) for e in v_events])
+            venue_html_parts.append(f"""
+                <div class="venue-group" data-cat="{escape(category)}" style="--c: {color};">
+                    <div class="venue-header">
+                        <div class="v-cat-circle">{svg}</div>
+                        <div class="v-name">{escape(venue_name)}</div>
+                    </div>
+                    <div class="venue-events">
+                        {sub_rows_html}
+                    </div>
+                </div>
+            """)
+            
+        rows_container = "\n".join(venue_html_parts)
+        
         all_sections.append(f"""
             <div class="cat-group" data-cat="{escape(category)}">
                 <h3 class="section-header">{escape(category).upper()} &middot; {len(cat_events)}</h3>
-                <div class="rows-container">{rows}</div>
+                <div class="rows-container">{rows_container}</div>
             </div>
         """)
 
@@ -338,7 +415,46 @@ def build_html_report(
     }}
     .r-book:hover {{ background: #fafafa; border-color: #d4d4d8; }}
     
+    /* Venue Grouping */
+    .venue-group {{
+      margin-bottom: 16px;
+      border-left: 2px solid rgba(var(--c), 0.3);
+      border-radius: 4px;
+    }}
+    .venue-group:not(:has(.event-row:not([style*="display: none"]))) {{
+      display: none;
+    }}
+    .venue-header {{
+      display: flex; align-items: center; gap: 16px;
+      padding: 8px 16px 8px 12px;
+      font-weight: 600; color: var(--text);
+    }}
+    .v-cat-circle {{
+      width: 44px; height: 44px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0;
+      background: rgba(var(--c), 0.1); color: rgb(var(--c));
+    }}
+    .v-name {{ font-size: 1.05rem; }}
+    .venue-events {{
+      padding-left: 60px;
+      display: flex; flex-direction: column; gap: 8px;
+      padding-bottom: 8px;
+    }}
+    
+    .sub-row-main {{
+      display: grid; grid-template-columns: 1fr; gap: 12px 16px; padding: 12px 16px;
+      cursor: pointer; list-style: none; align-items: center;
+    }}
+    .sub-row-main::-webkit-details-marker {{ display: none; }}
+    .sub-row-main .r-content, .sub-row-main .r-meta, .sub-row-main .r-book {{ grid-column: 1; }}
+    
     @media (min-width: 768px) {{
+      .sub-row-main {{
+        grid-template-columns: minmax(200px, 1fr) minmax(120px, auto) 80px;
+        gap: 20px;
+      }}
+      .sub-row-main .r-content, .sub-row-main .r-meta, .sub-row-main .r-book {{ grid-column: auto; }}
+      
       .row-main {{
         grid-template-columns: 44px minmax(200px, 1fr) minmax(120px, auto) 80px;
         gap: 20px;
