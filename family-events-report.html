@@ -50,13 +50,15 @@
       text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; 
     }
     
-    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .cat-toggles { display: flex; flex-wrap: wrap; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 20px; width: fit-content; border: 1px solid var(--border); }
     .pill {
-      appearance: none; background: transparent; border: 1px solid var(--border);
-      padding: 6px 14px; border-radius: 99px; font-size: 0.85rem; font-weight: 500;
-      color: var(--muted); cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px; appearance: none; border: none; background: transparent; padding: 6px 14px;
+      border-radius: 99px; font-size: 0.85rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; transition: 0.2s;
     }
-    .pill.active { background: rgba(var(--c), 0.1); border-color: rgba(var(--c), 0.3); color: rgb(var(--c)); }
+    .pill svg { width: 14px; height: 14px; color: var(--muted); transition: 0.2s; display: block; }
+    .pill.active { background: #fff; color: rgb(var(--c)); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .pill.active svg { color: rgb(var(--c)); }
     
     .age-toggles { display: flex; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 99px; width: fit-content; border: 1px solid var(--border); }
     .age-btn, .month-btn {
@@ -166,8 +168,8 @@
     <div class="filters">
       <div class="filter-group">
         <div class="filter-title">Categories</div>
-        <div class="pills" id="cat-pills">
-          <button class="pill active" data-cat="Theatre &amp; Shows" style="--c:139, 92, 246">Theatre &amp; Shows</button><button class="pill active" data-cat="Museums &amp; Learning" style="--c:59, 130, 246">Museums &amp; Learning</button><button class="pill active" data-cat="Outdoor &amp; Parks" style="--c:16, 185, 129">Outdoor &amp; Parks</button><button class="pill active" data-cat="Sports &amp; Swimming" style="--c:14, 165, 233">Sports &amp; Swimming</button><button class="pill active" data-cat="Soft Play &amp; Indoor" style="--c:245, 158, 11">Soft Play &amp; Indoor</button><button class="pill active" data-cat="Farms &amp; Animals" style="--c:132, 204, 22">Farms &amp; Animals</button><button class="pill active" data-cat="Seasonal" style="--c:236, 72, 153">Seasonal</button>
+        <div class="cat-toggles" id="cat-toggles">
+          <button class="pill active" data-cat="Theatre &amp; Shows" style="--c:139, 92, 246"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 7.5 2 12 2z"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M10 15c.67.67 1.33 1 2 1s1.33-.33 2-1"/></svg>Theatre</button><button class="pill active" data-cat="Museums &amp; Learning" style="--c:59, 130, 246"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>Museums</button><button class="pill active" data-cat="Outdoor &amp; Parks" style="--c:16, 185, 129"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"/><path d="M12 16a6 6 0 0 1-6-6c0-3.3 2.7-6 6-6s6 2.7 6 6a6 6 0 0 1-6 6z"/></svg>Outdoor</button><button class="pill active" data-cat="Sports &amp; Swimming" style="--c:14, 165, 233"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2.5 0 5 2 7.5 2s5-2 7.5-2 5 2 7.5 2"/><path d="M2 17c2.5 0 5 2 7.5 2s5-2 7.5-2 5 2 7.5 2"/><path d="M12 7c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>Sports</button><button class="pill active" data-cat="Soft Play &amp; Indoor" style="--c:245, 158, 11"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="8" y="13" width="8" height="8" rx="2"/></svg>Soft Play</button><button class="pill active" data-cat="Farms &amp; Animals" style="--c:132, 204, 22"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10z"/><path d="M3 10V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>Farms</button><button class="pill active" data-cat="Seasonal" style="--c:236, 72, 153"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M2 12h20"/><path d="m4.9 4.9 14.2 14.2"/><path d="m19.1 4.9-14.2 14.2"/></svg>Seasonal</button>
         </div>
       </div>
       <div class="filter-group">
@@ -1431,7 +1433,7 @@ A Unicorn Theatre and Theatre Hullabaloo production.</p>
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+    <details class="event-row age-5 age-2" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
       <summary class="row-main">
         <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
@@ -1468,7 +1470,7 @@ Join us for FREE, regular drop-in sessions for families at the Young V&amp;amp;A
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+    <details class="event-row age-5 age-2" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
       <summary class="row-main">
         <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
@@ -1578,7 +1580,7 @@ Explore exciting play adventures with our friendly team of Play Champions in...<
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+    <details class="event-row age-5 age-2" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
       <summary class="row-main">
         <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
@@ -1615,7 +1617,7 @@ Meet Amanda in The Shed, her studio space in the Design Gallery at Young V&amp;a
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+    <details class="event-row age-5 age-2" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
       <summary class="row-main">
         <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
@@ -1796,7 +1798,7 @@ Family Design Challenge brings families together to explore design through hands
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+    <details class="event-row age-5 age-2" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
       <summary class="row-main">
         <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
@@ -3059,7 +3061,7 @@ This creative event will include opportunities to connect through sensory play, 
     </details>
     
     <footer>
-      Auto-generated &middot; Last updated: 16 Apr 2026 09:49
+      Auto-generated &middot; Last updated: 16 Apr 2026 09:56
     </footer>
   </main>
 

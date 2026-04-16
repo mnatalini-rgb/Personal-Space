@@ -197,7 +197,9 @@ def build_html_report(
     pills = []
     for cat in CATEGORY_ORDER:
         color = CATEGORY_COLORS.get(cat, "0, 0, 0")
-        pills.append(f'<button class="pill active" data-cat="{escape(cat)}" style="--c:{color}">{escape(cat)}</button>')
+        svg = CATEGORY_SVGS.get(cat, "")
+        short_name = escape(cat.split(" & ")[0])
+        pills.append(f'<button class="pill active" data-cat="{escape(cat)}" style="--c:{color}">{svg}{short_name}</button>')
 
     month_pills = ['<button class="month-btn active" data-month="all">All</button>']
     seen_months = []
@@ -265,13 +267,15 @@ def build_html_report(
       text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; 
     }}
     
-    .pills {{ display: flex; flex-wrap: wrap; gap: 8px; }}
+    .cat-toggles {{ display: flex; flex-wrap: wrap; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 20px; width: fit-content; border: 1px solid var(--border); }}
     .pill {{
-      appearance: none; background: transparent; border: 1px solid var(--border);
-      padding: 6px 14px; border-radius: 99px; font-size: 0.85rem; font-weight: 500;
-      color: var(--muted); cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px; appearance: none; border: none; background: transparent; padding: 6px 14px;
+      border-radius: 99px; font-size: 0.85rem; font-weight: 600; color: var(--muted);
+      cursor: pointer; transition: 0.2s;
     }}
-    .pill.active {{ background: rgba(var(--c), 0.1); border-color: rgba(var(--c), 0.3); color: rgb(var(--c)); }}
+    .pill svg {{ width: 14px; height: 14px; color: var(--muted); transition: 0.2s; display: block; }}
+    .pill.active {{ background: #fff; color: rgb(var(--c)); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
+    .pill.active svg {{ color: rgb(var(--c)); }}
     
     .age-toggles {{ display: flex; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 99px; width: fit-content; border: 1px solid var(--border); }}
     .age-btn, .month-btn {{
@@ -381,7 +385,7 @@ def build_html_report(
     <div class="filters">
       <div class="filter-group">
         <div class="filter-title">Categories</div>
-        <div class="pills" id="cat-pills">
+        <div class="cat-toggles" id="cat-toggles">
           {''.join(pills)}
         </div>
       </div>
