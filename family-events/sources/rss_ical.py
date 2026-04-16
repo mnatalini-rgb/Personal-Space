@@ -105,6 +105,14 @@ def fetch_rss_ical_events(feed_defs: list[dict], aquatics_json: dict) -> tuple[l
                 parsed = feedparser.parse(feed_def["url"])
                 for entry in parsed.entries:
                     title = as_text(getattr(entry, "title", ""))
+                    link = as_text(getattr(entry, "link", ""))
+                    if not title.strip() or not link.strip():
+                        continue
+                    if feed_def.get("name") == "British Library":
+                        bl_skip = ["kickstart", "business", "ip for", "intellectual property",
+                                   "profile:", "author:", "curator:"]
+                        if any(kw in title.lower() for kw in bl_skip):
+                            continue
                     summary = as_text(getattr(entry, "summary", ""))
                     full_text = f"{title} {summary}"
                     if not is_family_relevant(full_text):

@@ -145,14 +145,7 @@ RSS_FEEDS = [
         "address": "Victoria Park, London E3",
         "distance_from_e3": "Local",
     },
-    {
-        "name": "British Library",
-        "type": "ical",
-        "url": "https://events.bl.uk/feed",
-        "category": "Museums & Learning",
-        "address": "96 Euston Rd, London NW1 2DB",
-        "distance_from_e3": "~42 mins",
-    },
+
 ]
 
 LONDON_AQUATICS_JSON = {
