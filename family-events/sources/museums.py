@@ -164,12 +164,12 @@ def _generic_card_scrape(
         ".event", ".listing", ".result-item",
     ]
 
-    partial_selectors = [
+    all_selectors = exact_selectors if selectors else exact_selectors + [
         "[class*=card]", "[class*=event]", "[class*=listing]",
         "[class*=teaser]", "[class*=promo]", "[class*=result]",
     ]
 
-    for sel in exact_selectors + partial_selectors:
+    for sel in all_selectors:
         for node in soup.select(sel):
             ev = _try_add_event(
                 node, url, venue, address, distance, seen,
@@ -178,7 +178,7 @@ def _generic_card_scrape(
             if ev:
                 events.append(ev)
 
-    if not events:
+    if not events and not selectors:
         for link in soup.find_all("a", href=True):
             parent = link.parent
             container = parent if parent else link
@@ -190,7 +190,6 @@ def _generic_card_scrape(
                 events.append(ev)
 
     return events
-
 
 
 def _scrape_soup_cards(
@@ -321,8 +320,9 @@ def _scrape_lt_museum(cfg: dict) -> list[dict]:
         )
     except Exception:
         soup = _playwright_soup(cfg["url"], wait_ms=8000)
-        if "challenge" in soup.get_text().lower()[:500]:
-            raise RuntimeError("Cloudflare challenge — cannot scrape")
+        page_text = soup.get_text().lower()[:1000]
+        if any(x in page_text for x in ["challenge", "cloudflare", "security verification"]):
+            raise RuntimeError("Cloudflare bot protection — cannot scrape")
         return _scrape_soup_cards(
             soup, cfg["url"], cfg["name"], cfg["address"],
             cfg["distance_from_e3"], always_relevant=False,
@@ -346,8 +346,9 @@ def _scrape_british_museum(cfg: dict) -> list[dict]:
         )
     except Exception:
         soup = _playwright_soup(cfg["url"], wait_ms=8000)
-        if "challenge" in soup.get_text().lower()[:500]:
-            raise RuntimeError("Cloudflare challenge — cannot scrape")
+        page_text = soup.get_text().lower()[:1000]
+        if any(x in page_text for x in ["challenge", "cloudflare", "security verification"]):
+            raise RuntimeError("Cloudflare bot protection — cannot scrape")
         return _scrape_soup_cards(
             soup, cfg["url"], cfg["name"], cfg["address"],
             cfg["distance_from_e3"], always_relevant=True,
@@ -388,7 +389,7 @@ def _scrape_halfmoon(cfg: dict) -> list[dict]:
     return _generic_card_scrape(
         url=cfg["url"], venue=cfg["name"], address=cfg["address"],
         distance=cfg["distance_from_e3"], always_relevant=True,
-        selectors=[".event_listing_item", ".event_listing", "[class*=listing]"],
+        selectors=[".event_listing_item"],
     )
 
 
