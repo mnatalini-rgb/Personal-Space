@@ -384,6 +384,14 @@ def _scrape_tate(cfg: dict) -> list[dict]:
     return events
 
 
+def _scrape_halfmoon(cfg: dict) -> list[dict]:
+    return _generic_card_scrape(
+        url=cfg["url"], venue=cfg["name"], address=cfg["address"],
+        distance=cfg["distance_from_e3"], always_relevant=True,
+        selectors=[".event_listing_item", ".event_listing", "[class*=listing]"],
+    )
+
+
 _SCRAPERS = {
     "nhm": _scrape_nhm,
     "bank_of_england": _scrape_bank_of_england,
@@ -393,6 +401,7 @@ _SCRAPERS = {
     "british_museum": _scrape_british_museum,
     "national_gallery": _scrape_national_gallery,
     "tate": _scrape_tate,
+    "halfmoon": _scrape_halfmoon,
 }
 
 

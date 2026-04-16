@@ -227,6 +227,14 @@ MUSEUM_SOURCES = [
         "distance_from_e3": "~30 mins",
         "always_relevant": True,
     },
+    {
+        "scraper": "halfmoon",
+        "name": "Half Moon Theatre",
+        "url": "https://www.halfmoon.org.uk/whats-on/",
+        "address": "43 White Horse Rd, London E1 0ND",
+        "distance_from_e3": "~15 mins",
+        "always_relevant": True,
+    },
 ]
 
 
