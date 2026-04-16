@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 
-WINDOW_DAYS = 28
+WINDOW_DAYS = 120
 STATE_RETENTION_DAYS = 90
 
 TARGET_AGES = [2, 5]

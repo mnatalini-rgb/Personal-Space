@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup  # type: ignore[reportMissingImports]
 from dateutil import parser as date_parser
 
-WINDOW_DAYS = 28
+WINDOW_DAYS = 120
 KIDS_KEYWORDS = [
     "baby",
     "babies",

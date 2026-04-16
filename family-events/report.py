@@ -199,6 +199,20 @@ def build_html_report(
         color = CATEGORY_COLORS.get(cat, "0, 0, 0")
         pills.append(f'<button class="pill active" data-cat="{escape(cat)}" style="--c:{color}">{escape(cat)}</button>')
 
+    month_pills = ['<button class="month-btn active" data-month="all">All</button>']
+    seen_months = []
+    cur = start_range.replace(day=1)
+    while cur <= end_range:
+        label = cur.strftime("%b %Y")
+        val = cur.strftime("%Y-%m")
+        if val not in seen_months:
+            seen_months.append(val)
+            month_pills.append(f'<button class="month-btn" data-month="{val}">{label}</button>')
+        if cur.month == 12:
+            cur = cur.replace(year=cur.year + 1, month=1)
+        else:
+            cur = cur.replace(month=cur.month + 1)
+
     html = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -260,12 +274,12 @@ def build_html_report(
     .pill.active {{ background: rgba(var(--c), 0.1); border-color: rgba(var(--c), 0.3); color: rgb(var(--c)); }}
     
     .age-toggles {{ display: flex; gap: 4px; background: #f5f5f5; padding: 4px; border-radius: 99px; width: fit-content; border: 1px solid var(--border); }}
-    .age-btn {{
+    .age-btn, .month-btn {{
       appearance: none; border: none; background: transparent; padding: 6px 16px;
       border-radius: 99px; font-size: 0.85rem; font-weight: 600; color: var(--muted);
       cursor: pointer; transition: 0.2s;
     }}
-    .age-btn.active {{ background: #fff; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
+    .age-btn.active, .month-btn.active {{ background: #fff; color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
     
     /* Sections */
     section {{ margin-bottom: 40px; }}
@@ -372,6 +386,12 @@ def build_html_report(
         </div>
       </div>
       <div class="filter-group">
+        <div class="filter-title">Month</div>
+        <div class="age-toggles" id="month-toggles">
+          {''.join(month_pills)}
+        </div>
+      </div>
+      <div class="filter-group">
         <div class="filter-title">Ages</div>
         <div class="age-toggles" id="age-toggles">
           <button class="age-btn active" data-age="all">Both Kids</button>
@@ -465,6 +485,9 @@ def build_html_report(
       
       let activeCats = new Set(Array.from(pills).map(p => p.getAttribute('data-cat')));
       let activeAge = 'all';
+      let activeMonth = 'all';
+      
+      const monthBtns = document.querySelectorAll('.month-btn');
       
       function applyFilters() {{
         const allRows = document.querySelectorAll('.event-row');
@@ -477,7 +500,17 @@ def build_html_report(
             isAgeMatch = row.classList.contains('age-' + activeAge);
           }}
           
-          row.style.display = (isCatMatch && isAgeMatch) ? '' : 'none';
+          let isMonthMatch = true;
+          if (activeMonth !== 'all') {{
+            const dStr = row.getAttribute('data-date');
+            if (dStr && dStr !== 'None') {{
+              isMonthMatch = dStr.substring(0, 7) === activeMonth;
+            }} else {{
+              isMonthMatch = false;
+            }}
+          }}
+          
+          row.style.display = (isCatMatch && isAgeMatch && isMonthMatch) ? '' : 'none';
         }});
         
         document.querySelectorAll('.cat-group').forEach(group => {{
@@ -510,6 +543,15 @@ def build_html_report(
           ageBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           activeAge = btn.getAttribute('data-age');
+          applyFilters();
+        }});
+      }});
+      
+      monthBtns.forEach(btn => {{
+        btn.addEventListener('click', () => {{
+          monthBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeMonth = btn.getAttribute('data-month');
           applyFilters();
         }});
       }});

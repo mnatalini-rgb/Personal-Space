@@ -6,7 +6,7 @@ from datetime import timedelta
 import requests
 from dateutil import parser as date_parser
 
-WINDOW_DAYS = 28
+WINDOW_DAYS = 120
 KIDS_KEYWORDS = [
     "baby",
     "babies",

@@ -11,7 +11,7 @@ from icalendar import Calendar
 from datetime import datetime
 from datetime import timedelta
 
-WINDOW_DAYS = 28
+WINDOW_DAYS = 120
 KIDS_KEYWORDS = [
     "baby",
     "babies",
