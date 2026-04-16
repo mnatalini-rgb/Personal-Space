@@ -579,19 +579,5 @@ def get_static_events() -> list[dict]:
             "source": "Static",
             "is_new": False,
         },
-        # --- London Fire Brigade Open Days ---
-        {
-            "venue": "London Fire Brigade",
-            "title": "Fire Station Open Days & Community Events",
-            "description": "Free fire station open days across London — meet firefighters, see engines, try equipment. Check website for upcoming dates. Great for kids!",
-            "start": None,
-            "url": "https://www.london-fire.gov.uk/community/events-open-days/",
-            "address": "Various fire stations across London",
-            "distance": "Varies",
-            "age": "All ages",
-            "cost": "Free",
-            "category": "Seasonal",
-            "source": "Static",
-            "is_new": False,
-        },
+        # London Fire Brigade — now scraped dynamically via sources/lfb.py
     ]

@@ -52,6 +52,7 @@ def run() -> int:
     )
     static_mod = _load_module("sources_static", project_dir / "sources" / "static.py")
     kids_london = _load_module("sources_kids_london", project_dir / "sources" / "kids_in_london.py")
+    lfb = _load_module("sources_lfb", project_dir / "sources" / "lfb.py")
 
     state_path = root / "family-events" / "data" / "state.json"
     report_path = root / "family-events-report.html"
@@ -82,6 +83,10 @@ def run() -> int:
     kids_events, kids_errors = kids_london.fetch_kids_in_london_events()
     all_events.extend(kids_events)
     failed_sources.extend(kids_errors)
+
+    lfb_events, lfb_errors = lfb.fetch_lfb_events()
+    all_events.extend(lfb_events)
+    failed_sources.extend(lfb_errors)
 
     all_events = _dedupe(all_events)
 
