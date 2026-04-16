@@ -83,7 +83,7 @@ def _collect_events(payload):
     return []
 
 
-def _parse_start(event: dict) -> str | None:
+def _parse_start(event: dict, window_start: datetime | None = None) -> str | None:
     candidates = [
         event.get("firstInstanceDateTime"),
         event.get("firstInstanceDateTimeUtc"),
@@ -102,14 +102,22 @@ def _parse_start(event: dict) -> str | None:
                 first.get("instanceStart"),
             ]
         )
+    parsed: datetime | None = None
     for value in candidates:
         if not value:
             continue
         try:
-            return date_parser.parse(str(value)).isoformat()
+            parsed = date_parser.parse(str(value))
+            break
         except Exception:
             continue
-    return None
+    if parsed is None:
+        return None
+    # If the first instance is before the window but the API returned this
+    # event (meaning it has instances inside the window), clamp to window start.
+    if window_start and parsed < window_start:
+        parsed = window_start
+    return parsed.isoformat()
 
 
 def fetch_spektrix_events(venues: list[dict]) -> tuple[list[dict], list[str]]:
@@ -143,14 +151,10 @@ def fetch_spektrix_events(venues: list[dict]) -> tuple[list[dict], list[str]]:
                     age_text = f"{age_guide} {age_category}".strip()
                     if not always_relevant and not is_family_relevant(f"{full_text} {age_text}"):
                         continue
-                    start_iso = _parse_start(raw)
+                    # API already filters by instanceStart_from/to; pass
+                    # window start so long-running shows get clamped forward.
+                    start_iso = _parse_start(raw, window_start=start)
                     if not start_iso:
-                        continue
-                    try:
-                        dt = datetime.fromisoformat(start_iso)
-                        if dt < start or dt > end:
-                            continue
-                    except Exception:
                         continue
                     event_id = raw.get("id") or raw.get("Id") or raw.get("eventId")
                     event_url = venue.get("website") or raw.get("url")
