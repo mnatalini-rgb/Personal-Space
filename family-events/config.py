@@ -158,6 +158,77 @@ LONDON_AQUATICS_JSON = {
 
 IDEA_STORE_LOCATIONS = ["Bow", "Whitechapel", "Canary Wharf", "Chrisp Street"]
 
+MUSEUM_SOURCES = [
+    {
+        "scraper": "nhm",
+        "name": "Natural History Museum",
+        "url": "https://www.nhm.ac.uk/whats-on.html",
+        "address": "Cromwell Road, London SW7 5BD",
+        "distance_from_e3": "~50 mins",
+        "always_relevant": False,
+    },
+    {
+        "scraper": "bank_of_england",
+        "name": "Bank of England Museum",
+        "url": "https://www.bankofengland.co.uk/museum/whats-on",
+        "address": "Bartholomew Lane, London EC2R 8AH",
+        "distance_from_e3": "~25 mins",
+        "always_relevant": False,
+    },
+    {
+        "scraper": "science_museum",
+        "name": "Science Museum",
+        "url": "https://www.sciencemuseum.org.uk/see-and-do?type=events",
+        "address": "Exhibition Road, London SW7 2DD",
+        "distance_from_e3": "~50 mins",
+        "always_relevant": False,
+    },
+    {
+        "scraper": "lt_museum",
+        "name": "London Transport Museum",
+        "url": "https://www.ltmuseum.co.uk/whats-on",
+        "address": "Covent Garden Piazza, London WC2E 7BB",
+        "distance_from_e3": "~35 mins",
+        "always_relevant": False,
+    },
+    {
+        "scraper": "southbank",
+        "name": "Southbank Centre",
+        "url": "https://www.southbankcentre.co.uk/whats-on/?artform-filter=family-young-people",
+        "address": "Belvedere Road, London SE1 8XX",
+        "distance_from_e3": "~35 mins",
+        "always_relevant": True,
+    },
+    {
+        "scraper": "british_museum",
+        "name": "British Museum",
+        "url": "https://www.britishmuseum.org/visit/family-visits",
+        "address": "Great Russell St, London WC1B 3DG",
+        "distance_from_e3": "~35 mins",
+        "always_relevant": True,
+    },
+    {
+        "scraper": "national_gallery",
+        "name": "National Gallery",
+        "url": "https://www.nationalgallery.org.uk/events?audience=families",
+        "address": "Trafalgar Square, London WC2N 5DN",
+        "distance_from_e3": "~35 mins",
+        "always_relevant": False,
+    },
+    {
+        "scraper": "tate",
+        "name": "Tate",
+        "url": "https://www.tate.org.uk/whats-on?type=families_and_children",
+        "urls": [
+            "https://www.tate.org.uk/whats-on?type=families_and_children&gallery_group=tate-modern",
+            "https://www.tate.org.uk/whats-on?type=families_and_children&gallery_group=tate-britain",
+        ],
+        "address": "Bankside / Millbank, London",
+        "distance_from_e3": "~30 mins",
+        "always_relevant": True,
+    },
+]
+
 
 def get_window_range() -> tuple[datetime, datetime]:
     start = datetime.now()
