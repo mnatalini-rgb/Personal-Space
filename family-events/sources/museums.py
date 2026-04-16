@@ -81,6 +81,22 @@ def _fetch_soup(url: str) -> BeautifulSoup:
     return BeautifulSoup(resp.content, "html.parser")
 
 
+def _playwright_soup(url: str, wait_ms: int = 3000) -> BeautifulSoup:
+    """Render page with headless Chromium and return soup. For JS-rendered / WAF-blocked sites."""
+    from playwright.sync_api import sync_playwright
+    pw = sync_playwright().start()
+    try:
+        browser = pw.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(url, timeout=30000, wait_until="domcontentloaded")
+        page.wait_for_timeout(wait_ms)
+        html = page.content()
+        browser.close()
+    finally:
+        pw.stop()
+    return BeautifulSoup(html, "html.parser")
+
+
 NAV_JUNK = [
     "skip to", "menu", "cookie", "log in", "search", "footer",
     "navigation", "breadcrumb", "accept all", "sign up",
@@ -177,50 +193,80 @@ def _generic_card_scrape(
 
 
 
-def _scrape_nhm(cfg: dict) -> list[dict]:
-    """Natural History Museum — Next.js, try __NEXT_DATA__ first, then cards."""
-    url = cfg["url"]
-    soup = _fetch_soup(url)
+def _scrape_soup_cards(
+    soup: BeautifulSoup, url: str, venue: str, address: str,
+    distance: str, always_relevant: bool = False, cost: str = "Check venue",
+) -> list[dict]:
+    events: list[dict] = []
+    seen: set[str] = set()
+    start_window, end_window = _get_window()
 
-    next_data = soup.find("script", id="__NEXT_DATA__")
-    if next_data and next_data.string:
-        import json
-        try:
-            data = json.loads(next_data.string)
-            props = data.get("props", {}).get("pageProps", {})
-            events_data = (
-                props.get("events")
-                or props.get("items")
-                or props.get("data", {}).get("events")
-                or []
+    all_selectors = [
+        "article", ".card", ".event-card", ".event-item", ".event-listing",
+        ".whats-on-item", ".listing-item", "[data-event]", ".grid-item",
+        ".teaser", ".promo", ".views-row", ".event", ".listing", ".result-item",
+        "[class*=card]", "[class*=event]", "[class*=listing]",
+        "[class*=teaser]", "[class*=promo]", "[class*=result]",
+    ]
+
+    for sel in all_selectors:
+        for node in soup.select(sel):
+            ev = _try_add_event(
+                node, url, venue, address, distance, seen,
+                start_window, end_window, always_relevant, cost,
             )
-            if isinstance(events_data, list) and events_data:
-                events = []
-                start_w, end_w = _get_window()
-                for item in events_data:
-                    title = item.get("title") or item.get("name") or ""
-                    desc = item.get("description") or item.get("summary") or title
-                    text = f"{title} {desc}"
-                    if not _is_family(text):
-                        continue
-                    slug = item.get("slug") or item.get("url") or ""
-                    link = slug if slug.startswith("http") else urljoin(url, slug)
-                    date_str = item.get("startDate") or item.get("date") or ""
-                    date_iso = _find_date(str(date_str))
-                    events.append(_make_event(
-                        venue=cfg["name"], title=title, description=text,
-                        start=date_iso, url=link, address=cfg["address"],
-                        distance=cfg["distance_from_e3"],
-                    ))
-                if events:
-                    return events
-        except (json.JSONDecodeError, KeyError):
-            pass
+            if ev:
+                events.append(ev)
 
-    return _generic_card_scrape(
-        url=url, venue=cfg["name"], address=cfg["address"],
-        distance=cfg["distance_from_e3"], always_relevant=False,
-    )
+    if not events:
+        for link in soup.find_all("a", href=True):
+            container = link.parent if link.parent else link
+            ev = _try_add_event(
+                container, url, venue, address, distance, seen,
+                start_window, end_window, always_relevant, cost,
+            )
+            if ev:
+                events.append(ev)
+
+    return events
+
+
+def _scrape_nhm(cfg: dict) -> list[dict]:
+    """NHM — client-rendered, requires Playwright."""
+    url = cfg["url"]
+    soup = _playwright_soup(url, wait_ms=5000)
+    events: list[dict] = []
+    seen: set[str] = set()
+    start_w, end_w = _get_window()
+
+    for node in soup.select("[class*=eventcard], [class*=card]"):
+        link = node.find("a", href=True)
+        if not link:
+            continue
+        href = urljoin(url, str(link.get("href", "")))
+        if href in seen or not href.startswith("http") or "/events/" not in href:
+            continue
+
+        text = " ".join(node.stripped_strings)
+        if len(text) < 10:
+            continue
+        if not _is_family(text):
+            continue
+
+        title_el = node.find(["h2", "h3", "h4"]) or link
+        title = title_el.get_text(strip=True) if title_el else "Family event"
+        if not title or len(title) < 3:
+            continue
+
+        seen.add(href)
+        date_iso = _find_date(text)
+        events.append(_make_event(
+            venue=cfg["name"], title=title, description=text,
+            start=date_iso, url=href, address=cfg["address"],
+            distance=cfg["distance_from_e3"],
+        ))
+
+    return events
 
 
 def _scrape_bank_of_england(cfg: dict) -> list[dict]:
@@ -233,19 +279,54 @@ def _scrape_bank_of_england(cfg: dict) -> list[dict]:
 
 
 def _scrape_science_museum(cfg: dict) -> list[dict]:
-    """Science Museum — Drupal, server-rendered."""
-    return _generic_card_scrape(
-        url=cfg["url"], venue=cfg["name"], address=cfg["address"],
-        distance=cfg["distance_from_e3"], always_relevant=False,
-    )
+    """Science Museum — WAF blocks requests, requires Playwright."""
+    url = cfg["url"]
+    soup = _playwright_soup(url, wait_ms=5000)
+    events: list[dict] = []
+    seen: set[str] = set()
+
+    for node in soup.select(".c-card, [class*=card], [class*=teaser]"):
+        link = node.find("a", href=True)
+        if not link:
+            continue
+        href = urljoin(url, str(link.get("href", "")))
+        if href in seen or not href.startswith("http") or "/see-and-do/" not in href:
+            continue
+
+        text = " ".join(node.stripped_strings)
+        if len(text) < 10:
+            continue
+
+        title_el = node.select_one(".c-card__title") or node.find(["h2", "h3", "h4"]) or link
+        title = title_el.get_text(strip=True) if title_el else "Family event"
+        if not title or len(title) < 3:
+            continue
+
+        seen.add(href)
+        events.append(_make_event(
+            venue=cfg["name"], title=title, description=text,
+            start=None, url=href, address=cfg["address"],
+            distance=cfg["distance_from_e3"],
+        ))
+
+    return events
 
 
 def _scrape_lt_museum(cfg: dict) -> list[dict]:
-    """London Transport Museum — may need headers for 403."""
-    return _generic_card_scrape(
-        url=cfg["url"], venue=cfg["name"], address=cfg["address"],
-        distance=cfg["distance_from_e3"], always_relevant=False,
-    )
+    """London Transport Museum — Cloudflare protected, tries Playwright."""
+    try:
+        return _generic_card_scrape(
+            url=cfg["url"], venue=cfg["name"], address=cfg["address"],
+            distance=cfg["distance_from_e3"], always_relevant=False,
+        )
+    except Exception:
+        soup = _playwright_soup(cfg["url"], wait_ms=8000)
+        if "challenge" in soup.get_text().lower()[:500]:
+            raise RuntimeError("Cloudflare challenge — cannot scrape")
+        return _scrape_soup_cards(
+            soup, cfg["url"], cfg["name"], cfg["address"],
+            cfg["distance_from_e3"], always_relevant=False,
+        )
 
 
 def _scrape_southbank(cfg: dict) -> list[dict]:
@@ -257,18 +338,38 @@ def _scrape_southbank(cfg: dict) -> list[dict]:
 
 
 def _scrape_british_museum(cfg: dict) -> list[dict]:
-    """British Museum — family visits page, always relevant."""
-    return _generic_card_scrape(
-        url=cfg["url"], venue=cfg["name"], address=cfg["address"],
-        distance=cfg["distance_from_e3"], always_relevant=True,
-    )
+    """British Museum — Cloudflare protected, tries Playwright."""
+    try:
+        return _generic_card_scrape(
+            url=cfg["url"], venue=cfg["name"], address=cfg["address"],
+            distance=cfg["distance_from_e3"], always_relevant=True,
+        )
+    except Exception:
+        soup = _playwright_soup(cfg["url"], wait_ms=8000)
+        if "challenge" in soup.get_text().lower()[:500]:
+            raise RuntimeError("Cloudflare challenge — cannot scrape")
+        return _scrape_soup_cards(
+            soup, cfg["url"], cfg["name"], cfg["address"],
+            cfg["distance_from_e3"], always_relevant=True,
+        )
 
 
 def _scrape_national_gallery(cfg: dict) -> list[dict]:
-    """National Gallery — use /events for listings."""
-    return _generic_card_scrape(
-        url=cfg["url"], venue=cfg["name"], address=cfg["address"],
-        distance=cfg["distance_from_e3"], always_relevant=False,
+    """National Gallery — client-rendered events, tries Playwright."""
+    try:
+        events = _generic_card_scrape(
+            url=cfg["url"], venue=cfg["name"], address=cfg["address"],
+            distance=cfg["distance_from_e3"], always_relevant=False,
+        )
+        if events:
+            return events
+    except Exception:
+        pass
+
+    soup = _playwright_soup(cfg["url"], wait_ms=5000)
+    return _scrape_soup_cards(
+        soup, cfg["url"], cfg["name"], cfg["address"],
+        cfg["distance_from_e3"], always_relevant=False,
     )
 
 
