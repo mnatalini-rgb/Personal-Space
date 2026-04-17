@@ -475,6 +475,290 @@
 
 </div>
 
+<!-- ═══ Contract Compliance Timeline ═══ -->
+<div class="card">
+  <h3>📅 Contract Compliance Timeline — FY 2025/26</h3>
+  <p style="font-size: 13px; color: #86868b; margin-bottom: 16px;">Jul 2025 → Jun 2026 · Expected services vs actual invoices · <span style="color:#34c759;">●</span> Fulfilled <span style="color:#ff9500;">●</span> Pending <span style="color:#ff3b30;">●</span> Overdue/Unquoted <span style="color:#d2d2d7;">●</span> No contract on file</p>
+
+  <style>
+    .tl-grid { display: grid; grid-template-columns: 180px 1fr; gap: 0; margin-bottom: 0; }
+    .tl-header { display: grid; grid-template-columns: 180px 1fr; gap: 0; margin-bottom: 8px; }
+    .tl-months { display: grid; grid-template-columns: repeat(12, 1fr); font-size: 10px; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+    .tl-row { display: grid; grid-template-columns: 180px 1fr; gap: 0; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .tl-row:last-child { border-bottom: none; }
+    .tl-label { font-size: 13px; font-weight: 600; color: #1d1d1f; line-height: 1.3; }
+    .tl-label small { display: block; font-weight: 400; color: #86868b; font-size: 11px; }
+    .tl-track { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); height: 28px; background: #fafafa; border-radius: 6px; }
+    .tl-track .tl-cell { position: relative; border-right: 1px solid #f0f0f0; }
+    .tl-track .tl-cell:last-child { border-right: none; }
+    .tl-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 14px; height: 14px; border-radius: 50%; z-index: 2; cursor: default; }
+    .tl-dot.green { background: #34c759; }
+    .tl-dot.amber { background: #ff9500; }
+    .tl-dot.red { background: #ff3b30; }
+    .tl-dot.grey { background: #d2d2d7; }
+    .tl-diamond { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg); width: 10px; height: 10px; border: 2px solid; z-index: 1; background: #fff; }
+    .tl-diamond.green { border-color: #34c759; }
+    .tl-diamond.amber { border-color: #ff9500; }
+    .tl-diamond.red { border-color: #ff3b30; }
+    .tl-bar { position: absolute; top: 50%; transform: translateY(-50%); height: 6px; border-radius: 3px; z-index: 1; }
+    .tl-bar.green { background: rgba(52,199,89,0.25); }
+    .tl-bar.grey { background: rgba(210,210,215,0.4); }
+    .tl-now { position: absolute; top: 0; bottom: 0; width: 2px; background: #007aff; z-index: 3; }
+    .tl-section { font-size: 12px; font-weight: 700; color: #86868b; text-transform: uppercase; letter-spacing: 0.5px; padding: 16px 0 6px 0; border-bottom: 1px solid #e0e0e0; }
+    .tl-missing-tag { display: inline-block; background: #fff3cd; color: #856404; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 8px; margin-left: 4px; }
+    .tl-tooltip { display: none; position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); background: #1d1d1f; color: #fff; font-size: 11px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; z-index: 10; pointer-events: none; }
+    .tl-dot:hover .tl-tooltip, .tl-diamond:hover .tl-tooltip { display: block; }
+    @media (max-width: 650px) {
+      .tl-grid, .tl-header, .tl-row { grid-template-columns: 1fr; }
+      .tl-months { font-size: 8px; }
+      .tl-label { margin-bottom: 4px; }
+    }
+  </style>
+
+  <!-- Month headers -->
+  <div class="tl-header">
+    <div></div>
+    <div class="tl-months">
+      <div>Jul</div><div>Aug</div><div>Sep</div><div>Oct</div><div>Nov</div><div>Dec</div>
+      <div>Jan</div><div>Feb</div><div>Mar</div><div>Apr</div><div>May</div><div>Jun</div>
+    </div>
+  </div>
+
+  <!-- ── Contractors WITH Contracts ── -->
+  <div class="tl-section">Contractors with contracts on file</div>
+
+  <!-- B&W: Extinguisher Service (Annual) -->
+  <div class="tl-row">
+    <div class="tl-label">B&W Fire Services<small>Extinguisher Service · Annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Oct: Invoice 98604 -->
+        <div class="tl-dot green"><div class="tl-tooltip">✓ Inv 98604 · 08 Oct · £84</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- B&W: Smoke/AOV/EML (Bi-Annual) -->
+  <div class="tl-row">
+    <div class="tl-label">B&W Fire Services<small>Smoke/AOV/EML · Bi-annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Oct: Visit 1 -->
+        <div class="tl-dot green"><div class="tl-tooltip">✓ Visit 1 · Inv 98605 · 08 Oct · £588</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Apr: Visit 2 expected -->
+        <div class="tl-diamond amber"><div class="tl-tooltip">◇ Visit 2 due ~Apr 2026</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- B&W: Dry Riser (Annual) -->
+  <div class="tl-row">
+    <div class="tl-label">B&W Fire Services<small>Dry Riser Test · Annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Oct -->
+        <div class="tl-dot green"><div class="tl-tooltip">✓ Inv 98698 · 08 Oct · £479.80</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- B&W: Unquoted extras -->
+  <div class="tl-row">
+    <div class="tl-label">B&W Fire Services<small>Unquoted work · Not in contract</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Nov -->
+        <div class="tl-dot red"><div class="tl-tooltip">✗ Inv 101178 · 26 Nov · £256.80 · EML Failed</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Feb -->
+        <div class="tl-dot red"><div class="tl-tooltip">✗ Inv 104925 · 28 Feb · £180 · Unquoted</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- HAUS: Monthly services -->
+  <div class="tl-row">
+    <div class="tl-label">HAUS Block Mgmt<small>5 monthly services · £801/mo</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Jul · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Aug · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Sep · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Oct · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Nov · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Dec · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Jan · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Feb · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Mar · £801</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Apr expected</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ May expected</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Jun expected</div></div></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- Biopest: Monthly visits -->
+  <div class="tl-row">
+    <div class="tl-label">Biopest Management<small>12 monthly visits · £1,200/yr</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Jul (prepaid)</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Aug (prepaid)</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Sep (prepaid)</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Oct (prepaid)</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Nov (prepaid)</div></div></div>
+      <div class="tl-cell"><div class="tl-dot green" style="width:10px;height:10px;"><div class="tl-tooltip">✓ Dec (prepaid)</div></div></div>
+      <div class="tl-cell"><!-- Jan: invoice date -->
+        <div class="tl-dot green"><div class="tl-tooltip">✓ Inv C100374.3 · 05 Jan · £1,440 (6-mo prepay)</div></div>
+      </div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Feb — 2nd half unpaid</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Mar — 2nd half unpaid</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Apr — 2nd half unpaid</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ May — 2nd half unpaid</div></div></div>
+      <div class="tl-cell"><div class="tl-diamond amber"><div class="tl-tooltip">◇ Jun — 2nd half unpaid</div></div></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- ── Contractors WITHOUT Contracts ── -->
+  <div class="tl-section">No contract on file <span class="tl-missing-tag">ACTION NEEDED</span></div>
+
+  <!-- Reliable Elevator -->
+  <div class="tl-row">
+    <div class="tl-label">Reliable Elevator<small>Lift maintenance · Likely biannual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"><!-- Jul: repair -->
+        <div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Inv NV130408 · 08 Jul · £1,500 · Repair</div></div>
+      </div>
+      <div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Sep -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv NV131027 · 11 Sep · £540 · Maintenance</div></div>
+      </div>
+      <div class="tl-cell"><!-- Oct -->
+        <div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Inv NV131138 · 15 Oct · £180 · Repair</div></div>
+      </div>
+      <div class="tl-cell"><!-- Nov -->
+        <div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Inv NV131546 · 04 Nov · £180 · Repair</div></div>
+      </div>
+      <div class="tl-cell"><!-- Dec -->
+        <div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">3 invoices Dec · £866 · Repairs</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Mar -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv NV132755 · 12 Mar · £540 · Maintenance</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- Aqua Logic -->
+  <div class="tl-row">
+    <div class="tl-label">Aqua Logic<small>Water hygiene + pump · Likely annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Oct -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv 13193 · 01 Oct · £879 · Service</div></div>
+      </div>
+      <div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Dec -->
+        <div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Inv 13585 · 24 Dec · £1,152 · Water tank repair</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- SCG Cloud (Telephone) -->
+  <div class="tl-row">
+    <div class="tl-label">SCG Cloud Ltd<small>Telephone · Monthly</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Aug · £108</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Sep · £108</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Oct · £113</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Nov · £113</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Dec · £113</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Jan · £113</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Feb · £113</div></div></div>
+      <div class="tl-cell"><div class="tl-dot grey" style="width:8px;height:8px;"><div class="tl-tooltip">Mar · £122</div></div></div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- Roburn (Window Cleaning) -->
+  <div class="tl-row">
+    <div class="tl-label">Roburn<small>Window cleaning · Likely biannual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Nov -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv 3987 · 25 Nov · £155</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Mar -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv 4083 · 27 Mar · £155</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- Spotless Cleaning -->
+  <div class="tl-row">
+    <div class="tl-label">Spotless Cleaning<small>Communal cleaning · Periodic</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Oct -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv 11942 · 08 Oct · £515</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- 4Site Consulting -->
+  <div class="tl-row">
+    <div class="tl-label">4Site Consulting<small>Fire Risk Assessment · Annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Mar -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv 1230-87505 · 06 Mar · £684</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- HEF Services -->
+  <div class="tl-row">
+    <div class="tl-label">HEF Services<small>PAT Testing · Annual</small></div>
+    <div class="tl-track">
+      <div class="tl-cell"></div>
+      <div class="tl-cell"><!-- Aug -->
+        <div class="tl-dot grey"><div class="tl-tooltip">Inv INV-3364 · 04 Aug · £180</div></div>
+      </div>
+      <div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div><div class="tl-cell"></div>
+      <div class="tl-now" style="left: 79.2%;"></div>
+    </div>
+  </div>
+
+  <!-- Summary box -->
+  <div style="margin-top: 20px; background: #f9f9fb; border-radius: 8px; padding: 16px; font-size: 13px; line-height: 1.6;">
+    <strong>Summary:</strong> 3 of 10 contractors have contracts on file. B&W Fire Services has £436.80 in unquoted work. Biopest second-half payment (£1,440) due ~Jan 2027. HAUS monthly charges on track.<br>
+    <strong style="color: #ff3b30;">Missing contracts needed:</strong> Reliable Elevator, Aqua Logic, SCG Cloud, Roburn, Spotless Cleaning, 4Site Consulting, HEF Services — Directors should request copies from HAUS or suppliers.
+  </div>
+</div>
+
 </div> <!-- End tab-overview -->
 
 <div id="tab-detail" class="tab-content">
