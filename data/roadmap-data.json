@@ -1,0 +1,1219 @@
+{
+  "sprintData": {
+    "Q1-2026": {
+      "sprints": [
+        {
+          "id": "s1.1",
+          "name": "Sprint 1.1",
+          "start": "2026-01-05",
+          "end": "2026-01-16",
+          "month": "JAN",
+          "links": []
+        },
+        {
+          "id": "s1.2",
+          "name": "Sprint 1.2",
+          "start": "2026-01-19",
+          "end": "2026-01-30",
+          "month": "JAN",
+          "links": []
+        },
+        {
+          "id": "s1.3",
+          "name": "Sprint 1.3",
+          "start": "2026-02-02",
+          "end": "2026-02-13",
+          "month": "FEB",
+          "links": []
+        },
+        {
+          "id": "s1.4",
+          "name": "Sprint 1.4",
+          "start": "2026-02-16",
+          "end": "2026-02-27",
+          "month": "FEB",
+          "links": []
+        },
+        {
+          "id": "s1.5",
+          "name": "Sprint 1.5",
+          "start": "2026-03-02",
+          "end": "2026-03-13",
+          "month": "MAR",
+          "links": []
+        },
+        {
+          "id": "s1.6",
+          "name": "Sprint 1.6",
+          "start": "2026-03-16",
+          "end": "2026-03-27",
+          "month": "MAR",
+          "links": []
+        }
+      ],
+      "assignments": {
+        "anouk": {
+          "s1.1": [],
+          "s1.2": [],
+          "s1.3": [
+            {
+              "id": "q1-1",
+              "name": "Logitech Brand Takeover + RV experiment",
+              "color": "#ea580c"
+            }
+          ],
+          "s1.4": [
+            {
+              "id": "q1-2",
+              "name": "Logitech Brand Takeover + RV experiment",
+              "color": "#ea580c"
+            }
+          ],
+          "s1.5": [
+            {
+              "id": "q1-3",
+              "name": "Skin Initiative",
+              "color": "#8b5cf6"
+            }
+          ],
+          "s1.6": [
+            {
+              "id": "q1-4",
+              "name": "Skin Initiative",
+              "color": "#8b5cf6"
+            }
+          ]
+        },
+        "isabel": {
+          "s1.1": [
+            {
+              "id": "q1-5",
+              "name": "Blacklyte iterations",
+              "color": "#d97706"
+            }
+          ],
+          "s1.2": [
+            {
+              "id": "q1-6",
+              "name": "Blacklyte iterations",
+              "color": "#d97706"
+            }
+          ],
+          "s1.3": [
+            {
+              "id": "q1-7",
+              "name": "Missions Admin Migration",
+              "color": "#fb923c"
+            }
+          ],
+          "s1.4": [
+            {
+              "id": "q1-8",
+              "name": "Missions Admin Migration",
+              "color": "#fb923c"
+            }
+          ],
+          "s1.5": [
+            {
+              "id": "q1-9",
+              "name": "Missions Admin Migration",
+              "color": "#fb923c"
+            }
+          ],
+          "s1.6": [
+            {
+              "id": "q1-10",
+              "name": "Skin Initiative",
+              "color": "#8b5cf6"
+            }
+          ]
+        },
+        "egor": {
+          "s1.1": [
+            {
+              "id": "q1-11",
+              "name": "Primis",
+              "color": "#164e63"
+            }
+          ],
+          "s1.2": [
+            {
+              "id": "q1-12",
+              "name": "Primis",
+              "color": "#164e63"
+            },
+            {
+              "id": "q1-13",
+              "name": "Publift display Faceit",
+              "color": "#0284c7"
+            }
+          ],
+          "s1.3": [
+            {
+              "id": "q1-14",
+              "name": "Publift display Faceit",
+              "color": "#0284c7"
+            }
+          ],
+          "s1.4": [
+            {
+              "id": "q1-15",
+              "name": "Primis / Moba outstream AB test",
+              "color": "#67e8f9"
+            }
+          ],
+          "s1.5": [
+            {
+              "id": "q1-16",
+              "name": "Primis / Moba outstream AB test",
+              "color": "#67e8f9"
+            }
+          ],
+          "s1.6": [
+            {
+              "id": "q1-17",
+              "name": "Primis / Moba display AB test",
+              "color": "#a5f3fc"
+            }
+          ]
+        },
+        "teodor": {
+          "s1.1": [
+            {
+              "id": "q1-18",
+              "name": "Logitech Brand Takeover + RV experiment",
+              "color": "#ea580c"
+            }
+          ],
+          "s1.2": [
+            {
+              "id": "q1-19",
+              "name": "Logitech Brand Takeover + RV experiment",
+              "color": "#ea580c"
+            }
+          ],
+          "s1.3": [
+            {
+              "id": "q1-20",
+              "name": "Play Interstitial",
+              "color": "#0891b2"
+            }
+          ],
+          "s1.4": [
+            {
+              "id": "q1-21",
+              "name": "Play Interstitial",
+              "color": "#0891b2"
+            }
+          ],
+          "s1.5": [
+            {
+              "id": "q1-22",
+              "name": "Play Interstitial",
+              "color": "#0891b2"
+            }
+          ],
+          "s1.6": [
+            {
+              "id": "q1-23",
+              "name": "Play Interstitial",
+              "color": "#0891b2"
+            },
+            {
+              "id": "q1-24",
+              "name": "Video Skippable Interstitial",
+              "color": "#06b6d4"
+            }
+          ]
+        },
+        "omar": {
+          "s1.1": [],
+          "s1.2": [],
+          "s1.3": [],
+          "s1.4": [],
+          "s1.5": [],
+          "s1.6": []
+        },
+        "moritz": {
+          "s1.1": [],
+          "s1.2": [],
+          "s1.3": [],
+          "s1.4": [],
+          "s1.5": [],
+          "s1.6": []
+        },
+        "releases": {
+          "s1.1": [
+            {
+              "id": "q1-r1",
+              "name": "Primis",
+              "color": "#164e63"
+            }
+          ],
+          "s1.2": [
+            {
+              "id": "q1-r2",
+              "name": "Blacklyte iterations",
+              "color": "#d97706"
+            }
+          ],
+          "s1.3": [],
+          "s1.4": [
+            {
+              "id": "q1-r3",
+              "name": "Publift: AR investigation",
+              "color": "#38bdf8"
+            }
+          ],
+          "s1.5": [
+            {
+              "id": "q1-r4",
+              "name": "Primis / Moba outstream AB test",
+              "color": "#67e8f9"
+            },
+            {
+              "id": "q1-r5",
+              "name": "Primis / Moba display AB test",
+              "color": "#a5f3fc"
+            }
+          ],
+          "s1.6": [
+            {
+              "id": "q1-r6",
+              "name": "Ads Alerts V2",
+              "color": "#22d3ee"
+            }
+          ]
+        }
+      }
+    },
+    "Q2-2026": {
+      "sprints": [
+        {
+          "id": "s2.1",
+          "name": "Sprint 2.1",
+          "start": "2026-03-30",
+          "end": "2026-04-10",
+          "month": "APR",
+          "links": []
+        },
+        {
+          "id": "s2.2",
+          "name": "Sprint 2.2",
+          "start": "2026-04-13",
+          "end": "2026-04-24",
+          "month": "APR",
+          "links": []
+        },
+        {
+          "id": "s2.3",
+          "name": "Sprint 2.3",
+          "start": "2026-04-27",
+          "end": "2026-05-08",
+          "month": "MAY",
+          "links": []
+        },
+        {
+          "id": "s2.4",
+          "name": "Sprint 2.4",
+          "start": "2026-05-11",
+          "end": "2026-05-22",
+          "month": "MAY",
+          "links": []
+        },
+        {
+          "id": "s2.5",
+          "name": "Sprint 2.5",
+          "start": "2026-05-25",
+          "end": "2026-06-05",
+          "month": "JUN",
+          "links": []
+        },
+        {
+          "id": "s2.6",
+          "name": "Sprint 2.6",
+          "start": "2026-06-08",
+          "end": "2026-06-19",
+          "month": "JUN",
+          "links": []
+        }
+      ],
+      "assignments": {
+        "anouk": {
+          "s2.1": [
+            {
+              "id": "1",
+              "name": "Peripherals Initiative Discovery",
+              "projectId": "proj-5",
+              "color": "#7c3aed"
+            },
+            {
+              "id": "11",
+              "name": "AL Growth — Trust Modal Redesign",
+              "projectId": "proj-3",
+              "color": "#b45309"
+            }
+          ],
+          "s2.2": [
+            {
+              "id": "2",
+              "name": "AL Growth — Trust Modal Redesign",
+              "projectId": "proj-3",
+              "color": "#b45309"
+            }
+          ],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "isabel": {
+          "s2.1": [
+            {
+              "id": "3",
+              "name": "Skin Initiative",
+              "projectId": "proj-3",
+              "color": "#8b5cf6"
+            },
+            {
+              "id": "4",
+              "name": "Missions Admin Migration",
+              "projectId": "proj-8",
+              "color": "#fb923c"
+            }
+          ],
+          "s2.2": [
+            {
+              "id": "5",
+              "name": "Skin Initiative",
+              "projectId": "proj-3",
+              "color": "#8b5cf6"
+            }
+          ],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "egor": {
+          "s2.1": [
+            {
+              "id": "6",
+              "name": "Hardware component investigation",
+              "projectId": "proj-5",
+              "color": "#6d28d9"
+            }
+          ],
+          "s2.2": [
+            {
+              "id": "7",
+              "name": "Advertiser portal Tradeit",
+              "projectId": null,
+              "color": "#64748b"
+            }
+          ],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "teodor": {
+          "s2.1": [
+            {
+              "id": "8",
+              "name": "Tech Debts",
+              "projectId": null,
+              "color": "#94a3b8"
+            }
+          ],
+          "s2.2": [
+            {
+              "id": "9",
+              "name": "Tech Debts",
+              "projectId": null,
+              "color": "#94a3b8"
+            },
+            {
+              "id": "12",
+              "name": "AL Growth — Trust Modal Redesign",
+              "projectId": "proj-3",
+              "color": "#b45309"
+            }
+          ],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "omar": {
+          "s2.1": [],
+          "s2.2": [
+            {
+              "id": "10",
+              "name": "Onboarding",
+              "projectId": null,
+              "color": "#94a3b8"
+            }
+          ],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "moritz": {
+          "s2.1": [],
+          "s2.2": [],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        },
+        "releases": {
+          "s2.1": [],
+          "s2.2": [],
+          "s2.3": [],
+          "s2.4": [],
+          "s2.5": [],
+          "s2.6": []
+        }
+      }
+    }
+  },
+  "stakeholderData": [
+    {
+      "id": "sh-1",
+      "initiative": "Play Interstitial",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "Q2 2026",
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": "docs/product_documentation/onePager_ Play Interstitial.md",
+      "dashboardLink": null,
+      "stage": "development",
+      "requiresExperiment": true,
+      "startDate": "2026-02-15",
+      "devStartDate": "2026-03-15",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": [
+        {
+          "label": "One-Pager",
+          "url": "docs/product_documentation/onePager_ Play Interstitial.md"
+        },
+        {
+          "label": "PRD",
+          "url": "docs/product_briefs/PRD — Video Interstitials.md"
+        },
+        {
+          "label": "Figma Board",
+          "url": "https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1"
+        }
+      ]
+    },
+    {
+      "id": "sh-2",
+      "initiative": "Blacklyte Activation",
+      "area": "brand_integrations",
+      "priority": "P1",
+      "impact": "€500K",
+      "effort": null,
+      "status": "tbd",
+      "eta": null,
+      "notes": "waiting for commercial team",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-3",
+      "initiative": "Outstream competitors exclusion",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "tbd",
+      "eta": null,
+      "notes": "don't show a competitor outstream on brand takeover pages",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-4",
+      "initiative": "AdShield Implementation",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "tbd",
+      "eta": null,
+      "notes": "",
+      "jiraKey": "AD-3753",
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-5",
+      "initiative": "Placement improvements",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": "M-L",
+      "status": "on_hold",
+      "eta": null,
+      "notes": "increase the viewability to 75% per ad unit",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-6",
+      "initiative": "Primis / Moba outstream AB test",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "done",
+      "eta": null,
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": "analysis/prebid-experiment-results.html",
+      "stage": "completed",
+      "requiresExperiment": true,
+      "startDate": "2025-11-01",
+      "devStartDate": "2025-12-01",
+      "readyDate": "2026-01-15",
+      "experimentStartDate": "2026-01-20",
+      "concludedDate": "2026-03-01",
+      "releasedDate": null,
+      "completedDate": "2026-03-10",
+      "links": [
+        {
+          "label": "Results Dashboard",
+          "url": "analysis/prebid-experiment-results.html"
+        }
+      ]
+    },
+    {
+      "id": "sh-7",
+      "initiative": "Video Skippable Interstitial",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "done",
+      "eta": "Apr 2026",
+      "notes": "Experiment concluded. Retention guardrail passed (+0.3%, not significant). 70.4% completion rate, 0.37% CTR, 320 Premium subs. GTM handed to Commercial team (Apr 15).",
+      "jiraKey": null,
+      "prdLink": "docs/product_briefs/PRD — Video Interstitials.md",
+      "dashboardLink": "skippable-video-dashboard.html",
+      "stage": "completed",
+      "requiresExperiment": true,
+      "startDate": "2026-03-01",
+      "devStartDate": "2026-03-20",
+      "readyDate": "2026-03-16",
+      "experimentStartDate": "2026-03-16",
+      "concludedDate": "2026-04-14",
+      "releasedDate": "2026-04-15",
+      "completedDate": "2026-04-16",
+      "links": [
+        {
+          "label": "PRD",
+          "url": "docs/product_briefs/PRD — Video Interstitials.md"
+        },
+        {
+          "label": "Mixpanel",
+          "url": "https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg"
+        }
+      ]
+    },
+    {
+      "id": "sh-8",
+      "initiative": "Primis content video",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "on_hold",
+      "eta": null,
+      "notes": "waiting for Primis for the documentation",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-9",
+      "initiative": "Publift: CMP optimisation",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "on_hold",
+      "eta": null,
+      "notes": "remove the TCF in geo's where's not needed",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-10",
+      "initiative": "Publift: AR investigation",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "done",
+      "eta": null,
+      "notes": "waiting for Publift",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": false,
+      "startDate": "2025-10-01",
+      "devStartDate": "2025-11-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": "2026-02-01",
+      "completedDate": "2026-02-15",
+      "links": []
+    },
+    {
+      "id": "sh-11",
+      "initiative": "Ads Alerts V2",
+      "area": "advertising",
+      "priority": "P2",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "Apr 2026",
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "development",
+      "requiresExperiment": false,
+      "startDate": "2026-03-01",
+      "devStartDate": "2026-03-15",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-12",
+      "initiative": "AdOps handover document",
+      "area": "advertising",
+      "priority": "P2",
+      "impact": null,
+      "effort": null,
+      "status": "on_hold",
+      "eta": null,
+      "notes": "Moved to backlog — no bandwidth. Discuss and align on what tasks need to be handed over to Ad Ops",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": "2026-04-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-13",
+      "initiative": "Primis / Moba display AB test",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "done",
+      "eta": null,
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": true,
+      "startDate": "2025-11-01",
+      "devStartDate": "2025-12-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": "2026-03-01",
+      "releasedDate": null,
+      "completedDate": "2026-03-10",
+      "links": []
+    },
+    {
+      "id": "sh-14",
+      "initiative": "Blacklyte iterations",
+      "area": "brand_integrations",
+      "priority": "P1",
+      "impact": "€420,000",
+      "effort": null,
+      "status": "done",
+      "eta": null,
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": false,
+      "startDate": "2025-09-01",
+      "devStartDate": "2025-10-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": "2026-01-15",
+      "completedDate": "2026-01-15",
+      "links": []
+    },
+    {
+      "id": "sh-15",
+      "initiative": "Publift display Faceit",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": "€258,000",
+      "effort": "S",
+      "status": "done",
+      "eta": "September 15",
+      "notes": "Developed, pending legal signature",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": false,
+      "startDate": "2025-06-01",
+      "devStartDate": "2025-07-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": "2025-09-15",
+      "completedDate": "2025-09-15",
+      "links": []
+    },
+    {
+      "id": "sh-16",
+      "initiative": "Primis",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": "€264,000",
+      "effort": "M",
+      "status": "done",
+      "eta": null,
+      "notes": "GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": false,
+      "startDate": "2025-08-01",
+      "devStartDate": "2025-09-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": "2026-01-01",
+      "completedDate": "2026-01-01",
+      "links": []
+    },
+    {
+      "id": "sh-17",
+      "initiative": "Logitech Brand Takeover + RV experiment",
+      "area": "brand_integrations",
+      "priority": "P0",
+      "impact": "€250,000",
+      "effort": null,
+      "status": "done",
+      "eta": null,
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "completed",
+      "requiresExperiment": true,
+      "startDate": "2025-07-01",
+      "devStartDate": "2025-08-01",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": "2025-12-01",
+      "releasedDate": null,
+      "completedDate": "2025-12-15",
+      "links": []
+    },
+    {
+      "id": "sh-18",
+      "initiative": "Google",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": "€319,000",
+      "effort": null,
+      "status": "blocked",
+      "eta": null,
+      "notes": "Google didn't sign the contract",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": "2025-06-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-19",
+      "initiative": "Publift outstream video",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": "€264,000",
+      "effort": "M/L",
+      "status": "blocked",
+      "eta": null,
+      "notes": "Primis is going live instead",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-20",
+      "initiative": "Rewarded video",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "blocked",
+      "eta": null,
+      "notes": "not worth it at the time due to CMPs",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-21",
+      "initiative": "Ezoic outstream",
+      "area": "advertising",
+      "priority": "P2",
+      "impact": "€0",
+      "effort": "M",
+      "status": "blocked",
+      "eta": null,
+      "notes": "relationships with Ezoic are paused",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-22",
+      "initiative": "Ezoic anchor ads",
+      "area": "advertising",
+      "priority": "P2",
+      "impact": "€120,000",
+      "effort": "L",
+      "status": "blocked",
+      "eta": null,
+      "notes": "relationships with Ezoic are paused",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": false,
+      "startDate": null,
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-23",
+      "initiative": "Prebid Outstream CSStats",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "Apr 2026",
+      "notes": "Experiment live since 2026-04-09",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": "analysis/prebid-outstream-csstats-dashboard.html",
+      "stage": "experimenting",
+      "requiresExperiment": true,
+      "startDate": "2026-03-15",
+      "devStartDate": "2026-04-01",
+      "readyDate": "2026-04-09",
+      "experimentStartDate": "2026-04-09",
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": [
+        {
+          "label": "Dashboard",
+          "url": "analysis/prebid-outstream-csstats-dashboard.html"
+        }
+      ]
+    },
+    {
+      "id": "sh-24",
+      "initiative": "Prebid Outstream FACEIT",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "May 2026",
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": true,
+      "startDate": "2026-04-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-25",
+      "initiative": "Prebid Display FACEIT",
+      "area": "advertising",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "May 2026",
+      "notes": "",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": null,
+      "stage": "scoping",
+      "requiresExperiment": true,
+      "startDate": "2026-04-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": []
+    },
+    {
+      "id": "sh-26",
+      "initiative": "AL Growth — Trust Modal Redesign",
+      "area": "brand_integrations",
+      "priority": "P1",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "May 2026",
+      "notes": "Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.",
+      "jiraKey": "AD-3946",
+      "prdLink": null,
+      "dashboardLink": "analysis/al-growth-dashboard.html",
+      "stage": "development",
+      "requiresExperiment": true,
+      "startDate": "2026-04-01",
+      "devStartDate": "2026-04-07",
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": [
+        {
+          "label": "Dashboard",
+          "url": "analysis/al-growth-dashboard.html"
+        }
+      ]
+    },
+    {
+      "id": "sh-27",
+      "initiative": "Peripheral Initiative",
+      "area": "advertising",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "Q2 2026",
+      "notes": "End-to-end peripheral data play: collect hardware telemetry via FACEIT Client, design user-facing profile, normalise storage for ad targeting segments. Live in IT + T3 countries. Egor (BE), Anouk (Design). Gated on Legal (LEGD-8214).",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": "analysis/peripheral-data-dashboard.html",
+      "stage": "development",
+      "requiresExperiment": false,
+      "startDate": "2026-02-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": [
+        {
+          "label": "PRD",
+          "url": "docs/product_briefs/hardware-ad-targeting-scoping.md"
+        },
+        {
+          "label": "Dashboard",
+          "url": "analysis/peripheral-data-dashboard.html"
+        }
+      ]
+    },
+    {
+      "id": "sh-28",
+      "initiative": "Skin Vault",
+      "area": "brand_integrations",
+      "priority": "P0",
+      "impact": null,
+      "effort": null,
+      "status": "in_progress",
+      "eta": "Q2 2026",
+      "notes": "Live on 300 profiles. Backlog prioritised: direct Steam shop link (FE), rarity filter, skin name search (UX research needed). Mongo DB post-pipeline. Blocked on Steam API rate-limiting + Legal consent UX (LEGD-8213). Anouk: interaction data analysis + FLA0 feedback. Isabel: Mongo + API data share. Theo: backlog tickets.",
+      "jiraKey": null,
+      "prdLink": null,
+      "dashboardLink": "analysis/skin-vault-dashboard.html",
+      "stage": "development",
+      "requiresExperiment": false,
+      "startDate": "2026-03-01",
+      "devStartDate": null,
+      "readyDate": null,
+      "experimentStartDate": null,
+      "concludedDate": null,
+      "releasedDate": null,
+      "completedDate": null,
+      "links": [
+        {
+          "label": "Dashboard",
+          "url": "analysis/skin-vault-dashboard.html"
+        },
+        {
+          "label": "Legal — LEGD-8213",
+          "url": "https://efgcloud.atlassian.net/browse/LEGD-8213"
+        }
+      ]
+    }
+  ],
+  "holidays": [
+    {
+      "memberId": "moritz",
+      "startDate": "2026-04-02",
+      "endDate": "2026-04-08",
+      "label": "Easter"
+    }
+  ]
+}

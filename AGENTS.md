@@ -126,3 +126,26 @@ Since you don't have direct access to FACEIT's BigQuery schema:
 - **Users**: DAU/MAU, geo, platform, engagement segments
 - **Partners**: organiser/advertiser metadata, campaign configurations
 
+---
+
+## Process: Experiment Status Change
+
+**Trigger**: User says an experiment is "completed", "concluded", "done", "shipped", or changes its status in any direction.
+
+When an experiment status changes, update **ALL** of the following in a single pass. Do not wait to be reminded.
+
+### Checklist (mandatory, every status change)
+
+1. **`data/roadmap-data.json`** — Update the stakeholder item: `status`, `stage`, `notes`, and all date fields (`concludedDate`, `releasedDate`, `completedDate`)
+2. **`context/experiments.md`** — Update the experiment entry: `Status` field, `Results` section, `Next Steps` section
+3. **`context/advertising.md`** or **`context/brand_integrations.md`** — Update the relevant product section status
+4. **`docs/product_briefs/`** — Update the PRD or experiment brief with conclusion and results
+5. **`index.html`** (hub page) — Move the experiment card between sections (`Live Experiments` ↔ `Concluded Experiments`) and update the badge (`badge-live` → `badge-concluded` with month)
+6. **`monthly-releases.html`** — Add or update the experiment entry in `SEED_DATA`. Include hypothesis, primary/secondary metrics, verdict, verdictSummary, links. Bump `SEED_VERSION` so updated data appears on next load.
+
+### Rules
+
+- All six locations are updated in one pass. Never partially update.
+- If a location doesn't have a reference to the experiment, skip it — but check all six.
+- When concluding, always include key metrics in the `notes` field and `Results` section.
+

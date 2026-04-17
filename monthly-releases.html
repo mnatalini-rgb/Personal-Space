@@ -492,7 +492,7 @@
     </footer>
 
     <script>
-        const SEED_VERSION = 1;
+        const SEED_VERSION = 2;
         const SEED_DATA = [
             // RELEASES
             {
@@ -625,6 +625,66 @@
                 team: ['moritz', 'isabel'],
                 links: { jira: null, dashboard: null, report: null },
                 notes: ''
+            },
+            {
+                id: 'exp-4', month: '2026-02', type: 'experiment',
+                name: 'Mystery Box — Account Linkage Uplift', projectId: 'proj-13',
+                area: 'brand_integrations', priority: 'P0',
+                hypothesis: 'A "mystery reward" framework using curiosity and variable-reward psychology will increase account linkage rates compared to a fixed 500 FP reward.',
+                startDate: '2026-01-15', endDate: '2026-02-28',
+                primaryMetric: { name: 'AL completion rate', result: '+61% relative lift (1.36% → 2.19%)', target: 'Significant uplift' },
+                secondaryMetrics: [
+                    { name: 'Activated users', result: '~293K (both groups)', target: null },
+                    { name: 'Control completions', result: '1,854 / 147,105', target: null },
+                    { name: 'Variant completions', result: '2,955 / 146,131', target: null }
+                ],
+                sampleSize: '~293K users (50/50 split)',
+                confidence: '95%',
+                verdict: 'confirmed',
+                verdictSummary: '+61% relative lift in AL completion. Clean signal — user quality comparable between groups. Cost flag: equal tier distribution inflated variant costs (fixable with weighted probabilities). Evaluating as default mechanic for all linkage missions.',
+                team: ['moritz'],
+                links: { jira: null, dashboard: 'mystery-box-experiment-report.html', report: null },
+                notes: 'Follow-up with Tradeit running (per-challenge level, launched March 2026)'
+            },
+            {
+                id: 'exp-5', month: '2026-04', type: 'experiment',
+                name: 'Skippable Video Interstitial', projectId: 'proj-14',
+                area: 'advertising', priority: 'P0',
+                hypothesis: 'Adding a skippable video format inside the interstitial placement will increase CPM without negatively impacting user retention (measured by games played).',
+                startDate: '2026-03-16', endDate: '2026-04-14',
+                primaryMetric: { name: 'Retention guardrail', result: '+0.3% (not significant) — PASSED', target: 'No negative impact' },
+                secondaryMetrics: [
+                    { name: 'Video completion rate', result: '70.4% (GAM) / 83.3% (FE)', target: '>65%' },
+                    { name: 'CTR', result: '0.37% (23,698 clicks)', target: '>0.2%' },
+                    { name: 'Premium subscriptions', result: '320 (46 direct + 274 assisted)', target: null }
+                ],
+                sampleSize: '6.47M GAM impressions, 184 countries',
+                confidence: '95%',
+                verdict: 'confirmed',
+                verdictSummary: 'Retention guardrail passed — variant tracks within ±1K of control across 31 days. 70.4% completion rate, 0.37% CTR. Format is safe to ship. GTM ownership transferred to commercial team (Apr 15).',
+                team: ['moritz'],
+                links: { jira: null, dashboard: 'skippable-video-experiment-report.html', report: 'skippable-video-dashboard.html' },
+                notes: 'Open questions on ad serving, sales packaging, pricing, and trafficking sent to Mandar\'s team'
+            },
+            {
+                id: 'exp-6', month: '2026-04', type: 'experiment',
+                name: 'Trust Modal — AL Flow Simplification', projectId: 'proj-15',
+                area: 'brand_integrations', priority: 'P1',
+                hypothesis: 'Removing the trust modal and sending users directly to the partner login screen will increase account linkage rate.',
+                startDate: '2026-03-12', endDate: '2026-04-10',
+                primaryMetric: { name: 'Linkage-step completion rate', result: '-48.4% (5.34% → 2.75%)', target: 'Improvement' },
+                secondaryMetrics: [
+                    { name: 'Full-population AL rate', result: '+12.8% (0.18% → 0.20%)', target: null },
+                    { name: '€ impact per cohort', result: '+€416 for control', target: null },
+                    { name: '€ impact per 1K users', result: '+€9.82 for control', target: null }
+                ],
+                sampleSize: '2M users (70/30 split)',
+                confidence: '99%',
+                verdict: 'not_confirmed',
+                verdictSummary: 'Hypothesis rejected. Removing the trust modal nearly halves linkage-step completion (-48.4%). The modal acts as a trust signal that increases willingness to complete. Recommendation: keep trust modal as permanent default for all partner AL flows.',
+                team: ['moritz'],
+                links: { jira: null, dashboard: null, report: 'docs/product_briefs/trust-modal-experiment-conclusion.md' },
+                notes: 'Apply trust modal pattern to all future partner AL flows (PaySafe, etc.)'
             }
         ];
 

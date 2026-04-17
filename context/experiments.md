@@ -293,7 +293,7 @@ New BE feature developed to **fix reward probabilities per tier** — solving th
 
 **Type**: A/B test
 **Funnel stage**: Advertising — AVU / CPM
-**Status**: Launched 16 March 2026 — results pending
+**Status**: Completed — experiment concluded 14 April 2026. GTM handed to Commercial team (15 April 2026).
 **Reference PRD**: `docs/product_briefs/PRD — Video Interstitials.md`
 
 #### Problem
@@ -333,11 +333,28 @@ Adding a skippable video format inside the interstitial placement will increase 
 
 #### Results
 
-— Results pending (launched 16 March 2026)
+A/B test ran 16 March – 14 April 2026 (31 days, 6.47M GAM impressions across 184 countries).
+
+**Retention guardrail: PASSED**
+- Variant: 173.3K avg daily matchmaking uniques vs Control: 172.8K (+0.3% delta, not statistically significant)
+- Both groups tracked within ±1K on all 31 days with identical weekly seasonality
+
+**Performance metrics:**
+- 70.4% video completion rate (GAM weighted avg); 83.3% full-15s completion on front-end events
+- 0.37% CTR — 23,698 clicks to Premium purchase page
+- 320 Premium subscriptions attributed (46 direct, 274 view-through)
+- 1.35% click-to-subscription conversion rate
+
+**Regional pattern:** Tier 1 / APAC markets achieved 75–81% completion. Central Asia / Balkans dipped to 50–65% (likely device/connectivity, not content relevance).
+
+Full experiment report: `skippable-video-dashboard.pdf`
 
 #### Next Steps
 
-— To be updated once results are available.
+- Experiment validated — format is safe to ship. No retention risk detected.
+- Go-to-market ownership transferred to Mandar's commercial team (agreed 15 April 2026).
+- Open questions on ad serving setup, sales packaging, pricing model, and trafficking sent to commercial team.
+- Mandar to share full Salesforce pipeline overview.
 
 ---
 

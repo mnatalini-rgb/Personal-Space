@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Box Account Linkage — Experiment Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #8b5cf6;
+            --accent-light: #ede9fe;
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* Highlights & Insights */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+
+        h3 { font-weight: 600; color: var(--text); }
+
+        /* ========== PRINT / PDF STYLES ========== */
+        @media print {
+            body { background: #fff; padding: 0.5rem; font-size: 11px; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { max-width: 100%; }
+            .header { margin-bottom: 1rem; padding-bottom: 0.75rem; }
+            .header h1 { font-size: 1.5rem; }
+            .header h2 { font-size: 1rem; }
+
+            .section { page-break-inside: avoid; break-inside: avoid; margin-bottom: 1.5rem; padding: 1.25rem; box-shadow: none; border-radius: 8px; border: 1px solid var(--border); }
+
+            .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+            .kpi-card { padding: 0.75rem; box-shadow: none; border: 1px solid var(--border); }
+            .kpi-value { font-size: 1.5rem; }
+            .kpi-title { font-size: 0.7rem; }
+
+            .grid-2 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+            .table-wrapper { box-shadow: none; border: 1px solid var(--border); }
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.4rem 0.6rem; }
+
+            .insight-card { box-shadow: none; margin-bottom: 0.5rem; padding: 0.75rem; border: 1px solid var(--border); border-left-width: 4px; }
+            .insight-card p { font-size: 0.8rem; }
+
+            .footer { margin-top: 1.5rem; font-size: 0.7rem; }
+
+            /* Force page breaks before heavy sections */
+            #design { page-break-before: always; break-before: page; }
+            #results { page-break-before: always; break-before: page; }
+            #cost-analysis { page-break-before: always; break-before: page; }
+            #partner-value { page-break-before: always; break-before: page; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Experiment &middot; A/B Test</span>
+            <h1>Mystery Box &mdash; Account Linkage Uplift</h1>
+            <h2>Winline &middot; Jan&ndash;Feb 2026 &middot; Completed</h2>
+            <p>Moritz Natalini &middot; Ads &amp; Partnerships &middot; EFG</p>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- VERDICT -->
+        <!-- ============================================================ -->
+        <div class="section" id="verdict" style="border-left: 4px solid var(--green); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Verdict</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>+61% relative lift</strong> in account linkage completion rate (1.36% &rarr; 2.19%)</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Clean signal</strong> &mdash; user quality and volume comparable between groups</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-yellow"></span> <strong>Cost insight flagged</strong> &mdash; equal tier distribution inflated costs, now fixable with weighted probabilities</p>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 1. EXPERIMENT DESIGN -->
+        <!-- ============================================================ -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Experiment Design</h2>
+            
+            <div class="insight-card" style="border-left-color: var(--accent); margin-bottom: 2rem;">
+                <p><strong>Problem:</strong> In long-term partnerships, account linkage rates decline over time, limiting partner value and reducing users entering the funnel.</p>
+                <p><strong>Hypothesis:</strong> A "mystery reward" framework uses curiosity and variable-reward psychology to increase motivation. Users perceive a free, low-effort opportunity with potential upside.</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Test Design</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Group</th><th>Description</th><th>Reward</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Control</td><td>Standard linkage mission</td><td>Fixed: 500 FP</td></tr>
+                                <tr><td>Variant</td><td>Mystery Box linkage mission</td><td>Random from 4 tiers</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Reward Tiers</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Tier</th><th>Reward</th><th class="number">Share</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Premium Monthly Sub</td><td class="number">24%</td></tr>
+                                <tr><td>2</td><td>1,000 FP</td><td class="number">26%</td></tr>
+                                <tr><td>3</td><td>250 FP</td><td class="number">25%</td></tr>
+                                <tr><td>4</td><td>500 FP</td><td class="number">25%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -0.5rem;">
+                        <strong>Note:</strong> Equal distribution across all tiers (uncapped) &mdash; due to time constraints preventing calibrated weighting.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2. RESULTS -->
+        <!-- ============================================================ -->
+        <div class="section" id="results">
+            <h2 class="section-title">2. Results</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Activated Users</div>
+                    <div class="kpi-value">~293K</div>
+                    <div class="kpi-sub">Total across both groups</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Control Conv.</div>
+                    <div class="kpi-value">1.36%</div>
+                    <div class="kpi-sub">1,854 / 147,105</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Variant Conv.</div>
+                    <div class="kpi-value" style="color: var(--green);">2.19%</div>
+                    <div class="kpi-sub">2,955 / 146,131</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Relative Uplift</div>
+                    <div class="kpi-value" style="color: var(--green);">+61%</div>
+                    <div class="kpi-sub">Variant vs Control</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Results Breakdown</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Group</th>
+                                    <th class="number">Activated</th>
+                                    <th class="number">Completed</th>
+                                    <th class="number">Completion Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Control</td>
+                                    <td class="number">147,105</td>
+                                    <td class="number">1,854</td>
+                                    <td class="number">1.36%</td>
+                                </tr>
+                                <tr>
+                                    <td>Variant</td>
+                                    <td class="number">146,131</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">2,955</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">2.19%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Signal Quality</h3>
+                    <div class="insight-card" style="border-left-color: var(--blue); height: 100%;">
+                        <p>User quality and volume were comparable between groups &mdash; positive signal is clean.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 3. COST ANALYSIS & NEXT STEPS -->
+        <!-- ============================================================ -->
+        <div class="section" id="cost-analysis">
+            <h2 class="section-title">3. Cost Analysis &amp; Next Steps</h2>
+            
+            <div class="grid-2" style="margin-bottom: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Cost Breakdown</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mission</th>
+                                    <th class="number">Completions Paid</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Variant (Mystery Box)</td>
+                                    <td class="number">2,028</td>
+                                    <td>$616 + $5K prize pool</td>
+                                </tr>
+                                <tr>
+                                    <td>Control</td>
+                                    <td class="number">1,864</td>
+                                    <td>$739</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Insights</h3>
+                    <div class="insight-card" style="border-left-color: var(--yellow); margin-bottom: 1rem;">
+                        <p><strong>Cost Flag:</strong> Equal reward distribution across all tiers (including highest-value Premium subs at 24%) inflated variant costs. Backend now supports weighted probabilities to control CPA.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--blue);">
+                        <p><strong>Compliance Note:</strong> Account linking does not involve payment from users. No cost to participate &mdash; does not constitute gambling.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Next Steps</h3>
+            <div style="background-color: var(--surface); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                <ol style="margin-left: 1.5rem; padding-left: 0;">
+                    <li class="list-item">Calibrate reward weights to reduce CPA (weight lower tiers more heavily)</li>
+                    <li class="list-item">Evaluate Mystery Box as the default mechanic for all linkage missions</li>
+                    <li class="list-item">Test Mystery Box vs Drops to compare gamification approaches</li>
+                    <li class="list-item">Follow-up experiment running with Tradeit &mdash; per-challenge level (deeper funnel)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 4. PARTNER VALUE PROJECTION -->
+        <!-- ============================================================ -->
+        <div class="section" id="partner-value">
+            <h2 class="section-title">4. Partner Value Projection &mdash; If Mystery Box Goes to Production</h2>
+
+            <div class="insight-card" style="border-left-color: var(--accent); margin-bottom: 2rem;">
+                <p><strong>Model:</strong> Applying the observed +61% AL uplift to each partner's NSM value per Account Linkage. Projections are per mission cycle (~147K eligible users per group, matching experiment scale). Annual estimates assume ~12 mission cycles/year.</p>
+            </div>
+
+            <div class="grid-2" style="margin-bottom: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">NSM Values Used</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Partner</th><th class="number">&euro; per AL</th><th>Source</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Winline</td><td class="number" style="font-weight: 600;">&euro;4.33</td><td>BQ + Partner CRM</td></tr>
+                                <tr><td>Tradeit</td><td class="number" style="font-weight: 600;">&euro;0.38</td><td>BQ + Partner CRM</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Uplift Applied</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Metric</th><th class="number">Control</th><th class="number">Mystery Box</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>AL rate</td><td class="number">1.36%</td><td class="number" style="color: var(--green); font-weight: 600;">2.19%</td></tr>
+                                <tr><td>ALs per 100K eligible</td><td class="number">1,360</td><td class="number" style="color: var(--green); font-weight: 600;">2,190</td></tr>
+                                <tr><td>Incremental ALs per 100K</td><td class="number">&mdash;</td><td class="number" style="color: var(--green); font-weight: 600;">+830</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Value Per Mission Cycle (per 100K eligible users)</h3>
+            <div class="table-wrapper" style="margin-bottom: 2rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Partner</th>
+                            <th class="number">&euro;/AL</th>
+                            <th class="number">Control Value</th>
+                            <th class="number">Mystery Box Value</th>
+                            <th class="number">Incremental Value</th>
+                            <th class="number">Uplift</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Winline</strong></td>
+                            <td class="number">&euro;4.33</td>
+                            <td class="number">&euro;5,889</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">&euro;9,483</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">+&euro;3,594</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">+61%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tradeit</strong></td>
+                            <td class="number">&euro;0.38</td>
+                            <td class="number">&euro;517</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">&euro;832</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">+&euro;315</td>
+                            <td class="number" style="color: var(--green); font-weight: 600;">+61%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Annualised Projection (~12 mission cycles/year)</h3>
+            <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 2rem;">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Winline Incremental</div>
+                    <div class="kpi-value" style="color: var(--green); font-size: 2rem;">+&euro;43K</div>
+                    <div class="kpi-sub">~&euro;3,594 &times; 12 cycles/yr</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Tradeit Incremental</div>
+                    <div class="kpi-value" style="color: var(--green); font-size: 2rem;">+&euro;3.8K</div>
+                    <div class="kpi-sub">~&euro;315 &times; 12 cycles/yr</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Combined Incremental</div>
+                    <div class="kpi-value" style="font-size: 2rem;">+&euro;47K</div>
+                    <div class="kpi-sub">Per 100K eligible users/partner</div>
+                </div>
+            </div>
+
+            <div class="insight-card" style="border-left-color: var(--yellow); margin-bottom: 1rem;">
+                <h3>Scaling Note</h3>
+                <p>Winline's eligible pool is ~450K active players (RU). At full scale, the annualised incremental value could reach <strong>~&euro;194K</strong> for Winline alone. Tradeit's eligible pool spans 169K+ users across multiple regions &mdash; with Mystery Box already driving their March 2026 spike to &euro;68.7K (5&times; prior months).</p>
+            </div>
+
+            <div class="insight-card" style="border-left-color: var(--blue);">
+                <h3>Downstream Caveat</h3>
+                <p>These projections are based on AL value only (top of funnel). The full partner value depends on downstream conversion quality (KYC, FTD, trades). Mystery Box drives volume, but Q2 priorities include tightening the conversion ladder to ensure AL uplift translates to proportional C1/C2 value.</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Data sources: FACEIT Missions Platform, Winline CRM, Tradeit CRM, BigQuery &middot; Jan&ndash;Feb 2026 | Internal PM Tool
+        </footer>
+
+    </div>
+</body>
+</html>

@@ -111,14 +111,18 @@ Initial UX explorations and format concepts:
 Play Interstitial concept board (April 2026):  
 [https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1\&t=iw9eKdWDLP2J8MZ9-1](https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1)
 
-## Experiment & Validation Plan (Next Step)
+## Experiment & Validation Plan ~~(Next Step)~~ — Completed
 
-* A/B/C test (confirmed April 2026):  
-  * **Control (A)**: No ads — baseline retention and engagement  
-  * **Test B**: No ads on the first match, ads from 2nd match onward  
-  * **Test C**: Ads from the first match onward  
-* Primary question: does the first-match ad-free experience meaningfully improve retention vs immediate ads?
-* Validate whether revenue per user increases without negative behavioural impact
+**Status**: Experiment concluded 14 April 2026. Go-to-market agreed 15 April 2026.
+
+* A/B test ran 16 March – 14 April 2026 (31 days, 6.47M impressions, 184 countries)
+* **Retention guardrail: PASSED** — variant +0.3% vs control (not statistically significant)
+* 70.4% video completion rate (GAM); 83.3% full-15s on FE events
+* 0.37% CTR → 23,698 clicks → 320 Premium subscriptions (46 direct, 274 view-through)
+
+**Decision**: Move to production. Commercial team owns GTM.
+
+Full experiment report: `skippable-video-dashboard.pdf`
 
 **Experiment tracking**:  
 [Mixpanel Board — Play Interstitial Experiment](https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg)

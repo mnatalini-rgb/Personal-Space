@@ -102,6 +102,42 @@ Next week:
 
 ---
 
+## Post 5: Skippable Video Interstitial Results (DRAFT — post after Mandar's CPM calculation)
+
+> **Blocked on:** Mandar's CPM/revenue uplift forecast. Once available, add a "Revenue projection" line to the Results block before posting.
+
+```
+:microscope: Skippable Video Interstitial — Results
+
+**Setup:** A/B test on our existing overlay interstitial — replacing static display with a skippable video (3s unskippable, then skip). 31 days, 6.47M impressions, 184 countries. House ad (Premium subscription CTA) — no paid cannibalisation.
+**Hypothesis:** Video format increases CPM potential without negatively impacting user retention.
+
+Results:
+• Retention guardrail: +0.3% (variant vs control) — not significant. PASSED.
+• Video completion rate: 70.4% (GAM weighted) / 83.3% full-15s (FE)
+• CTR: 0.37% — 23,698 clicks to Premium purchase page
+• Premium subs attributed: 320 (46 direct, 274 view-through)
+• Regional: Tier 1 / APAC 75–81% completion. Central Asia / Balkans 50–65% (device quality).
+• Revenue uplift forecast: [TBD — pending Mandar's CPM calculation]
+
+:white_check_mark: **Verdict:** Confirmed. No retention risk. Format is safe to ship — video completion and CTR both clear green thresholds.
+
+What we learned:
+• Users tolerate skippable video interstitials well — 83% watch the full 15s when they interact
+• The "only fire when display doesn't fill" logic means every video impression is incremental, not cannibalising existing paid inventory
+• Low-completion geos correlate with device quality, not content — geo-targeting adjustments may be worth it for paid campaigns
+
+Next steps:
+• GTM ownership transferred to Mandar's commercial team (agreed Apr 15)
+• Open questions sent to commercial: ad serving setup (VAST vs GAM), sales packaging, pricing model, trafficking ops
+• Mandar sharing full Salesforce pipeline overview
+
+Full report → skippable-video-experiment-report.html
+Interactive dashboard → skippable-video-dashboard.html
+```
+
+---
+
 ## Posting Schedule This Week
 
 | Day | Post | Status |

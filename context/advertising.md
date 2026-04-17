@@ -137,10 +137,10 @@ Test results TBD — to be updated once the campaign concludes.
 
 ## Interstitial Video Test (Overlay)
 
-- **Status**: Launching today (16 March 2026)
+- **Status**: Completed — experiment concluded 14 April 2026. GTM handed to Commercial team (15 April 2026).
 - **Format**: Skippable video served on the current **overlay product**
 - **Note**: This is distinct from the **Play Interstitial** — a separate initiative (see below)
-- Purpose is primarily a **behavioural tolerance test** — validating whether users tolerate the format without harming engagement or increasing ad-block usage before scaling monetisation
+- **Results**: Retention guardrail passed (+0.3%, not significant). 70.4% completion rate, 0.37% CTR, 320 Premium subscriptions attributed. Full report: `skippable-video-dashboard.pdf`
 
 ---
 

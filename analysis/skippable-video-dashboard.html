@@ -132,7 +132,7 @@
             <h2>House Ad for Premium Subscription &middot; Launched Mar 16, 2026 &middot; Updated Apr 14</h2>
             <p>Moritz Natalini &middot; Ads &amp; Partnerships &middot; EFG</p>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
-                <strong>Decision:</strong> Should we move the skippable video interstitial to production and begin go-to-market preparation?
+                <strong>Decision:</strong> Should we move the skippable video interstitial to production and begin go-to-market preparation? <span style="color: var(--green); font-weight: 600;">&mdash; Yes, agreed. Commercial team owns GTM (Apr 15).</span>
             </p>
         </header>
 
@@ -615,6 +615,33 @@
                         <li class="list-item">Explore replacing house ad with programmatic demand (VAST tags from SSPs) &mdash; revenue opportunity.</li>
                         <li class="list-item">Monitor low-completion geos (Kosovo, Pakistan, Albania) &mdash; consider geo-targeting adjustments if video CPM &lt; display CPM in those markets.</li>
                     </ol>
+
+                    <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Go-to-Market &mdash; Open Questions for Commercial Team</h3>
+                    <div class="insight-card" style="border-left-color: var(--yellow); margin-bottom: 1rem;">
+                        <p style="margin-bottom: 0.75rem;">The experiment validated the format on a <strong>new ad unit</strong> using a house ad (Premium subscription CTA). Mandar&rsquo;s team has agreed to take skippable video interstitials to market. The following questions need answers from the commercial side to define the operational model:</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="insight-card" style="border-left-color: var(--border);">
+                            <p><strong>1. Ad Serving Setup</strong></p>
+                            <p>The experiment ran as a custom front-end implementation (house ad, no GAM video line item). How should this work in production? Options include VAST tags from SSPs, direct-sold creatives via GAM, or a hybrid approach.</p>
+                        </div>
+                        <div class="insight-card" style="border-left-color: var(--border);">
+                            <p><strong>2. Sales &amp; Packaging</strong></p>
+                            <p>How will the sales team position this to advertisers? As a standalone product, bundled with display interstitials, or as part of a broader video package? What&rsquo;s the pitch?</p>
+                        </div>
+                        <div class="insight-card" style="border-left-color: var(--border);">
+                            <p><strong>3. Pricing Model</strong></p>
+                            <p>What pricing structure works for the market? CPM floor, fixed rate per campaign, or programmatic-only? The experiment data (70.4% completion, 0.37% CTR) provides the proof points &mdash; sales needs to translate this into a rate card.</p>
+                        </div>
+                        <div class="insight-card" style="border-left-color: var(--border);">
+                            <p><strong>4. Trafficking &amp; Operations</strong></p>
+                            <p>Who handles creative upload, QA, and campaign setup? Does this fit into the existing ad ops workflow or does it require new tooling / process?</p>
+                        </div>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent); margin-bottom: 0;">
+                        <p><strong>Owner:</strong> Mandar&rsquo;s commercial team. PM has validated the format works and there is no retention risk. The operational go-to-market model is a commercial decision.</p>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">Agreed during catchup &mdash; Apr 15, 2026. Mandar will also share the full Salesforce pipeline overview.</p>
+                    </div>
                 </div>
                 <div>
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
@@ -637,7 +664,8 @@
                         <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Completion Rate (70.4% GAM / 83.3% FE)</p>
                         <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> CTR (0.37%)</p>
                         <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Premium Conversions (320 subs &mdash; 46 direct + 274 assisted)</p>
-                        <p><span class="status-indicator status-yellow"></span> CPM Uplift (pending &mdash; house ad, no revenue comparison yet)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> CPM Uplift (pending &mdash; house ad, no revenue comparison yet)</p>
+                        <p><span class="status-indicator status-yellow"></span> Go-to-Market (agreed &mdash; open questions sent to commercial team, Apr 15)</p>
                     </div>
                 </div>
             </div>

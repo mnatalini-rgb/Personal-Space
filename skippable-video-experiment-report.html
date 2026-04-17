@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skippable Video Interstitial — Experiment Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+            --text: #1a1a2e;
+            --text-muted: #6b7280;
+            --accent: #8b5cf6;
+            --accent-light: #ede9fe;
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        /* KPIs */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+        /* Tables */
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        /* Highlights & Insights */
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+
+        h3 { font-weight: 600; color: var(--text); }
+
+        /* Funnel & Experiment specific styles */
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; margin-bottom: 1.5rem; }
+        
+        .experiment-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; background-color: var(--surface); }
+        .experiment-box.control { border-top: 4px solid var(--text-muted); }
+        .experiment-box.variant { border-top: 4px solid var(--accent); }
+        .experiment-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .experiment-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text); }
+
+        /* ========== PRINT / PDF STYLES ========== */
+        @media print {
+            body { background: #fff; padding: 0.5rem; font-size: 11px; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .container { max-width: 100%; }
+            .header { margin-bottom: 1rem; padding-bottom: 0.75rem; }
+            .header h1 { font-size: 1.5rem; }
+            .header h2 { font-size: 1rem; }
+
+            .section { page-break-inside: avoid; break-inside: avoid; margin-bottom: 1.5rem; padding: 1.25rem; box-shadow: none; border-radius: 8px; border: 1px solid var(--border); }
+
+            .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+            .kpi-card { padding: 0.75rem; box-shadow: none; border: 1px solid var(--border); }
+            .kpi-value { font-size: 1.5rem; }
+            .kpi-title { font-size: 0.7rem; }
+
+            .grid-2 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+            .table-wrapper { box-shadow: none; border: 1px solid var(--border); margin-bottom: 1rem; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.4rem 0.6rem; }
+
+            .insight-card { box-shadow: none; margin-bottom: 0.5rem; padding: 0.75rem; border: 1px solid var(--border); border-left-width: 4px; }
+            .insight-card p { font-size: 0.8rem; }
+
+            .footer { margin-top: 1.5rem; font-size: 0.7rem; }
+
+            .funnel-wrapper { flex-wrap: wrap; }
+            .funnel-step { box-shadow: none; padding: 0.5rem; }
+            .funnel-value { font-size: 1.25rem; }
+            
+            .experiment-box { padding: 0.75rem; }
+            .experiment-value { font-size: 1.5rem; }
+
+            /* Force page breaks before heavy sections */
+            #design { page-break-before: always; break-before: page; }
+            #results { page-break-before: always; break-before: page; }
+            
+            #guardrail { page-break-before: always; break-before: page; }
+            #regional { page-break-before: always; break-before: page; }
+            #funnel { page-break-before: always; break-before: page; }
+            #decisions { page-break-before: always; break-before: page; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Experiment &middot; A/B Test</span>
+            <h1>Skippable Video Interstitial</h1>
+            <h2>Advertising &middot; Mar&ndash;Apr 2026 &middot; Completed</h2>
+            <p>Moritz Natalini &middot; Ads &amp; Partnerships &middot; EFG</p>
+        </header>
+
+        <!-- ============================================================ -->
+        <!-- VERDICT -->
+        <!-- ============================================================ -->
+        <div class="section" id="verdict" style="border-left: 4px solid var(--green); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Verdict</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Retention guardrail passed</strong> &mdash; variant tracks within &plusmn;1K of control across 31 days (+0.3% delta, not statistically significant)</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>70.4% video completion rate</strong> &mdash; weighted avg across 184 countries (GAM); 83.3% full-15s completion on front-end events</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>0.37% CTR</strong> &mdash; 23,698 clicks to Premium purchase page across 6.47M impressions, driving 320 subscriptions</p>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 1. EXPERIMENT DESIGN -->
+        <!-- ============================================================ -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Experiment Design</h2>
+            
+            <div class="insight-card" style="border-left-color: var(--accent); margin-bottom: 2rem;">
+                <p><strong>Problem:</strong> Interstitial ads deliver highest CPMs due to strong visibility and CTR, but are highly intrusive. Increasing inventory volume risks user frustration and long-term CPM degradation. Revenue cannot safely grow by adding more interstitials.</p>
+                <p><strong>Solution:</strong> Maintain same inventory size but increase CPMs by upgrading the creative format &mdash; replace static image interstitials with video. Video drives stronger advertiser outcomes (viewability, CTR, brand lift) at the same impression count.</p>
+                <p><strong>Why skippable:</strong> Given the format's intrusiveness, skippable video (3s unskippable, then skip available) balances revenue uplift with user experience. Aligns with established user expectations (YouTube-like behaviour).</p>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Format Specification</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <tbody>
+                                <tr><td><strong>Type</strong></td><td>A/B test</td></tr>
+                                <tr><td><strong>Duration</strong></td><td>15 seconds</td></tr>
+                                <tr><td><strong>Autoplay</strong></td><td>Sound off</td></tr>
+                                <tr><td><strong>Skip available</strong></td><td>After 3 seconds</td></tr>
+                                <tr><td><strong>Trigger</strong></td><td>User return after inactivity</td></tr>
+                                <tr><td><strong>Placement</strong></td><td>Guaranteed in-view interstitial</td></tr>
+                                <tr><td><strong>Fallback logic</strong></td><td>Video only shows if no display interstitial fills</td></tr>
+                                <tr><td><strong>Creative</strong></td><td>House ad &mdash; Premium subscription CTA</td></tr>
+                                <tr><td><strong>Test period</strong></td><td>Mar 16 &ndash; Apr 14, 2026 (31 days)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <h3 style="margin-bottom: 0; font-size: 1.1rem;">Test Groups</h3>
+                    <div class="insight-card" style="border-left-color: var(--text-muted); margin-bottom: 0;">
+                        <p><strong>Control:</strong> Standard display interstitial</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent); margin-bottom: 0;">
+                        <p><strong>Variant:</strong> Skippable video interstitial with 3s unskippable, then skip button. 15s total duration.</p>
+                    </div>
+                    <h3 style="margin-top: 0.5rem; margin-bottom: 0; font-size: 1.1rem;">Key Design Choice</h3>
+                    <div class="insight-card" style="border-left-color: var(--blue); margin-bottom: 0;">
+                        <p><strong>No Paid Cannibalisation:</strong> The video interstitial only fires when no display interstitial fills from the programmatic waterfall. Every video impression is incremental &mdash; it monetises previously unfilled inventory.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 2. RESULTS -->
+        <!-- ============================================================ -->
+        <div class="section" id="results">
+            <h2 class="section-title">2. Results</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">GAM Impressions</div>
+                    <div class="kpi-value">6.47M</div>
+                    <div class="kpi-sub">Mar 26 &ndash; Apr 14, 20 days</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">GAM Clicks</div>
+                    <div class="kpi-value">23,698</div>
+                    <div class="kpi-sub">Click &rarr; Premium purchase page</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">CTR</div>
+                    <div class="kpi-value">0.37%</div>
+                    <div class="kpi-sub">Clicks / Impressions</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Completion Rate</div>
+                    <div class="kpi-value" style="color: var(--green);">70.4%</div>
+                    <div class="kpi-sub">Weighted avg, 184 countries</div>
+                </div>
+            </div>
+
+            <div class="kpi-grid-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Completed</div>
+                    <div class="kpi-value" style="color: var(--green);">4.26M</div>
+                    <div class="kpi-sub">83.3% of FE interactions &middot; Full 15s</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Closed/Skipped</div>
+                    <div class="kpi-value" style="color: var(--yellow);">810K</div>
+                    <div class="kpi-sub">15.9% of FE interactions</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">FE: Outside Click</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">39K</div>
+                    <div class="kpi-sub">0.8% of FE interactions</div>
+                </div>
+            </div>
+            
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">
+                <strong>Note:</strong> FE events (5.11M total) cover ~79% of GAM impressions (6.47M). Gap is expected &mdash; GAM fires on ad request, FE fires on user interaction with the player UI.
+            </p>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Premium Subscription Conversions</h3>
+            <div class="kpi-grid-3">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Direct Subs</div>
+                    <div class="kpi-value" style="color: var(--green);">46</div>
+                    <div class="kpi-sub">Clicked video CTA &rarr; subscribed immediately</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--blue);">
+                    <div class="kpi-title">Assisted Subs</div>
+                    <div class="kpi-value" style="color: var(--blue);">274</div>
+                    <div class="kpi-sub">Saw ad, subscribed later (view-through)</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Total Attributed</div>
+                    <div class="kpi-value" style="color: var(--accent);">320</div>
+                    <div class="kpi-sub">Direct + assisted &middot; via affiliate link tracking</div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Explanatory note:</strong> Direct subs involve users clicking the CTA directly from the video to the purchase page. Assisted subs capture users who viewed the ad but subscribed in a separate session, tracked via affiliate attribution links.
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 3. RETENTION GUARDRAIL -->
+        <!-- ============================================================ -->
+        <div class="section" id="guardrail">
+            <h2 class="section-title">3. Retention Guardrail</h2>
+            
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                A/B test: exp_VIDEO_INTERSTITIAL_AD &middot; Mar 14 &ndash; Apr 13, 2026 &middot; Metric: Uniques of CS2 Active Matchmaking Player (free users only)
+            </p>
+
+            <div class="grid-2" style="margin-bottom: 1.5rem;">
+                <div class="experiment-box variant">
+                    <div class="experiment-label">Variant</div>
+                    <div class="experiment-value" style="color: var(--accent);">173.3K</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">avg daily uniques</div>
+                </div>
+                <div class="experiment-box control">
+                    <div class="experiment-label">Control</div>
+                    <div class="experiment-value">172.8K</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">avg daily uniques</div>
+                </div>
+            </div>
+
+            <div class="kpi-card" style="margin-bottom: 1.5rem; max-width: 300px;">
+                <div class="kpi-title">Delta (Variant vs Control)</div>
+                <div class="kpi-value" style="color: var(--green);">+0.3%</div>
+            </div>
+
+            <div class="grid-2">
+                <div class="insight-card" style="border-left-color: var(--green); height: 100%;">
+                    <h3>Guardrail Passed</h3>
+                    <p>Variant tracks within &plusmn;1K of control on all 31 days. +0.3% aggregate delta is not statistically significant &mdash; both groups show identical weekly seasonality (Sat/Sun peaks at ~190&ndash;197K, midweek troughs at ~151&ndash;165K). No retention divergence detected.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--blue); height: 100%;">
+                    <h3>Weekly Pattern</h3>
+                    <p>Both groups exhibit strong 7-day cycle: matchmaking uniques peak on weekends (Sat 190K+) and trough midweek (Tue/Wed ~151&ndash;165K). Video interstitial does not dampen or shift natural engagement rhythm.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 4. REGIONAL PERFORMANCE -->
+        <!-- ============================================================ -->
+        <div class="section" id="regional">
+            <h2 class="section-title">4. Regional Performance</h2>
+            
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                GAM data: 184 countries &middot; Mar 26 &ndash; Apr 14, 2026 &middot; ~323K impressions/day avg
+            </p>
+
+            <div class="table-wrapper" style="margin-bottom: 1.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th class="number">Impressions</th>
+                            <th class="number">Share</th>
+                            <th class="number">CTR</th>
+                            <th class="number">Completion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Poland</td><td class="number">925,776</td><td class="number">14.3%</td><td class="number">0.30%</td><td class="number">71.9%</td></tr>
+                        <tr><td>Kazakhstan</td><td class="number">494,768</td><td class="number">7.6%</td><td class="number">0.45%</td><td class="number">59.4%</td></tr>
+                        <tr><td>Türkiye</td><td class="number">465,820</td><td class="number">7.2%</td><td class="number">0.36%</td><td class="number">73.2%</td></tr>
+                        <tr><td>Ukraine</td><td class="number">383,490</td><td class="number">5.9%</td><td class="number">0.40%</td><td class="number">71.0%</td></tr>
+                        <tr><td>United States</td><td class="number">281,027</td><td class="number">4.3%</td><td class="number">0.24%</td><td class="number">76.2%</td></tr>
+                        <tr><td>Romania</td><td class="number">249,026</td><td class="number">3.8%</td><td class="number">0.35%</td><td class="number">70.6%</td></tr>
+                        <tr><td>Germany</td><td class="number">240,921</td><td class="number">3.7%</td><td class="number">0.30%</td><td class="number">72.1%</td></tr>
+                        <tr><td>Brazil</td><td class="number">191,978</td><td class="number">3.0%</td><td class="number">0.26%</td><td class="number">76.3%</td></tr>
+                        <tr><td>Uzbekistan</td><td class="number">191,135</td><td class="number">3.0%</td><td class="number">0.47%</td><td class="number">63.8%</td></tr>
+                        <tr><td>Belarus</td><td class="number">188,082</td><td class="number">2.9%</td><td class="number">0.43%</td><td class="number">64.3%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-card" style="border-left-color: var(--yellow);">
+                <h3>Regional Pattern</h3>
+                <p>Central Asian / Balkan countries show 50&ndash;65% completion, while Tier 1 / APAC markets consistently achieve 75&ndash;81%. Likely device quality and connection speed differences rather than content relevance.</p>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 5. USER BEHAVIOUR FUNNEL -->
+        <!-- ============================================================ -->
+        <div class="section" id="funnel">
+            <h2 class="section-title">5. User Behaviour Funnel</h2>
+
+            <div class="funnel-wrapper">
+                <div class="funnel-step" style="flex: 1;">
+                    <div class="funnel-title">GAM Impression</div>
+                    <div class="funnel-value">6.47M</div>
+                    <div class="funnel-sub">100%</div>
+                </div>
+                <div class="funnel-arrow">&rarr;</div>
+                <div class="funnel-step" style="flex: 1;">
+                    <div class="funnel-title">FE Completed</div>
+                    <div class="funnel-value" style="color: var(--blue);">4.26M</div>
+                    <div class="funnel-sub">65.9%</div>
+                </div>
+                <div class="funnel-arrow">&rarr;</div>
+                <div class="funnel-step" style="flex: 1;">
+                    <div class="funnel-title">GAM Click</div>
+                    <div class="funnel-value" style="color: var(--green);">23,698</div>
+                    <div class="funnel-sub">0.37%</div>
+                </div>
+                <div class="funnel-arrow">&rarr;</div>
+                <div class="funnel-step" style="flex: 1;">
+                    <div class="funnel-title">Premium Subs</div>
+                    <div class="funnel-value" style="color: var(--yellow);">320</div>
+                    <div class="funnel-sub">46 direct + 274 assisted</div>
+                </div>
+            </div>
+
+            <div class="table-wrapper" style="margin-bottom: 1.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th class="number">Volume</th>
+                            <th class="number">% of Impressions</th>
+                            <th class="number">Step Conv.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GAM Impression</td>
+                            <td class="number">6,469,233</td>
+                            <td class="number">100%</td>
+                            <td class="number">&mdash;</td>
+                        </tr>
+                        <tr>
+                            <td>FE Completed (full 15s)</td>
+                            <td class="number">4,260,935</td>
+                            <td class="number">65.9%</td>
+                            <td class="number">65.9%</td>
+                        </tr>
+                        <tr>
+                            <td>FE Closed / Skipped</td>
+                            <td class="number">810,455</td>
+                            <td class="number">12.5%</td>
+                            <td class="number">&mdash;</td>
+                        </tr>
+                        <tr>
+                            <td>FE Outside Click</td>
+                            <td class="number">39,057</td>
+                            <td class="number">0.6%</td>
+                            <td class="number">&mdash;</td>
+                        </tr>
+                        <tr>
+                            <td>GAM Click (CTA)</td>
+                            <td class="number">23,698</td>
+                            <td class="number">0.37%</td>
+                            <td class="number">0.56%</td>
+                        </tr>
+                        <tr>
+                            <td>Premium Subscription</td>
+                            <td class="number">320</td>
+                            <td class="number">0.005%</td>
+                            <td class="number">1.35%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                <strong>Note:</strong> Step Conv. for CTA = clicks / FE completed. Subscription step conv. = 320 total subs / 23,698 clicks = 1.35%.
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 6. DECISION & NEXT STEPS -->
+        <!-- ============================================================ -->
+        <div class="section" id="decisions">
+            <h2 class="section-title">6. Decision &amp; Next Steps</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: var(--text);"><span class="status-indicator status-green"></span> Guardrail passed &mdash; safe to proceed</p>
+            </div>
+
+            <div style="background-color: var(--surface); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 2rem;">
+                <ol style="margin-left: 1.5rem; padding-left: 0;">
+                    <li class="list-item">Validate CPM uplift: compare video eCPM vs display interstitial eCPM for same unfilled inventory</li>
+                    <li class="list-item">Explore replacing house ad with programmatic demand (VAST tags from SSPs) &mdash; revenue opportunity</li>
+                    <li class="list-item">Monitor low-completion geos (Kosovo, Pakistan, Albania) &mdash; consider geo-targeting adjustments</li>
+                    <li class="list-item">GTM ownership transferred to Mandar's commercial team (agreed 15 April 2026)</li>
+                </ol>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">GTM Open Questions</h3>
+            <div class="grid-2" style="margin-bottom: 2rem;">
+                <div class="insight-card" style="border-left-color: var(--text-muted); margin-bottom: 0; height: 100%;">
+                    <h3>1. Ad Serving Setup</h3>
+                    <p>The experiment ran as a custom front-end implementation (house ad, no GAM video line item). How should this work in production? Options: VAST tags from SSPs, direct-sold creatives via GAM, or hybrid.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--text-muted); margin-bottom: 0; height: 100%;">
+                    <h3>2. Sales &amp; Packaging</h3>
+                    <p>How will sales team position this? Standalone, bundled with display, or part of broader video package?</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--text-muted); margin-bottom: 0; height: 100%;">
+                    <h3>3. Pricing Model</h3>
+                    <p>CPM floor, fixed rate per campaign, or programmatic-only? Data (70.4% completion, 0.37% CTR) provides proof points.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--text-muted); margin-bottom: 0; height: 100%;">
+                    <h3>4. Trafficking &amp; Operations</h3>
+                    <p>Who handles creative upload, QA, campaign setup? Existing ad ops workflow or new tooling?</p>
+                </div>
+            </div>
+
+            <div class="insight-card" style="border-left-color: var(--accent);">
+                <h3>Owner: Mandar's commercial team</h3>
+                <p>PM validated the format works with no retention risk. Operational GTM is a commercial decision. Agreed during catchup &mdash; Apr 15, 2026.</p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Data sources: Google Ad Manager (Mar 26 &ndash; Apr 14, 2026), Mixpanel (Mar 14 &ndash; Apr 13, 2026), FE Events (all-time through Apr 14, 2026) | Internal PM Tool
+        </footer>
+
+    </div>
+</body>
+</html>
