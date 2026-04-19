@@ -229,6 +229,42 @@ MUSEUM_SOURCES = [
 ]
 
 
+SCRAPED_SOURCES = [
+    # Spektrix ticketing API
+    {"name": "Unicorn Theatre", "url": "https://www.unicorntheatre.com/", "type": "Spektrix"},
+    {"name": "Little Angel Theatre", "url": "https://littleangeltheatre.com/", "type": "Spektrix"},
+    {"name": "Barbican Centre", "url": "https://www.barbican.org.uk/", "type": "Spektrix"},
+    {"name": "Discover Story Centre", "url": "https://discover.org.uk/", "type": "Spektrix"},
+    # RSS / iCal feeds
+    {"name": "British Library", "url": "https://events.bl.uk/feed.rss", "type": "RSS"},
+    {"name": "Water & Steam Museum", "url": "https://waterandsteam.org.uk/events/feed/", "type": "RSS"},
+    {"name": "Tower Hamlets Council Events", "url": "https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx", "type": "RSS"},
+    {"name": "Victoria Park Events", "url": "https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx", "type": "RSS"},
+    # OpenActive
+    {"name": "Better Leisure Centres", "url": "https://better-admin.org.uk/api/openactive/better/session-series", "type": "OpenActive"},
+    # Museum scrapers
+    {"name": "Natural History Museum", "url": "https://www.nhm.ac.uk/whats-on.html", "type": "Museum"},
+    {"name": "Bank of England Museum", "url": "https://www.bankofengland.co.uk/museum/whats-on", "type": "Museum"},
+    {"name": "Science Museum", "url": "https://www.sciencemuseum.org.uk/see-and-do", "type": "Museum"},
+    {"name": "London Transport Museum", "url": "https://www.ltmuseum.co.uk/whats-on", "type": "Museum"},
+    {"name": "Southbank Centre", "url": "https://www.southbankcentre.co.uk/whats-on/", "type": "Museum"},
+    {"name": "British Museum", "url": "https://www.britishmuseum.org/visit/family-visits", "type": "Museum"},
+    {"name": "National Gallery", "url": "https://www.nationalgallery.org.uk/events", "type": "Museum"},
+    {"name": "Tate Modern & Britain", "url": "https://www.tate.org.uk/whats-on", "type": "Museum"},
+    {"name": "Half Moon Theatre", "url": "https://www.halfmoon.org.uk/whats-on/", "type": "Museum"},
+    # Council & community
+    {"name": "Tower Hamlets Council", "url": "https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx", "type": "Council"},
+    {"name": "Idea Store (Tower Hamlets)", "url": "https://www.ideastore.co.uk/whats-on", "type": "Council"},
+    {"name": "Hackney Libraries", "url": "https://lovehackney.uk/whats-on", "type": "Council"},
+    {"name": "Islington Libraries", "url": "https://directory.islington.gov.uk/kb5/islington/directory/", "type": "Council"},
+    {"name": "Newham Libraries", "url": "https://newham.events.mylibrary.digital/", "type": "Council"},
+    # Other scrapers
+    {"name": "Kids In London", "url": "https://kidsinlondon.co.uk/", "type": "Scraper"},
+    {"name": "London Fire Brigade", "url": "https://www.london-fire.gov.uk/community/events-open-days/", "type": "Scraper"},
+    {"name": "London Aquatics Centre", "url": "https://londonaquaticscentre.org/", "type": "Scraper"},
+]
+
+
 def get_window_range() -> tuple[datetime, datetime]:
     start = datetime.now()
     end = start + timedelta(days=WINDOW_DAYS)

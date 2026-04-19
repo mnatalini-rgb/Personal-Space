@@ -114,6 +114,7 @@ def run() -> int:
         start_range=start,
         end_range=end,
         failed_sources=failed_sources,
+        scraped_sources=config.SCRAPED_SOURCES,
     )
 
     state.save_state(state_path, updated_state)

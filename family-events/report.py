@@ -190,6 +190,7 @@ def build_html_report(
     start_range: datetime,
     end_range: datetime,
     failed_sources: list[str],
+    scraped_sources: list[dict] | None = None,
 ) -> None:
     now = datetime.now()
     events = [e for e in events if not e.get("start") or datetime.fromisoformat(e["start"]) >= now]
@@ -267,6 +268,61 @@ def build_html_report(
             </a>
         """)
     static_grid = f"<div class=\"static-grid\">{''.join(static_items)}</div>"
+
+    failed_names = set()
+    for fs in failed_sources:
+        name_part = fs.split(":")[0].strip() if ":" in fs else fs
+        failed_names.add(name_part.lower())
+
+    source_types = {}
+    for src in (scraped_sources or []):
+        stype = src.get("type", "Other")
+        source_types.setdefault(stype, []).append(src)
+
+    TYPE_ORDER = ["Spektrix", "RSS", "OpenActive", "Museum", "Council", "Scraper"]
+    TYPE_LABELS = {
+        "Spektrix": "Ticketing (Spektrix API)",
+        "RSS": "RSS & iCal Feeds",
+        "OpenActive": "OpenActive API",
+        "Museum": "Museum & Venue Scrapers",
+        "Council": "Council & Library Scrapers",
+        "Scraper": "Other Scrapers",
+    }
+
+    sources_html_parts = []
+    for stype in TYPE_ORDER:
+        items = source_types.get(stype, [])
+        if not items:
+            continue
+        label = TYPE_LABELS.get(stype, stype)
+        items_html = []
+        for s in items:
+            name = escape(s.get("name", "Unknown"))
+            url = escape(s.get("url", "#"))
+            is_failed = any(name.lower().startswith(fn) or fn.startswith(name.lower()) for fn in failed_names)
+            status = "❌" if is_failed else "✅"
+            items_html.append(
+                f'<a href="{url}" class="source-link" target="_blank" rel="noopener">'
+                f'<span class="src-status">{status}</span>'
+                f'<span class="src-name">{name}</span>'
+                f'<span class="src-url">{url}</span>'
+                f'</a>'
+            )
+        sources_html_parts.append(
+            f'<div class="source-type-group">'
+            f'<h4 class="source-type-label">{escape(label)}</h4>'
+            f'<div class="source-list">{"".join(items_html)}</div>'
+            f'</div>'
+        )
+
+    sources_section = (
+        f'<details class="transparent" id="sec-sources">'
+        f'<summary class="main-summary">SOURCES &middot; <span class="count">{len(scraped_sources or [])}</span></summary>'
+        f'<div class="section-content">'
+        f'{"".join(sources_html_parts)}'
+        f'</div>'
+        f'</details>'
+    ) if scraped_sources else ""
 
     failed_note = (
         f"<div class='warning'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'></path><line x1='12' y1='9' x2='12' y2='13'></line><line x1='12' y1='17' x2='12.01' y2='17'></line></svg> Failed to fetch from: {escape(', '.join(failed_sources))}</div>"
@@ -473,6 +529,24 @@ def build_html_report(
     .d-pill {{ display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; }}
     .d-pill svg {{ color: var(--muted); }}
     .d-source {{ margin-left: auto; font-style: italic; opacity: 0.7; }}
+
+    /* Sources Reference */
+    .source-type-group {{ margin-bottom: 24px; }}
+    .source-type-group:last-child {{ margin-bottom: 0; }}
+    .source-type-label {{
+      font-size: 0.75rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+    }}
+    .source-list {{ display: flex; flex-direction: column; gap: 6px; }}
+    .source-link {{
+      display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      text-decoration: none; color: var(--text); transition: transform 0.2s, box-shadow 0.2s;
+    }}
+    .source-link:hover {{ transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }}
+    .src-status {{ font-size: 1rem; flex-shrink: 0; }}
+    .src-name {{ font-weight: 500; font-size: 0.9rem; white-space: nowrap; }}
+    .src-url {{ font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: auto; }}
     
     /* Static Grid */
     .static-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }}
@@ -556,6 +630,8 @@ def build_html_report(
         {static_grid}
       </div>
     </details>
+
+    {sources_section}
     
     <footer>
       Auto-generated &middot; Last updated: {datetime.now().strftime('%d %b %Y %H:%M')}

@@ -177,6 +177,24 @@
     .d-pill { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border); padding: 4px 10px; border-radius: 99px; }
     .d-pill svg { color: var(--muted); }
     .d-source { margin-left: auto; font-style: italic; opacity: 0.7; }
+
+    /* Sources Reference */
+    .source-type-group { margin-bottom: 24px; }
+    .source-type-group:last-child { margin-bottom: 0; }
+    .source-type-label {
+      font-size: 0.75rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+    }
+    .source-list { display: flex; flex-direction: column; gap: 6px; }
+    .source-link {
+      display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      text-decoration: none; color: var(--text); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .source-link:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .src-status { font-size: 1rem; flex-shrink: 0; }
+    .src-name { font-weight: 500; font-size: 0.9rem; white-space: nowrap; }
+    .src-url { font-size: 0.75rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-left: auto; }
     
     /* Static Grid */
     .static-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
@@ -199,7 +217,7 @@
   <main class="container">
     <div class="summary-banner">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-      10 new events this week: 6 museums, 3 theatre, 1 outdoor
+      No new events this week.
     </div>
     
     <div class='warning'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'></path><line x1='12' y1='9' x2='12' y2='13'></line><line x1='12' y1='17' x2='12.01' y2='17'></line></svg> Failed to fetch from: London Transport Museum: Cloudflare bot protection — cannot scrape, British Museum: Cloudflare bot protection — cannot scrape, Islington Libraries: 403 Client Error: Forbidden for url: https://directory.islington.gov.uk/kb5/islington/directory/results.action?qt=library+children&amp;familychannelnew=0&amp;sorttype=relevance, Newham Libraries: Page.goto: Timeout 30000ms exceeded.
@@ -231,7 +249,7 @@ Call log:
     </div>
     
     <details class="transparent" id="sec-new" open>
-      <summary class="main-summary">NEW THIS WEEK &middot; <span class="count">10</span></summary>
+      <summary class="main-summary">NEW THIS WEEK &middot; <span class="count">0</span></summary>
       <div class="section-content" id="new-buckets">
         <div id="b-weekend">
           <div class="section-header">THIS WEEKEND</div>
@@ -247,370 +265,11 @@ Call log:
         </div>
       </div>
       <!-- Hidden container to hold rows before JS sorts them -->
-      <div id="new-raw" style="display:none;">
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-21T11:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Free talk with artist Jonathan Hogg</div>
-          <div class="r-venue">Homerton Library</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Tue 21 Apr, 11:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/jonathan-hogg" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Join Hackney u3a and Hackney Libraries for a talk by audiovisual artist Jonathan Hogg.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Homerton Library, Homerton High Street, London, England, E9 6AS
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Free
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-21T18:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Build Your Own Wormery</div>
-          <div class="r-venue">Hearth Bakery</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Tue 21 Apr, 18:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/build-your-own-wormery" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Join the team at Hearth for a hands-on workshop exploring how to turn your kitchen waste into nutrient-rich fertiliser using worms.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Hearth Bakery, Grow Studios, London, England, E9 5LN
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-23T19:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Upcycled Fashion Workshop: Patch Making Workshop with UIIBA Club</div>
-          <div class="r-venue">Netil House</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Thu 23 Apr, 19:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/patch-making" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">A 1-hour introduction to hand sewing.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Netil House, 1 Westgate Street, London, England, E8 3RL
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T13:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Play Fair</div>
-          <div class="r-venue">Hackney Bridge</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Sat 25 Apr, 13:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/play-fair" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">You&#x27;re invited to Play Fair, a community festival meets society fair for East London!</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Hackney Bridge, Units 1-28, Echo Building, East Bay Lane, London, E15 2SJ
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T14:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Queer Nature (for LGBTIQ+ Families)</div>
-          <div class="r-venue">Allen&amp;#39;s Community Garden</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Sat 25 Apr, 14:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/allens-garden" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Come and spend time with other queer families. There will be a foraging walk for primary aged children and their families and a nature crafting workshop open to all.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Allen&amp;#39;s Community Garden, Bethune Road, N16 5BD
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T15:00:00.481000" style="--c: 59, 130, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Museums &amp; Learning">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Upcycled Fashion Workshop: Pierce Your Shirt with MINSKI</div>
-          <div class="r-venue">Netil House</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Sat 25 Apr, 15:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/pierce-your-shirt-with-minski" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">A hands-on workshop experimenting with eyelets, ribbon and metal attachments to reshape and customise a shirt.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Netil House, 1 Westgate Street, London, England, E8 3RL
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-04-29T16:30:00.481000" style="--c: 139, 92, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Theatre &amp; Shows">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 7.5 2 12 2z"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M10 15c.67.67 1.33 1 2 1s1.33-.33 2-1"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Michal Malinowski at Hackney Central Library</div>
-          <div class="r-venue">Hackney Central Library</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Wed 29 Apr, 16:30</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/michal-malinowski" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Join a very special Polish language event at Hackney Central Library!</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Hackney Central Library, 1 Reading Lane, London, England, E8 1GQ
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-05-10T13:00:00.481000" style="--c: 139, 92, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Theatre &amp; Shows">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 7.5 2 12 2z"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M10 15c.67.67 1.33 1 2 1s1.33-.33 2-1"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Canalside Live Sustainability Session</div>
-          <div class="r-venue">Grow Hackney</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Sun 10 May, 13:00</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/canalside-live" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">A free afternoon of live music, food and conversation.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Grow Hackney, 98C Main Yard, Wallis Road, Hackney Wick, London, E9 5LN
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Free
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-05-12T19:30:00.481000" style="--c: 139, 92, 246;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Theatre &amp; Shows">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.5-4.5 10-10 10S2 17.5 2 12 7.5 2 12 2z"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M10 15c.67.67 1.33 1 2 1s1.33-.33 2-1"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Noughts and Crosses</div>
-          <div class="r-venue">Hackney Empire</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Tue 12 May, 19:30</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/noughts-and-crosses" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Noughts and Crosses: This gripping Romeo and Juliet story by acclaimed writer Malorie Blackman and adapted by Sabrina Mahfouz is a captivating drama of love, revolution and what it means to grow up in a divided world.</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Hackney Empire, 291 Mare Street, London, England, E8 1EJ
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    
-
-    <details class="event-row age-2 age-5" data-cat="Outdoor &amp; Parks" data-new="true" data-date="2026-05-28T10:30:00.481000" style="--c: 16, 185, 129;">
-      <summary class="row-main">
-        <div class="r-cat-circle" style="background: rgba(var(--c), 0.1); color: rgb(var(--c));" title="Outdoor &amp; Parks">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"/><path d="M12 16a6 6 0 0 1-6-6c0-3.3 2.7-6 6-6s6 2.7 6 6a6 6 0 0 1-6 6z"/></svg>
-        </div>
-        <div class="r-content">
-          <div class="r-title">Bach to Baby Family Concert in Victoria Park</div>
-          <div class="r-venue">St John of Jerusalem</div>
-        </div>
-        <div class="r-meta">
-          <div class="r-date">Thu 28 May, 10:30</div>
-          <div class="r-age">2-5 / family</div>
-        </div>
-        <a href="https://lovehackney.uk/whats-on/bach-to-baby-may" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
-      </summary>
-      <div class="row-details">
-        <p class="d-desc">Bach to Baby Family Concerts in Victoria Park</p>
-        <div class="d-meta">
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            St John of Jerusalem, Lauriston Rd, E9 7EY
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            Check venue
-          </span>
-          <span class="d-pill">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            ~25 mins
-          </span>
-          <span class="d-source">Source: Hackney Libraries</span>
-        </div>
-      </div>
-    </details>
-    </div>
+      <div id="new-raw" style="display:none;"></div>
     </details>
     
     <details class="transparent" id="sec-all">
-      <summary class="main-summary">ALL EVENTS &middot; <span class="count">180</span></summary>
+      <summary class="main-summary">ALL EVENTS &middot; <span class="count">183</span></summary>
       <div class="section-content" id="all-events">
         
             <div class="cat-group" data-cat="Theatre &amp; Shows">
@@ -953,7 +612,7 @@ Call log:
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-05-10T13:00:00.481000" style="--c: 139, 92, 246;">
+    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="false" data-date="2026-05-10T13:00:00.481000" style="--c: 139, 92, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Canalside Live Sustainability Session</div>
@@ -995,7 +654,7 @@ Call log:
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-04-29T16:30:00.481000" style="--c: 139, 92, 246;">
+    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="false" data-date="2026-04-29T16:30:00.481000" style="--c: 139, 92, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Michal Malinowski at Hackney Central Library</div>
@@ -1037,7 +696,7 @@ Call log:
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="true" data-date="2026-05-12T19:30:00.481000" style="--c: 139, 92, 246;">
+    <details class="event-row age-2 age-5" data-cat="Theatre &amp; Shows" data-new="false" data-date="2026-05-12T19:30:00.481000" style="--c: 139, 92, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Noughts and Crosses</div>
@@ -2174,7 +1833,7 @@ A Unicorn Theatre and Theatre Hullabaloo production.</p>
             </div>
         
             <div class="cat-group" data-cat="Museums &amp; Learning">
-                <h3 class="section-header">MUSEUMS &AMP; LEARNING &middot; <span class="count">124</span></h3>
+                <h3 class="section-header">MUSEUMS &AMP; LEARNING &middot; <span class="count">127</span></h3>
                 <div class="rows-container">
                 <div class="venue-group" data-cat="Museums &amp; Learning" style="--c: 59, 130, 246;">
                     <div class="venue-header">
@@ -2183,7 +1842,7 @@ A Unicorn Theatre and Theatre Hullabaloo production.</p>
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T14:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-25T14:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Queer Nature (for LGBTIQ+ Families)</div>
@@ -2937,7 +2596,7 @@ A magical celebration of individuality, acceptance, and the freedom to dream.</p
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T13:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-25T13:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Play Fair</div>
@@ -3085,7 +2744,7 @@ A magical celebration of individuality, acceptance, and the freedom to dream.</p
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-21T18:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-21T18:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Build Your Own Wormery</div>
@@ -3127,7 +2786,7 @@ A magical celebration of individuality, acceptance, and the freedom to dream.</p
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-21T11:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-21T11:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Free talk with artist Jonathan Hogg</div>
@@ -3313,11 +2972,117 @@ A magical celebration of individuality, acceptance, and the freedom to dream.</p
                 <div class="venue-group" data-cat="Museums &amp; Learning" style="--c: 59, 130, 246;">
                     <div class="venue-header">
                         <div class="v-cat-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg></div>
+                        <div class="v-name">Natural History Museum</div>
+                    </div>
+                    <div class="venue-events">
+                        
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+      <summary class="sub-row-main">
+        <div class="r-content">
+          <div class="r-title">Dino Snores for Kids</div>
+        </div>
+        <div class="r-meta">
+          <div class="r-date">Date TBC</div>
+          <div class="r-age">2-5 / family</div>
+        </div>
+        <a href="https://www.nhm.ac.uk/events/dino-snores-for-kids.html" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
+      </summary>
+      <div class="row-details">
+        <p class="d-desc">Dino Snores for Kids Various dates, 18:30–10:00 From £87 Members: from £79 Category: Families Ages 7–11 only Families Ages 7–11 only</p>
+        <div class="d-meta">
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Cromwell Road, London SW7 5BD
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Check venue
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            ~50 mins
+          </span>
+          <span class="d-source">Source: Natural History Museum</span>
+        </div>
+      </div>
+    </details>
+    
+
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="" style="--c: 59, 130, 246;">
+      <summary class="sub-row-main">
+        <div class="r-content">
+          <div class="r-title">Dino Disco for Kids</div>
+        </div>
+        <div class="r-meta">
+          <div class="r-date">Date TBC</div>
+          <div class="r-age">2-5 / family</div>
+        </div>
+        <a href="https://www.nhm.ac.uk/events/dino-disco" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
+      </summary>
+      <div class="row-details">
+        <p class="d-desc">Dino Disco for Kids Various dates, 19:00–21:00 £20 Members: £18 Category: Families Families</p>
+        <div class="d-meta">
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Cromwell Road, London SW7 5BD
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Check venue
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            ~50 mins
+          </span>
+          <span class="d-source">Source: Natural History Museum</span>
+        </div>
+      </div>
+    </details>
+    
+
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-12-15T15:45:00" style="--c: 59, 130, 246;">
+      <summary class="sub-row-main">
+        <div class="r-content">
+          <div class="r-title">Kids Tour: The Young Explorers</div>
+        </div>
+        <div class="r-meta">
+          <div class="r-date">Tue 15 Dec, 15:45</div>
+          <div class="r-age">2-5 / family</div>
+        </div>
+        <a href="https://www.nhm.ac.uk/events/kids-tour-the-young-explorers" class="r-book" target="_blank" rel="noopener" onclick="event.stopPropagation()">Book</a>
+      </summary>
+      <div class="row-details">
+        <p class="d-desc">Kids Tour: The Young Explorers Various dates, 15:00–15:45 £15 Members: £12 Category: Tours Tours</p>
+        <div class="d-meta">
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Cromwell Road, London SW7 5BD
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Check venue
+          </span>
+          <span class="d-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            ~50 mins
+          </span>
+          <span class="d-source">Source: Natural History Museum</span>
+        </div>
+      </div>
+    </details>
+    
+                    </div>
+                </div>
+            
+
+                <div class="venue-group" data-cat="Museums &amp; Learning" style="--c: 59, 130, 246;">
+                    <div class="venue-header">
+                        <div class="v-cat-circle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16"/><path d="M4 18h16"/><path d="M6 18v-8"/><path d="M10 18v-8"/><path d="M14 18v-8"/><path d="M18 18v-8"/><path d="M12 2L2 10h20L12 2z"/></svg></div>
                         <div class="v-name">Netil House</div>
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-23T19:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-23T19:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Upcycled Fashion Workshop: Patch Making Workshop with UIIBA Club</div>
@@ -3349,7 +3114,7 @@ A magical celebration of individuality, acceptance, and the freedom to dream.</p
     </details>
     
 
-    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="true" data-date="2026-04-25T15:00:00.481000" style="--c: 59, 130, 246;">
+    <details class="event-row age-2 age-5" data-cat="Museums &amp; Learning" data-new="false" data-date="2026-04-25T15:00:00.481000" style="--c: 59, 130, 246;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Upcycled Fashion Workshop: Pierce Your Shirt with MINSKI</div>
@@ -6416,7 +6181,7 @@ Family Design Challenge brings families together to explore design through hands
                     </div>
                     <div class="venue-events">
                         
-    <details class="event-row age-2 age-5" data-cat="Outdoor &amp; Parks" data-new="true" data-date="2026-05-28T10:30:00.481000" style="--c: 16, 185, 129;">
+    <details class="event-row age-2 age-5" data-cat="Outdoor &amp; Parks" data-new="false" data-date="2026-05-28T10:30:00.481000" style="--c: 16, 185, 129;">
       <summary class="sub-row-main">
         <div class="r-content">
           <div class="r-title">Bach to Baby Family Concert in Victoria Park</div>
@@ -7154,9 +6919,11 @@ This creative event will include opportunities to connect through sensory play, 
         </div>
       </div>
     </details>
+
+    <details class="transparent" id="sec-sources"><summary class="main-summary">SOURCES &middot; <span class="count">26</span></summary><div class="section-content"><div class="source-type-group"><h4 class="source-type-label">Ticketing (Spektrix API)</h4><div class="source-list"><a href="https://www.unicorntheatre.com/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Unicorn Theatre</span><span class="src-url">https://www.unicorntheatre.com/</span></a><a href="https://littleangeltheatre.com/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Little Angel Theatre</span><span class="src-url">https://littleangeltheatre.com/</span></a><a href="https://www.barbican.org.uk/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Barbican Centre</span><span class="src-url">https://www.barbican.org.uk/</span></a><a href="https://discover.org.uk/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Discover Story Centre</span><span class="src-url">https://discover.org.uk/</span></a></div></div><div class="source-type-group"><h4 class="source-type-label">RSS &amp; iCal Feeds</h4><div class="source-list"><a href="https://events.bl.uk/feed.rss" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">British Library</span><span class="src-url">https://events.bl.uk/feed.rss</span></a><a href="https://waterandsteam.org.uk/events/feed/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Water &amp; Steam Museum</span><span class="src-url">https://waterandsteam.org.uk/events/feed/</span></a><a href="https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Tower Hamlets Council Events</span><span class="src-url">https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx</span></a><a href="https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Victoria Park Events</span><span class="src-url">https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx</span></a></div></div><div class="source-type-group"><h4 class="source-type-label">OpenActive API</h4><div class="source-list"><a href="https://better-admin.org.uk/api/openactive/better/session-series" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Better Leisure Centres</span><span class="src-url">https://better-admin.org.uk/api/openactive/better/session-series</span></a></div></div><div class="source-type-group"><h4 class="source-type-label">Museum &amp; Venue Scrapers</h4><div class="source-list"><a href="https://www.nhm.ac.uk/whats-on.html" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Natural History Museum</span><span class="src-url">https://www.nhm.ac.uk/whats-on.html</span></a><a href="https://www.bankofengland.co.uk/museum/whats-on" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Bank of England Museum</span><span class="src-url">https://www.bankofengland.co.uk/museum/whats-on</span></a><a href="https://www.sciencemuseum.org.uk/see-and-do" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Science Museum</span><span class="src-url">https://www.sciencemuseum.org.uk/see-and-do</span></a><a href="https://www.ltmuseum.co.uk/whats-on" class="source-link" target="_blank" rel="noopener"><span class="src-status">❌</span><span class="src-name">London Transport Museum</span><span class="src-url">https://www.ltmuseum.co.uk/whats-on</span></a><a href="https://www.southbankcentre.co.uk/whats-on/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Southbank Centre</span><span class="src-url">https://www.southbankcentre.co.uk/whats-on/</span></a><a href="https://www.britishmuseum.org/visit/family-visits" class="source-link" target="_blank" rel="noopener"><span class="src-status">❌</span><span class="src-name">British Museum</span><span class="src-url">https://www.britishmuseum.org/visit/family-visits</span></a><a href="https://www.nationalgallery.org.uk/events" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">National Gallery</span><span class="src-url">https://www.nationalgallery.org.uk/events</span></a><a href="https://www.tate.org.uk/whats-on" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Tate Modern &amp; Britain</span><span class="src-url">https://www.tate.org.uk/whats-on</span></a><a href="https://www.halfmoon.org.uk/whats-on/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Half Moon Theatre</span><span class="src-url">https://www.halfmoon.org.uk/whats-on/</span></a></div></div><div class="source-type-group"><h4 class="source-type-label">Council &amp; Library Scrapers</h4><div class="source-list"><a href="https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Tower Hamlets Council</span><span class="src-url">https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx</span></a><a href="https://www.ideastore.co.uk/whats-on" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Idea Store (Tower Hamlets)</span><span class="src-url">https://www.ideastore.co.uk/whats-on</span></a><a href="https://lovehackney.uk/whats-on" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Hackney Libraries</span><span class="src-url">https://lovehackney.uk/whats-on</span></a><a href="https://directory.islington.gov.uk/kb5/islington/directory/" class="source-link" target="_blank" rel="noopener"><span class="src-status">❌</span><span class="src-name">Islington Libraries</span><span class="src-url">https://directory.islington.gov.uk/kb5/islington/directory/</span></a><a href="https://newham.events.mylibrary.digital/" class="source-link" target="_blank" rel="noopener"><span class="src-status">❌</span><span class="src-name">Newham Libraries</span><span class="src-url">https://newham.events.mylibrary.digital/</span></a></div></div><div class="source-type-group"><h4 class="source-type-label">Other Scrapers</h4><div class="source-list"><a href="https://kidsinlondon.co.uk/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">Kids In London</span><span class="src-url">https://kidsinlondon.co.uk/</span></a><a href="https://www.london-fire.gov.uk/community/events-open-days/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">London Fire Brigade</span><span class="src-url">https://www.london-fire.gov.uk/community/events-open-days/</span></a><a href="https://londonaquaticscentre.org/" class="source-link" target="_blank" rel="noopener"><span class="src-status">✅</span><span class="src-name">London Aquatics Centre</span><span class="src-url">https://londonaquaticscentre.org/</span></a></div></div></div></details>
     
     <footer>
-      Auto-generated &middot; Last updated: 19 Apr 2026 18:32
+      Auto-generated &middot; Last updated: 19 Apr 2026 19:19
     </footer>
   </main>
 
