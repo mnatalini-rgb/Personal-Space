@@ -54,6 +54,9 @@ def run() -> int:
     kids_london = _load_module("sources_kids_london", project_dir / "sources" / "kids_in_london.py")
     lfb = _load_module("sources_lfb", project_dir / "sources" / "lfb.py")
     museums = _load_module("sources_museums", project_dir / "sources" / "museums.py")
+    council_libs = _load_module(
+        "sources_council_libs", project_dir / "sources" / "council_libraries.py"
+    )
 
     state_path = root / "family-events" / "data" / "state.json"
     report_path = root / "family-events-report.html"
@@ -92,6 +95,10 @@ def run() -> int:
     museum_events, museum_errors = museums.fetch_museum_events(config.MUSEUM_SOURCES)
     all_events.extend(museum_events)
     failed_sources.extend(museum_errors)
+
+    council_events, council_errors = council_libs.fetch_council_library_events()
+    all_events.extend(council_events)
+    failed_sources.extend(council_errors)
 
     all_events = _dedupe(all_events)
 
