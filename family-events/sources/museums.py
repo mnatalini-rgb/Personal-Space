@@ -83,7 +83,10 @@ def _fetch_soup(url: str) -> BeautifulSoup:
 
 def _playwright_soup(url: str, wait_ms: int = 3000) -> BeautifulSoup:
     """Render page with headless Chromium and return soup. For JS-rendered / WAF-blocked sites."""
-    from playwright.sync_api import sync_playwright
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError as exc:
+        raise RuntimeError("No module named 'playwright' - install with: pip install playwright") from exc
     pw = sync_playwright().start()
     try:
         browser = pw.chromium.launch(headless=True)

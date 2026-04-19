@@ -81,17 +81,8 @@ SPEKTRIX_CLIENTS = [
         "distance_from_e3": "~28 mins",
     },
     {
-        "name": "British Library",
-        "client_candidates": ["britishlibrary", "bl"],
-        "always_relevant": False,
-        "website": "https://www.bl.uk/events",
-        "category": "Museums & Learning",
-        "address": "96 Euston Rd, London NW1 2DB",
-        "distance_from_e3": "~42 mins",
-    },
-    {
         "name": "Discover Story Centre",
-        "client_candidates": ["discoverstorycentre"],
+        "client_candidates": ["discover"],
         "always_relevant": True,
         "website": "https://discover.org.uk/",
         "category": "Museums & Learning",

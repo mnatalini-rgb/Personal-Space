@@ -191,6 +191,8 @@ def build_html_report(
     end_range: datetime,
     failed_sources: list[str],
 ) -> None:
+    now = datetime.now()
+    events = [e for e in events if not e.get("start") or datetime.fromisoformat(e["start"]) >= now]
     new_events = [e for e in events if e.get("is_new")]
     new_count = len(new_events)
     
@@ -241,7 +243,7 @@ def build_html_report(
         
         all_sections.append(f"""
             <div class="cat-group" data-cat="{escape(category)}">
-                <h3 class="section-header">{escape(category).upper()} &middot; {len(cat_events)}</h3>
+                <h3 class="section-header">{escape(category).upper()} &middot; <span class="count">{len(cat_events)}</span></h3>
                 <div class="rows-container">{rows_container}</div>
             </div>
         """)
@@ -522,7 +524,7 @@ def build_html_report(
     </div>
     
     <details class="transparent" id="sec-new" open>
-      <summary class="main-summary">NEW THIS WEEK &middot; {new_count}</summary>
+      <summary class="main-summary">NEW THIS WEEK &middot; <span class="count">{new_count}</span></summary>
       <div class="section-content" id="new-buckets">
         <div id="b-weekend">
           <div class="section-header">THIS WEEKEND</div>
@@ -542,14 +544,14 @@ def build_html_report(
     </details>
     
     <details class="transparent" id="sec-all">
-      <summary class="main-summary">ALL EVENTS &middot; {len(events)}</summary>
+      <summary class="main-summary">ALL EVENTS &middot; <span class="count">{len(events)}</span></summary>
       <div class="section-content" id="all-events">
         {''.join(all_sections)}
       </div>
     </details>
     
     <details class="transparent" id="sec-static">
-      <summary class="main-summary">ALWAYS AVAILABLE &middot; {len(static_events)}</summary>
+      <summary class="main-summary">ALWAYS AVAILABLE &middot; <span class="count">{len(static_events)}</span></summary>
       <div class="section-content">
         {static_grid}
       </div>
@@ -608,11 +610,48 @@ def build_html_report(
       let activeMonth = 'all';
       
       const monthBtns = document.querySelectorAll('.month-btn');
-      
+
+      function countVisible(selector) {{
+        return Array.from(document.querySelectorAll(selector)).filter(el => el.style.display !== 'none').length;
+      }}
+
+      function updateVisibilityAndCounts() {{
+        document.querySelectorAll('.venue-group').forEach(group => {{
+          const visibleRows = Array.from(group.querySelectorAll('.event-row')).filter(row => row.style.display !== 'none').length;
+          group.style.display = visibleRows ? '' : 'none';
+        }});
+
+        document.querySelectorAll('.cat-group').forEach(group => {{
+          const visibleRows = Array.from(group.querySelectorAll('.event-row')).filter(row => row.style.display !== 'none').length;
+          const countEl = group.querySelector('.section-header .count');
+          if (countEl) countEl.textContent = String(visibleRows);
+          group.style.display = visibleRows ? '' : 'none';
+        }});
+
+        const weekendBucket = document.getElementById('b-weekend');
+        const nextBucket = document.getElementById('b-next');
+        const laterBucket = document.getElementById('b-later');
+
+        [weekendBucket, nextBucket, laterBucket].forEach(bucket => {{
+          if (!bucket) return;
+          const visibleRows = Array.from(bucket.querySelectorAll('.event-row')).filter(row => row.style.display !== 'none').length;
+          bucket.style.display = visibleRows ? '' : 'none';
+        }});
+
+        const newCountEl = document.querySelector('#sec-new > summary .count');
+        const allCountEl = document.querySelector('#sec-all > summary .count');
+        const staticCountEl = document.querySelector('#sec-static > summary .count');
+
+        if (newCountEl) newCountEl.textContent = String(countVisible('#new-buckets .event-row'));
+        if (allCountEl) allCountEl.textContent = String(countVisible('#all-events .event-row'));
+        if (staticCountEl) staticCountEl.textContent = String(countVisible('.static-item'));
+      }}
+       
       function applyFilters() {{
         const allRows = document.querySelectorAll('.event-row');
         allRows.forEach(row => {{
           const cat = row.getAttribute('data-cat');
+          const isPast = row.dataset.past === 'true';
           const isCatMatch = activeCats.has(cat);
           
           let isAgeMatch = true;
@@ -630,19 +669,15 @@ def build_html_report(
             }}
           }}
           
-          row.style.display = (isCatMatch && isAgeMatch && isMonthMatch) ? '' : 'none';
-        }});
-        
-        document.querySelectorAll('.cat-group').forEach(group => {{
-          const cat = group.getAttribute('data-cat');
-          const hasVisibleRows = Array.from(group.querySelectorAll('.event-row')).some(r => r.style.display !== 'none');
-          group.style.display = (!activeCats.has(cat) || !hasVisibleRows) ? 'none' : '';
+          row.style.display = (!isPast && isCatMatch && isAgeMatch && isMonthMatch) ? '' : 'none';
         }});
         
         document.querySelectorAll('.static-item').forEach(item => {{
           const cat = item.getAttribute('data-cat');
           item.style.display = activeCats.has(cat) ? '' : 'none';
         }});
+
+        updateVisibilityAndCounts();
       }}
       
       pills.forEach(pill => {{
@@ -675,6 +710,21 @@ def build_html_report(
           applyFilters();
         }});
       }});
+
+      // Hide past events
+      const nowTs = Date.now();
+      document.querySelectorAll('.event-row').forEach(row => {{
+        const dStr = row.getAttribute('data-date');
+        if (dStr && dStr !== 'None') {{
+          const d = new Date(dStr);
+          if (!isNaN(d) && d.getTime() < nowTs) {{
+            row.dataset.past = 'true';
+            row.style.display = 'none';
+          }}
+        }}
+      }});
+
+      applyFilters();
     }});
   </script>
 </body>
