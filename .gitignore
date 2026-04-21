@@ -11,6 +11,12 @@
 data/brand_integrations/faceit-events user_client_hardware_details_v2 2026-03-25T2056.csv
 data/brand_integrations/faceit campaign_service_campaigns 2026-03-25T1440.csv
 
+# Firebase service account keys
+todo-7ad09-firebase-adminsdk-fbsvc-*.json
+
+# Work project docs (not for public repo)
+docs/projects/
+
 # Temporary/scratch scripts
 test.py
 test2.py
