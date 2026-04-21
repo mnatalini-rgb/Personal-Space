@@ -252,6 +252,14 @@ SCRAPED_SOURCES = [
     {"name": "National Gallery", "url": "https://www.nationalgallery.org.uk/events", "type": "Museum"},
     {"name": "Tate Modern & Britain", "url": "https://www.tate.org.uk/whats-on", "type": "Museum"},
     {"name": "Half Moon Theatre", "url": "https://www.halfmoon.org.uk/whats-on/", "type": "Museum"},
+    # Attraction scrapers
+    {"name": "Garden Museum", "url": "https://www.gardenmuseum.org.uk/whats-on/", "type": "Attraction"},
+    {"name": "Hertfordshire Zoo", "url": "https://hertfordshirezoo.com/events/", "type": "Attraction"},
+    {"name": "Old MacDonald's Farm", "url": "https://omdfarm.co.uk/special-events", "type": "Attraction"},
+    {"name": "Cedars Nature Centre", "url": "https://www.cedarsnaturecentre.co.uk/", "type": "Attraction"},
+    {"name": "Go To Kids Activities", "url": "https://gtka.co.uk/", "type": "Attraction"},
+    {"name": "Exotic Explorers", "url": "https://exoticexplorers.co.uk/events", "type": "Attraction"},
+    {"name": "Visit Epping Forest", "url": "https://www.visiteppingforest.org/events", "type": "Attraction"},
     # Council & community
     {"name": "Tower Hamlets Council", "url": "https://www.towerhamlets.gov.uk/News_events/Events/Events.aspx", "type": "Council"},
     {"name": "Idea Store (Tower Hamlets)", "url": "https://www.ideastore.co.uk/whats-on", "type": "Council"},
