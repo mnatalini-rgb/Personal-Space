@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Conversion Pathways — Cross-Functional Kickoff</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #FEFEFE;
+    --surface: #EEEEEE;
+    --surface-2: #CCCCCC;
+    --border: #CCCCCC;
+    --text: #000000;
+    --text-muted: #595959;
+    --accent: #FF5500;
+    --green: #0097A7;
+    --red: #D63031;
+    --orange: #FFAB40;
+    --blue: #4285F4;
+    --slate: #78909C;
+    --dark-bar: #262626;
+    --eng: #4285F4;
+    --design: #AB47BC;
+    --data: #0097A7;
+    --ops: #FF8F00;
+    --comm: #78909C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 80px 80px 80px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .slide.active { display: flex; opacity: 1; }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--dark-bar);
+    z-index: 1;
+  }
+
+  .slide::after {
+    content: 'CONFIDENTIAL';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 30px;
+    background: var(--dark-bar);
+    color: #FFF;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    font-size: 7pt;
+    display: flex;
+    align-items: center;
+    padding-left: 80px;
+    z-index: 10;
+  }
+
+  .label {
+    position: absolute;
+    top: 0; left: 80px;
+    height: 40px;
+    color: #FFF;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 0; right: 80px;
+    height: 30px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 7pt;
+    color: #FFF;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    z-index: 11;
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 45px; left: 80px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  h1, h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32pt !important;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: #000;
+    margin-top: 20px;
+  }
+
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    color: #000;
+  }
+
+  .subtitle {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13pt;
+    color: #000;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .warning { color: var(--orange); }
+
+  .kpi-row { display: flex; gap: 24px; margin-top: 24px; }
+
+  .kpi {
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    padding: 24px 28px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .kpi .kpi-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .kpi .kpi-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    margin: 6px 0 4px;
+  }
+
+  .kpi .kpi-desc {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    color: #000;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13pt;
+    margin-top: 16px;
+  }
+
+  th {
+    text-align: right;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #000;
+    border: 1px solid #000;
+    font-size: 14px;
+    background: transparent;
+  }
+  th:first-child { text-align: left; }
+
+  td {
+    padding: 10px 14px;
+    text-align: right;
+    border: 1px solid #000;
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    color: #000;
+  }
+  td:first-child { text-align: left; font-weight: 500; }
+
+  .callout {
+    background: #EEEEEE;
+    border: none;
+    border-left: 4px solid var(--accent);
+    padding: 20px 28px;
+    margin-top: 16px;
+  }
+  .callout-green { border-left-color: var(--green); }
+  .callout-red { border-left-color: var(--red); }
+  .callout-blue { border-left-color: var(--blue); }
+  .callout-orange { border-left-color: var(--orange); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+
+  .method-list { list-style: none; margin-top: 8px; }
+  .method-list li {
+    font-size: 13pt;
+    line-height: 1.6;
+    padding: 5px 0 5px 20px;
+    position: relative;
+  }
+  .method-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+  }
+
+  .phase-list { list-style: none; margin-top: 16px; }
+  .phase-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+    font-size: 13pt;
+    line-height: 1.5;
+  }
+
+  .phase-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .team-tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+    color: #FFF;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .tag-eng { background: var(--eng); }
+  .tag-design { background: var(--design); }
+  .tag-data { background: var(--data); }
+  .tag-ops { background: var(--ops); }
+  .tag-comm { background: var(--comm); }
+
+  .pillar-card {
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    padding: 24px;
+  }
+
+  .pillar-card h3 { font-size: 18px; margin-bottom: 8px; }
+
+  .pillar-card .pillar-target {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .pillar-card ul { list-style: none; }
+  .pillar-card ul li {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .pillar-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 11px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+  }
+
+  .ownership-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #EEE;
+  }
+
+  .ownership-team {
+    flex-shrink: 0;
+    width: 140px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+
+  .ownership-items {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .big-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .nav-hint {
+    position: fixed;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+
+<nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;position:fixed;top:0;left:0;right:0;z-index:1000;">
+  <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+  <span style="color:#CBD5E1;">&middot;</span>
+  <span style="color:#6B7280;">Mission Conversion Pathways &mdash; Cross-Functional Kickoff</span>
+</nav>
+
+<div class="deck">
+
+  <div class="slide active" data-slide="1">
+    <div class="label">Cross-Functional Kickoff</div>
+    <h1>Mission Conversion<br>Pathways</h1>
+    <p class="subtitle" style="max-width: 700px; margin-top: 8px;">
+      Data findings, proposed solution, and team ownership<br>
+      for the mission redesign initiative
+    </p>
+    <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+      <span class="team-tag tag-eng" style="font-size: 13px; padding: 4px 12px;">Engineering</span>
+      <span class="team-tag tag-design" style="font-size: 13px; padding: 4px 12px;">Design (Anouk)</span>
+      <span class="team-tag tag-data" style="font-size: 13px; padding: 4px 12px;">Data (Isabel, Kerrin)</span>
+      <span class="team-tag tag-ops" style="font-size: 13px; padding: 4px 12px;">Activation Ops</span>
+      <span class="team-tag tag-comm" style="font-size: 13px; padding: 4px 12px;">Commercial</span>
+    </div>
+    <div style="font-size: 14px; color: var(--text-muted); margin-top: 24px;">
+      <strong style="color: var(--text);">PRD:</strong> <code>docs/product_briefs/nonlinear-missions-prd.md</code><br>
+      <strong style="color: var(--text);">Data sources:</strong> CDP (Snowflake), BQ (dim__users, UserMissions, Campaigns, Shop)<br>
+      <strong style="color: var(--text);">Analysis period:</strong> Feb &ndash; Apr 2026 + 18-month historical trend
+    </div>
+    <div class="slide-footer">Moritz Natalini &middot; Brand Integrations &middot; FACEIT</div>
+    <div class="slide-number">1 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="2">
+    <div class="label">The Problem</div>
+    <h1>Gaming converts at 90%.<br>Partner tasks at <span class="negative">1&ndash;2%</span>.</h1>
+    <p class="subtitle" style="max-width: 750px;">
+      Across all partners, geos, and mission types &mdash; a <strong>40x drop-off</strong> between gaming challenge completion and partner task completion. The late-funnel works (67&ndash;99% once past the gate). The gate itself is the bottleneck.
+    </p>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Gaming &rarr; Partner</div>
+        <div class="kpi-val negative">40x</div>
+        <div class="kpi-desc">Drop-off, all partnerships (Mar 2026)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Winline AL Rate</div>
+        <div class="kpi-val negative">1.7%</div>
+        <div class="kpi-desc">286K gaming &rarr; 4,741 AL</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Tradeit Reward Leakage</div>
+        <div class="kpi-val negative">294K</div>
+        <div class="kpi-desc">Expired unclaimed rewards</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">18-Month Trend</div>
+        <div class="kpi-val negative">9.5% &rarr; 6.7%</div>
+        <div class="kpi-desc">Partner completion declining while base 3x'd</div>
+      </div>
+    </div>
+    <div class="callout callout-red" style="margin-top: 20px;">
+      <p style="font-size: 14px;"><strong>This is not a reach problem.</strong> We tripled our user base (175K &rarr; 404K exposed) but partner completions didn't scale. The product gives users no new reason to convert month over month. The following slides show what we found when we dug into the data.</p>
+    </div>
+    <div class="slide-number">2 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="3">
+    <div class="label">Data Analysis &mdash; The 8-Step Investigation</div>
+    <h2>Cross-platform analysis: CDP &times; BQ</h2>
+    <p class="subtitle" style="margin-bottom: 16px;">We cross-referenced Snowflake CDP data (152,939 Winline depositors) against BQ user profiles, mission state, campaign configs, and shop data.</p>
+
+    <div class="two-col">
+      <div>
+        <h3 style="font-size: 17px;">Steps 1&ndash;3: Finding the cohort</h3>
+        <div style="font-size: 14px; line-height: 1.7;">
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>1. CDP Overlap:</strong> Only <strong>9%</strong> of 152K Winline depositors appear in CDP mission events. 139,120 are "deposit-only."
+          </div>
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>2. FACEIT Activity:</strong> Of 139K deposit-only, <strong>45,664 (33%)</strong> are active gamers (match in 30d). Near-identical profile to mission-engaged users.
+          </div>
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong style="color: var(--accent);">3. BOFU Activation:</strong> <strong>43,904 (96.2%)</strong> of active deposit-only users are already in FTD/WHALE BOFU missions. They play matches, claim gaming rewards. Only <strong>65 (0.1%)</strong> complete partner tasks.
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top: 12px; padding: 14px 20px;">
+          <p style="font-size: 13px;"><strong>Conscious engagement validated:</strong> 43,905 users have <code>status = 'complete'</code> on the gaming task &mdash; they claimed the reward. They saw the mission, collected FP, looked at "Deposit 3,000 RUB", and chose not to proceed.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-size: 17px;">Steps 4&ndash;8: Understanding why</h3>
+        <div style="font-size: 14px; line-height: 1.7;">
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>4. Staleness:</strong> FTD &amp; WHALE partner challenges are <strong>identical</strong> Feb = Mar = Apr 2026. Same copy, same amounts, same odds.
+          </div>
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>5. FTD vs WHALE:</strong> WHALE converts <strong>7pp lower</strong> (38.4% vs 45.6%). Higher threshold = lower conversion. No intermediate steps.
+          </div>
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>6. Cross-Mission:</strong> 30.2% are mission grinders (also do Premium Monthly). 69.8% are BOFU-only. Two different intervention paths.
+          </div>
+          <div style="padding: 8px 0; border-bottom: 1px solid #EEE;">
+            <strong>7. Historical:</strong> 9.5% &rarr; 6.7% over 18 months. Actively worsening.
+          </div>
+          <div style="padding: 8px 0;">
+            <strong>8. Shop:</strong> <strong>83.3%</strong> spend FP in shop. Profile items dominate (831M FP). 7.7K buy Tradeit codes voluntarily with FP &mdash; but won't do Winline partner tasks.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">Full analysis with queries: PRD Section 2a (8 steps, all data sourced)</div>
+    <div class="slide-number">3 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="4">
+    <div class="label">Key Insight</div>
+    <h1>43,904 users are in our missions.<br>They <span style="color:var(--accent);">choose</span> not to convert.</h1>
+
+    <div class="two-col" style="margin-top: 16px;">
+      <div>
+        <h3 style="font-size: 17px;">Four structural problems</h3>
+        <div style="font-size: 14px; line-height: 1.8;">
+          <div style="padding: 10px 0; border-bottom: 1px solid #EEE;">
+            <span class="negative" style="font-weight: 700;">1.</span> <strong>Partner task conversion failure</strong> &mdash; 43,904 active BOFU users, 65 complete partner tasks (0.1%). The gaming→partner gap applies to BOFU just as much as TOFU.
+          </div>
+          <div style="padding: 10px 0; border-bottom: 1px solid #EEE;">
+            <span class="negative" style="font-weight: 700;">2.</span> <strong>Challenge staleness</strong> &mdash; identical partner asks for 3 consecutive months. Zero incremental motivation.
+          </div>
+          <div style="padding: 10px 0; border-bottom: 1px solid #EEE;">
+            <span class="negative" style="font-weight: 700;">3.</span> <strong>Declining trend</strong> &mdash; 9.5% &rarr; 6.7% over 18 months while user base tripled. Getting worse, not plateauing.
+          </div>
+          <div style="padding: 10px 0;">
+            <span class="warning" style="font-weight: 700;">4.</span> <strong>Reward mismatch</strong> &mdash; 83.3% actively spend FP in shop. They are economically motivated. But current partner task rewards don't justify depositing 3,000&ndash;5,000 RUB.
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size: 17px;">What this means</h3>
+        <div class="callout callout-red" style="margin-top: 0;">
+          <p style="font-size: 14px; line-height: 1.6;">
+            <strong>The original hypothesis was wrong.</strong><br><br>
+            We assumed "nonlinear structure" (letting users choose challenge order) would solve the conversion problem.<br><br>
+            The data shows: BOFU users already see all challenges. They're not blocked by order &mdash; they're choosing not to act on stale, poorly-incentivised partner tasks.<br><br>
+            <strong>Nonlinear structure helps TOFU.</strong> For BOFU, we need challenge variety and reward rebalancing. Hence: three pillars.
+          </p>
+        </div>
+        <div style="margin-top: 16px; display: flex; gap: 16px;">
+          <div style="text-align: center; padding: 16px; background: #EEEEEE; flex: 1; border: 1px solid #CCC;">
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">TOFU Problem</div>
+            <div style="font-size: 16px; font-weight: 600; margin-top: 4px;">Structure</div>
+          </div>
+          <div style="text-align: center; padding: 16px; background: #EEEEEE; flex: 1; border: 1px solid #CCC; border-left: 3px solid var(--accent);">
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--accent);">BOFU Problem</div>
+            <div style="font-size: 16px; font-weight: 600; margin-top: 4px;">Value Exchange</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">4 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="5">
+    <div class="label">Proposed Solution</div>
+    <h2>Three pillars, different problems, different teams</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">No single change fixes both TOFU and BOFU. Each pillar targets a specific segment and involves different team capabilities.</p>
+
+    <div class="three-col" style="margin-top: 16px;">
+      <div class="pillar-card">
+        <div class="pillar-target">Primarily TOFU</div>
+        <h3>Pillar 1: Nonlinear Structure</h3>
+        <ul>
+          <li>All challenges visible from start</li>
+          <li>User-chosen completion order</li>
+          <li>Visual progression tracker</li>
+          <li>Soft recommendations, no hard gates</li>
+        </ul>
+        <div style="margin-top: 12px; padding: 10px; background: #FFF; font-size: 13px;">
+          <span class="team-tag tag-eng">Eng</span>
+          <span class="team-tag tag-design">Design</span>
+          <span class="team-tag tag-data">Data</span>
+        </div>
+      </div>
+      <div class="pillar-card" style="border-top: 3px solid var(--accent);">
+        <div class="pillar-target">Primarily BOFU</div>
+        <h3>Pillar 2: Progressive Challenges &amp; Rotation</h3>
+        <ul>
+          <li>Progressive partner asks (500 &rarr; 1,500 &rarr; 3,000 RUB)</li>
+          <li>Monthly challenge rotation</li>
+          <li>Challenge template library per tier</li>
+          <li>Partner-approved variant ranges</li>
+        </ul>
+        <div style="margin-top: 12px; padding: 10px; background: #FFF; font-size: 13px;">
+          <span class="team-tag tag-eng">Eng</span>
+          <span class="team-tag tag-ops">Ops</span>
+          <span class="team-tag tag-comm">Commercial</span>
+        </div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-target">TOFU + BOFU</div>
+        <h3>Pillar 3: Reward Rebalancing</h3>
+        <ul>
+          <li>Milestone rewards at progression thresholds</li>
+          <li>Exclusive profile items for partner tasks</li>
+          <li>Tiered reward escalation</li>
+          <li>Mystery Box on milestones (+61% AL validated)</li>
+        </ul>
+        <div style="margin-top: 12px; padding: 10px; background: #FFF; font-size: 13px;">
+          <span class="team-tag tag-eng">Eng</span>
+          <span class="team-tag tag-design">Design</span>
+          <span class="team-tag tag-ops">Ops</span>
+        </div>
+      </div>
+    </div>
+
+    <table style="font-size: 13px; margin-top: 16px;">
+      <thead><tr><th>Segment</th><th>Primary Problem</th><th>P1 (Structure)</th><th>P2 (Challenges)</th><th>P3 (Rewards)</th></tr></thead>
+      <tbody>
+        <tr><td>TOFU (unlinked)</td><td>Hard sequential gate</td><td class="positive" style="font-weight:700;">Primary fix</td><td>Moderate</td><td class="positive">Milestone motivation</td></tr>
+        <tr><td>MOFU (linked, no deposit)</td><td>Single high-barrier ask</td><td class="positive">Helps</td><td class="positive" style="font-weight:700;">Progressive asks</td><td class="positive">Exclusive items</td></tr>
+        <tr><td>BOFU (depositing, not converting)</td><td>Stale asks, weak incentives</td><td style="color:#999;">Marginal</td><td class="positive" style="font-weight:700;">Primary fix</td><td class="positive" style="font-weight:700;">Primary fix</td></tr>
+      </tbody>
+    </table>
+
+    <div class="slide-number">5 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="6">
+    <div class="label">Pillar 1 — Detail</div>
+    <h2><span class="team-tag tag-eng">Eng</span> <span class="team-tag tag-design">Design</span> Nonlinear Mission Structure</h2>
+
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <h3 style="font-size: 17px;">What changes</h3>
+        <ul class="method-list">
+          <li><strong>Challenge state model refactor:</strong> Current backend assumes sequential ordering (N unlocks after N-1). Needs concurrent active challenges with independent completion states.</li>
+          <li><strong>New config schema:</strong> <code>mode: sequential | nonlinear | hybrid</code> per mission. Hybrid allows some challenges sequential, others flexible.</li>
+          <li><strong>Progression engine:</strong> New component to calculate % complete, emit milestone events. Support configurable weighting (partner challenges can count more).</li>
+          <li><strong>Auto-claim:</strong> Existing reward-on-completion must work for any challenge independently.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size: 17px;"><span class="team-tag tag-design" style="vertical-align: baseline;">Design</span> UX requirements</h3>
+        <ul class="method-list">
+          <li><strong>Mission map/board:</strong> All challenges visible on entry. Visual distinction between gaming vs partner challenges.</li>
+          <li><strong>Progress tracker:</strong> Bar, tier map, or board &mdash; must show overall advancement and distance to next milestone reward.</li>
+          <li><strong>Soft recommendations:</strong> "Start here for best results" guidance without hard blocking.</li>
+          <li><strong>Trust Modal:</strong> Must remain in AL flow (validated: nearly doubles AL step completion).</li>
+        </ul>
+
+        <h3 style="font-size: 17px; margin-top: 20px;"><span class="team-tag tag-data" style="vertical-align: baseline;">Data</span> Instrumentation</h3>
+        <ul class="method-list">
+          <li>Challenge selection order per user</li>
+          <li>Progression milestone events</li>
+          <li>Time-to-completion per challenge type</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-blue" style="margin-top: 12px;">
+      <p style="font-size: 14px;"><strong>Key question for Engineering:</strong> What's the effort estimate for the challenge state refactor? This is the critical path item for Pillar 1. Everything else (progression engine, config, UI) layers on top.</p>
+    </div>
+    <div class="slide-number">6 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="7">
+    <div class="label">Pillar 2 — Detail</div>
+    <h2><span class="team-tag tag-eng">Eng</span> <span class="team-tag tag-ops">Ops</span> <span class="team-tag tag-comm">Comm</span> Progressive Challenges &amp; Rotation</h2>
+
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <h3 style="font-size: 17px;">Challenge template library</h3>
+        <ul class="method-list">
+          <li><strong>New data model:</strong> Partner-approved challenge variants per tier. Each template: action type, threshold, currency, min odds, localised copy, reward tier.</li>
+          <li><strong>Versioned + validated:</strong> Templates enforce contractual constraints (min deposit amounts, odds thresholds). Activation Ops can't accidentally go below partner minimums.</li>
+          <li><strong>Progressive graph:</strong> Partner challenges form ordered sub-sequences within nonlinear mission (500 &rarr; 1,500 &rarr; 3,000 RUB).</li>
+        </ul>
+
+        <h3 style="font-size: 17px; margin-top: 16px;">Monthly rotation</h3>
+        <ul class="method-list">
+          <li><strong>MVP:</strong> Manual template assignment by Ops per month (no automation). Low-risk, immediate benefit.</li>
+          <li><strong>Phase 2:</strong> Automated scheduler &mdash; ensures no user sees same partner ask two consecutive months. Tracks <code>last_assigned_template_id</code> per user-tier.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size: 17px;">Why this matters (the data)</h3>
+        <div style="font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+          FTD and WHALE partner challenges have been <strong>identical for 3 months</strong>:
+        </div>
+        <table style="font-size: 13px;">
+          <thead><tr><th>Tier</th><th>Challenge</th><th>Feb</th><th>Mar</th><th>Apr</th></tr></thead>
+          <tbody>
+            <tr><td>FTD</td><td>Deposit</td><td>3,000₽</td><td>3,000₽</td><td>3,000₽</td></tr>
+            <tr><td>FTD</td><td>Bet @1.3</td><td>5,000₽</td><td>5,000₽</td><td>5,000₽</td></tr>
+            <tr><td>WHALE</td><td>Deposit</td><td>5,000₽</td><td>5,000₽</td><td>5,000₽</td></tr>
+            <tr><td>WHALE</td><td>Bet @1.3</td><td>25,000₽</td><td>25,000₽</td><td>25,000₽</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-orange" style="margin-top: 16px;">
+          <p style="font-size: 13px;"><strong>Risk — Progressive asks cannibalise higher tiers:</strong> Users may settle for "Deposit 500₽" and never progress to 3,000₽. Mitigation: reward curve makes higher tiers significantly more attractive. Low-tier = modest FP; high-tier = exclusive items.</p>
+        </div>
+
+        <h3 style="font-size: 17px; margin-top: 16px;"><span class="team-tag tag-comm" style="vertical-align: baseline;">Commercial</span> Action needed</h3>
+        <p style="font-size: 14px;">Winline must approve progressive deposit ladder + variant ranges. Can they approve a range (500&ndash;5,000₽) rather than individual challenges?</p>
+      </div>
+    </div>
+    <div class="slide-number">7 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="8">
+    <div class="label">Pillar 3 — Detail</div>
+    <h2><span class="team-tag tag-eng">Eng</span> <span class="team-tag tag-design">Design</span> <span class="team-tag tag-ops">Ops</span> Reward Rebalancing</h2>
+
+    <div class="two-col" style="margin-top: 12px;">
+      <div>
+        <h3 style="font-size: 17px;">What we're building</h3>
+        <ul class="method-list">
+          <li><strong>Milestone reward system:</strong> Thresholds like "complete &ge;3 challenges incl. &ge;1 partner" to unlock bonus rewards. Configurable per mission.</li>
+          <li><strong>Exclusive items:</strong> Profile cards, avatar frames, limited-edition bundles &mdash; flagged <code>mission_exclusive</code>, cannot be bought in shop. Scarcity drives value.</li>
+          <li><strong>Tiered reward curve:</strong> Low-tier partner task = FP only. Mid-tier = FP + common item. High-tier = exclusive item + Mystery Box.</li>
+          <li><strong>Mystery Box on milestones:</strong> Reuse existing mechanic (validated +61% AL uplift, Jan/Feb 2026). Adapt to trigger on milestone events, not just AL.</li>
+        </ul>
+
+        <h3 style="font-size: 17px; margin-top: 16px;"><span class="team-tag tag-eng" style="vertical-align: baseline;">Eng</span> Technical scope</h3>
+        <ul class="method-list">
+          <li>Milestone layer on top of per-challenge rewards</li>
+          <li>Shop item catalogue integration (<code>mission_exclusive</code> flag)</li>
+          <li>Reward analytics: BQ events for reward type effectiveness</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size: 17px;">Why this works (the data)</h3>
+        <div style="font-size: 14px; line-height: 1.6; margin-bottom: 16px;">
+          83.3% of conscious BOFU users are active FP shop spenders. Here's what they buy:
+        </div>
+        <table style="font-size: 13px;">
+          <thead><tr><th>Category</th><th>Buyers</th><th>FP Spent</th></tr></thead>
+          <tbody>
+            <tr style="background: #FFF3E0;"><td><strong>Profile items (cards, frames)</strong></td><td><strong>60K+</strong></td><td><strong>831M</strong></td></tr>
+            <tr><td>Tradeit codes</td><td>7.7K</td><td>123M</td></tr>
+            <tr><td>CS2 Skins</td><td>3.7K</td><td>119M</td></tr>
+            <tr><td>Steam codes</td><td>3.4K</td><td>82M</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-green" style="margin-top: 16px;">
+          <p style="font-size: 13px;"><strong>Profile customization dominates.</strong> These users care about FACEIT identity/status. Exclusive items they can't get from gaming alone = strong incentive to complete partner tasks.</p>
+        </div>
+
+        <h3 style="font-size: 17px; margin-top: 16px;"><span class="team-tag tag-design" style="vertical-align: baseline;">Design</span> Action needed</h3>
+        <p style="font-size: 14px;">Design mission-exclusive profile cards, frames, and bundles. Start with recolours of popular items or limited-edition variants to minimise asset creation lead time.</p>
+      </div>
+    </div>
+    <div class="slide-number">8 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="9">
+    <div class="label">Team Ownership</div>
+    <h2>Who owns what</h2>
+
+    <div style="max-width: 950px; margin-top: 12px;">
+      <div class="ownership-row">
+        <div class="ownership-team" style="color: var(--eng);">Engineering</div>
+        <div class="ownership-items">
+          <strong>P1:</strong> Challenge state model refactor (sequential &rarr; nonlinear), progression engine, config schema (<code>mode</code> field, milestones), auto-claim adaptation<br>
+          <strong>P2:</strong> Challenge template library data model, progressive challenge graph, rotation scheduler (Phase 2), partner challenge validation rules<br>
+          <strong>P3:</strong> Milestone reward system, shop catalogue integration (<code>mission_exclusive</code> flag), Mystery Box milestone trigger, reward analytics events<br>
+          <strong>Cross-cutting:</strong> BQ instrumentation (new events: challenge order, progression, milestones, template rotation, reward type), CDP compatibility for progressive partner tasks
+        </div>
+      </div>
+      <div class="ownership-row">
+        <div class="ownership-team" style="color: var(--design);">Design</div>
+        <div class="ownership-items">
+          <strong>P1:</strong> Mission map/board UX, progression tracker UI (bar vs map vs board), soft recommendation patterns<br>
+          <strong>P3:</strong> Exclusive reward item creation (profile cards, frames, limited-edition bundles), milestone reward display, tiered reward visual hierarchy
+        </div>
+      </div>
+      <div class="ownership-row">
+        <div class="ownership-team" style="color: var(--data);">Data</div>
+        <div class="ownership-items">
+          <strong>P1:</strong> Instrumentation spec for challenge order + progression events, A/B test design (nonlinear vs sequential)<br>
+          <strong>P2:</strong> Rotation effectiveness analysis, tier-by-tier completion rate monitoring<br>
+          <strong>P3:</strong> Reward type effectiveness analysis (FP vs exclusive vs Mystery Box), quality guardrail monitoring (C1/C2 rates)<br>
+          <strong>Cross-cutting:</strong> Dashboard for cross-pillar performance tracking
+        </div>
+      </div>
+      <div class="ownership-row">
+        <div class="ownership-team" style="color: var(--ops);">Activation Ops</div>
+        <div class="ownership-items">
+          <strong>P1:</strong> Mission config (nonlinear vs sequential per campaign), milestone threshold setup<br>
+          <strong>P2:</strong> Template library maintenance, monthly rotation assignment (manual MVP), partner challenge variant curation<br>
+          <strong>P3:</strong> Reward curve configuration per mission, exclusive item assignment to milestones
+        </div>
+      </div>
+      <div class="ownership-row" style="border-bottom: none;">
+        <div class="ownership-team" style="color: var(--comm);">Commercial</div>
+        <div class="ownership-items">
+          <strong>P2:</strong> Negotiate progressive deposit ladder with Winline, secure partner approval for challenge variant ranges<br>
+          <strong>Cross-cutting:</strong> Confirm partner reporting requirements for rotation (MoM comparability), align on Tradeit as MVP partner
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-number">9 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="10">
+    <div class="label">Open Questions</div>
+    <h2>Need your input</h2>
+    <p class="subtitle" style="margin-bottom: 12px;">These are the decisions we can't make alone. Grouped by who we need to hear from.</p>
+
+    <div class="two-col">
+      <div>
+        <h3 style="font-size: 16px;"><span class="team-tag tag-eng">Eng</span> Engineering</h3>
+        <ul class="method-list" style="font-size: 14px;">
+          <li>Effort estimate for challenge state refactor? (Critical path)</li>
+          <li>Can we support hybrid missions (some sequential, some flexible)?</li>
+          <li>Template swap within existing campaign shell vs auto-generating new campaigns monthly?</li>
+          <li>Performance impact of milestone evaluation on every challenge completion?</li>
+        </ul>
+
+        <h3 style="font-size: 16px; margin-top: 20px;"><span class="team-tag tag-design">Design</span> Design</h3>
+        <ul class="method-list" style="font-size: 14px;">
+          <li>What's the minimum viable progression UI? (Progress bar vs full mission map/board?)</li>
+          <li>Lead time for exclusive item asset creation? Can we start with recolours?</li>
+          <li>How do we handle progressive disclosure without overwhelming users?</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size: 16px;"><span class="team-tag tag-data">Data</span> Data</h3>
+        <ul class="method-list" style="font-size: 14px;">
+          <li>Can we A/B test reward types (FP vs exclusive vs Mystery Box) within the same structure?</li>
+          <li>Should milestone thresholds be weighted (partner challenges count more)?</li>
+          <li>What quality guardrail threshold for C1/C2 triggers rollback?</li>
+        </ul>
+
+        <h3 style="font-size: 16px; margin-top: 20px;"><span class="team-tag tag-ops">Ops</span> <span class="team-tag tag-comm">Comm</span> Ops &amp; Commercial</h3>
+        <ul class="method-list" style="font-size: 14px;">
+          <li>What progressive deposit ladder is acceptable to Winline? (500 &rarr; 1,500 &rarr; 3,000₽ or different?)</li>
+          <li>Can partners approve a variant range rather than individual challenges?</li>
+          <li>Rotation cadence: monthly (current campaign cadence) or bi-weekly?</li>
+          <li>How do we handle users mid-mission when challenges rotate?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slide-number">10 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="11">
+    <div class="label">Phased Rollout</div>
+    <h2>Proposed phasing</h2>
+
+    <div style="max-width: 950px; margin-top: 8px;">
+      <ul class="phase-list">
+        <li>
+          <div class="phase-num" style="background: var(--accent);">1</div>
+          <div>
+            <strong>Pillar 1 + 3: Nonlinear Structure + Rewards &mdash; Tradeit MVP</strong><br>
+            <span style="color:var(--text-muted); font-size:14px;">Ship nonlinear mission structure with milestone rewards on Tradeit (most diverse geos, implicit AL = lower risk). A/B test vs sequential. Measure: partner task completion rate, AL rate, reward claim rate, downstream quality.</span><br>
+            <span class="team-tag tag-eng" style="margin-top: 4px;">Eng</span>
+            <span class="team-tag tag-design">Design</span>
+            <span class="team-tag tag-data">Data</span>
+            <span class="team-tag tag-ops">Ops</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num" style="background: var(--accent);">2</div>
+          <div>
+            <strong>Pillar 2: Progressive Challenges + Rotation &mdash; Winline</strong><br>
+            <span style="color:var(--text-muted); font-size:14px;">Once variant ranges are approved, build template library and launch progressive partner asks. Target the 43K conscious BOFU users. A/B test progressive vs flat. Requires Commercial + Winline alignment.</span><br>
+            <span class="team-tag tag-eng" style="margin-top: 4px;">Eng</span>
+            <span class="team-tag tag-ops">Ops</span>
+            <span class="team-tag tag-comm">Commercial</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num" style="background: var(--green);">3</div>
+          <div>
+            <strong>Full rollout &mdash; All partners</strong><br>
+            <span style="color:var(--text-muted); font-size:14px;">Based on Tradeit + Winline results, roll out winning combination to WhiteMarket, PaySafe, and future partners. Automated rotation scheduler replaces manual Ops assignment.</span><br>
+            <span class="team-tag tag-eng" style="margin-top: 4px;">Eng</span>
+            <span class="team-tag tag-ops">Ops</span>
+            <span class="team-tag tag-comm">Commercial</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 16px; max-width: 950px;">
+      <h3 style="font-size: 17px;">Parallel experiments (already designed, can run independently)</h3>
+      <div style="display: flex; gap: 24px; margin-top: 8px;">
+        <div style="flex: 1; padding: 16px 20px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+          <strong style="font-size: 14px;">Localisation</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">A/B: localised mission copy vs English-only. Measures TOFU/MOFU completion rates. No eng dependency &mdash; config-only.</p>
+        </div>
+        <div style="flex: 1; padding: 16px 20px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+          <strong style="font-size: 14px;">AL Challenges</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">A/B: explicit AL challenge in mission vs implicit (current). Validates whether surfacing AL as a task improves linkage rate.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-number">11 / 12</div>
+  </div>
+
+  <div class="slide" data-slide="12">
+    <div class="label">Opportunity</div>
+    <h1>What's at stake</h1>
+
+    <div class="kpi-row" style="margin-top: 24px;">
+      <div class="kpi" style="border-left: 4px solid var(--green);">
+        <div class="kpi-label">BOFU (5% Conversion)</div>
+        <div class="kpi-val positive">&euro;9,504/mo</div>
+        <div class="kpi-desc">2,195 incremental C3 conversions &times; &euro;4.33</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--green);">
+        <div class="kpi-label">TOFU (15% AL Lift)</div>
+        <div class="kpi-val positive">&euro;3,078/mo</div>
+        <div class="kpi-desc">~711 incremental ALs &times; &euro;4.33</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--accent);">
+        <div class="kpi-label">Combined (Winline Only)</div>
+        <div class="kpi-val" style="color: var(--accent);">&euro;12,582/mo</div>
+        <div class="kpi-desc">Before Tradeit, WM, PaySafe</div>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top: 28px; max-width: 100%;">
+      <p style="font-size: 15px; line-height: 1.6;">
+        <strong>The 43K BOFU users are real, active, verified, economically motivated users who already deposit on Winline.</strong>
+        They are EBU today &mdash; inflating our denominator without generating partner value.
+        Converting even a small fraction directly improves Partner Efficiency (&euro;/1K EBU).
+        At Winline C2 value of &euro;121.10, 100 incremental C2 conversions = &euro;12,110/month.
+      </p>
+    </div>
+
+    <div style="margin-top: 28px; text-align: center;">
+      <p style="font-size: 18px; font-weight: 600; font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">
+        Full PRD: <code style="font-size: 16px; color: var(--text);">nonlinear-missions-prd.md</code>
+      </p>
+      <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">
+        Let's discuss. What questions do you have?
+      </p>
+    </div>
+
+    <div class="slide-footer">Moritz Natalini &middot; Brand Integrations &middot; FACEIT</div>
+    <div class="slide-number">12 / 12</div>
+  </div>
+
+</div>
+
+<div class="nav-hint">Arrow keys or click to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+  });
+
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>
