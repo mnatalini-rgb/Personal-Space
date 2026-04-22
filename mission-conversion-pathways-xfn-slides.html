@@ -370,14 +370,8 @@
       Data findings, proposed solution, and team ownership<br>
       for the mission redesign initiative
     </p>
-    <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
-      <span class="team-tag tag-eng" style="font-size: 13px; padding: 4px 12px;">Engineering</span>
-      <span class="team-tag tag-design" style="font-size: 13px; padding: 4px 12px;">Design (Anouk)</span>
-      <span class="team-tag tag-data" style="font-size: 13px; padding: 4px 12px;">Data (Isabel, Kerrin)</span>
-      <span class="team-tag tag-ops" style="font-size: 13px; padding: 4px 12px;">Activation Ops</span>
-      <span class="team-tag tag-comm" style="font-size: 13px; padding: 4px 12px;">Commercial</span>
-    </div>
-    <div style="font-size: 14px; color: var(--text-muted); margin-top: 24px;">
+    <div style="font-size: 14px; color: var(--text-muted); margin-top: 32px;">
+      <strong style="color: var(--text);">Stakeholders:</strong> Engineering (Isabel), Design (Anouk, Kerrin), Commercial, Activation Ops<br>
       <strong style="color: var(--text);">PRD:</strong> <code>docs/product_briefs/nonlinear-missions-prd.md</code><br>
       <strong style="color: var(--text);">Data sources:</strong> CDP (Snowflake), BQ (dim__users, UserMissions, Campaigns, Shop)<br>
       <strong style="color: var(--text);">Analysis period:</strong> Feb &ndash; Apr 2026 + 18-month historical trend
@@ -536,7 +530,6 @@
         <div style="margin-top: 12px; padding: 10px; background: #FFF; font-size: 13px;">
           <span class="team-tag tag-eng">Eng</span>
           <span class="team-tag tag-design">Design</span>
-          <span class="team-tag tag-data">Data</span>
         </div>
       </div>
       <div class="pillar-card" style="border-top: 3px solid var(--accent);">
@@ -595,6 +588,7 @@
           <li><strong>New config schema:</strong> <code>mode: sequential | nonlinear | hybrid</code> per mission. Hybrid allows some challenges sequential, others flexible.</li>
           <li><strong>Progression engine:</strong> New component to calculate % complete, emit milestone events. Support configurable weighting (partner challenges can count more).</li>
           <li><strong>Auto-claim:</strong> Existing reward-on-completion must work for any challenge independently.</li>
+          <li><strong>Instrumentation:</strong> New BQ events for challenge selection order, progression milestones, time-to-completion per challenge type.</li>
         </ul>
       </div>
       <div>
@@ -604,13 +598,6 @@
           <li><strong>Progress tracker:</strong> Bar, tier map, or board &mdash; must show overall advancement and distance to next milestone reward.</li>
           <li><strong>Soft recommendations:</strong> "Start here for best results" guidance without hard blocking.</li>
           <li><strong>Trust Modal:</strong> Must remain in AL flow (validated: nearly doubles AL step completion).</li>
-        </ul>
-
-        <h3 style="font-size: 17px; margin-top: 20px;"><span class="team-tag tag-data" style="vertical-align: baseline;">Data</span> Instrumentation</h3>
-        <ul class="method-list">
-          <li>Challenge selection order per user</li>
-          <li>Progression milestone events</li>
-          <li>Time-to-completion per challenge type</li>
         </ul>
       </div>
     </div>
@@ -724,23 +711,15 @@
           <strong>P1:</strong> Challenge state model refactor (sequential &rarr; nonlinear), progression engine, config schema (<code>mode</code> field, milestones), auto-claim adaptation<br>
           <strong>P2:</strong> Challenge template library data model, progressive challenge graph, rotation scheduler (Phase 2), partner challenge validation rules<br>
           <strong>P3:</strong> Milestone reward system, shop catalogue integration (<code>mission_exclusive</code> flag), Mystery Box milestone trigger, reward analytics events<br>
-          <strong>Cross-cutting:</strong> BQ instrumentation (new events: challenge order, progression, milestones, template rotation, reward type), CDP compatibility for progressive partner tasks
+          <strong>Cross-cutting:</strong> BQ instrumentation (new events: challenge order, progression, milestones, template rotation, reward type), CDP compatibility for progressive partner tasks, A/B test infrastructure, quality guardrail monitoring (C1/C2 rates)
         </div>
       </div>
       <div class="ownership-row">
         <div class="ownership-team" style="color: var(--design);">Design</div>
         <div class="ownership-items">
           <strong>P1:</strong> Mission map/board UX, progression tracker UI (bar vs map vs board), soft recommendation patterns<br>
-          <strong>P3:</strong> Exclusive reward item creation (profile cards, frames, limited-edition bundles), milestone reward display, tiered reward visual hierarchy
-        </div>
-      </div>
-      <div class="ownership-row">
-        <div class="ownership-team" style="color: var(--data);">Data</div>
-        <div class="ownership-items">
-          <strong>P1:</strong> Instrumentation spec for challenge order + progression events, A/B test design (nonlinear vs sequential)<br>
-          <strong>P2:</strong> Rotation effectiveness analysis, tier-by-tier completion rate monitoring<br>
-          <strong>P3:</strong> Reward type effectiveness analysis (FP vs exclusive vs Mystery Box), quality guardrail monitoring (C1/C2 rates)<br>
-          <strong>Cross-cutting:</strong> Dashboard for cross-pillar performance tracking
+          <strong>P3:</strong> Exclusive reward item creation (profile cards, frames, limited-edition bundles), milestone reward display, tiered reward visual hierarchy<br>
+          <strong>Cross-cutting:</strong> Dashboard for cross-pillar performance tracking, rotation effectiveness analysis
         </div>
       </div>
       <div class="ownership-row">
@@ -776,6 +755,8 @@
           <li>Can we support hybrid missions (some sequential, some flexible)?</li>
           <li>Template swap within existing campaign shell vs auto-generating new campaigns monthly?</li>
           <li>Performance impact of milestone evaluation on every challenge completion?</li>
+          <li>Can we A/B test reward types (FP vs exclusive vs Mystery Box) within the same structure?</li>
+          <li>What quality guardrail threshold for C1/C2 triggers rollback?</li>
         </ul>
 
         <h3 style="font-size: 16px; margin-top: 20px;"><span class="team-tag tag-design">Design</span> Design</h3>
@@ -783,17 +764,11 @@
           <li>What's the minimum viable progression UI? (Progress bar vs full mission map/board?)</li>
           <li>Lead time for exclusive item asset creation? Can we start with recolours?</li>
           <li>How do we handle progressive disclosure without overwhelming users?</li>
+          <li>Should milestone thresholds be weighted (partner challenges count more)?</li>
         </ul>
       </div>
       <div>
-        <h3 style="font-size: 16px;"><span class="team-tag tag-data">Data</span> Data</h3>
-        <ul class="method-list" style="font-size: 14px;">
-          <li>Can we A/B test reward types (FP vs exclusive vs Mystery Box) within the same structure?</li>
-          <li>Should milestone thresholds be weighted (partner challenges count more)?</li>
-          <li>What quality guardrail threshold for C1/C2 triggers rollback?</li>
-        </ul>
-
-        <h3 style="font-size: 16px; margin-top: 20px;"><span class="team-tag tag-ops">Ops</span> <span class="team-tag tag-comm">Comm</span> Ops &amp; Commercial</h3>
+        <h3 style="font-size: 16px;"><span class="team-tag tag-ops">Ops</span> <span class="team-tag tag-comm">Comm</span> Ops &amp; Commercial</h3>
         <ul class="method-list" style="font-size: 14px;">
           <li>What progressive deposit ladder is acceptable to Winline? (500 &rarr; 1,500 &rarr; 3,000₽ or different?)</li>
           <li>Can partners approve a variant range rather than individual challenges?</li>
@@ -819,7 +794,6 @@
             <span style="color:var(--text-muted); font-size:14px;">Ship nonlinear mission structure with milestone rewards on Tradeit (most diverse geos, implicit AL = lower risk). A/B test vs sequential. Measure: partner task completion rate, AL rate, reward claim rate, downstream quality.</span><br>
             <span class="team-tag tag-eng" style="margin-top: 4px;">Eng</span>
             <span class="team-tag tag-design">Design</span>
-            <span class="team-tag tag-data">Data</span>
             <span class="team-tag tag-ops">Ops</span>
           </div>
         </li>

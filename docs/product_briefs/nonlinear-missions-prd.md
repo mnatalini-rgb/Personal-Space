@@ -5,7 +5,7 @@
 | **Author** | Moritz Natalini |
 | **Date** | 2026-04-22 |
 | **Status** | Draft |
-| **Stakeholders** | Engineering, Design (Anouk), Data (Isabel, Kerrin), Commercial, Activation Ops |
+| **Stakeholders** | Engineering (Isabel), Design (Anouk, Kerrin), Commercial, Activation Ops |
 | **Product Area** | Brand Integrations |
 
 ---
