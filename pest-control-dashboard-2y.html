@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matchsticks Apartments — 2-Year Pest Control Report</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; padding: 24px; max-width: 1000px; margin: 0 auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  .subtitle { color: #86868b; margin-bottom: 24px; font-size: 14px; }
+  
+  .status-banner { border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
+  .status-banner.green { background: #e6f4ea; border-left: 5px solid #34c759; }
+  .status-banner.red { background: #fce8e6; border-left: 5px solid #ff3b30; }
+  .status-icon { font-size: 36px; }
+  .status-text h2 { font-size: 18px; margin-bottom: 4px; color: #d93025; }
+  .status-text p { font-size: 14px; color: #555; line-height: 1.4; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } }
+  
+  .card { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .card h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-big { font-size: 40px; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 13px; color: #86868b; margin-top: 6px; line-height: 1.4; }
+  .stat-warn { color: #ff9500; }
+  .stat-bad { color: #ff3b30; }
+  .stat-info { color: #007aff; }
+
+  .chart-container { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px; position: relative; }
+  .chart-container h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .bar-chart-wrapper { position: relative; padding-bottom: 8px; }
+  .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; height: 180px; padding: 0 4px; border-bottom: 2px solid #e0e0e0; position: relative; z-index: 2; }
+  
+  /* Rat-stopper milestone line */
+  .milestone-line { position: absolute; left: 34%; top: -10px; bottom: 0; width: 2px; border-left: 2px dashed #007aff; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; }
+  .milestone-label { background: #007aff; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 6px; border-radius: 4px; white-space: nowrap; transform: translateX(-50%); margin-top: -10px; }
+  
+  .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; position: relative; height: 100%; }
+  .bar-stack { display: flex; flex-direction: column; justify-content: flex-end; width: 100%; max-width: 32px; height: 130px; }
+  
+  .bar { width: 100%; position: relative; min-height: 2px; }
+  .bar-mice { background: linear-gradient(180deg, #ff9500, #ffb84d); border-radius: 4px 4px 0 0; }
+  .bar-rats { background: linear-gradient(180deg, #ff3b30, #ff6b6b); border-radius: 4px 4px 0 0; }
+  .bar-stacked-bottom { border-radius: 0; }
+  .bar-none { background: #e8f5e9; border-radius: 4px 4px 0 0; }
+  
+  .bar-value { font-size: 11px; font-weight: 700; color: #333; text-align: center; position: absolute; top: -18px; width: 100%; }
+  .bar-label-container { text-align: center; margin-top: 8px; height: 28px; }
+  .bar-month { font-size: 11px; font-weight: 600; color: #555; }
+  .bar-year { font-size: 9px; color: #86868b; }
+
+  .legend { display: flex; gap: 20px; margin-top: 20px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .legend-dot.mice { background: #ff9500; }
+  .legend-dot.rats { background: #ff3b30; }
+  .legend-dot.clear { background: #34c759; }
+
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+  .hotspot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hotspot { background: #f9f9f9; border-radius: 10px; padding: 14px; text-align: left; border-left: 4px solid transparent; }
+  .hotspot.critical { background: #fce8e6; border-left-color: #ff3b30; }
+  .hotspot.warn { background: #fff8e1; border-left-color: #ff9500; }
+  .hotspot.info { background: #e3f2fd; border-left-color: #007aff; }
+  .hotspot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .hotspot-name { font-size: 14px; font-weight: 600; }
+  .hotspot-rank { font-size: 11px; font-weight: 700; color: #fff; background: #333; padding: 2px 6px; border-radius: 10px; }
+  .hotspot-desc { font-size: 12px; color: #555; line-height: 1.4; }
+
+  .issues-card { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .issues-card h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .issue { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+  .issue:last-child { border-bottom: none; }
+  .issue-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .issue-text { font-size: 14px; line-height: 1.5; color: #333; }
+  .issue-text strong { color: #d93025; }
+  .issue-meta { display: block; font-size: 12px; color: #86868b; margin-top: 4px; }
+
+  .timeline { margin-bottom: 20px; }
+  .timeline h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .visits-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  @media (min-width: 768px) { .visits-grid { grid-template-columns: 1fr 1fr; } }
+  
+  .visit { background: #fff; border-radius: 8px; padding: 12px 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 3px solid #007aff; display: flex; flex-direction: column; font-size: 13px; }
+  .visit.has-rats { border-left-color: #ff3b30; }
+  .visit.has-mice { border-left-color: #ff9500; }
+  .visit.clear { border-left-color: #34c759; }
+  
+  .visit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .visit-date { font-weight: 700; color: #1d1d1f; }
+  .visit-tech { font-size: 11px; color: #86868b; }
+  .visit-body { color: #555; line-height: 1.4; }
+  .visit-body strong { color: #1d1d1f; }
+  
+  .caps-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-right: 4px; margin-bottom: 4px; }
+  .badge-rats { background: #fce8e6; color: #d93025; }
+  .badge-mice { background: #fef7e0; color: #b06000; }
+
+  .footer-note { background: #fff; border-radius: 12px; padding: 20px 24px; font-size: 14px; color: #333; line-height: 1.6; margin-top: 16px; border-top: 4px solid #1d1d1f; }
+  .footer-note h4 { font-size: 16px; margin-bottom: 8px; color: #1d1d1f; }
+  .footer-note ul { margin-left: 20px; margin-bottom: 12px; color: #555; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card, .chart-container, .issues-card, .visit, .footer-note, .status-banner { box-shadow: none; border: 1px solid #e0e0e0; break-inside: avoid; }
+    .milestone-line { border-left-color: #333; }
+    .milestone-label { background: #333; }
+    .status-banner.red { background: #fff; border-left: 5px solid #ff3b30; }
+    .badge-rats, .badge-mice { border: 1px solid #ccc; }
+    .visits-grid { grid-template-columns: 1fr 1fr; }
+    @page { margin: 1cm; size: A4 portrait; }
+  }
+</style>
+</head>
+<body>
+
+<h1>🐀 2-Year Pest Control Analysis</h1>
+<p class="subtitle">Matchsticks Apartments · 115 Fairfield Road, E3 2ZP · Report Period: Mar 2024 – Mar 2026<br>Prepared by RTM Directors for Matchsticks Apartments</p>
+
+<!-- OVERALL STATUS -->
+<div class="status-banner green">
+  <div class="status-icon">✅</div>
+  <div class="status-text">
+    <h2 style="color: #137333;">Significant Improvement — Zero Rats in 6 Months</h2>
+    <p>3 consecutive fully clear visits. The situation has significantly improved with 0 rats caught since Sep 2025. However, environmental issues (bins, damaged mesh) remain — summer will test whether these improvements hold.</p>
+  </div>
+</div>
+
+<!-- KEY STATS -->
+<div class="grid">
+  <div class="card">
+    <h3>Total Rats Caught</h3>
+    <div class="stat-big stat-bad">21</div>
+    <div class="stat-label">All between May '24 and Sep '25 — <strong>ZERO</strong> since Oct '25.</div>
+  </div>
+  <div class="card">
+    <h3>Total Mice Caught</h3>
+    <div class="stat-big stat-warn">12</div>
+    <div class="stat-label">Trending down — only 5 caught in the last 6 months.</div>
+  </div>
+  <div class="card">
+    <h3>Total Visits</h3>
+    <div class="stat-big stat-info">29</div>
+    <div class="stat-label">27 routine visits, 2 call-outs. Average of ~1.2 visits per month.</div>
+  </div>
+  <div class="card">
+    <h3>Months Since Last Rat</h3>
+    <div class="stat-big stat-good" style="color: #34c759;">6</div>
+    <div class="stat-label"><strong>Last rat caught: Sep 2025.</strong> Last 3 visits ALL CLEAR.</div>
+  </div>
+</div>
+
+<!-- ACTIVITY CHART -->
+<div class="chart-container">
+  <h3>Rodent Captures Timeline (Mar '24 – Mar '26)</h3>
+  <div class="bar-chart-wrapper">
+    <div class="milestone-line" style="left: 26%;">
+      <div class="milestone-label">Rat Stopper Installed (Sep '24)</div>
+    </div>
+    <div class="bar-chart">
+      <!-- Mar 24: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Mar</div><div class="bar-year">'24</div></div>
+      </div>
+      <!-- Apr 24: 1M -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Apr</div></div>
+      </div>
+      <!-- May 24: 2R -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 40px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">May</div></div>
+      </div>
+      <!-- Jun 24: 1M -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Jun</div></div>
+      </div>
+      <!-- Jul 24: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Jul</div></div>
+      </div>
+      <!-- Aug 24: 3R -->
+      <div class="bar-group">
+        <div class="bar-value">3</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 60px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Aug</div></div>
+      </div>
+      <!-- Sep 24: 2R (call out) -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 40px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Sep</div></div>
+      </div>
+      <!-- Oct 24: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Oct</div></div>
+      </div>
+      <!-- Nov 24: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Nov</div></div>
+      </div>
+      <!-- Dec 24: 3R -->
+      <div class="bar-group">
+        <div class="bar-value">3</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 60px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Dec</div></div>
+      </div>
+      <!-- Jan 25: 1R -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Jan</div><div class="bar-year">'25</div></div>
+      </div>
+      <!-- Feb 25: 3R -->
+      <div class="bar-group">
+        <div class="bar-value">3</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 60px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Feb</div></div>
+      </div>
+      <!-- Mar 25: 1M -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Mar</div></div>
+      </div>
+      <!-- Apr 25: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Apr</div></div>
+      </div>
+      <!-- May 25: 5R -->
+      <div class="bar-group">
+        <div class="bar-value">5</div>
+        <div class="bar-stack"><div class="bar bar-rats" style="height: 100px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">May</div></div>
+      </div>
+      <!-- Jun 25: 2R, 1M -->
+      <div class="bar-group">
+        <div class="bar-value">3</div>
+        <div class="bar-stack">
+          <div class="bar bar-mice" style="height: 20px;"></div>
+          <div class="bar bar-rats bar-stacked-bottom" style="height: 40px;"></div>
+        </div>
+        <div class="bar-label-container"><div class="bar-month">Jun</div></div>
+      </div>
+      <!-- Jul 25: 1R, 1M -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack">
+          <div class="bar bar-mice" style="height: 20px;"></div>
+          <div class="bar bar-rats bar-stacked-bottom" style="height: 20px;"></div>
+        </div>
+        <div class="bar-label-container"><div class="bar-month">Jul</div></div>
+      </div>
+      <!-- Aug 25: 1M -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Aug</div></div>
+      </div>
+      <!-- Sep 25: 1R, 1M -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack">
+          <div class="bar bar-mice" style="height: 20px;"></div>
+          <div class="bar bar-rats bar-stacked-bottom" style="height: 20px;"></div>
+        </div>
+        <div class="bar-label-container"><div class="bar-month">Sep</div></div>
+      </div>
+      <!-- Oct 25: 2M -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 40px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Oct</div></div>
+      </div>
+      <!-- Nov 25: 2M -->
+      <div class="bar-group">
+        <div class="bar-value">2</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 40px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Nov</div></div>
+      </div>
+      <!-- Dec 25: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Dec</div></div>
+      </div>
+      <!-- Jan 26: 1M -->
+      <div class="bar-group">
+        <div class="bar-value">1</div>
+        <div class="bar-stack"><div class="bar bar-mice" style="height: 20px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Jan</div><div class="bar-year">'26</div></div>
+      </div>
+      <!-- Feb 26: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Feb</div></div>
+      </div>
+      <!-- Mar 26: 0 -->
+      <div class="bar-group">
+        <div class="bar-value">0</div>
+        <div class="bar-stack"><div class="bar bar-none" style="height: 6px;"></div></div>
+        <div class="bar-label-container"><div class="bar-month">Mar</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot rats"></div> Rats</div>
+    <div class="legend-item"><div class="legend-dot mice"></div> Mice</div>
+    <div class="legend-item"><div class="legend-dot clear"></div> No Captures</div>
+  </div>
+</div>
+
+<div class="split-grid">
+  <!-- PRE/POST ANALYSIS -->
+  <div class="card">
+    <h3>Pre vs Post Rat-Stopper</h3>
+    <p style="font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4;">Non-return valves were fitted to manholes in Sep 2024 to block drain access. Data shows environmental factors are sustaining the population.</p>
+    
+    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+      <span style="font-size: 14px; font-weight: 600;">Before (Mar-Sep '24)</span>
+      <span style="font-size: 14px; color: #d93025; font-weight: 700;">0.88 rats / visit</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+      <span style="font-size: 14px; font-weight: 600;">After (Sep '24-Sep '25)</span>
+      <span style="font-size: 14px; color: #d93025; font-weight: 700;">1.15 rats / visit ⬆</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 10px 0;">
+      <span style="font-size: 14px; font-weight: 600;">Recent (Oct '25-Mar '26)</span>
+      <span style="font-size: 14px; color: #34c759; font-weight: 700;">0.0 rats / visit ⬇</span>
+    </div>
+    <div style="background: #e6f4ea; padding: 10px 12px; border-radius: 6px; margin-top: 8px; font-size: 12px; color: #137333; font-weight: 600;">
+      Conclusion: Substantial drop in captures in the last 6 months.
+    </div>
+  </div>
+
+  <!-- HOTSPOTS -->
+  <div class="chart-container" style="margin-bottom: 0;">
+    <h3>Activity Hotspots</h3>
+    <div class="hotspot-grid">
+      <div class="hotspot critical">
+        <div class="hotspot-header">
+          <span class="hotspot-name">Bin Store</span>
+          <span class="hotspot-rank">#1</span>
+        </div>
+        <div class="hotspot-desc">Primary feeding zone. Open bins & damaged door mesh.</div>
+      </div>
+      <div class="hotspot critical">
+        <div class="hotspot-header">
+          <span class="hotspot-name">Gas/Elec Cupboard</span>
+          <span class="hotspot-rank">#2</span>
+        </div>
+        <div class="hotspot-desc">Rats in ceiling void. Gnawed holes connecting to bins.</div>
+      </div>
+      <div class="hotspot warn">
+        <div class="hotspot-header">
+          <span class="hotspot-name">1st Floor Risers</span>
+          <span class="hotspot-rank">#3</span>
+        </div>
+        <div class="hotspot-desc">Persistent mice activity near flats 103-105.</div>
+      </div>
+      <div class="hotspot info">
+        <div class="hotspot-header">
+          <span class="hotspot-name">External/Drains</span>
+          <span class="hotspot-rank">#4</span>
+        </div>
+        <div class="hotspot-desc">Rat footprints found. Mice feeding from external bait.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OUTSTANDING ACTIONS -->
+<div class="issues-card">
+  <h3>⚠️ 10 Outstanding Building Issues (Consistently Raised by BioPest)</h3>
+  <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 0 20px; margin-bottom: 0;">
+    <div>
+      <div class="issue">
+        <div class="issue-icon">🗑️</div>
+        <div class="issue-text">
+          <strong>Bin lids not used</strong>
+          <span class="issue-meta">Critical • Raised virtually every visit (29 visits)</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">🚪</div>
+        <div class="issue-text">
+          <strong>Damaged mesh on bin store doors</strong>
+          <span class="issue-meta">Critical • Allows rats direct access from street</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">🧱</div>
+        <div class="issue-text">
+          <strong>Seal holes (Bin Store ↔ Gas Cupboard)</strong>
+          <span class="issue-meta">Critical • Gnawed holes allow free rodent movement</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">💧</div>
+        <div class="issue-text">
+          <strong>Missing drainage bungs in bins</strong>
+          <span class="issue-meta">Important • Rats accessing food from underneath</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">🚰</div>
+        <div class="issue-text">
+          <strong>Full drain survey required</strong>
+          <span class="issue-meta">Important • Raised repeatedly since May 2024</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="issue">
+        <div class="issue-icon">🛡️</div>
+        <div class="issue-text">
+          <strong>Steel plate proofing on gas door</strong>
+          <span class="issue-meta">Important • Bottom gnawed away by rats</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">🧹</div>
+        <div class="issue-text">
+          <strong>Deep clean of bin store needed</strong>
+          <span class="issue-meta">Important • Old droppings, debris, nesting materials</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">☠️</div>
+        <div class="issue-text">
+          <strong>Remove old blue paste rodenticide</strong>
+          <span class="issue-meta">Important • Leftover from previous contractor</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">⚡</div>
+        <div class="issue-text">
+          <strong>Install electric fly control unit</strong>
+          <span class="issue-meta">Recommended • Needed for bin store</span>
+        </div>
+      </div>
+      <div class="issue">
+        <div class="issue-icon">💊</div>
+        <div class="issue-text">
+          <strong>Intensive Rodenticide Programme</strong>
+          <span class="issue-meta">Recommended • Due to high persistent population</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VISIT TIMELINE -->
+<div class="timeline" style="page-break-before: always;">
+  <h3>Full Visit Log (Mar 2024 – Mar 2026)</h3>
+  <div class="visits-grid">
+    
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">13 Mar 2026</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <strong>CLEAR</strong> — no rodent activity anywhere. Flies starting to develop in bin store as weather warms.
+      </div>
+    </div>
+    
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">12 Feb 2026</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <strong>CLEAR</strong> — no feeding from bait stations, no captures anywhere. Bin store, gas cupboard, ceiling, rear, service rooms all clear.
+      </div>
+    </div>
+    
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">12 Jan 2026</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">1 MOUSE</span><br>
+        1st floor riser (mouse). No activity in bin store/gas cupboard hotspot. New contract started.
+      </div>
+    </div>
+    
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">04 Dec 2025</span>
+        <span class="visit-tech">Routine • Gary K.</span>
+      </div>
+      <div class="visit-body">
+        <strong>CLEAR</strong> — no captures or evidence. Bin store in general good order, slight food debris under 1 bin. End of contract cycle.
+      </div>
+    </div>
+    
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">14 Nov 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">2 MICE</span><br>
+        1st floor riser (2 mice). Mice showing learnt behaviour resistance. Feeding from bait in bin store.
+      </div>
+    </div>
+    
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">02 Oct 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">2 MICE</span><br>
+        1st floor riser (2 mice). Old droppings in bin store/gas cupboard. Flies in bin store.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">04 Sep 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">1 RAT</span><span class="caps-badge badge-mice">1 MOUSE</span><br>
+        Gas cupboard (mouse) - ceiling area removed near waste pipe, UV gel applied. Bin store (rat).
+      </div>
+    </div>
+    
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">08 Aug 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">1 MOUSE</span><br>
+        1st floor riser (mouse). Mice feeding from external bait station. Evidence in bin store/gas cupboard.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">11 Jul 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">1 RAT</span><span class="caps-badge badge-mice">1 MOUSE</span><br>
+        Bin store (rat), Gas cupboard (mouse). 1 live rat seen running under door from bin store to gas cupboard. Door bottom gnawed.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">06 Jun 2025</span>
+        <span class="visit-tech">Routine • Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">2 RATS</span><span class="caps-badge badge-mice">1 MOUSE</span><br>
+        Bin store (2 rats). Electrical cupboard (mouse). No internal evidence.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">01 May 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">5 RATS</span><br>
+        <strong>5 rats in snap traps.</strong> Rats accessing bins, pulling food into bait stations. Mesh on doors damaged.
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">01 Apr 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        No captures. Evidence of mice feeding from non-toxic monitoring bait in low amounts but avoiding traps.
+      </div>
+    </div>
+
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">04 Mar 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">1 MOUSE</span><br>
+        1 mouse in snap trap. Open food sources still present. Damaged mesh on bin store doors.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">04 Feb 2025</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">3 RATS</span><br>
+        Bin store (2 rats), Gas cupboard (1 rat). Damaged fly mesh on doors. Open bins + missing bungs.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">10 Jan 2025</span>
+        <span class="visit-tech">Routine • Darren+Steve+Gary</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">1 RAT</span><br>
+        Bin store (1 rat). Inspection chambers lifted — non-toxic bait not consumed from drains.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">12 Dec 2024</span>
+        <span class="visit-tech">Routine • Darren+Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">3 RATS</span><br>
+        Ceiling void gas cupboard (3 rats — cannibalism). Live rat seen. Rat footprints in rear drain. UV tracking placed.
+      </div>
+    </div>
+
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">08 Nov 2024</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        Mouse found feeding on waste, ran up wall into gas cupboard hole. Droppings everywhere. Gnawed holes in plasterboard.
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">11 Oct 2024</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        No captures. Bins still open. Risers clear.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">25 Sep 2024</span>
+        <span class="visit-tech">Call Out • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        Dead rat removed from gas cupboard. Mouse seen running from bins towards gas cupboard.
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">09 Sep 2024</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <strong>RAT STOPPER INSTALLATION:</strong> Non-return valves fitted to manholes by another contractor. No captures.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">03 Sep 2024</span>
+        <span class="visit-tech">Call Out • Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">2 RATS</span><br>
+        Dead rats removed, snap traps reset. Drain inspection upcoming.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">30 Aug 2024</span>
+        <span class="visit-tech">Routine • Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">3 RATS</span><br>
+        Ceiling void meter cupboard (2 rats). 1st floor riser cupboard (1 rat).
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">02 Jul 2024</span>
+        <span class="visit-tech">Routine • New Starter</span>
+      </div>
+      <div class="visit-body">
+        No new activity. Old droppings + movement in tracking dust in risers + bin store.
+      </div>
+    </div>
+
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">18 Jun 2024</span>
+        <span class="visit-tech">Routine • Darren M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">1 MOUSE</span><br>
+        Bin store (1 mouse). UV tracking shows rodents climbing walls, into bins. Behaviour resistance to traps.
+      </div>
+    </div>
+
+    <div class="visit has-rats">
+      <div class="visit-header">
+        <span class="visit-date">14 May 2024</span>
+        <span class="visit-tech">Routine • Darren+Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-rats">2 RATS</span><br>
+        Ceiling void gas cupboard (2 rats). Rat droppings in bike store manhole. UV dust deployed. Old poison found.
+      </div>
+    </div>
+
+    <div class="visit has-mice">
+      <div class="visit-header">
+        <span class="visit-date">16 Apr 2024</span>
+        <span class="visit-tech">Routine • Steve M.</span>
+      </div>
+      <div class="visit-body">
+        <span class="caps-badge badge-mice">1 MOUSE</span><br>
+        Bin store (1 mouse).
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">26 Mar 2024</span>
+        <span class="visit-tech">Routine • Gary K.</span>
+      </div>
+      <div class="visit-body">
+        All clear.
+      </div>
+    </div>
+
+    <div class="visit clear">
+      <div class="visit-header">
+        <span class="visit-date">04 Mar 2024</span>
+        <span class="visit-tech">Routine • Steve M.</span>
+      </div>
+      <div class="visit-body">
+        Meter room clear.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer-note">
+  <h4>Recommendations for RTM Direct Action</h4>
+  <ul>
+    <li><strong>Immediate Fixes:</strong> Send a handyman to repair the damaged bin store mesh and fit steel plates to the bottom of the gas cupboard door. Seal all gnawed holes between the two rooms.</li>
+    <li><strong>Waste Management:</strong> Send strict communications to residents regarding bin lids. The unlimited food supply in the bin store is the primary driver of the rat population.</li>
+    <li><strong>Deep Clean:</strong> Arrange a professional deep clean of the bin store and gas cupboard to remove old droppings and nesting materials, making new activity easier to spot.</li>
+    <li><strong>Pest Strategy:</strong> Authorise BioPest to deploy the recommended intensive cholecalciferol rodenticide programme, given the ineffectiveness of snap traps on the current population.</li>
+  </ul>
+</div>
+
+</body>
+</html>

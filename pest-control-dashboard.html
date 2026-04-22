@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matchsticks Apartments — Pest Control Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1d1d1f; padding: 24px; max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  .subtitle { color: #86868b; margin-bottom: 24px; font-size: 14px; }
+  .status-banner { border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 16px; }
+  .status-banner.green { background: #e6f4ea; border-left: 5px solid #34c759; }
+  .status-banner.amber { background: #fff8e1; border-left: 5px solid #ff9500; }
+  .status-banner.red { background: #fce8e6; border-left: 5px solid #ff3b30; }
+  .status-icon { font-size: 36px; }
+  .status-text h2 { font-size: 18px; margin-bottom: 4px; }
+  .status-text p { font-size: 14px; color: #555; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .card h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-big { font-size: 40px; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 13px; color: #86868b; margin-top: 4px; }
+  .stat-good { color: #34c759; }
+  .stat-warn { color: #ff9500; }
+  .stat-bad { color: #ff3b30; }
+
+  .chart-container { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .chart-container h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 160px; padding: 0 8px; border-bottom: 2px solid #e0e0e0; }
+  .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar { width: 100%; max-width: 60px; border-radius: 6px 6px 0 0; transition: height 0.4s ease; position: relative; min-height: 2px; }
+  .bar-mice { background: linear-gradient(180deg, #ff9500, #ffb84d); }
+  .bar-rats { background: linear-gradient(180deg, #ff3b30, #ff6b6b); }
+  .bar-none { background: #e8f5e9; }
+  .bar-value { font-size: 12px; font-weight: 700; color: #333; text-align: center; }
+  .bar-label { font-size: 11px; color: #86868b; text-align: center; margin-top: 8px; }
+  .bar-month { font-size: 12px; font-weight: 600; color: #555; text-align: center; }
+
+  .legend { display: flex; gap: 20px; margin-top: 14px; justify-content: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #555; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+  .legend-dot.mice { background: #ff9500; }
+  .legend-dot.rats { background: #ff3b30; }
+  .legend-dot.clear { background: #34c759; }
+
+  .timeline { margin-bottom: 20px; }
+  .timeline h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .visit { background: #fff; border-radius: 12px; padding: 18px 24px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #007aff; }
+  .visit.has-activity { border-left-color: #ff9500; }
+  .visit.clear { border-left-color: #34c759; }
+  .visit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .visit-date { font-weight: 700; font-size: 15px; }
+  .visit-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+  .badge-clear { background: #e6f4ea; color: #137333; }
+  .badge-mice { background: #fef7e0; color: #b06000; }
+  .badge-rats { background: #fce8e6; color: #d93025; }
+  .visit-body { font-size: 14px; color: #555; line-height: 1.5; }
+  .visit-body strong { color: #333; }
+  .visit-areas { margin-top: 6px; }
+  .area-tag { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; margin: 2px 4px 2px 0; background: #f0f0f0; color: #555; }
+  .area-tag.hot { background: #fce8e6; color: #d93025; }
+
+  .issues-card { background: #fff; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 20px; }
+  .issues-card h3 { font-size: 15px; color: #86868b; font-weight: 600; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .issue { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+  .issue:last-child { border-bottom: none; }
+  .issue-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .issue-text { font-size: 14px; line-height: 1.4; }
+  .issue-text strong { color: #1d1d1f; }
+  .issue-text .count { color: #86868b; font-size: 12px; }
+
+  .hotspot-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 650px) { .hotspot-grid { grid-template-columns: 1fr 1fr; } }
+  .hotspot { background: #f9f9f9; border-radius: 10px; padding: 14px; text-align: center; }
+  .hotspot.active { background: #fef7e0; border: 1px solid #ffe0a0; }
+  .hotspot.inactive { background: #e8f5e9; border: 1px solid #c8e6c9; }
+  .hotspot-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .hotspot-status { font-size: 12px; }
+  .hotspot-status.ok { color: #34c759; }
+  .hotspot-status.warn { color: #ff9500; }
+
+  .footer-note { background: #f0f0f0; border-radius: 12px; padding: 16px 24px; font-size: 13px; color: #86868b; line-height: 1.5; margin-top: 16px; }
+  .footer-note strong { color: #555; }
+</style>
+</head>
+<body>
+
+<h1>🐀 Pest Control Dashboard</h1>
+<p class="subtitle">Matchsticks Apartments · 115 Fairfield Road, E3 2ZP · BioPest Management Ltd · Contract C100374</p>
+
+<!-- OVERALL STATUS -->
+<div class="status-banner green">
+  <div class="status-icon">✅</div>
+  <div class="status-text">
+    <h2>Under Control — No Active Rodent Activity</h2>
+    <p>3 consecutive clear visits (Dec '25, Feb '26, Mar '26). Last mice caught: Jan '26 (1 mouse, 1st floor riser near Flat 105). Ongoing monitoring in place with non-toxic methods.</p>
+  </div>
+</div>
+
+<!-- KEY STATS -->
+<div class="grid">
+  <div class="card">
+    <h3>Mice Caught (6 months)</h3>
+    <div class="stat-big stat-warn">5</div>
+    <div class="stat-label">Oct '25: 2 · Nov '25: 2 · Jan '26: 1 · Dec, Feb, Mar: 0</div>
+  </div>
+  <div class="card">
+    <h3>Current Status</h3>
+    <div class="stat-big stat-good">Clear</div>
+    <div class="stat-label">No rats or mice detected — 3 clean visits in a row</div>
+  </div>
+  <div class="card">
+    <h3>Active Hotspot</h3>
+    <div class="stat-big" style="font-size: 20px; color: #333;">1st Floor Riser (Flat 105)</div>
+    <div class="stat-label">Recurring mice activity — last caught Jan '26. Monitor closely</div>
+  </div>
+  <div class="card">
+    <h3>Visits This Contract</h3>
+    <div class="stat-big" style="color: #007aff;">3 / 12</div>
+    <div class="stat-label">New contract started Jan '26 · Next visit: 15 Apr '26</div>
+  </div>
+</div>
+
+<!-- ACTIVITY CHART -->
+<div class="chart-container">
+  <h3>Rodent Captures — Last 6 Months</h3>
+  <div class="bar-chart">
+    <div class="bar-group">
+      <div class="bar-value">2</div>
+      <div class="bar bar-mice" style="height: 64px;"></div>
+      <div class="bar-month">Oct</div>
+      <div class="bar-label">2025</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-value">2</div>
+      <div class="bar bar-mice" style="height: 64px;"></div>
+      <div class="bar-month">Nov</div>
+      <div class="bar-label">2025</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-value">0</div>
+      <div class="bar bar-none" style="height: 8px;"></div>
+      <div class="bar-month">Dec</div>
+      <div class="bar-label">2025</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-value">1</div>
+      <div class="bar bar-mice" style="height: 32px;"></div>
+      <div class="bar-month">Jan</div>
+      <div class="bar-label">2026</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-value">0</div>
+      <div class="bar bar-none" style="height: 8px;"></div>
+      <div class="bar-month">Feb</div>
+      <div class="bar-label">2026</div>
+    </div>
+    <div class="bar-group">
+      <div class="bar-value">0</div>
+      <div class="bar bar-none" style="height: 8px;"></div>
+      <div class="bar-month">Mar</div>
+      <div class="bar-label">2026</div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot mice"></div> Mice caught</div>
+    <div class="legend-item"><div class="legend-dot clear"></div> No activity</div>
+  </div>
+</div>
+
+<!-- AREA BREAKDOWN -->
+<div class="chart-container">
+  <h3>Area Breakdown — Last Visit Status (Mar '26)</h3>
+  <div class="hotspot-grid">
+    <div class="hotspot inactive">
+      <div class="hotspot-name">🗑️ Bin Store</div>
+      <div class="hotspot-status ok">✅ No rodent activity</div>
+    </div>
+    <div class="hotspot inactive">
+      <div class="hotspot-name">🔧 Gas Cupboard</div>
+      <div class="hotspot-status ok">✅ No activity</div>
+    </div>
+    <div class="hotspot active">
+      <div class="hotspot-name">📍 1st Floor Riser (105)</div>
+      <div class="hotspot-status warn">⚠️ Historical hotspot — clear since Feb</div>
+    </div>
+    <div class="hotspot inactive">
+      <div class="hotspot-name">🏗️ Other Riser Cupboards</div>
+      <div class="hotspot-status ok">✅ No activity</div>
+    </div>
+    <div class="hotspot inactive">
+      <div class="hotspot-name">🏠 External Rear</div>
+      <div class="hotspot-status ok">✅ No activity</div>
+    </div>
+    <div class="hotspot inactive">
+      <div class="hotspot-name">🔝 Ceiling Void</div>
+      <div class="hotspot-status ok">✅ No activity</div>
+    </div>
+  </div>
+</div>
+
+<!-- RECURRING ISSUES -->
+<div class="issues-card">
+  <h3>⚠️ Outstanding Issues — Raised by BioPest</h3>
+  <div class="issue">
+    <div class="issue-icon">🗑️</div>
+    <div class="issue-text">
+      <strong>Open bins — lids not being used</strong> <span class="count">(raised every visit, 6/6 reports)</span><br>
+      Bins stored without lids provide rodents with food sources. Deep clean of bins + floor area required. Drainage bungs need fitting to prevent rat access from below.
+    </div>
+  </div>
+  <div class="issue">
+    <div class="issue-icon">🪰</div>
+    <div class="issue-text">
+      <strong>Electric fly control unit needed in bin store</strong> <span class="count">(raised Oct '25 + Mar '26)</span><br>
+      Various fly species present. Warmer weather returning — will get worse without action. Open bins are the root cause.
+    </div>
+  </div>
+  <div class="issue">
+    <div class="issue-icon">🧱</div>
+    <div class="issue-text">
+      <strong>Seal holes between bin store and gas cupboard</strong> <span class="count">(raised Oct '25, Nov '25)</span><br>
+      Rats have gnawed holes in wall-to-floor junction. Gas cupboard ceiling void needs closing off with access hatch. Steel plates needed on gas cupboard door bottom.
+    </div>
+  </div>
+  <div class="issue">
+    <div class="issue-icon">🚰</div>
+    <div class="issue-text">
+      <strong>Full drain survey recommended</strong> <span class="count">(raised Oct '25, Nov '25)</span><br>
+      BioPest disclaimer: <em>"Site will continue to have rat activity unless a FULL drain survey is carried out and any remedial works to fix defects are completed."</em>
+    </div>
+  </div>
+</div>
+
+<!-- VISIT TIMELINE -->
+<div class="timeline">
+  <h3>Visit History</h3>
+
+  <div class="visit clear">
+    <div class="visit-header">
+      <span class="visit-date">13 Mar 2026</span>
+      <span class="visit-badge badge-clear">✅ Clear</span>
+    </div>
+    <div class="visit-body">
+      No rodent activity anywhere on site. Non-toxic monitoring in place. Flies starting to develop in bin store as weather warms up.
+      <div class="visit-areas">
+        <span class="area-tag">Risers ✅</span>
+        <span class="area-tag">Bin store ✅</span>
+        <span class="area-tag">External ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visit clear">
+    <div class="visit-header">
+      <span class="visit-date">12 Feb 2026</span>
+      <span class="visit-badge badge-clear">✅ Clear</span>
+    </div>
+    <div class="visit-body">
+      No rodent feeding or captures anywhere — bin store, gas cupboard, ceiling space, external rear, service rooms all clear.
+      <div class="visit-areas">
+        <span class="area-tag">Risers ✅</span>
+        <span class="area-tag">Bin store ✅</span>
+        <span class="area-tag">Gas cupboard ✅</span>
+        <span class="area-tag">Ceiling void ✅</span>
+        <span class="area-tag">External ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visit has-activity">
+    <div class="visit-header">
+      <span class="visit-date">12 Jan 2026</span>
+      <span class="visit-badge badge-mice">🐭 1 mouse caught</span>
+    </div>
+    <div class="visit-body">
+      <strong>1 mouse caught</strong> in snap trap — 1st floor riser cupboard near Flat 105. No activity in bin store, gas cupboard, or other stations. New contract cycle started (1 of 12).
+      <div class="visit-areas">
+        <span class="area-tag hot">1st Floor Riser (105) 🐭</span>
+        <span class="area-tag">Bin store ✅</span>
+        <span class="area-tag">Gas cupboard ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visit clear">
+    <div class="visit-header">
+      <span class="visit-date">4 Dec 2025</span>
+      <span class="visit-badge badge-clear">✅ Clear</span>
+    </div>
+    <div class="visit-body">
+      No captures or evidence of rodent activity throughout site. Bin store in good order (slight food debris under 1 bin). End of previous contract cycle (12 of 12).
+      <div class="visit-areas">
+        <span class="area-tag">All areas ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visit has-activity">
+    <div class="visit-header">
+      <span class="visit-date">14 Nov 2025</span>
+      <span class="visit-badge badge-mice">🐭 2 mice caught</span>
+    </div>
+    <div class="visit-body">
+      <strong>2 mice caught</strong> in snap traps — 1st floor riser near Flat 105 (same hotspot). Mice showing <strong>learnt behaviour resistance</strong> to snap traps. Non-toxic bait replenished. Bin store/gas cupboard: mice feeding from bait but no rats. <em>BioPest flagged: "11 rats caught so far this year and 8 mice caught so far this year" — may need rodenticide programme.</em>
+      <div class="visit-areas">
+        <span class="area-tag hot">1st Floor Riser (105) 🐭</span>
+        <span class="area-tag hot">Bin store — mice feeding</span>
+        <span class="area-tag">Gas cupboard ✅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="visit has-activity">
+    <div class="visit-header">
+      <span class="visit-date">2 Oct 2025</span>
+      <span class="visit-badge badge-mice">🐭 2 mice caught</span>
+    </div>
+    <div class="visit-body">
+      <strong>2 mice caught</strong> in snap traps — 1st floor riser cupboard near Flat 105. Old droppings in bin store and gas cupboard. Various fly species in bin store. Rats had gnawed holes between bin store and gas cupboard.
+      <div class="visit-areas">
+        <span class="area-tag hot">1st Floor Riser (105) 🐭</span>
+        <span class="area-tag hot">Bin store — old droppings + flies</span>
+        <span class="area-tag hot">Gas cupboard — old droppings</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="footer-note">
+  <strong>📊 6-Month Trend:</strong> Activity peaked Oct–Nov '25 (4 mice caught, bin store issues, gnawed holes). Improved significantly since Dec '25 with 3 consecutive clear visits. The recurring hotspot is the <strong>1st floor riser near Flat 105</strong> — all 5 mice caught in the last 6 months were from this location.<br><br>
+  <strong>🎯 Priority Actions for RTM:</strong><br>
+  1. <strong>Bin store lids</strong> — enforce lids on all bins, fit drainage bungs (flagged every single visit)<br>
+  2. <strong>Seal holes</strong> — bin store ↔ gas cupboard wall/floor junction + gas cupboard door bottom<br>
+  3. <strong>Electric fly unit</strong> — install in bin store before summer<br>
+  4. <strong>Drain survey</strong> — BioPest say rat activity won't stop without it<br><br>
+  <strong>Next visit:</strong> 15 Apr 2026 · <strong>Technician:</strong> Darren McArthur (primary) · <strong>Contract:</strong> C100374 (12 visits/year)
+</div>
+
+</body>
+</html>
