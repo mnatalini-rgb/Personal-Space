@@ -139,62 +139,110 @@
 
 <div id="tab-dashboard" class="tab-content active">
 
-<div class="status-banner green" style="display: block; padding: 30px;">
-  <h2 style="font-size: 36px; margin-bottom: 20px; color: #1d1d1f; font-weight: 700;">On Track</h2>
-  
-  <div style="display: flex; gap: 40px; margin-bottom: 24px; flex-wrap: wrap;">
+<div class="status-banner green" style="display: block; padding: 24px; margin-bottom: 24px;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
     <div>
-      <div style="font-size: 32px; font-weight: 700; color: #1d1d1f;">£39,587</div>
-      <div style="font-size: 14px; color: #555; font-weight: 600; text-transform: uppercase;">Spent</div>
+      <h2 style="font-size: 32px; color: #1d1d1f; font-weight: 700; display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+        <span style="display:inline-block; width:14px; height:14px; background:#34c759; border-radius:50%; box-shadow: 0 0 0 4px rgba(52,199,89,0.2);"></span>
+        On Track
+      </h2>
+      <p style="font-size: 15px; color: #555;">Overall spending is 7% under budget. Projected £52,783 vs £57,912 annual budget.</p>
     </div>
-    <div>
-      <div style="font-size: 32px; font-weight: 700; color: #1d1d1f;">£43,434</div>
-      <div style="font-size: 14px; color: #555; font-weight: 600; text-transform: uppercase;">Budget by this point</div>
-    </div>
-    <div>
-      <div style="font-size: 32px; font-weight: 700; color: #1d1d1f;">£52,783</div>
-      <div style="font-size: 14px; color: #555; font-weight: 600; text-transform: uppercase;">Forecast year-end</div>
+    
+    <div style="display: flex; gap: 24px; background: rgba(255,255,255,0.7); padding: 16px 24px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.04); box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+      <div>
+        <div style="font-size: 12px; color: #86868b; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Cash at Bank</div>
+        <div style="font-size: 26px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px;">£19,823</div>
+      </div>
+      <div style="width: 1px; background: rgba(0,0,0,0.08); margin: 4px 0;"></div>
+      <div title="Cash + money owed to us - money we owe">
+        <div style="font-size: 12px; color: #86868b; font-weight: 600; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Financial Position <span style="font-size: 10px; cursor: help; border-bottom: 1px dotted #ccc;">?</span></div>
+        <div style="font-size: 26px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px;">£27,162</div>
+      </div>
     </div>
   </div>
-  
-  <p style="font-size: 16px; color: #1d1d1f; margin-bottom: 12px; line-height: 1.5;">
-    Overall spending is 7% under budget at this point. Projected year-end spend of £52,783 is within the £57,912 annual budget.
-  </p>
-  
-  <div style="background: rgba(0,0,0,0.05); padding: 16px; border-radius: 8px; font-size: 14px; color: #333; line-height: 1.5;">
-    <strong>🔮 Q4 Forecast & Considerations:</strong> With 1 quarter remaining and £18,325 budget remaining, the building is on track. <br>
-    <strong>Key risks:</strong> Fire Safety is already over budget. <br>
-    <strong>Consider:</strong> Will accountancy & audit fees (£1,260 budgeted, £0 spent) land in Q4? If so, this will draw down the remaining budget quickly. Close monitoring required on further maintenance spending before year-end.
-  </div>
-</div>
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 16px;">
-  <div class="card" style="margin-bottom: 0;">
-    <h3>Budget Health</h3>
-    <div class="stat-big stat-good">£18,325 remaining</div>
-    <div class="stat-label">32% of budget left for 25% of year</div>
+  <div style="background: rgba(255,255,255,0.7); border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.04);">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <div style="font-size: 28px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px;">£39,587</div>
+        <div style="font-size: 13px; color: #555; font-weight: 600; text-transform: uppercase; margin-top: 2px;">Spent (68%)</div>
+      </div>
+      <div>
+        <div style="font-size: 28px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px;">£43,434</div>
+        <div style="font-size: 13px; color: #555; font-weight: 600; text-transform: uppercase; margin-top: 2px;">Budget by this point</div>
+      </div>
+      <div>
+        <div style="font-size: 28px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.5px;">£52,783</div>
+        <div style="font-size: 13px; color: #555; font-weight: 600; text-transform: uppercase; margin-top: 2px;">Forecast Year-End</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 28px; font-weight: 700; color: #86868b; letter-spacing: -0.5px;">£57,912</div>
+        <div style="font-size: 13px; color: #86868b; font-weight: 600; text-transform: uppercase; margin-top: 2px;">Annual Budget</div>
+      </div>
+    </div>
+    
+    <div style="width: 100%; height: 10px; background: rgba(0,0,0,0.06); border-radius: 5px; overflow: hidden; display: flex;">
+      <div style="width: 68%; background: #34c759; height: 100%; border-radius: 5px;"></div>
+    </div>
   </div>
-  <div class="card" style="margin-bottom: 0;">
-    <h3>Forecast Variance</h3>
-    <div class="stat-big stat-good">+£5,129 under budget</div>
-    <div class="stat-label">£57,912 annual budget - £52,783 projected</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border-top: 4px solid #34c759;">
+      <h3 style="font-size: 14px; color: #34c759; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 16px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><circle cx="8" cy="8" r="6" stroke="#34c759" stroke-width="1.5" fill="none"/><path d="M5 8l2 2 4-4" stroke="#34c759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span> Highlights
+      </h3>
+      <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #1d1d1f; line-height: 1.6;">
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #34c759; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span><strong>+£5,129</strong> under budget (projected year-end)</span>
+        </li>
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #34c759; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span><strong>£18,325</strong> (32%) budget remaining for 25% of year</span>
+        </li>
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #34c759; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span>B&W fire safety switch saves <strong>£650/yr</strong></span>
+        </li>
+        <li style="display: flex; gap: 10px;">
+          <span style="color: #34c759; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span>New contracts secured (8 of 10)</span>
+        </li>
+      </ul>
+    </div>
+
+    <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); border-top: 4px solid #ff3b30;">
+      <h3 style="font-size: 14px; color: #ff3b30; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 16px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="vertical-align:middle;"><path d="M8 1L15 14H1L8 1Z" stroke="#ff9500" stroke-width="1.5" fill="none"/><path d="M8 6v4M8 11.5v.5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round"/></svg></span> Areas of Concern
+      </h3>
+      <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #1d1d1f; line-height: 1.6;">
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #ff3b30; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span><strong>£7,494</strong> service charges outstanding (East End Homes owes £6,518)</span>
+        </li>
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #ff3b30; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span>Fire Safety over budget (but explained)</span>
+        </li>
+        <li style="margin-bottom: 12px; display: flex; gap: 10px;">
+          <span style="color: #ff3b30; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span>Cleaning invoices missing Dec–Mar</span>
+        </li>
+        <li style="display: flex; gap: 10px;">
+          <span style="color: #ff9500; flex-shrink: 0; font-weight: bold;">&rarr;</span> 
+          <span>Accountancy fees (£1,260) may hit Q4</span>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="card" style="margin-bottom: 0;">
-    <h3>Service Charges Outstanding</h3>
-    <div class="stat-big stat-bad">£7,494</div>
-    <div class="stat-label">from 3 leaseholders</div>
-  </div>
-</div>
-<div style="background: #f5f5f7; border-radius: 8px; padding: 16px 24px; display: flex; gap: 32px; margin-bottom: 24px; flex-wrap: wrap;">
-  <div><span style="color:#555;">Cash at Bank:</span> <strong>£19,823</strong></div>
-  <div title="Cash + money owed to us - money we owe"><span style="color:#555;">Financial Position:</span> <strong>£27,162</strong> <span style="font-size: 11px; cursor: help; border-bottom: 1px dotted #ccc;">?</span></div>
 </div>
 <div class="grid">
 <div class="card">
-  <h3>⚠️ Needs Attention</h3>
+  <h3 style="display: flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;"><path d="M8 1L15 14H1L8 1Z" stroke="#ff9500" stroke-width="1.5" fill="none"/><path d="M8 6v4M8 11.5v.5" stroke="#ff9500" stroke-width="1.5" stroke-linecap="round"/></svg> Needs Attention</h3>
   <div style="margin-bottom: 20px;">
     <div class="issue" onclick="gotoInvoice('Fire Safety')" style="cursor: pointer;">
-      <div class="issue-icon">🔴</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>FM02 Fire Safety Maintenance</strong>
@@ -205,7 +253,7 @@
     </div>
     
     <div class="issue" onclick="gotoInvoice('Insurance')" style="cursor: pointer;">
-      <div class="issue-icon">🔴</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff3b30;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>IN02 Engineering Insurance</strong>
@@ -216,7 +264,7 @@
     </div>
 
     <div class="issue" onclick="gotoInvoice('Utilities')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>PE01 Pest Control</strong>
@@ -227,7 +275,7 @@
     </div>
 
     <div class="issue" onclick="gotoInvoice('Reserves')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>RF01 General Reserves</strong>
@@ -238,7 +286,7 @@
     </div>
 
     <div class="issue" onclick="gotoInvoice('Insurance')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>IN01 Building Insurance</strong>
@@ -249,7 +297,7 @@
     </div>
 
     <div class="issue" onclick="gotoInvoice('Insurance')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>IN05 D&O Insurance</strong>
@@ -260,7 +308,7 @@
     </div>
 
     <div class="issue" onclick="gotoInvoice('Utilities')" style="cursor: pointer;">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text" style="width: 100%;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <strong>TE01 Telephone</strong>
@@ -319,36 +367,78 @@
 </div>
 
 <div class="card">
-  <h3>📋 Board Action Items</h3>
+  <h3 style="display: flex; align-items: center; gap: 8px;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;"><rect x="1" y="2" width="14" height="12" rx="2" stroke="#86868b" stroke-width="1.5" fill="none"/><path d="M4 6h8M4 9h5" stroke="#86868b" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Board Action Items
+  </h3>
   
-  <div style="margin-bottom: 24px;">
-    <h4 style="color: #ff3b30; margin-bottom: 12px;">🔴 Act Now</h4>
-    <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 8px;">• East End Homes owes £6,518 — escalate recovery</li>
-      <li style="margin-bottom: 8px;">• Biopest — £1,440 invoiced matches 6-month pre-payment; on budget ✓</li>
+  <div style="margin-bottom: 20px;">
+    <h4 style="color: #ff3b30; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff3b30;"></span> Act Now
+    </h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="margin-bottom: 10px; padding: 10px 12px; background: #fce8e6; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">East End Homes — £6,518 outstanding</strong><br>
+        <span style="color: #555;">Escalate recovery. Largest single debtor.</span>
+      </li>
+      <li style="margin-bottom: 10px; padding: 10px 12px; background: #fce8e6; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Biopest — £1,440 invoiced</strong><br>
+        <span style="color: #555;">Matches 6-month pre-payment. On budget.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <h4 style="color: #ff9500; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff9500;"></span> Monitor
+    </h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="margin-bottom: 8px; padding: 10px 12px; background: #fff8e1; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Fire Safety — £830 over budget</strong><br>
+        <span style="color: #555;">Explained: Canam→B&W transition mid-year (board decision Aug, after budget set Jul). No duplicate. Saves ~£650/yr going forward.</span>
+      </li>
+      <li style="margin-bottom: 8px; padding: 10px 12px; background: #fff8e1; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Cleaning — no invoices since Dec</strong><br>
+        <span style="color: #555;">Spotless contract started Dec 2025 but no invoices received Dec–Mar. Chase HAUS.</span>
+      </li>
+      <li style="margin-bottom: 8px; padding: 10px 12px; background: #fff8e1; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Pest Control — fully spent</strong><br>
+        <span style="color: #555;">No budget remaining for additional visits.</span>
+      </li>
+      <li style="margin-bottom: 8px; padding: 10px 12px; background: #fff8e1; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Telephone — 8% over pro-rata</strong><br>
+        <span style="color: #555;">Monitor Q4 invoices. New contract at lower rate starts Apr 2026.</span>
+      </li>
+      <li style="margin-bottom: 8px; padding: 10px 12px; background: #fff8e1; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong style="color: #1d1d1f;">Engineering Insurance — £100 over</strong><br>
+        <span style="color: #555;">Annual premium. No further action this year.</span>
+      </li>
     </ul>
   </div>
 
   <div style="margin-bottom: 24px;">
-    <h4 style="color: #ff9500; margin-bottom: 12px;">🟡 Monitor</h4>
-    <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 8px;">• Fire Safety over budget by £830 — <strong>explained:</strong> board approved switch from Canam to B&W in Aug, after budget was set in Jul. Canam charged £998 for Jul–Sep (half-yearly billing), B&W from Oct. No duplicate. B&W saves ~£650/yr going forward</li>
-      <li style="margin-bottom: 8px;">• Pest Control fully spent — no budget for additional visits</li>
-      <li style="margin-bottom: 8px;">• Telephone trending 8% over pro-rata — monitor Q4 invoices</li>
-      <li style="margin-bottom: 8px;">• Engineering Insurance £100 over budget — annual premium, no further action this year</li>
-      <li style="margin-bottom: 8px;">• Cleaning: No Spotless invoices received Dec–Mar despite monthly contract starting Dec 2025 — chase HAUS</li>
-    </ul>
-  </div>
-
-  <div style="margin-bottom: 24px;">
-    <h4 style="color: #86868b; margin-bottom: 12px;">⚪ Review for FY26/27 Budget</h4>
-    <ul style="list-style: none; padding: 0;">
-      <li style="margin-bottom: 8px;">• Fire Door Remedial: £5,000 budgeted, £0 spent — confirm if deferred or cancelled</li>
-      <li style="margin-bottom: 8px;">• Audit Fees: £1,260 budgeted, £0 net — expected in Q4 post year-end</li>
-      <li style="margin-bottom: 8px;">• Communal Cleaning only 25% spent — consider reducing budget</li>
-      <li style="margin-bottom: 8px;">• Electricity only 35% spent — consider reducing budget</li>
-      <li style="margin-bottom: 8px;">• Window Cleaning renewal: £498 (up from £465) — budget needs £33 increase</li>
-      <li style="margin-bottom: 8px;">• Telephone new contract £1,075.80/yr vs current £1,226 budget — reduce budget</li>
+    <h4 style="color: #86868b; margin-bottom: 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#d2d2d7;"></span> Review for FY26/27 Budget
+    </h4>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Fire Door Remedial</strong> — £5k budgeted, £0 spent. Deferred or cancelled?
+      </li>
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Audit Fees</strong> — £1,260 budgeted, £0 spent. Expected Q4 post year-end.
+      </li>
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Cleaning</strong> — only 25% spent. Consider reducing budget.
+      </li>
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Electricity</strong> — only 35% spent. Consider reducing budget.
+      </li>
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Window Cleaning</strong> — renewal £498 (up from £465). Budget needs +£33.
+      </li>
+      <li style="margin-bottom: 6px; padding: 8px 12px; background: #f9f9fb; border-radius: 8px; font-size: 13px; line-height: 1.5;">
+        <strong>Telephone</strong> — new contract £1,076/yr vs £1,226 budget. Reduce.
+      </li>
     </ul>
   </div>
 
@@ -1656,7 +1746,7 @@
       </div>
     </div>
     <div class="issue">
-      <div class="issue-icon">🟡</div>
+      <div class="issue-icon"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff9500;"></span></div>
       <div class="issue-text">
         <strong>WATCH</strong><br>
         • RE01 Repairs & Maintenance: £5,043 vs £7,000 budget (72%) — within budget<br>
