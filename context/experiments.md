@@ -358,6 +358,98 @@ Full experiment report: `skippable-video-dashboard.pdf`
 
 ---
 
+## April 2026 — Data Investigation: Winline Opportunity Gap
+
+**Type**: Cross-platform data analysis (CDP × BQ)
+**Partner**: Winline
+**Status**: Completed — findings integrated into Nonlinear Missions PRD
+**Date**: 22 April 2026
+
+### Objective
+
+Quantify how many Winline depositors are active FACEIT users but never engage with missions — the "opportunity gap" that structural mission changes (nonlinear missions) could address.
+
+### Methodology
+
+1. Exported Winline user events from Snowflake CDP (`analytics_rep.cdp_service.user_events`)
+   - `last_dep` events (deposits, last 3 months): 152,939 unique users
+   - `task_*` events (mission tasks, last 3 months): 16,414 unique users
+2. Computed cohort overlap locally (CSV intersection by `user_id`)
+3. Cross-referenced all 155,534 unique users against BQ `business-intelligence-prod.dbt_user.dim__users` for FACEIT activity, verification, subscription, geo, language, account age
+4. Batched BQ queries (8 batches of ~20K user IDs each) due to BQ Console character limits
+
+### Key Findings
+
+**Cohort Overlap:**
+
+| Cohort | Users | % |
+|---|---|---|
+| Deposit + Mission (both) | 13,819 | 9.0% of depositors |
+| Deposit only (no mission) | 139,120 | 91.0% of depositors |
+| Mission only (no deposit) | 2,595 | — |
+
+Missions capture only 9% of the depositing Winline user base.
+
+**FACEIT Activity of Deposit-Only Users (139,120):**
+
+| Recency | Users | % |
+|---|---|---|
+| Active last 30 days | 45,664 | 32.8% |
+| Active 31–90 days | 16,813 | 12.1% |
+| Active 91–365 days | 18,498 | 13.3% |
+| Churned (>1y / never matched) | 58,145 | 41.8% |
+
+**45,664 active FACEIT gamers deposit on Winline but never touch a mission.** Their profile (69.1% verified, 10.2% premium, median account age 5y2m, overwhelmingly RU) is near-identical to users who do engage with missions — the gap is structural, not demographic.
+
+**Critical correction — BOFU Mission Activation (BQ UserMissions):**
+
+Cross-referencing the 45,664 active-30d deposit-only users against BQ `UserMissions` for FTD + WHALE Winline campaigns (Feb–Apr 2026):
+
+| Segment | Users | % of Active-30d |
+|---|---|---|
+| **Activated BOFU mission + played matches (EBU)** | **43,904** | **96.2%** |
+| Activated, no progress | 883 | 1.9% |
+| Never activated any BOFU mission | 871 | 1.9% |
+
+**The original assumption was wrong.** These users are NOT ignoring missions — 96.2% are in BOFU missions, actively playing gaming challenges. They just don't complete the partner conversion tasks (deposit 3,000 RUB, bet 5,000 RUB). Only 65 users (0.1%) complete all tasks including partner tasks.
+
+**Challenge staleness:** BOFU partner tasks are identical month over month (Feb = Mar = Apr). Same deposit amounts, same bet amounts, same minimum odds. Users who didn't convert in February see the exact same ask in March and April.
+
+**Two structural problems, not a reach problem:**
+1. Partner task conversion failure: 43,904 EBU users grind gaming challenges but 0.1% complete partner tasks
+2. Challenge staleness: identical partner asks month over month provide zero incremental motivation
+
+### Data Artefacts
+
+- CDP exports: `data/brand_integrations/faceit_snowflake_analytics rep__cdp_service__user_events 2026-04-22T1016.csv` (mission users), `...T1017.csv` (deposit users)
+- Cohort CSV: `data/brand_integrations/winline_cdp_cohorts_for_bq.csv`
+- BQ batch queries: `data/brand_integrations/bq_batches/batch_1.sql` through `batch_8.sql`
+- BQ results: `data/brand_integrations/bq-results-20260422-*.csv` (8 files)
+
+### Implications
+
+- The mission product's BOFU conversion problem is not about reach — 96% of active depositors are already in missions
+- The problem is partner task conversion: users engage with gaming challenges but not partner tasks (0.1% completion rate)
+- **Conscious engagement confirmed**: 43,905 users claimed the "Play 1 match" gaming reward (not passive auto-enrollment). They saw the mission, collected the reward, and chose not to do partner tasks.
+- Challenge staleness compounds the issue: identical partner asks month over month give no new reason to convert
+- **FTD vs WHALE**: WHALE tier converts 7pp lower (38.4% vs 45.6%) — higher deposit/bet thresholds reduce conversion
+- **Cross-mission engagement**: 30.2% of conscious BOFU users also complete Premium Monthly missions (mission grinders who still skip partner tasks). 69.8% only appear in Winline BOFU (weak discovery/activation).
+- **Historical decline**: Partner completion rates fell from ~9.5% (mid-2024) to 6.7% (2026 YTD) while user base tripled. Problem is actively worsening.
+- Validates the core thesis of the Nonlinear Missions PRD: structural mission changes (user-chosen order, progression, challenge variety) could unlock conversion among 43,904 active EBU users
+- 41.8% churn rate among deposit-only users represents a separate reactivation opportunity outside mission scope
+- Impact at Winline C3 value of €4.33: even 5% BOFU partner task conversion = 2,195 conversions = €9,504/month
+- **Shop engagement**: 83.3% of conscious BOFU users have shop orders in 2026 — they are FP-motivated and economically active. Reward-effort mismatch on partner tasks is a key lever.
+
+### Data Artefacts (updated)
+
+- CDP exports: `data/brand_integrations/faceit_snowflake_analytics rep__cdp_service__user_events 2026-04-22T1016.csv` (mission users), `...T1017.csv` (deposit users)
+- Cohort CSV: `data/brand_integrations/winline_cdp_cohorts_for_bq.csv`
+- BQ batch queries: `data/brand_integrations/bq_batches/batch_1.sql` through `batch_8.sql`
+- BQ results: `data/brand_integrations/bq-results-20260422-*.csv`
+- BOFU mission activation: `data/brand_integrations/bq-results-20260422-101321-1776852814220.csv`
+- Gaming reward claims: `data/brand_integrations/bq-results-20260422-113626-1776857793603.csv`
+- Premium Monthly users: `data/brand_integrations/bq-results-20260422-114810-1776858503585.csv`
+
 ## December 2025 — Brand Integrations
 
 ### Experiment 1: TOFU — Increasing Account Linkage Among Unresponsive Users

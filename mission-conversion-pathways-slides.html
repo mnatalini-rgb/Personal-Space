@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Conversion Pathways — Commercial Briefing</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #FEFEFE;
+    --surface: #EEEEEE;
+    --surface-2: #CCCCCC;
+    --border: #CCCCCC;
+    --text: #000000;
+    --text-muted: #595959;
+    --accent: #FF5500;
+    --accent-light: #FF5500;
+    --green: #0097A7;
+    --green-bg: #EEEEEE;
+    --red: #D63031;
+    --orange: #FFAB40;
+    --orange-bg: #EEEEEE;
+    --blue: #78909C;
+    --blue-bg: #EEEEEE;
+    --dark-bar: #262626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 80px 80px 80px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .slide.active { display: flex; opacity: 1; }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--dark-bar);
+    z-index: 1;
+  }
+
+  .slide::after {
+    content: 'CONFIDENTIAL';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: var(--dark-bar);
+    color: #FFFFFF;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    font-size: 7pt;
+    display: flex;
+    align-items: center;
+    padding-left: 80px;
+    z-index: 10;
+  }
+
+  .label {
+    position: absolute;
+    top: 0;
+    left: 80px;
+    height: 40px;
+    color: #FFFFFF;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    letter-spacing: normal;
+    z-index: 2;
+    margin: 0;
+  }
+
+  .kpi .label {
+    position: static;
+    height: auto;
+    color: #000000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: normal;
+    font-weight: 700;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 0;
+    right: 80px;
+    height: 30px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 7pt;
+    color: #FFFFFF;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    z-index: 11;
+  }
+
+  .slide-footer {
+    position: absolute;
+    bottom: 45px;
+    left: 80px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  h1, h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32pt !important;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    color: #000000;
+    margin-top: 20px;
+  }
+
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    color: #000000;
+  }
+
+  .subtitle {
+    font-family: 'Barlow', sans-serif;
+    font-size: 13pt;
+    color: #000000;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .positive { color: var(--green); }
+  .negative { color: var(--red); }
+  .warning { color: var(--orange); }
+
+  .kpi-row {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .kpi {
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    border-radius: 0;
+    padding: 28px 32px;
+    flex: 1;
+    text-align: center;
+    color: #000000;
+  }
+
+  .kpi .kpi-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    margin: 8px 0 4px;
+  }
+
+  .kpi .kpi-desc {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: #000000;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13pt;
+    margin-top: 16px;
+  }
+
+  th {
+    text-align: right;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #000000;
+    border: 1px solid #000000;
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: normal;
+    background: transparent;
+  }
+
+  th:first-child { text-align: left; }
+
+  td {
+    padding: 10px 14px;
+    text-align: right;
+    border: 1px solid #000000;
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    color: #000000;
+  }
+
+  td:first-child { text-align: left; font-weight: 500; }
+
+  tr.highlight-row td {
+    background: #FFF3E0;
+  }
+
+  tr.total-row td {
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    font-weight: 700;
+    background: transparent;
+  }
+
+  .callout {
+    background: #EEEEEE;
+    border: none;
+    border-left: 4px solid var(--accent);
+    border-radius: 0;
+    padding: 24px 32px;
+    margin-top: 20px;
+  }
+
+  .callout-orange { border-left-color: var(--orange); }
+  .callout-green { border-left-color: var(--green); }
+  .callout-blue { border-left-color: #4285F4; }
+  .callout-red { border-left-color: var(--red); }
+
+  .callout h3 { color: #000000 !important; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  .phase-list { list-style: none; margin-top: 16px; }
+
+  .phase-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 13pt;
+    line-height: 1.5;
+  }
+
+  .phase-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .method-list {
+    list-style: none;
+    margin-top: 8px;
+  }
+
+  .method-list li {
+    font-size: 13pt;
+    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text);
+  }
+
+  .method-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+  }
+
+  .bar-group { margin-bottom: 28px; }
+  .bar-group-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+    gap: 12px;
+  }
+
+  .bar-row-label {
+    width: 160px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    text-align: right;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 36px;
+    background: transparent;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .bar-accent { background: var(--accent); }
+  .bar-muted { background: var(--blue); }
+  .bar-danger { background: var(--red); }
+  .bar-dim { background: rgba(120,144,156,0.45); color: #000; }
+
+  /* Funnel visual */
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 700px;
+  }
+
+  .funnel-step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .funnel-bar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+    transition: width 0.6s ease;
+  }
+
+  .funnel-label {
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    min-width: 200px;
+  }
+
+  /* Pillar cards */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .pillar-card {
+    background: #EEEEEE;
+    border: 1px solid #CCCCCC;
+    padding: 28px 24px;
+  }
+
+  .pillar-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .pillar-card .pillar-target {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .pillar-card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pillar-card ul li {
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 4px 0 4px 16px;
+    position: relative;
+  }
+
+  .pillar-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--dark-bar);
+  }
+
+  .big-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .nav-hint {
+    position: fixed;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+
+<nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;position:fixed;top:0;left:0;right:0;z-index:1000;">
+  <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+  <span style="color:#CBD5E1;">&middot;</span>
+  <span style="color:#6B7280;">Mission Conversion Pathways &mdash; Commercial Briefing</span>
+</nav>
+
+<div class="deck">
+
+  <!-- SLIDE 1: TITLE -->
+  <div class="slide active" data-slide="1">
+    <div class="label">Brand Integrations</div>
+    <h1>Mission Conversion<br>Pathways</h1>
+    <p class="subtitle" style="max-width: 700px; margin-top: 8px;">
+      Cross-platform data analysis &amp; mission redesign proposal<br>
+      Winline &middot; Tradeit &middot; All Partners
+    </p>
+    <div class="kpi-row" style="max-width: 700px;">
+      <div style="font-size: 14px; color: var(--text-muted); padding: 12px 0;">
+        <strong style="color: var(--text);">Data sources:</strong> CDP (Snowflake), BQ (dim__users, UserMissions, Campaigns, Shop)<br>
+        <strong style="color: var(--text);">Cohort:</strong> 152,939 Winline depositors &times; FACEIT activity &times; mission state<br>
+        <strong style="color: var(--text);">Period:</strong> Feb &ndash; Apr 2026 (campaign data), 18-month trend
+      </div>
+    </div>
+    <div class="slide-footer">Moritz Natalini &middot; Brand Integrations &middot; FACEIT</div>
+    <div class="slide-number">1 / 10</div>
+  </div>
+
+  <!-- SLIDE 2: THE PROBLEM -->
+  <div class="slide" data-slide="2">
+    <div class="label">The Problem</div>
+    <h1>Gaming converts at 90%.<br>Partner tasks at <span class="negative">1&ndash;2%</span>.</h1>
+    <p class="subtitle" style="max-width: 750px; margin-top: 8px;">
+      Across all partners and geos, there's a <strong>40x drop-off</strong> between gaming challenge completion and partner task completion. The funnel works once users pass the partner gate &mdash; but almost nobody does.
+    </p>
+    <div class="kpi-row" style="margin-top: 32px;">
+      <div class="kpi">
+        <div class="label">Gaming &rarr; Partner</div>
+        <div class="kpi-val negative">40x</div>
+        <div class="kpi-desc">Drop-off across all partnerships</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Winline AL Rate</div>
+        <div class="kpi-val negative">1.7%</div>
+        <div class="kpi-desc">286K gaming &rarr; 4,741 linked</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Historical Decline</div>
+        <div class="kpi-val negative">9.5% &rarr; 6.7%</div>
+        <div class="kpi-desc">Partner completion rate, 18 months</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Late-Funnel Works</div>
+        <div class="kpi-val positive">67&ndash;99%</div>
+        <div class="kpi-desc">Completion once past partner gate</div>
+      </div>
+    </div>
+    <div class="slide-footer">Source: March 2026 Mission Review, BQ UserMissions</div>
+    <div class="slide-number">2 / 10</div>
+  </div>
+
+  <!-- SLIDE 3: THE 91% QUESTION -->
+  <div class="slide" data-slide="3">
+    <div class="label">CDP &times; BQ Cross-Platform Analysis</div>
+    <h2>152,939 Winline depositors.<br>Only <span class="negative">9%</span> appear in mission events.</h2>
+    <p class="subtitle" style="margin-bottom: 24px;">Are the other 91% lost? We cross-referenced CDP deposit events against FACEIT activity data.</p>
+
+    <div class="two-col">
+      <div>
+        <h3>CDP Cohort Overlap</h3>
+        <table style="font-size: 14px;">
+          <thead>
+            <tr><th>Cohort</th><th>Users</th><th>%</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Depositing on Winline (3 months)</td><td>152,939</td><td>100%</td></tr>
+            <tr><td>Mission-active on FACEIT</td><td>16,414</td><td>10.7%</td></tr>
+            <tr><td>Both (deposit + partner task)</td><td>13,819</td><td>9.0%</td></tr>
+            <tr class="highlight-row"><td><strong>Deposit only (no mission tasks)</strong></td><td><strong>139,120</strong></td><td><strong>91.0%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>But: Are they active on FACEIT?</h3>
+        <div style="margin-top: 16px;">
+          <div class="bar-row" style="margin: 10px 0;"><div class="bar-row-label">Active 30d</div><div class="bar-track"><div class="bar-fill bar-accent" style="width:32.8%">45,664 (32.8%)</div></div></div>
+          <div class="bar-row" style="margin: 10px 0;"><div class="bar-row-label">Active 31&ndash;90d</div><div class="bar-track"><div class="bar-fill bar-muted" style="width:12.1%">16,813</div></div></div>
+          <div class="bar-row" style="margin: 10px 0;"><div class="bar-row-label">Active 91&ndash;365d</div><div class="bar-track"><div class="bar-fill bar-dim" style="width:13.3%">18,498</div></div></div>
+          <div class="bar-row" style="margin: 10px 0;"><div class="bar-row-label">Churned (&gt;1yr)</div><div class="bar-track"><div class="bar-fill" style="width:41.8%; background:#DDD; color:#999;">58,145</div></div></div>
+        </div>
+        <div class="callout" style="margin-top: 16px; padding: 16px 20px;">
+          <p style="font-size: 14px;"><strong>45,664 are active gamers</strong> with near-identical profiles to mission-engaged users (69% verified, 10% premium, median 5yr account age, RU dominant).</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">3 / 10</div>
+  </div>
+
+  <!-- SLIDE 4: THE KEY FINDING -->
+  <div class="slide" data-slide="4">
+    <div class="label">The Key Finding</div>
+    <h1>They're in our missions.<br>They <span style="color:var(--accent);">choose</span> not to convert.</h1>
+    <p class="subtitle" style="max-width: 750px; margin-top: 4px;">
+      Cross-referencing the 45,664 active deposit-only users against BQ mission data (FTD + WHALE campaigns, Feb&ndash;Apr 2026):
+    </p>
+
+    <div class="kpi-row" style="margin-top: 28px;">
+      <div class="kpi">
+        <div class="label">In BOFU Missions</div>
+        <div class="kpi-val" style="color: var(--accent);">96.2%</div>
+        <div class="kpi-desc">43,904 activated FTD/WHALE missions</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Claimed Gaming Reward</div>
+        <div class="kpi-val" style="color: var(--accent);">43,905</div>
+        <div class="kpi-desc">Conscious engagement &mdash; saw mission, collected reward</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Complete Partner Tasks</div>
+        <div class="kpi-val negative">65</div>
+        <div class="kpi-desc">0.1% complete deposit + bet challenges</div>
+      </div>
+    </div>
+
+    <div class="callout callout-red" style="max-width: 100%; margin-top: 28px;">
+      <p style="font-size: 15px;"><strong>These are not passive users.</strong> They opened the mission, played a match, claimed the FP reward, saw the partner tasks (Deposit 3,000 RUB / Bet 5,000 RUB), and chose not to proceed. They are EBU &mdash; they inflate our denominator without generating partner value.</p>
+    </div>
+
+    <div class="slide-footer">Source: BQ UserMissions &times; Campaigns (FTD + WHALE campaign IDs, Feb&ndash;Apr 2026)</div>
+    <div class="slide-number">4 / 10</div>
+  </div>
+
+  <!-- SLIDE 5: WHY THEY DON'T CONVERT -->
+  <div class="slide" data-slide="5">
+    <div class="label">Root Cause Analysis</div>
+    <h2>Three compounding problems</h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 20px;">
+      <div class="callout callout-red" style="margin-top: 0;">
+        <h3 style="font-size: 17px; margin-bottom: 12px;">1. Challenge Staleness</h3>
+        <p style="font-size: 14px; line-height: 1.6;">FTD and WHALE partner challenges are <strong>identical</strong> month over month. Feb = Mar = Apr 2026.</p>
+        <table style="font-size: 12px; margin-top: 12px;">
+          <thead><tr><th>Tier</th><th>Feb</th><th>Mar</th><th>Apr</th></tr></thead>
+          <tbody>
+            <tr><td>FTD</td><td>3,000 RUB</td><td>3,000 RUB</td><td>3,000 RUB</td></tr>
+            <tr><td>WHALE</td><td>5,000 RUB</td><td>5,000 RUB</td><td>5,000 RUB</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Users who said no in February see the exact same ask in March and April.</p>
+      </div>
+
+      <div class="callout callout-orange" style="margin-top: 0;">
+        <h3 style="font-size: 17px; margin-bottom: 12px;">2. Declining Trend</h3>
+        <p style="font-size: 14px; line-height: 1.6;">Partner completion rates are <strong>actively eroding</strong> while the user base triples.</p>
+        <div style="margin-top: 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom: 4px;"><span>2024 Q2&ndash;Q4</span><span style="font-weight:600;">9.5%</span></div>
+          <div style="height:8px; background:#EEE; margin-bottom:8px;"><div style="width:95%; height:100%; background:var(--green);"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom: 4px;"><span>2025 H1</span><span style="font-weight:600;">9.2%</span></div>
+          <div style="height:8px; background:#EEE; margin-bottom:8px;"><div style="width:92%; height:100%; background:var(--orange);"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom: 4px;"><span>2025 H2</span><span style="font-weight:600;">6.9%</span></div>
+          <div style="height:8px; background:#EEE; margin-bottom:8px;"><div style="width:69%; height:100%; background:var(--orange);"></div></div>
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom: 4px;"><span><strong>2026 YTD</strong></span><span style="font-weight:600; color:var(--red);">6.7%</span></div>
+          <div style="height:8px; background:#EEE;"><div style="width:67%; height:100%; background:var(--red);"></div></div>
+        </div>
+      </div>
+
+      <div class="callout callout-blue" style="margin-top: 0;">
+        <h3 style="font-size: 17px; margin-bottom: 12px;">3. Reward Mismatch</h3>
+        <p style="font-size: 14px; line-height: 1.6;"><strong>83.3%</strong> of these users actively spend FP in the FACEIT shop. They are economically motivated.</p>
+        <table style="font-size: 12px; margin-top: 12px;">
+          <thead><tr><th>Shop Category</th><th>FP Spent</th></tr></thead>
+          <tbody>
+            <tr><td>Profile items (cards, frames)</td><td>831M</td></tr>
+            <tr><td>Tradeit codes</td><td>123M</td></tr>
+            <tr><td>CS2 Skins</td><td>119M</td></tr>
+            <tr><td>Steam codes</td><td>82M</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">7.7K users buy Tradeit codes with FP voluntarily &mdash; but won't do Winline partner tasks for FP.</p>
+      </div>
+    </div>
+
+    <div class="slide-number">5 / 10</div>
+  </div>
+
+  <!-- SLIDE 6: BOFU ENGAGEMENT PROFILE -->
+  <div class="slide" data-slide="6">
+    <div class="label">User Segmentation</div>
+    <h2>Two distinct sub-populations within the 43K</h2>
+    <p class="subtitle" style="margin-bottom: 20px;">Cross-mission engagement reveals different intervention paths.</p>
+
+    <div class="two-col">
+      <div>
+        <div style="display: flex; gap: 16px; margin-top: 8px;">
+          <div style="flex: 1; padding: 24px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 8px;">30.2% &mdash; Mission Grinders</div>
+            <div class="big-number">13,241</div>
+            <p style="font-size: 14px; margin-top: 8px; line-height: 1.5;">Also complete Premium Monthly missions (21 challenges). They love the mission format. <strong>They still skip partner tasks.</strong></p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Intervention: Better rewards &amp; progressive challenges</p>
+          </div>
+          <div style="flex: 1; padding: 24px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+            <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; color: var(--blue); margin-bottom: 8px;">69.8% &mdash; BOFU-Only</div>
+            <div class="big-number">30,664</div>
+            <p style="font-size: 14px; margin-top: 8px; line-height: 1.5;">Only appear in Winline BOFU missions. Likely auto-enrolled via "Play 1 match", claim FP, leave.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Intervention: Better discovery &amp; activation mechanics</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <h3 style="font-size: 17px;">Engagement matrix</h3>
+          <table style="font-size: 14px;">
+            <thead><tr><th>Segment</th><th>Users</th><th>%</th></tr></thead>
+            <tbody>
+              <tr><td>Shop buyer + Monthly grinder</td><td>12,589</td><td>28.7%</td></tr>
+              <tr><td>Shop buyer only</td><td>24,005</td><td>54.7%</td></tr>
+              <tr><td>Monthly grinder only</td><td>652</td><td>1.5%</td></tr>
+              <tr><td>Neither</td><td>6,659</td><td>15.2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>What this means for Commercial</h3>
+        <ul class="method-list">
+          <li><strong>These are real, active, verified users</strong> &mdash; 69% verified, median 5+ year accounts, playing matches monthly</li>
+          <li><strong>They already deposit on Winline</strong> &mdash; that's how they entered the CDP cohort. They just won't deposit <em>through our missions</em></li>
+          <li><strong>The mission product gives them no new reason to convert</strong> &mdash; same ask, same reward, three months running</li>
+          <li><strong>But they respond to incentives</strong> &mdash; 83.3% shop buyers, 7.7K voluntarily buy Tradeit codes with FP</li>
+          <li><strong>FTD vs WHALE:</strong> WHALE converts 7pp lower (38.4% vs 45.6%) due to 5x higher threshold &mdash; <span style="color:var(--accent);">progressive asks would help</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="slide-number">6 / 10</div>
+  </div>
+
+  <!-- SLIDE 7: THE OPPORTUNITY -->
+  <div class="slide" data-slide="7">
+    <div class="label">Opportunity Sizing</div>
+    <h1>What's on the table</h1>
+    <p class="subtitle" style="max-width: 750px; margin-top: 4px;">Conservative sizing: converting a fraction of the 43K conscious BOFU users on partner tasks.</p>
+
+    <div class="kpi-row" style="margin-top: 28px;">
+      <div class="kpi" style="border-left: 4px solid var(--green);">
+        <div class="label">BOFU (5% Partner Conversion)</div>
+        <div class="kpi-val positive">&euro;9,504</div>
+        <div class="kpi-desc">per month &mdash; 2,195 incremental C3 conversions &times; &euro;4.33</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--green);">
+        <div class="label">TOFU (15% AL Lift)</div>
+        <div class="kpi-val positive">&euro;3,078</div>
+        <div class="kpi-desc">per month &mdash; ~711 incremental ALs &times; &euro;4.33</div>
+      </div>
+      <div class="kpi" style="border-left: 4px solid var(--accent);">
+        <div class="label">Combined Monthly</div>
+        <div class="kpi-val" style="color: var(--accent);">&euro;12,582</div>
+        <div class="kpi-desc">Winline only &mdash; before Tradeit, WM, PaySafe</div>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top: 28px; max-width: 100%;">
+      <p style="font-size: 15px; line-height: 1.6;">
+        <strong>NSM impact:</strong> These users are currently EBU (Engaged Base Users) who inflate the €/1K EBU denominator without generating partner value.
+        Converting them directly improves Partner Efficiency. At Winline C2 value of <strong>&euro;121.10</strong>, even 100 incremental C2 conversions = &euro;12,110/month.
+      </p>
+    </div>
+
+    <table style="font-size: 14px; margin-top: 20px; max-width: 800px;">
+      <thead><tr><th>Partner</th><th>AL (&euro;)</th><th>C1 (&euro;)</th><th>C2 (&euro;)</th><th>C3 (&euro;)</th></tr></thead>
+      <tbody>
+        <tr><td>Winline</td><td>&euro;4.33</td><td>&euro;8.66</td><td>&euro;121.10</td><td>&euro;4.33</td></tr>
+        <tr><td>Tradeit</td><td>&euro;0.38</td><td>&euro;0.04&ndash;0.18</td><td>&euro;8.75</td><td>&euro;35.00</td></tr>
+        <tr><td>WhiteMarket</td><td>&euro;0.38</td><td>&euro;0.05&ndash;0.25</td><td>&euro;12.50</td><td>&euro;50.00</td></tr>
+        <tr><td>PaySafe</td><td>&euro;2.50</td><td>&euro;5.00</td><td>&euro;17.50</td><td>TBD</td></tr>
+      </tbody>
+    </table>
+
+    <div class="slide-number">7 / 10</div>
+  </div>
+
+  <!-- SLIDE 8: THE SOLUTION -->
+  <div class="slide" data-slide="8">
+    <div class="label">Proposed Solution</div>
+    <h2>Three pillars, different problems</h2>
+    <p class="subtitle" style="margin-bottom: 8px;">No single change fixes both TOFU and BOFU. Each pillar targets a specific segment.</p>
+
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <div class="pillar-target">Primarily TOFU</div>
+        <h3>Pillar 1: Nonlinear Structure</h3>
+        <ul>
+          <li>All challenges visible from start</li>
+          <li>User-chosen completion order</li>
+          <li>Visual progression tracker</li>
+          <li>Soft recommendations, no hard gates</li>
+        </ul>
+        <div style="margin-top: 16px; padding: 12px; background: #FFF; font-size: 13px;">
+          <strong>Why:</strong> Users hit a hard sequential gate (AL) and drop off. Nonlinear lets them warm up before committing.
+        </div>
+      </div>
+
+      <div class="pillar-card" style="border-top: 3px solid var(--accent);">
+        <div class="pillar-target">Primarily BOFU</div>
+        <h3>Pillar 2: Progressive Challenges &amp; Rotation</h3>
+        <ul>
+          <li>Progressive partner asks (500 &rarr; 1,500 &rarr; 3,000 RUB)</li>
+          <li>Monthly challenge rotation</li>
+          <li>Challenge template library per tier</li>
+          <li>Partner-approved variant ranges</li>
+        </ul>
+        <div style="margin-top: 16px; padding: 12px; background: #FFF; font-size: 13px;">
+          <strong>Why:</strong> Same stale ask &times; 3 months = declining conversion. New asks + lower entry points give reasons to re-engage.
+        </div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-target">TOFU + BOFU</div>
+        <h3>Pillar 3: Reward Rebalancing</h3>
+        <ul>
+          <li>Milestone rewards at progression thresholds</li>
+          <li>Exclusive profile items for partner tasks</li>
+          <li>Tiered reward escalation</li>
+          <li>Mystery Box on milestones (validated +61% AL)</li>
+        </ul>
+        <div style="margin-top: 16px; padding: 12px; background: #FFF; font-size: 13px;">
+          <strong>Why:</strong> 83% spend FP on profile items. Exclusive rewards create incentive that gaming alone can't provide.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px; font-size: 14px; color: var(--text-muted);">
+      <strong style="color: var(--text);">Technical note for Evugene:</strong> Pillar 2 requires a challenge template library &mdash; a backend data model storing partner-approved challenge variants per tier. The rotation scheduler auto-assigns templates monthly so no user sees the same partner ask two months running. MVP approach: manual template assignment by Activation Ops, automated scheduling in Phase 2.
+    </div>
+
+    <div class="slide-number">8 / 10</div>
+  </div>
+
+  <!-- SLIDE 9: WHAT WE NEED FROM COMMERCIAL -->
+  <div class="slide" data-slide="9">
+    <div class="label">Commercial Ask</div>
+    <h2>What we need from you</h2>
+
+    <div style="max-width: 900px; margin-top: 16px;">
+      <ul class="phase-list">
+        <li>
+          <div class="phase-num">1</div>
+          <div>
+            <strong>Winline: Approve progressive deposit ladder</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Current: flat 3,000 RUB (FTD) / 5,000 RUB (WHALE). Proposed: 500 &rarr; 1,500 &rarr; 3,000 for FTD, 1,000 &rarr; 3,000 &rarr; 5,000 for WHALE. We need Winline's sign-off on acceptable deposit/bet ranges.</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num">2</div>
+          <div>
+            <strong>Winline: Define challenge variant library</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">For monthly rotation, we need 3&ndash;4 approved challenge variants per tier. Can Winline approve a range (e.g., "deposits between 500&ndash;5,000 RUB") rather than individual challenges? This simplifies the workflow significantly.</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num">3</div>
+          <div>
+            <strong>Tradeit: MVP partner for Pillar 1</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Tradeit has the most diverse geos and implicit AL (lower-risk). We'd like to run nonlinear structure as the first A/B test on Tradeit missions. Need Commercial alignment on timing &amp; reporting.</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num">4</div>
+          <div>
+            <strong>All partners: Confirm reporting requirements</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Challenge rotation changes the month-over-month comparability of partner reports. We'll tag challenges by tier &amp; action type for consistent aggregation. Any partner-specific reporting needs?</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="callout callout-green" style="max-width: 900px; margin-top: 12px;">
+      <p style="font-size: 15px;"><strong>Timeline ask:</strong> We need Winline variant approval before we can build the challenge template library. Ideal: start conversations this sprint, aim for approved variant ranges within 2 weeks.</p>
+    </div>
+
+    <div class="slide-number">9 / 10</div>
+  </div>
+
+  <!-- SLIDE 10: NEXT STEPS -->
+  <div class="slide" data-slide="10">
+    <div class="label">Next Steps</div>
+    <h2>Phased rollout plan</h2>
+
+    <div style="max-width: 900px; margin-top: 8px;">
+      <ul class="phase-list">
+        <li>
+          <div class="phase-num" style="background: var(--accent);">1</div>
+          <div>
+            <strong>Nonlinear Structure + Rewards (Pillar 1 + 3) &mdash; Tradeit MVP</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Ship nonlinear mission structure with milestone rewards on Tradeit. A/B test vs sequential. Measure: partner task completion rate, AL rate, reward claim rate.</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num" style="background: var(--accent);">2</div>
+          <div>
+            <strong>Progressive Challenges + Rotation (Pillar 2) &mdash; Winline</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Once variant ranges are approved, build challenge template library and launch progressive partner asks. Target the 43K conscious BOFU users directly. A/B test progressive vs flat.</span>
+          </div>
+        </li>
+        <li>
+          <div class="phase-num" style="background: var(--green);">3</div>
+          <div>
+            <strong>Full rollout &mdash; All partners</strong><br>
+            <span style="color:var(--text-muted); font-size:15px;">Based on Tradeit + Winline results, roll out winning combination to WhiteMarket, PaySafe, and future partners.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 24px; max-width: 900px;">
+      <h3 style="font-size: 17px; margin-bottom: 12px;">Parallel experiments (already designed)</h3>
+      <div style="display: flex; gap: 24px;">
+        <div style="flex: 1; padding: 16px 20px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+          <strong style="font-size: 14px;">Localisation</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">A/B test: localised mission copy vs English-only. Measures impact on TOFU/MOFU completion rates.</p>
+        </div>
+        <div style="flex: 1; padding: 16px 20px; background: #EEEEEE; border: 1px solid #CCCCCC;">
+          <strong style="font-size: 14px;">AL Challenges</strong>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">A/B test: explicit AL challenge in mission vs implicit (current). Validates whether surfacing AL as a task improves linkage rate.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="max-width: 900px; margin-top: 20px;">
+      <p style="font-size: 15px;"><strong>Full PRD available:</strong> <code>mission-conversion-pathways-prd.md</code> &mdash; includes all 8 data analysis steps, technical considerations, dependencies, risks, and open questions.</p>
+    </div>
+
+    <div class="slide-footer">Moritz Natalini &middot; Brand Integrations &middot; FACEIT</div>
+    <div class="slide-number">10 / 10</div>
+  </div>
+
+</div>
+
+<div class="nav-hint">Arrow keys or click to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+    slides[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+  });
+
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) goTo(current + 1);
+    else goTo(current - 1);
+  });
+</script>
+
+</body>
+</html>
