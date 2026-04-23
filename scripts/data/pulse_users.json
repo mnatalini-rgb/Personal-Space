@@ -1,0 +1,17 @@
+[
+  {"country":"RU","total_users":11049628,"new_this_week":20018,"new_last_week":19367},
+  {"country":"US","total_users":2682632,"new_this_week":4483,"new_last_week":3877},
+  {"country":"PL","total_users":2341879,"new_this_week":5339,"new_last_week":4912},
+  {"country":"TR","total_users":1660453,"new_this_week":6460,"new_last_week":5774},
+  {"country":"DE","total_users":1587294,"new_this_week":3421,"new_last_week":3105},
+  {"country":"UA","total_users":1248607,"new_this_week":3198,"new_last_week":2887},
+  {"country":"BR","total_users":1067176,"new_this_week":3557,"new_last_week":2561},
+  {"country":"KZ","total_users":996437,"new_this_week":2854,"new_last_week":2611},
+  {"country":"NL","total_users":882345,"new_this_week":2103,"new_last_week":1856},
+  {"country":"SE","total_users":743891,"new_this_week":1687,"new_last_week":1534},
+  {"country":"FI","total_users":671234,"new_this_week":1456,"new_last_week":1321},
+  {"country":"RO","total_users":654102,"new_this_week":1834,"new_last_week":1653},
+  {"country":"FR","total_users":612478,"new_this_week":1567,"new_last_week":1423},
+  {"country":"DK","total_users":589123,"new_this_week":1234,"new_last_week":1145},
+  {"country":"GB","total_users":547891,"new_this_week":1345,"new_last_week":1198}
+]
