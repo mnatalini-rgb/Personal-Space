@@ -1,0 +1,1179 @@
+{
+  "allData": {
+    "totalRows": 16084354,
+    "uniqueSystems": 454787,
+    "dau": 0,
+    "cpuAmd": 52.6,
+    "cpuIntel": 47.4,
+    "gamingPenetration": 36.4,
+    "keyboardPct": 65.9,
+    "mousePct": 34.1,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 2103399
+      },
+      {
+        "name": "Razer",
+        "count": 1714801
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 1511020
+      },
+      {
+        "name": "SteelSeries",
+        "count": 1210963
+      },
+      {
+        "name": "Semico",
+        "count": 919425
+      },
+      {
+        "name": "Standard System",
+        "count": 743457
+      },
+      {
+        "name": "Compx",
+        "count": 735040
+      },
+      {
+        "name": "Microsoft",
+        "count": 539159
+      },
+      {
+        "name": "By Tech",
+        "count": 457673
+      },
+      {
+        "name": "Sonix",
+        "count": 407697
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 4252548
+      },
+      {
+        "name": "MSI",
+        "count": 3493037
+      },
+      {
+        "name": "Gigabyte",
+        "count": 3320810
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 1270556
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 594353
+      },
+      {
+        "name": "Lenovo",
+        "count": 546422
+      },
+      {
+        "name": "HP",
+        "count": 454068
+      },
+      {
+        "name": "ASRock",
+        "count": 339812
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 7811411
+      },
+      {
+        "cores": "16 Cores",
+        "count": 4323813
+      },
+      {
+        "cores": "8 Cores",
+        "count": 1117017
+      },
+      {
+        "cores": "20 Cores",
+        "count": 1000614
+      },
+      {
+        "cores": "24 Cores",
+        "count": 464415
+      },
+      {
+        "cores": "6 Cores",
+        "count": 459001
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "All Released"
+  },
+  "trData": {
+    "totalRows": 8669139,
+    "uniqueSystems": 117380,
+    "dau": 0,
+    "cpuAmd": 58.3,
+    "cpuIntel": 41.7,
+    "gamingPenetration": 42.2,
+    "keyboardPct": 66.1,
+    "mousePct": 33.9,
+    "topPeripherals": [
+      {
+        "name": "SteelSeries",
+        "count": 1136973
+      },
+      {
+        "name": "Logitech",
+        "count": 1108750
+      },
+      {
+        "name": "Razer",
+        "count": 1050183
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 811612
+      },
+      {
+        "name": "Standard System",
+        "count": 504580
+      },
+      {
+        "name": "Semico",
+        "count": 503950
+      },
+      {
+        "name": "Compx",
+        "count": 373430
+      },
+      {
+        "name": "Microsoft",
+        "count": 338944
+      },
+      {
+        "name": "Sonix",
+        "count": 252798
+      },
+      {
+        "name": "Instant",
+        "count": 230838
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 2393236
+      },
+      {
+        "name": "MSI",
+        "count": 2257916
+      },
+      {
+        "name": "Gigabyte",
+        "count": 1447884
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 591214
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 483727
+      },
+      {
+        "name": "HP",
+        "count": 309313
+      },
+      {
+        "name": "Casper (TR)",
+        "count": 268600
+      },
+      {
+        "name": "Lenovo",
+        "count": 208732
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 4466718
+      },
+      {
+        "cores": "16 Cores",
+        "count": 2241593
+      },
+      {
+        "cores": "8 Cores",
+        "count": 555044
+      },
+      {
+        "cores": "20 Cores",
+        "count": 530964
+      },
+      {
+        "cores": "24 Cores",
+        "count": 245878
+      },
+      {
+        "cores": "6 Cores",
+        "count": 233226
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Early Release",
+    "countryCode": "TR"
+  },
+  "uaData": {
+    "totalRows": 1203558,
+    "uniqueSystems": 57786,
+    "dau": 0,
+    "cpuAmd": 55.9,
+    "cpuIntel": 44.1,
+    "gamingPenetration": 27.4,
+    "keyboardPct": 63.4,
+    "mousePct": 36.6,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 116018
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 95929
+      },
+      {
+        "name": "Razer",
+        "count": 90019
+      },
+      {
+        "name": "Asustek",
+        "count": 81002
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 79214
+      },
+      {
+        "name": "Standard System",
+        "count": 77752
+      },
+      {
+        "name": "Semico",
+        "count": 63964
+      },
+      {
+        "name": "Microsoft",
+        "count": 57376
+      },
+      {
+        "name": "Company",
+        "count": 55658
+      },
+      {
+        "name": "Compx",
+        "count": 53138
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 336961
+      },
+      {
+        "name": "Gigabyte",
+        "count": 199243
+      },
+      {
+        "name": "MSI",
+        "count": 170592
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 147676
+      },
+      {
+        "name": "Artline",
+        "count": 94508
+      },
+      {
+        "name": "Lenovo",
+        "count": 85624
+      },
+      {
+        "name": "Acer",
+        "count": 65810
+      },
+      {
+        "name": "HP",
+        "count": 22736
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 690153
+      },
+      {
+        "cores": "16 Cores",
+        "count": 228383
+      },
+      {
+        "cores": "8 Cores",
+        "count": 116204
+      },
+      {
+        "cores": "4 Cores",
+        "count": 44083
+      },
+      {
+        "cores": "20 Cores",
+        "count": 39604
+      },
+      {
+        "cores": "6 Cores",
+        "count": 36094
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "UA"
+  },
+  "brData": {
+    "totalRows": 786442,
+    "uniqueSystems": 38888,
+    "dau": 0,
+    "cpuAmd": 66.7,
+    "cpuIntel": 33.3,
+    "gamingPenetration": 24.5,
+    "keyboardPct": 66.8,
+    "mousePct": 33.2,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 112348
+      },
+      {
+        "name": "(Dispositivos Padr\u00e3o Do Sistema)",
+        "count": 82325
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 82118
+      },
+      {
+        "name": "By Tech",
+        "count": 56641
+      },
+      {
+        "name": "Razer",
+        "count": 51367
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 48872
+      },
+      {
+        "name": "Compx",
+        "count": 44321
+      },
+      {
+        "name": "Semico",
+        "count": 28328
+      },
+      {
+        "name": "Beken",
+        "count": 25845
+      },
+      {
+        "name": "Sonix",
+        "count": 20513
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "Gigabyte",
+        "count": 211854
+      },
+      {
+        "name": "ASUS",
+        "count": 159151
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 135405
+      },
+      {
+        "name": "MSI",
+        "count": 87077
+      },
+      {
+        "name": "Biostar Group",
+        "count": 28184
+      },
+      {
+        "name": "Acer",
+        "count": 24825
+      },
+      {
+        "name": "Mancer",
+        "count": 17135
+      },
+      {
+        "name": "Intel",
+        "count": 16451
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 364453
+      },
+      {
+        "cores": "16 Cores",
+        "count": 246715
+      },
+      {
+        "cores": "8 Cores",
+        "count": 48832
+      },
+      {
+        "cores": "6 Cores",
+        "count": 33627
+      },
+      {
+        "cores": "20 Cores",
+        "count": 26276
+      },
+      {
+        "cores": "24 Cores",
+        "count": 22272
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "BR"
+  },
+  "kzData": {
+    "totalRows": 669957,
+    "uniqueSystems": 34264,
+    "dau": 0,
+    "cpuAmd": 25.8,
+    "cpuIntel": 74.2,
+    "gamingPenetration": 20.3,
+    "keyboardPct": 64.0,
+    "mousePct": 36.0,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 88096
+      },
+      {
+        "name": "Compx",
+        "count": 57203
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 56674
+      },
+      {
+        "name": "Semico",
+        "count": 42276
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 42102
+      },
+      {
+        "name": "Company",
+        "count": 40858
+      },
+      {
+        "name": "Hp, Inc",
+        "count": 33797
+      },
+      {
+        "name": "By Tech",
+        "count": 28788
+      },
+      {
+        "name": "Microsoft",
+        "count": 25836
+      },
+      {
+        "name": "Razer",
+        "count": 20085
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "Gigabyte",
+        "count": 262804
+      },
+      {
+        "name": "ASUS",
+        "count": 100390
+      },
+      {
+        "name": "MSI",
+        "count": 72713
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 59267
+      },
+      {
+        "name": "Lenovo",
+        "count": 36124
+      },
+      {
+        "name": "ASRock",
+        "count": 35680
+      },
+      {
+        "name": "Acer",
+        "count": 30030
+      },
+      {
+        "name": "HP",
+        "count": 13391
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 350195
+      },
+      {
+        "cores": "16 Cores",
+        "count": 156809
+      },
+      {
+        "cores": "8 Cores",
+        "count": 59563
+      },
+      {
+        "cores": "20 Cores",
+        "count": 38342
+      },
+      {
+        "cores": "6 Cores",
+        "count": 20201
+      },
+      {
+        "cores": "4 Cores",
+        "count": 19488
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "KZ"
+  },
+  "arData": {
+    "totalRows": 445267,
+    "uniqueSystems": 25369,
+    "dau": 0,
+    "cpuAmd": 73.6,
+    "cpuIntel": 26.4,
+    "gamingPenetration": 30.3,
+    "keyboardPct": 67.3,
+    "mousePct": 32.7,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 89370
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 39935
+      },
+      {
+        "name": "(Dispositivos De Sistema Est\u00e1ndar)",
+        "count": 33594
+      },
+      {
+        "name": "Razer",
+        "count": 32271
+      },
+      {
+        "name": "Sonix",
+        "count": 30117
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 26536
+      },
+      {
+        "name": "By Tech",
+        "count": 26049
+      },
+      {
+        "name": "Evision",
+        "count": 21623
+      },
+      {
+        "name": "Compx",
+        "count": 21389
+      },
+      {
+        "name": "Semico",
+        "count": 17546
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 127712
+      },
+      {
+        "name": "Gigabyte",
+        "count": 110343
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 90472
+      },
+      {
+        "name": "MSI",
+        "count": 75783
+      },
+      {
+        "name": "ASRock",
+        "count": 10551
+      },
+      {
+        "name": "Biostar Group",
+        "count": 8061
+      },
+      {
+        "name": "Lenovo",
+        "count": 5841
+      },
+      {
+        "name": "HP",
+        "count": 5172
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 214532
+      },
+      {
+        "cores": "16 Cores",
+        "count": 125578
+      },
+      {
+        "cores": "8 Cores",
+        "count": 40570
+      },
+      {
+        "cores": "4 Cores",
+        "count": 20540
+      },
+      {
+        "cores": "6 Cores",
+        "count": 18539
+      },
+      {
+        "cores": "20 Cores",
+        "count": 9099
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Tier 3",
+    "countryCode": "AR"
+  },
+  "itData": {
+    "totalRows": 303779,
+    "uniqueSystems": 4550,
+    "dau": 0,
+    "cpuAmd": 51.3,
+    "cpuIntel": 48.7,
+    "gamingPenetration": 47.2,
+    "keyboardPct": 64.9,
+    "mousePct": 35.1,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 61251
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 42148
+      },
+      {
+        "name": "Razer",
+        "count": 39856
+      },
+      {
+        "name": "SteelSeries",
+        "count": 15649
+      },
+      {
+        "name": "Semico",
+        "count": 14945
+      },
+      {
+        "name": "Microsoft",
+        "count": 12173
+      },
+      {
+        "name": "(Periferiche Standard Di Sistema)",
+        "count": 7262
+      },
+      {
+        "name": "Compx",
+        "count": 6216
+      },
+      {
+        "name": "Sonix",
+        "count": 5601
+      },
+      {
+        "name": "Asustek",
+        "count": 5283
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 87423
+      },
+      {
+        "name": "MSI",
+        "count": 86174
+      },
+      {
+        "name": "Gigabyte",
+        "count": 43775
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 18221
+      },
+      {
+        "name": "HP",
+        "count": 16706
+      },
+      {
+        "name": "Lenovo",
+        "count": 16474
+      },
+      {
+        "name": "Acer",
+        "count": 11072
+      },
+      {
+        "name": "ASRock",
+        "count": 7958
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "16 Cores",
+        "count": 121320
+      },
+      {
+        "cores": "12 Cores",
+        "count": 74955
+      },
+      {
+        "cores": "20 Cores",
+        "count": 26243
+      },
+      {
+        "cores": "32 Cores",
+        "count": 23540
+      },
+      {
+        "cores": "24 Cores",
+        "count": 18203
+      },
+      {
+        "cores": "8 Cores",
+        "count": 18023
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Early Release",
+    "countryCode": "IT"
+  },
+  "inData": {
+    "totalRows": 319208,
+    "uniqueSystems": 4627,
+    "dau": 0,
+    "cpuAmd": 55.1,
+    "cpuIntel": 44.9,
+    "gamingPenetration": 38.1,
+    "keyboardPct": 66.4,
+    "mousePct": 33.6,
+    "topPeripherals": [
+      {
+        "name": "Razer",
+        "count": 61225
+      },
+      {
+        "name": "Logitech",
+        "count": 47436
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 28496
+      },
+      {
+        "name": "Standard System",
+        "count": 23062
+      },
+      {
+        "name": "Semico",
+        "count": 20628
+      },
+      {
+        "name": "Microsoft",
+        "count": 16973
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 12837
+      },
+      {
+        "name": "By Tech",
+        "count": 12503
+      },
+      {
+        "name": "Compx",
+        "count": 10107
+      },
+      {
+        "name": "Evision",
+        "count": 7391
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "MSI",
+        "count": 101783
+      },
+      {
+        "name": "Gigabyte",
+        "count": 83237
+      },
+      {
+        "name": "ASUS",
+        "count": 48676
+      },
+      {
+        "name": "Lenovo",
+        "count": 28541
+      },
+      {
+        "name": "HP",
+        "count": 16541
+      },
+      {
+        "name": "Acer",
+        "count": 15879
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 11440
+      },
+      {
+        "name": "Dell",
+        "count": 4976
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 125658
+      },
+      {
+        "cores": "16 Cores",
+        "count": 102757
+      },
+      {
+        "cores": "20 Cores",
+        "count": 25757
+      },
+      {
+        "cores": "24 Cores",
+        "count": 16272
+      },
+      {
+        "cores": "8 Cores",
+        "count": 14669
+      },
+      {
+        "cores": "32 Cores",
+        "count": 10954
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Early Release",
+    "countryCode": "IN"
+  },
+  "earlyReleaseData": {
+    "totalRows": 9292126,
+    "uniqueSystems": 126557,
+    "dau": 0,
+    "cpuAmd": 58.0,
+    "cpuIntel": 42.0,
+    "gamingPenetration": 42.3,
+    "keyboardPct": 66.1,
+    "mousePct": 33.9,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 1217437
+      },
+      {
+        "name": "SteelSeries",
+        "count": 1152622
+      },
+      {
+        "name": "Razer",
+        "count": 1151264
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 882256
+      },
+      {
+        "name": "Semico",
+        "count": 539523
+      },
+      {
+        "name": "Standard System",
+        "count": 527642
+      },
+      {
+        "name": "Compx",
+        "count": 389753
+      },
+      {
+        "name": "Microsoft",
+        "count": 368090
+      },
+      {
+        "name": "Sonix",
+        "count": 261541
+      },
+      {
+        "name": "Instant",
+        "count": 236452
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "ASUS",
+        "count": 2529335
+      },
+      {
+        "name": "MSI",
+        "count": 2445873
+      },
+      {
+        "name": "Gigabyte",
+        "count": 1574896
+      },
+      {
+        "name": "Monster (TR)",
+        "count": 591214
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 513388
+      },
+      {
+        "name": "HP",
+        "count": 342560
+      },
+      {
+        "name": "Casper (TR)",
+        "count": 268600
+      },
+      {
+        "name": "Lenovo",
+        "count": 253747
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 4667331
+      },
+      {
+        "cores": "16 Cores",
+        "count": 2465670
+      },
+      {
+        "cores": "8 Cores",
+        "count": 587736
+      },
+      {
+        "cores": "20 Cores",
+        "count": 582964
+      },
+      {
+        "cores": "24 Cores",
+        "count": 280353
+      },
+      {
+        "cores": "6 Cores",
+        "count": 250490
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Early Release"
+  },
+  "tier3Data": {
+    "totalRows": 6792228,
+    "uniqueSystems": 328230,
+    "dau": 0,
+    "cpuAmd": 45.2,
+    "cpuIntel": 54.8,
+    "gamingPenetration": 28.3,
+    "keyboardPct": 65.6,
+    "mousePct": 34.4,
+    "topPeripherals": [
+      {
+        "name": "Logitech",
+        "count": 885962
+      },
+      {
+        "name": "(Empty/Generic)",
+        "count": 628764
+      },
+      {
+        "name": "Razer",
+        "count": 563537
+      },
+      {
+        "name": "Semico",
+        "count": 379902
+      },
+      {
+        "name": "Compx",
+        "count": 345287
+      },
+      {
+        "name": "By Tech",
+        "count": 252666
+      },
+      {
+        "name": "Sino Wealth",
+        "count": 242158
+      },
+      {
+        "name": "Standard System",
+        "count": 215815
+      },
+      {
+        "name": "(\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u044b\u0435 \u0421\u0438\u0441\u0442\u0435\u043c\u043d\u044b\u0435 \u0423\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430)",
+        "count": 204324
+      },
+      {
+        "name": "Company",
+        "count": 195167
+      }
+    ],
+    "topMobo": [
+      {
+        "name": "Gigabyte",
+        "count": 1745914
+      },
+      {
+        "name": "ASUS",
+        "count": 1723213
+      },
+      {
+        "name": "MSI",
+        "count": 1047164
+      },
+      {
+        "name": "Sys Mfg/OEM",
+        "count": 757168
+      },
+      {
+        "name": "Lenovo",
+        "count": 292675
+      },
+      {
+        "name": "ASRock",
+        "count": 248780
+      },
+      {
+        "name": "Acer",
+        "count": 189038
+      },
+      {
+        "name": "HP",
+        "count": 111508
+      }
+    ],
+    "coreCounts": [
+      {
+        "cores": "12 Cores",
+        "count": 3144080
+      },
+      {
+        "cores": "16 Cores",
+        "count": 1858143
+      },
+      {
+        "cores": "8 Cores",
+        "count": 529281
+      },
+      {
+        "cores": "20 Cores",
+        "count": 417650
+      },
+      {
+        "cores": "6 Cores",
+        "count": 208511
+      },
+      {
+        "cores": "24 Cores",
+        "count": 184062
+      }
+    ],
+    "dateRange": [
+      "2026-03-12",
+      "2026-04-22"
+    ],
+    "tier": "Tier 3"
+  }
+}
