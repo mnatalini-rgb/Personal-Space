@@ -1706,7 +1706,14 @@ FACEIT uses Publift's Fuse CMP (TCF 2.2 compliant) globally, including in geos w
       }
     });
 
-    if (!localStorage.getItem('productivity_projects')) { localStorage.setItem('productivity_projects', JSON.stringify(projects)); }
+    // Add any new seed projects not yet in localStorage
+    SEED_PROJECTS.forEach(sp => {
+      if (!projects.find(p => p.id === sp.id)) {
+        projects.push(sp);
+      }
+    });
+
+    localStorage.setItem('productivity_projects', JSON.stringify(projects));
 
     function saveTasks() { localStorage.setItem('productivity_tasks', JSON.stringify(tasks)); }
     function saveGoals() { localStorage.setItem('productivity_q2_goals', JSON.stringify(q2Goals)); }
