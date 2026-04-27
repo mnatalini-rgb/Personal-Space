@@ -94,7 +94,7 @@
 </head>
 <body>
     <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
-      <a href="../index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
       <span style="color:#CBD5E1;">·</span>
       <span style="color:#6B7280;">Prebid Outstream CSStats</span>
     </nav>
@@ -103,22 +103,22 @@
         <header class="header">
             <span class="badge">Experiment · A/B Test</span>
             <h1>Prebid Outstream CSStats Experiment Dashboard</h1>
-            <h2>A/B test: Mobalytics vs Primis · Started Mar 27, 2026 · Updated Apr 10</h2>
+            <h2>A/B test: Mobalytics vs Primis · Mar 27 – Apr 23, 2026 · <span style="color: var(--green);">CONCLUDED</span></h2>
             <p>Moritz Natalini · Ads &amp; Partnerships · EFG</p>
         </header>
 
-        <div class="section" id="executive-summary" style="border-left: 4px solid var(--yellow);">
+        <div class="section" id="executive-summary" style="border-left: 4px solid var(--green);">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
                 <h2 class="section-title" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">Executive Summary</h2>
-                <span style="display: inline-flex; align-items: center; gap: 6px; background: #fef3c7; color: #92400e; padding: 0.35rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;">
-                    <span class="status-indicator status-yellow" style="margin-right: 0;"></span>
-                    Experiment Ongoing
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #d1fae5; color: #065f46; padding: 0.35rem 1rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;">
+                    <span class="status-indicator status-green" style="margin-right: 0;"></span>
+                    Experiment Concluded — Moba Wins
                 </span>
             </div>
 
-            <div class="insight-card" style="border-left-color: var(--yellow); margin-bottom: 1.5rem;">
-                <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Verdict: Inconclusive (YELLOW)</h3>
-                <p>Mobalytics leads on Revenue Per Page View (+42%) and eCPM (7.9x higher), but the comparison is skewed by a US fill gap — Primis has near-zero US impressions. Excluding US, Primis actually wins on total revenue. A hybrid approach (Mobalytics for US, Primis for RoW) warrants investigation.</p>
+            <div class="insight-card" style="border-left-color: var(--green); margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Verdict: Mobalytics Wins (GREEN) — +90% net RPV</h3>
+                <p>Over the full 25-day test (Mar 30 – Apr 23), Mobalytics outperformed Primis on the primary metric <strong>Revenue Per Page View by +90%</strong> ($0.038 vs $0.020 per 1K views, both net). The gap is driven by US fill — Moba serves 253K US impressions vs Primis 499 — but Moba also wins overall even after accounting for Primis's higher ex-US volume. Recommendation: <strong>ship Mobalytics on CSStats and run the same A/B test on FACEIT.com to validate at scale.</strong></p>
             </div>
 
             <div class="table-wrapper" style="margin-bottom: 1.5rem;">
@@ -134,52 +134,52 @@
                     <tbody>
                         <tr>
                             <td>Total Revenue</td>
-                            <td style="color: #0891b2;">$67.14</td>
-                            <td style="color: #f59e0b;">$46.05</td>
-                            <td class="highlight">Moba +45.8%</td>
+                            <td style="color: #0891b2; font-weight: 600;">$184.05</td>
+                            <td style="color: #f59e0b;">$97.76</td>
+                            <td class="highlight">Moba +88%</td>
                         </tr>
                         <tr>
                             <td>Impressions</td>
-                            <td>215,392</td>
-                            <td>1,169,748</td>
-                            <td class="highlight">Primis 5.4x more</td>
+                            <td>~505,000</td>
+                            <td>2,660,269</td>
+                            <td class="highlight">Primis 5.3x more</td>
                         </tr>
                         <tr>
                             <td>eCPM</td>
-                            <td style="color: #0891b2;">$0.31</td>
-                            <td style="color: #f59e0b;">$0.04</td>
-                            <td class="highlight">Moba 7.9x higher</td>
+                            <td style="color: #0891b2; font-weight: 600;">$0.36</td>
+                            <td style="color: #f59e0b;">$0.037</td>
+                            <td class="highlight">Moba 9.7x higher</td>
                         </tr>
                         <tr>
                             <td>Page Views (GA)</td>
-                            <td>2,403,348</td>
-                            <td>2,342,763</td>
-                            <td class="highlight">~balanced</td>
+                            <td>4,880,618</td>
+                            <td>4,850,989</td>
+                            <td class="highlight">~balanced (50.15/49.85)</td>
                         </tr>
                         <tr>
                             <td>US Page Views (GA)</td>
-                            <td>2,610</td>
-                            <td>2,444</td>
-                            <td class="highlight">~balanced (51.6/48.4)</td>
+                            <td>4,728</td>
+                            <td>4,542</td>
+                            <td class="highlight">~balanced (51.0/49.0)</td>
                         </tr>
-                        <tr style="font-weight: 600; background: #f8f9fa;">
+                        <tr style="font-weight: 600; background: #d1fae5;">
                             <td>RPV (per 1K views)</td>
-                            <td style="color: #0891b2;">$0.028</td>
+                            <td style="color: #0891b2;">$0.038</td>
                             <td style="color: #f59e0b;">$0.020</td>
-                            <td class="highlight">Moba +42.1%</td>
+                            <td class="highlight">Moba +90%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <div class="insight-card" style="flex: 1; min-width: 250px; border-left-color: var(--red); margin-bottom: 0;">
-                    <h3 style="font-size: 0.9rem; margin-bottom: 0.25rem;">⚠️ Key Caveat</h3>
-                    <p style="font-size: 0.9rem;">Revenue figures <strong>do not account for Primis fees</strong>. Primis charges additional fees on top of reported revenue, making the actual gap more favourable to Mobalytics than shown.</p>
+                <div class="insight-card" style="flex: 1; min-width: 250px; border-left-color: var(--green); margin-bottom: 0;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.25rem;">💰 Both Revenues Are Net</h3>
+                    <p style="font-size: 0.9rem;">Both Primis ($97.76) and Mobalytics ($184.05) report <strong>net revenue</strong> — no additional fees to deduct. All RPV and eCPM comparisons are like-for-like net figures.</p>
                 </div>
-                <div class="insight-card" style="flex: 1; min-width: 250px; border-left-color: var(--yellow); margin-bottom: 0;">
-                    <h3 style="font-size: 0.9rem; margin-bottom: 0.25rem;">🇺🇸 US Fill Gap</h3>
-                    <p style="font-size: 0.9rem;">GA page views are balanced (Moba 2,610 vs Primis 2,444), yet Primis fills only 284 impressions vs Moba's 98K. This is a Primis supply-side problem. Moba's US revenue ($45.37 = 67.6% of total) has no Primis equivalent. Ex-US: Primis wins.</p>
+                <div class="insight-card" style="flex: 1; min-width: 250px; border-left-color: var(--accent); margin-bottom: 0;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 0.25rem;">🇺🇸 US Fill Gap — Key Driver</h3>
+                    <p style="font-size: 0.9rem;">Primis fills only 499 US impressions ($0.15) vs Moba's 253K ($125.22). Moba's US revenue = 68% of its total. Ex-US: Primis $97.61 vs Moba ~$59 — Primis wins ex-US by ~$39, but not enough to overcome the US gap. A hybrid approach (Moba US + Primis RoW) saves ~$39/month — not worth the operational complexity.</p>
                 </div>
             </div>
         </div>
@@ -190,28 +190,28 @@
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-title">Total Page Views</div>
-                    <div class="kpi-value">6,463,153</div>
+                    <div class="kpi-value">13,133,591</div>
                     <div class="kpi-sub">Total views across variants</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Mobalytics Views</div>
-                    <div class="kpi-value" style="color: #0891b2;">2,403,348</div>
+                    <div class="kpi-value" style="color: #0891b2;">4,880,618</div>
                     <div class="kpi-sub">37.2% share</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Primis Views</div>
-                    <div class="kpi-value" style="color: #f59e0b;">2,342,763</div>
-                    <div class="kpi-sub">36.2% share</div>
+                    <div class="kpi-value" style="color: #f59e0b;">4,850,989</div>
+                    <div class="kpi-sub">36.9% share</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Traffic Split Δ</div>
-                    <div class="kpi-value" style="color: var(--green); font-size: 2rem;">2.6%</div>
+                    <div class="kpi-value" style="color: var(--green); font-size: 2rem;">0.6%</div>
                     <div class="kpi-sub"><span style="color: var(--green); font-weight: 600;">✓ Valid</span> (Core A/B balanced)</div>
                 </div>
             </div>
 
             <div class="insight-card">
-                <p>CSStats.gg A/B test comparing Mobalytics outstream video vs Primis outstream. Mobalytics variant receives 37.2% of traffic, Primis 36.2%. The remaining 25% is Russia/consent traffic (1.59M views — users without ad consent or using ad-blockers, predominantly RU). The core A/B comparison shows a balanced 50.6%/49.4% split when excluding this noise bucket.</p>
+                <p>CSStats.gg A/B test comparing Mobalytics outstream video vs Primis outstream. Mobalytics variant receives 37.2% of traffic, Primis 36.9%. The remaining ~26% is Russia/consent traffic (3.28M views — users without ad consent or using ad-blockers, predominantly RU) plus a small Publift variant (101K views). The core A/B comparison shows a balanced 50.15%/49.85% split when excluding noise buckets.</p>
             </div>
         </div>
 
@@ -264,33 +264,33 @@
         <div class="section" id="revenue">
             <h2 class="section-title">4. Revenue Analysis — Mobalytics vs Primis</h2>
             <div class="insight-card">
-                <p>Both revenue datasets loaded. Moba covers Mar 30 – Apr 8 (10 days), Primis is aggregated Mar 30 – Apr 10 (12 days). RPV calculations use GA page views per variant. Key caveat: Primis has near-zero US fill, making direct comparison misleading without geo-level normalization.</p>
+                <p>Both revenue datasets cover the full experiment period: <strong>Mar 30 – Apr 23, 2026 (25 days)</strong>. Moba data from GAM daily × country report (1,835 rows). Primis data aggregated by country (58 geos). GA page views also cover Mar 27 – Apr 23. Both Moba (Prebid, 0% commission) and Primis report <strong>net revenue</strong>.</p>
             </div>
             
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-title">Mobalytics Revenue</div>
-                    <div class="kpi-value" style="color: #0891b2;">$67.14</div>
-                    <div class="kpi-sub">10-day total (Mar 30 – Apr 8)</div>
+                    <div class="kpi-value" style="color: #0891b2;">$184.05</div>
+                    <div class="kpi-sub">25-day total (Mar 30 – Apr 23)</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Impressions</div>
-                    <div class="kpi-value" style="color: #0891b2;">215,392</div>
+                    <div class="kpi-value" style="color: #0891b2;">~505K</div>
                     <div class="kpi-sub">Outstream video</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Avg eCPM</div>
-                    <div class="kpi-value" style="color: #0891b2;">$0.31</div>
+                    <div class="kpi-value" style="color: #0891b2;">$0.36</div>
                     <div class="kpi-sub">Revenue per 1K impressions</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-title">RPV (est.)</div>
-                    <div class="kpi-value" style="color: var(--yellow);">$0.028</div>
+                    <div class="kpi-title">RPV</div>
+                    <div class="kpi-value" style="color: var(--green);">$0.038</div>
                     <div class="kpi-sub">Per 1K Mobalytics page views</div>
                 </div>
             </div>
 
-            <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">Revenue by Country — Top 15</h3>
+            <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">Mobalytics Revenue by Country — Top 10</h3>
             <div class="chart-container" style="margin-bottom: 2rem;">
                 <canvas id="geoRevenueChart"></canvas>
             </div>
@@ -311,25 +311,25 @@
 
             <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border);">
 
-            <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Primis Revenue — Aggregated (Mar 30 – Apr 10)</h3>
+            <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Primis Revenue — Aggregated (Mar 30 – Apr 23)</h3>
             <div class="insight-card">
-                <p>Primis data is aggregated (no daily breakdown available). Country codes mapped to full names. 'XX' (98,984 impressions) represents unknown/unmapped traffic.</p>
+                <p>Primis data is aggregated (no daily breakdown available). 58 country codes mapped to full names. 'XX' (227,939 impressions) represents unknown/unmapped traffic. <strong>Primis revenue ($97.76) is reported net.</strong></p>
             </div>
             
             <div class="kpi-grid">
                 <div class="kpi-card">
-                    <div class="kpi-title">Primis Revenue</div>
-                    <div class="kpi-value" style="color: #f59e0b;">$46.05</div>
-                    <div class="kpi-sub">Aggregated total</div>
+                    <div class="kpi-title">Primis Revenue (Net)</div>
+                    <div class="kpi-value" style="color: #f59e0b;">$97.76</div>
+                    <div class="kpi-sub">25-day total (Mar 30 – Apr 23)</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Impressions</div>
-                    <div class="kpi-value">1,169,748</div>
-                    <div class="kpi-sub">Outstream video (5.4x Mobalytics)</div>
+                    <div class="kpi-value">2,660,269</div>
+                    <div class="kpi-sub">Outstream video (5.3x Mobalytics)</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-title">Avg eCPM</div>
-                    <div class="kpi-value">$0.04</div>
+                    <div class="kpi-value" style="color: #f59e0b;">$0.037</div>
                     <div class="kpi-sub">Revenue per 1K impressions</div>
                 </div>
                 <div class="kpi-card">
@@ -339,7 +339,7 @@
                 </div>
             </div>
 
-            <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">Revenue by Country — Top 15</h3>
+            <h3 style="margin-bottom: 1rem; margin-top: 2rem; font-size: 1.1rem;">Primis Revenue by Country — Top 15</h3>
             <div class="chart-container" style="margin-bottom: 2rem;">
                 <canvas id="primisGeoChart"></canvas>
             </div>
@@ -361,8 +361,8 @@
             <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border);">
 
             <h3 style="margin-bottom: 1rem; font-size: 1.25rem;">Head-to-Head: Mobalytics vs Primis</h3>
-            <div class="insight-card">
-                <p>Mobalytics outperforms Primis on the primary metric RPV by +42%. Despite serving 5.4x fewer impressions, Mobalytics generated 45.8% more revenue through dramatically higher eCPM ($0.31 vs $0.04). However, the US anomaly (284 Primis impressions vs 98K Mobalytics) means the comparison is skewed — Mobalytics' US revenue ($45.37, 67.6% of total) has no Primis equivalent.</p>
+            <div class="insight-card" style="border-left-color: var(--green);">
+                <p>Mobalytics outperforms Primis on the primary metric <strong>RPV by +90%</strong>. Despite serving 5.3x fewer impressions, Moba generated 88% more revenue through dramatically higher eCPM ($0.36 vs $0.037). The US fill gap is the key driver — Moba's US revenue ($125.22, 68% of total) has no Primis equivalent (Primis: $0.15 US). Both revenues are reported net. <strong>Verdict: Mobalytics wins clearly.</strong></p>
             </div>
             
             <div class="table-wrapper">
@@ -378,109 +378,116 @@
                     <tbody>
                         <tr>
                             <td>Total Revenue</td>
-                            <td style="color: #0891b2;">$67.14</td>
-                            <td style="color: #f59e0b;">$46.05</td>
-                            <td class="highlight">Moba +45.8%</td>
+                            <td style="color: #0891b2; font-weight: 600;">$184.05</td>
+                            <td style="color: #f59e0b;">$97.76</td>
+                            <td class="highlight">Moba +88%</td>
                         </tr>
                         <tr>
                             <td>Impressions</td>
-                            <td class="number" style="text-align: left;">215,392</td>
-                            <td class="number" style="text-align: left;">1,169,748</td>
-                            <td class="highlight">Primis 5.4x more</td>
+                            <td class="number" style="text-align: left;">~505,000</td>
+                            <td class="number" style="text-align: left;">2,660,269</td>
+                            <td class="highlight">Primis 5.3x more</td>
                         </tr>
                         <tr>
                             <td>eCPM</td>
-                            <td style="color: #0891b2;">$0.31</td>
-                            <td style="color: #f59e0b;">$0.04</td>
-                            <td class="highlight">Moba 7.9x higher</td>
+                            <td style="color: #0891b2; font-weight: 600;">$0.36</td>
+                            <td style="color: #f59e0b;">$0.037</td>
+                            <td class="highlight">Moba 9.7x higher</td>
                         </tr>
                         <tr>
                             <td>Page Views (GA)</td>
-                            <td class="number" style="text-align: left;">2,403,348</td>
-                            <td class="number" style="text-align: left;">2,342,763</td>
-                            <td class="highlight">~balanced</td>
+                            <td class="number" style="text-align: left;">4,880,618</td>
+                            <td class="number" style="text-align: left;">4,850,989</td>
+                            <td class="highlight">~balanced (50.15/49.85)</td>
                         </tr>
                         <tr>
-                            <td>US Page Views (GA)</td>
-                            <td class="number" style="text-align: left;">2,610</td>
-                            <td class="number" style="text-align: left;">2,444</td>
-                            <td class="highlight">~balanced (51.6/48.4)</td>
+                            <td>US Impressions (Ad)</td>
+                            <td class="number" style="text-align: left;">253,371</td>
+                            <td class="number" style="text-align: left;">499</td>
+                            <td class="highlight" style="color: var(--red);">Primis near-zero US fill</td>
                         </tr>
-                        <tr>
+                        <tr style="font-weight: 600; background: #d1fae5;">
                             <td>RPV (per 1K views)</td>
-                            <td style="color: #0891b2;">$0.028</td>
+                            <td style="color: #0891b2;">$0.038</td>
                             <td style="color: #f59e0b;">$0.020</td>
-                            <td class="highlight">Moba +42.1%</td>
+                            <td class="highlight">Moba +90%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="insight-card" style="border-left-color: var(--yellow);">
-                <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Anomalies &amp; Caveats</h3>
+            <div class="insight-card" style="border-left-color: var(--accent);">
+                <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Key Observations</h3>
                 <ul style="margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem;">
-                    <li style="margin-bottom: 0.5rem;">🇺🇸 <strong>US Gap:</strong> GA page views are balanced (Moba 2,610 vs Primis 2,444), yet Primis serves virtually nothing (284 imp vs 98K). This is a Primis supply-side fill issue, not a traffic split problem. Mobalytics' US revenue ($45.37) inflates the comparison. Excluding US: Moba $21.77 vs Primis $45.97 — Primis wins ex-US.</li>
-                    <li style="margin-bottom: 0.5rem;">📅 <strong>Date mismatch:</strong> Moba data is Mar 30 – Apr 8 (10 days). Primis is aggregated Mar 30 – Apr 10 (12 days). Not perfectly aligned.</li>
-                    <li>🔢 <strong>Impression volume:</strong> Primis fills 5.4x more impressions at much lower eCPM. Volume strategy vs premium strategy.</li>
+                    <li style="margin-bottom: 0.5rem;">🇺🇸 <strong>US Fill Gap (key driver):</strong> Moba 253,371 US impressions ($125.22) vs Primis 499 ($0.15). This is a Primis supply-side fill issue, not a traffic split problem — GA page views are balanced. US revenue = 68% of Moba total.</li>
+                    <li style="margin-bottom: 0.5rem;">🌍 <strong>Ex-US:</strong> Primis $97.61 vs Moba ~$59. Primis wins ex-US by ~$39, but the US gap ($125 vs $0) overwhelms this. A hybrid (Moba US + Primis RoW) saves ~$39/month — not worth the operational complexity.</li>
+                    <li style="margin-bottom: 0.5rem;">💰 <strong>Both net:</strong> Both Primis and Moba revenues are reported net. No additional fees to deduct — the comparison is like-for-like.</li>
+                    <li>🔢 <strong>Impression strategy:</strong> Primis fills 5.3x more impressions at much lower eCPM ($0.037 vs $0.36). Volume can't compensate for the eCPM/fill gap.</li>
                 </ul>
             </div>
         </div>
 
-        <div class="section" id="decisions" style="border-color: var(--accent);">
+        <div class="section" id="decisions" style="border-color: var(--green);">
             <h2 class="section-title">5. Experiment Decision Framework</h2>
             <div class="decision-grid">
                 <div>
-                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
-                    <div class="insight-card" style="border-left-color: var(--border);">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions — Answered</h3>
+                    <div class="insight-card" style="border-left-color: var(--green);">
                         <p><strong>Is the traffic split valid?</strong></p>
-                        <p>Yes. The Mobalytics vs Primis comparison is balanced at 50.6% vs 49.4% (Δ 2.6%) when isolating the two variants.</p>
+                        <p><span class="status-indicator status-green"></span> Yes. Balanced at 50.15% vs 49.85% (Δ 0.6%) when isolating the two variants. 25 days of data.</p>
                     </div>
-                    <div class="insight-card" style="border-left-color: var(--border);">
+                    <div class="insight-card" style="border-left-color: var(--green);">
                         <p><strong>Which variant delivers higher RPV?</strong></p>
-                        <p>Mobalytics RPV $0.028 vs Primis RPV $0.020 — Mobalytics leads by 42%. BUT this is driven by US where Primis has no fill. Ex-US, Primis wins on total revenue.</p>
+                        <p><span class="status-indicator status-green"></span> Mobalytics: $0.038 RPV vs Primis $0.020 RPV — <strong>Moba wins by +90%</strong>. Driven by US fill but Moba also wins on overall net revenue ($184 vs $98).</p>
                     </div>
-                    <div class="insight-card" style="border-left-color: var(--border);">
+                    <div class="insight-card" style="border-left-color: var(--accent);">
                         <p><strong>Are there geo-specific performance variations?</strong></p>
-                        <p>Yes. Mobalytics dominates in US ($0.46 eCPM, 67.6% of revenue). Primis leads in Germany ($13.19 vs $4.22), Norway ($2.11 vs n/a), and has much higher fill globally.</p>
+                        <p>Yes. Moba dominates US ($125 vs $0.15). Primis leads ex-US by ~$19 net. Hybrid approach not worth the complexity for ~$19/month delta.</p>
                     </div>
 
-                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
-                    <ol style="margin-left: 1rem;">
-                        <li class="list-item"><strong style="color: var(--green);">Done:</strong> Import Mobalytics revenue CSV</li>
-                        <li class="list-item"><strong style="color: var(--green);">Done:</strong> Import Primis revenue CSV</li>
-                        <li class="list-item">Investigate why Primis has near-zero US fill</li>
-                        <li class="list-item">Request US-specific Primis config from Primis team</li>
-                        <li class="list-item">Consider hybrid: Mobalytics for US, Primis for RoW</li>
-                    </ol>
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Recommendation</h3>
+                    <div class="insight-card" style="border-left-color: var(--green); background: #f0fdf4;">
+                        <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Ship Mobalytics on CSStats — Next: test on FACEIT.com</h3>
+                        <ol style="margin-left: 1rem;">
+                            <li class="list-item"><strong style="color: var(--green);">Done:</strong> Import &amp; analyze Mobalytics revenue CSV (1,835 rows)</li>
+                            <li class="list-item"><strong style="color: var(--green);">Done:</strong> Import &amp; analyze Primis revenue CSV (58 geos)</li>
+                            <li class="list-item"><strong style="color: var(--green);">Done:</strong> Confirm both revenue streams are net (no additional fees)</li>
+                            <li class="list-item"><strong style="color: var(--green);">Done:</strong> Compute head-to-head RPV → Moba wins +90%</li>
+                            <li class="list-item"><strong>Next:</strong> Communicate result to EFG/Max and sunset Primis outstream on CSStats</li>
+                            <li class="list-item"><strong>Next:</strong> Set up Mobalytics vs Primis A/B test on FACEIT.com outstream inventory</li>
+                            <li class="list-item"><strong>Next:</strong> Monitor Moba RPV on CSStats post-rollout (100% traffic) for 2 weeks</li>
+                        </ol>
+                    </div>
                 </div>
                 <div>
                     <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
-                    <div class="insight-card">
-                        <p><span class="status-indicator status-green"></span> <strong>GREEN (Winner)</strong></p>
-                        <p>Higher RPV (+5% uplift vs control)<br>Equal or better user experience (fill/latency)</p>
+                    <div class="insight-card" style="background: #f0fdf4;">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN (Winner) ✓ MET</strong></p>
+                        <p>Higher RPV (+90% uplift vs Primis) — well above +5% threshold</p>
                     </div>
                     <div class="insight-card">
                         <p><span class="status-indicator status-yellow"></span> <strong>YELLOW (Inconclusive)</strong></p>
-                        <p>RPV parity within ±5% margin<br>Needs further segmentation</p>
+                        <p>RPV parity within ±5% margin — <em>Not applicable</em></p>
                     </div>
                     <div class="insight-card">
                         <p><span class="status-indicator status-red"></span> <strong>RED (Loser)</strong></p>
-                        <p>Lower RPV (&lt;-5% vs control)<br>Noticeable UX degradation</p>
+                        <p>Lower RPV (&lt;-5% vs control) — <em>Not applicable</em></p>
                     </div>
 
                     <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
-                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic Validity (Confirmed valid split)</p>
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Moba Revenue (Received ✓)</p>
-                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Primis Revenue (Received ✓)</p>
-                        <p><span class="status-indicator status-yellow"></span> Overall Decision (YELLOW — Inconclusive (US fill gap))</p>
+                    <div style="background-color: #f0fdf4; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--green);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Traffic Validity (Confirmed valid split — Δ 0.6%)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> GA Page Views (Updated Apr 23 ✓)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Revenue Data (Full period Mar 30 – Apr 23 ✓)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Both Revenues Net (Confirmed — no fees to deduct ✓)</p>
+                        <p><span class="status-indicator status-green"></span> <strong>Overall Decision: GREEN — Mobalytics Wins (+90% RPV)</strong></p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            Data source: Google Analytics · Mobalytics Revenue CSV · Primis Revenue CSV · CSStats.gg Prebid Outstream Experiment · Data: Mar 27 – Apr 10, 2026 | Internal PM Tool
+            Data source: Google Analytics · Mobalytics Revenue CSV · Primis Revenue CSV · CSStats.gg Prebid Outstream Experiment · GA Data: Mar 27 – Apr 23, 2026 · Revenue: Mar 30 – Apr 23, 2026 (full period) · Both Primis and Moba revenues are net | Internal PM Tool
         </div>
     </div>
 
@@ -501,11 +508,11 @@
             new Chart(variantBarCtx, {
                 type: 'bar',
                 data: {
-                    labels: ['Mobalytics', 'Primis', 'Russia / No Consent'],
+                    labels: ['Mobalytics', 'Primis', 'Russia / No Consent', 'Publift'],
                     datasets: [{
                         label: 'Total Views',
-                        data: [2403348, 2342763, 1589026],
-                        backgroundColor: ['#0891b2', '#f59e0b', '#94a3b8'],
+                        data: [4880618, 4850989, 3301208, 100776],
+                        backgroundColor: ['#0891b2', '#f59e0b', '#94a3b8', '#a78bfa'],
                         borderRadius: 4
                     }]
                 },
@@ -531,7 +538,7 @@
                 data: {
                     labels: ['Mobalytics', 'Primis'],
                     datasets: [{
-                        data: [2403348, 2342763],
+                        data: [4880618, 4850989],
                         backgroundColor: ['#0891b2', '#f59e0b'],
                         borderWidth: 1,
                         borderColor: '#ffffff',
@@ -551,31 +558,31 @@
 
             // Extracted data for top 25 countries (excluding Russia and not set)
             const countryData = [
-                { c: "Poland", prebid: 279374, primis: 279954 },
-                { c: "Brazil", prebid: 216069, primis: 205781 },
-                { c: "Germany", prebid: 170255, primis: 172590 },
-                { c: "Ukraine", prebid: 159005, primis: 145213 },
-                { c: "Türkiye", prebid: 137298, primis: 126794 },
-                { c: "France", prebid: 80292, primis: 73482 },
-                { c: "Argentina", prebid: 76138, primis: 79633 },
-                { c: "United Kingdom", prebid: 66600, primis: 62309 },
-                { c: "Canada", prebid: 57859, primis: 55689 },
-                { c: "Taiwan", prebid: 52801, primis: 48141 },
-                { c: "Romania", prebid: 52658, primis: 51615 },
-                { c: "Spain", prebid: 50219, primis: 51067 },
-                { c: "Portugal", prebid: 50155, primis: 44415 },
-                { c: "Finland", prebid: 50096, primis: 49769 },
-                { c: "South Korea", prebid: 48679, prebid_orig: 48679, primis: 46135 },
-                { c: "Belarus", prebid: 48726, primis: 46081 },
-                { c: "Czechia", prebid: 47929, primis: 46730 },
-                { c: "Sweden", prebid: 41306, primis: 43294 },
-                { c: "Kazakhstan", prebid: 34618, primis: 35070 },
-                { c: "Australia", prebid: 34699, primis: 40507 },
-                { c: "Vietnam", prebid: 34950, primis: 34490 },
-                { c: "Hong Kong", prebid: 32968, primis: 31329 },
-                { c: "Denmark", prebid: 30714, primis: 33387 },
-                { c: "Lithuania", prebid: 25886, primis: 24219 },
-                { c: "Hungary", prebid: 24531, primis: 21012 }
+                { c: "Poland", prebid: 554289, primis: 564721 },
+                { c: "Brazil", prebid: 435784, primis: 431029 },
+                { c: "Germany", prebid: 341335, primis: 355752 },
+                { c: "Ukraine", prebid: 320949, primis: 298931 },
+                { c: "Türkiye", prebid: 280647, primis: 265565 },
+                { c: "France", prebid: 182669, primis: 153953 },
+                { c: "Argentina", prebid: 158384, primis: 169487 },
+                { c: "United Kingdom", prebid: 132296, primis: 127339 },
+                { c: "Canada", prebid: 116072, primis: 116805 },
+                { c: "Spain", prebid: 105619, primis: 106731 },
+                { c: "Taiwan", prebid: 107362, primis: 100334 },
+                { c: "Romania", prebid: 102596, primis: 102954 },
+                { c: "Finland", prebid: 99292, primis: 100408 },
+                { c: "South Korea", prebid: 97195, primis: 98765 },
+                { c: "Belarus", prebid: 94573, primis: 97629 },
+                { c: "Portugal", prebid: 98884, primis: 89747 },
+                { c: "Czechia", prebid: 96092, primis: 93449 },
+                { c: "Sweden", prebid: 86990, primis: 91735 },
+                { c: "Australia", prebid: 72803, primis: 84366 },
+                { c: "Kazakhstan", prebid: 72862, primis: 72844 },
+                { c: "Vietnam", prebid: 71379, primis: 71086 },
+                { c: "Denmark", prebid: 65700, primis: 69453 },
+                { c: "Hong Kong", prebid: 68137, primis: 65043 },
+                { c: "Lithuania", prebid: 51554, primis: 48484 },
+                { c: "Hungary", prebid: 46225, primis: 42107 }
             ];
 
             // Process and format table
@@ -634,45 +641,42 @@
             });
 
             
-            // Moba Geo Data
+            // Moba Geo Data — Full period Mar 30 – Apr 23 (top 10 by revenue, aggregated from 1835-row daily CSV)
             const mobaGeoData = [
-                { country: 'United States', impressions: 98296, revenue: 45.37, ecpm: 0.46 },
-                { country: 'Germany', impressions: 22397, revenue: 4.22, ecpm: 0.19 },
-                { country: 'United Kingdom', impressions: 7754, revenue: 2.70, ecpm: 0.35 },
-                { country: 'Canada', impressions: 8992, revenue: 1.81, ecpm: 0.20 },
-                { country: 'Poland', impressions: 8164, revenue: 1.52, ecpm: 0.19 },
-                { country: 'South Korea', impressions: 3961, revenue: 1.03, ecpm: 0.26 },
-                { country: 'Brazil', impressions: 10302, revenue: 0.88, ecpm: 0.09 },
-                { country: 'Argentina', impressions: 5285, revenue: 0.87, ecpm: 0.16 },
-                { country: 'Australia', impressions: 3746, revenue: 0.84, ecpm: 0.22 },
-                { country: 'Romania', impressions: 1659, revenue: 0.79, ecpm: 0.48 },
-                { country: 'Sweden', impressions: 5259, revenue: 0.64, ecpm: 0.12 },
-                { country: 'France', impressions: 2841, revenue: 0.58, ecpm: 0.20 },
-                { country: 'Uzbekistan', impressions: 2160, revenue: 0.47, ecpm: 0.22 },
-                { country: 'Netherlands', impressions: 2084, revenue: 0.46, ecpm: 0.22 },
-                { country: 'Denmark', impressions: 1738, revenue: 0.40, ecpm: 0.23 }
+                { country: 'United States', impressions: 253371, revenue: 125.22, ecpm: 0.49 },
+                { country: 'Germany', impressions: 50700, revenue: 9.55, ecpm: 0.19 },
+                { country: 'United Kingdom', impressions: 23500, revenue: 8.21, ecpm: 0.35 },
+                { country: 'Poland', impressions: 36100, revenue: 6.72, ecpm: 0.19 },
+                { country: 'Canada', impressions: 24900, revenue: 5.02, ecpm: 0.20 },
+                { country: 'Sweden', impressions: 27500, revenue: 3.34, ecpm: 0.12 },
+                { country: 'Argentina', impressions: 18300, revenue: 3.01, ecpm: 0.16 },
+                { country: 'Brazil', impressions: 29900, revenue: 2.55, ecpm: 0.09 },
+                { country: 'Australia', impressions: 9500, revenue: 2.14, ecpm: 0.23 },
+                { country: 'South Korea', impressions: 7800, revenue: 2.04, ecpm: 0.26 }
             ];
 
+            // Primis Geo Data — Full period Mar 30 – Apr 23 (top 15 by revenue, from aggregated CSV)
+            // NOTE: Revenue shown is NET (as reported by Primis)
             const primisGeoData = [
-                { country: 'Germany', impressions: 106308, revenue: 13.19, ecpm: 0.12 },
-                { country: 'Canada', impressions: 41146, revenue: 4.67, ecpm: 0.11 },
-                { country: 'United Kingdom', impressions: 36836, revenue: 3.09, ecpm: 0.08 },
-                { country: 'Australia', impressions: 29051, revenue: 2.99, ecpm: 0.10 },
-                { country: 'Norway', impressions: 13690, revenue: 2.11, ecpm: 0.15 },
-                { country: 'Portugal', impressions: 28209, revenue: 2.10, ecpm: 0.07 },
-                { country: 'Sweden', impressions: 26800, revenue: 1.90, ecpm: 0.07 },
-                { country: 'Brazil', impressions: 130223, revenue: 1.89, ecpm: 0.01 },
-                { country: 'Poland', impressions: 166537, revenue: 1.72, ecpm: 0.01 },
-                { country: 'France', impressions: 42445, revenue: 1.54, ecpm: 0.04 },
-                { country: 'Denmark', impressions: 20929, revenue: 1.25, ecpm: 0.06 },
-                { country: 'Switzerland', impressions: 7448, revenue: 1.12, ecpm: 0.15 },
-                { country: 'Hong Kong', impressions: 19531, revenue: 0.95, ecpm: 0.05 },
-                { country: 'Austria', impressions: 9139, revenue: 0.88, ecpm: 0.10 },
-                { country: 'Czechia', impressions: 29222, revenue: 0.74, ecpm: 0.03 }
+                { country: 'Germany', impressions: 241587, revenue: 25.06, ecpm: 0.104 },
+                { country: 'Canada', impressions: 93386, revenue: 10.14, ecpm: 0.109 },
+                { country: 'Poland', impressions: 371026, revenue: 6.54, ecpm: 0.018 },
+                { country: 'Australia', impressions: 64450, revenue: 6.51, ecpm: 0.101 },
+                { country: 'United Kingdom', impressions: 84191, revenue: 6.30, ecpm: 0.075 },
+                { country: 'Sweden', impressions: 63468, revenue: 5.55, ecpm: 0.087 },
+                { country: 'Portugal', impressions: 62477, revenue: 4.09, ecpm: 0.065 },
+                { country: 'Norway', impressions: 33286, revenue: 3.81, ecpm: 0.114 },
+                { country: 'France', impressions: 99800, revenue: 3.67, ecpm: 0.037 },
+                { country: 'Hong Kong', impressions: 43790, revenue: 3.64, ecpm: 0.083 },
+                { country: 'Brazil', impressions: 299162, revenue: 2.98, ecpm: 0.010 },
+                { country: 'Unknown (XX)', impressions: 227939, revenue: 2.11, ecpm: 0.009 },
+                { country: 'Austria', impressions: 22325, revenue: 1.92, ecpm: 0.086 },
+                { country: 'Denmark', impressions: 47551, revenue: 1.81, ecpm: 0.038 },
+                { country: 'Switzerland', impressions: 16102, revenue: 1.57, ecpm: 0.098 }
             ];
 
             // Populate Geo Table
-            const totalRevenue = 67.14;
+            const totalRevenue = 184.05;
             const geoTbody = document.getElementById('geoRevenueTableBody');
             if (geoTbody) {
                 mobaGeoData.forEach(function(row) {
@@ -720,7 +724,7 @@
             }
 
             // Populate Primis Geo Table
-            const primisTotalRevenue = 46.05;
+            const primisTotalRevenue = 97.76;
             const primisGeoTbody = document.getElementById('primisGeoTableBody');
             if (primisGeoTbody) {
                 primisGeoData.forEach(function(row) {
