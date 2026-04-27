@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Notification Effectiveness — Analysis Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Surface */
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+
+            /* Typography */
+            --text: #1A1A2E;
+            --text-muted: #6B7280;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Brand accent — Blue (Brand Integrations) */
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+
+            /* Semantic — NEVER change these; color = meaning */
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+
+            /* Chart palette */
+            --chart-1: var(--accent);
+            --chart-2: #ef4444;
+            --chart-3: var(--green);
+            --chart-4: var(--yellow);
+            --chart-5: var(--blue);
+
+            /* Radii */
+            --radius-lg: 20px;
+            --radius-md: 14px;
+
+            /* Shadows */
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+        .chart-container.tall { height: 450px; }
+
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        th.sortable { cursor: pointer; user-select: none; position: relative; padding-right: 1.5rem; }
+        th.sortable:hover { color: var(--text); }
+        th.sortable::after { content: '\u21C5'; position: absolute; right: 0.4rem; top: 50%; transform: translateY(-50%); font-size: 0.7rem; opacity: 0.4; }
+        th.sortable.sort-asc::after { content: '\u2191'; opacity: 1; color: var(--accent); }
+        th.sortable.sort-desc::after { content: '\u2193'; opacity: 1; color: var(--accent); }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; }
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+
+        .experiment-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; }
+        .experiment-box.control { border-top: 4px solid var(--text-muted); }
+        .experiment-box.variant { border-top: 4px solid var(--accent); }
+        .experiment-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .experiment-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .experiment-delta { font-size: 1rem; font-weight: 600; }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        h3 { font-weight: 600; color: var(--text); }
+
+        @media (max-width: 900px) {
+            .kpi-grid, .kpi-grid-3, .grid-2, .grid-3, .decision-grid { grid-template-columns: 1fr; }
+            .funnel-wrapper { flex-direction: column; }
+            .funnel-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+      <span style="color:#CBD5E1;">&middot;</span>
+      <span style="color:#6B7280;">Activity Notification Effectiveness Dashboard</span>
+    </nav>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Analysis &middot; Brand Integrations</span>
+            <h1>Activity Notification Effectiveness</h1>
+            <h2>Mission Campaign Notifications &middot; Completion-Focused Analysis &middot; Updated 27 Apr 2026</h2>
+            <p>Moritz Natalini &middot; Ads & Partnerships &middot; EFG</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
+                <strong>Primary metric:</strong> Challenge completion rate by notification cohort (Clicked / Impression / No Notification)
+            </p>
+        </header>
+
+        <!-- VERDICT -->
+        <div class="section" style="border-left: 4px solid var(--yellow); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Verdict</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Notification clicks are THE conversion engine for partner challenges</strong> &mdash; Deposit +11.39pp, Trade +10.24pp, Account Link +7.53pp completion uplift when users click vs no notification</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>EE notifications drive 2.6&times; higher full completion than Traditional</strong> &mdash; 7.91% vs 3.01% full completion rate when clicked. EE click uplift is +4.70pp vs Traditional's +1.21pp</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-yellow"></span> <strong>Notification impact is 10&times; stronger for sponsored vs Premium missions</strong> &mdash; Premium users complete regardless (93-99% baseline); sponsored challenges are click-dependent (Trade 1.22% &rarr; 11.95% with click = 9.8&times;)</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-red"></span> <strong>Win Match and Bet notifications are counterproductive</strong> &mdash; negative uplift across ALL partners (users who win/bet do so regardless)</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-yellow"></span> <strong>Per-partner patterns diverge significantly</strong> &mdash; Winline Play Match +17.81pp vs WhiteMarket +4.97pp &mdash; same challenge type, different impact</p>
+            </div>
+        </div>
+
+        <!-- 1. ANALYSIS DESIGN -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Analysis Design</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Background</h3>
+                <div class="insight-card" style="border-left-color: var(--accent);">
+                    <p><strong>Problem:</strong> Activity notifications are the primary touchpoint driving users back to missions after auto-join, task completion, and reward availability. We had no visibility into which notification types drive actual challenge completions vs just generating clicks.</p>
+                    <p><strong>Solution:</strong> Joined notification interaction data with mission completion data to measure completion rates across three cohorts: Clicked, Impression Only, and No Notification. Added Premium mission benchmarks and EE vs Traditional notification comparison.</p>
+                    <p><strong>Why:</strong> Clicks mean nothing if they don't convert to completions. This analysis reframes notification effectiveness around the metric that matters for partner value: challenge completion.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Format Specification</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Value</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Type</td><td>Analysis</td></tr>
+                                <tr><td>Scope</td><td>All activity notifications (entity_type=CAMPAIGN)</td></tr>
+                                <tr><td>Period</td><td>Last 30 days (completion) / 90 days (trend)</td></tr>
+                                <tr><td>Tables</td><td>user_notification_interaction_v2 + CampaignService.UserMissions + Campaigns</td></tr>
+                                <tr><td>Interactions</td><td>impression, click, claim</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Metrics Hierarchy</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Priority</th><th>Metric</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong style="color: var(--accent);">Primary</strong></td><td>Challenge Completion Rate (any task value &ge; target)</td></tr>
+                                <tr><td><strong style="color: var(--accent);">Primary</strong></td><td>Full Completion Rate (all tasks complete)</td></tr>
+                                <tr><td><strong>Secondary</strong></td><td>User CTR (clicked users / impressed users)</td></tr>
+                                <tr><td><strong>Secondary</strong></td><td>Avg Tasks Completed (task depth per user)</td></tr>
+                                <tr><td>Guardrail</td><td>Notification volume stability</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Three Notification Cohorts</h3>
+                        <p><strong>Clicked</strong> &mdash; received notification and clicked it</p>
+                        <p><strong>Impression Only</strong> &mdash; received notification but never clicked</p>
+                        <p><strong>No Notification</strong> &mdash; enrolled in campaign but received no notification for it</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. HERO: CHALLENGE COMPLETION OVERVIEW -->
+        <div class="section" id="completion-overview">
+            <h2 class="section-title">2. Challenge Completion Overview</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">Clicker Completion</div>
+                    <div class="kpi-value" style="color: var(--green);">84.1%</div>
+                    <div class="kpi-sub">642K users completed &ge;1 task after clicking</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Impression-Only</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">78.2%</div>
+                    <div class="kpi-sub">3.51M users &middot; saw notification, didn't click</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Click Uplift</div>
+                    <div class="kpi-value">+5.9pp</div>
+                    <div class="kpi-sub">any-task completion difference</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Tasks Multiplier</div>
+                    <div class="kpi-value">2.2&times;</div>
+                    <div class="kpi-sub">avg tasks: 2.99 (clicked) vs 1.34 (impression)</div>
+                </div>
+            </div>
+
+            <div class="insight-card" style="padding: 2rem; border-left-color: var(--accent);">
+                <h3 style="margin-bottom: 1rem;">Completion Funnel (30-day, all campaigns)</h3>
+                <div class="funnel-wrapper">
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Notified Users</div>
+                        <div class="funnel-value" style="font-size: 1.3rem;">669K</div>
+                        <div class="funnel-sub">unique users/week avg</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1; border-top: 3px solid var(--green);">
+                        <div class="funnel-title">Clicked</div>
+                        <div class="funnel-value" style="font-size: 1.3rem;">152K</div>
+                        <div class="funnel-sub">22.7% user CTR</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1; border-top: 3px solid var(--accent);">
+                        <div class="funnel-title">Completed &ge;1 Task</div>
+                        <div class="funnel-value" style="font-size: 1.3rem;">657K</div>
+                        <div class="funnel-sub">98.2% of notified users</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1; border-top: 3px solid var(--green);">
+                        <div class="funnel-title">Task Completions</div>
+                        <div class="funnel-value" style="font-size: 1.3rem;">2.73M</div>
+                        <div class="funnel-sub">on notified campaigns</div>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem; text-align: center;">
+                    98% any-completion is inflated by trivial challenges (Play Match). The click doesn't gate <em>whether</em> users complete &mdash; it drives <em>how many</em> tasks they finish (2.2&times; multiplier) and which <em>types</em> they complete (see Section 3).
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. SPONSORED: CHALLENGE TYPE EFFECTIVENESS (promoted from old section 8) -->
+        <div class="section" id="challenge-type">
+            <h2 class="section-title">3. Sponsored: Challenge Type &times; Notification Effectiveness</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Strongest Uplift</div>
+                    <div class="kpi-value" style="color: var(--green);">+11.39pp</div>
+                    <div class="kpi-sub">Deposit challenges (Clicked vs No Notif)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Highest Click CR</div>
+                    <div class="kpi-value" style="color: var(--accent);">97.51%</div>
+                    <div class="kpi-sub">Play Match (trivial to complete)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Worst Performer</div>
+                    <div class="kpi-value" style="color: var(--red);">&minus;3.47pp</div>
+                    <div class="kpi-sub">Bet challenges (counterproductive)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Click Multiplier</div>
+                    <div class="kpi-value">9.8&times;</div>
+                    <div class="kpi-sub">Trade: 11.95% clicked vs 1.22% no-notif</div>
+                </div>
+            </div>
+
+            <div class="chart-container tall" style="margin-bottom: 2rem;">
+                <canvas id="challengeTypeChart"></canvas>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Challenge</th>
+                                    <th class="number">Clicked CR</th>
+                                    <th class="number">Impression CR</th>
+                                    <th class="number">No Notif CR</th>
+                                    <th class="number">Click Uplift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Deposit</td><td class="number">16.52%</td><td class="number">5.13%</td><td class="number">3.65%</td><td class="number highlight" style="color: var(--green);">+11.39pp</td></tr>
+                                <tr><td>Trade</td><td class="number">11.95%</td><td class="number">1.71%</td><td class="number">1.22%</td><td class="number highlight" style="color: var(--green);">+10.24pp</td></tr>
+                                <tr><td>Win Match</td><td class="number">70.70%</td><td class="number">62.22%</td><td class="number">67.96%</td><td class="number highlight" style="color: var(--green);">+8.48pp</td></tr>
+                                <tr><td>Account Link</td><td class="number">8.92%</td><td class="number">1.39%</td><td class="number">4.13%</td><td class="number highlight" style="color: var(--green);">+7.53pp</td></tr>
+                                <tr><td>Play Match</td><td class="number">97.51%</td><td class="number">91.45%</td><td class="number">84.20%</td><td class="number highlight" style="color: var(--green);">+6.06pp</td></tr>
+                                <tr><td>Buy</td><td class="number">2.85%</td><td class="number">0.68%</td><td class="number">0.17%</td><td class="number highlight" style="color: var(--green);">+2.17pp</td></tr>
+                                <tr><td>Bet</td><td class="number">63.67%</td><td class="number">67.14%</td><td class="number">68.99%</td><td class="number highlight" style="color: var(--red);">&minus;3.47pp</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="insight-card" style="border-left-color: var(--green);">
+                        <h3><span class="status-indicator status-green"></span> Deep-link click is the conversion mechanism</h3>
+                        <p>For Trade, Deposit, and AL, the click itself drives completion. Impression-only barely exceeds no-notification rates. This means CTR optimization directly multiplies partner conversions.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--red);">
+                        <h3><span class="status-indicator status-red"></span> Suppress Win Match and Bet notifications</h3>
+                        <p>Consistent negative uplift means these notifications target users who'd convert anyway. Sending them wastes attention budget and increases fatigue.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3><span class="status-indicator status-yellow"></span> Buy and AL rates are low even with clicks</h3>
+                        <p>2.85% and 8.92% respectively. Notifications help but the underlying challenge difficulty caps effectiveness. Product-side improvements needed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. BENCHMARK: SPONSORED vs PREMIUM COMPLETION -->
+        <div class="section" id="benchmark">
+            <h2 class="section-title">4. Benchmark: Sponsored vs Premium Mission Completion</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                How do sponsored mission completion rates compare to internal (Premium) missions? Premium missions serve as a benchmark for notification effectiveness on easier, gaming-native tasks.
+            </p>
+
+            <div class="chart-container tall" style="margin-bottom: 2rem;">
+                <canvas id="benchmarkChart"></canvas>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Campaign</th>
+                                    <th class="number">Clicked CR</th>
+                                    <th class="number">Impression CR</th>
+                                    <th class="number">No Notif CR</th>
+                                    <th class="number">Click Uplift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: var(--accent-light);">
+                                    <td><strong>Premium April Showers</strong></td>
+                                    <td class="number">98.79%</td>
+                                    <td class="number">89.06%</td>
+                                    <td class="number">36.69%</td>
+                                    <td class="number highlight" style="color: var(--green);">+62.10pp</td>
+                                </tr>
+                                <tr style="background-color: var(--accent-light);">
+                                    <td><strong>Beta April Showers</strong></td>
+                                    <td class="number">99.86%</td>
+                                    <td class="number">98.68%</td>
+                                    <td class="number">92.70%</td>
+                                    <td class="number highlight">+7.16pp</td>
+                                </tr>
+                                <tr style="background-color: var(--accent-light);">
+                                    <td><strong>Equinox Equilibrium</strong></td>
+                                    <td class="number">99.16%</td>
+                                    <td class="number">96.99%</td>
+                                    <td class="number">93.33%</td>
+                                    <td class="number highlight">+5.83pp</td>
+                                </tr>
+                                <tr>
+                                    <td>Sponsored Aggregate</td>
+                                    <td class="number">84.1%</td>
+                                    <td class="number">78.2%</td>
+                                    <td class="number">&mdash;</td>
+                                    <td class="number">+5.9pp</td>
+                                </tr>
+                                <tr><td colspan="5" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">Blue rows = Premium (internal) missions &middot; 30-day data &middot; CR = any task value &ge; target</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem; margin-top: 1.5rem; font-size: 1.1rem;">Premium "No Notification" Benchmarks</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Premium Campaign</th>
+                                    <th class="number">No Notif CR</th>
+                                    <th class="number">Users</th>
+                                    <th class="number">Avg Tasks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Cold Front Clash</td><td class="number">90.39%</td><td class="number">74,565</td><td class="number">3.20</td></tr>
+                                <tr><td>Lunar Inheritance</td><td class="number">90.51%</td><td class="number">87,333</td><td class="number">3.18</td></tr>
+                                <tr><td>Spring Inferno</td><td class="number">90.91%</td><td class="number">89,055</td><td class="number">3.36</td></tr>
+                                <tr><td>Resolution Rampage</td><td class="number">91.26%</td><td class="number">84,079</td><td class="number">3.36</td></tr>
+                                <tr><td>Blood Moon Boom</td><td class="number">97.05%</td><td class="number">76,291</td><td class="number">7.46</td></tr>
+                                <tr><td colspan="4" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">Top 5 by user count &middot; No notification cohort only &middot; Baseline completion without notification influence</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="insight-card" style="border-left-color: var(--green);">
+                        <h3><span class="status-indicator status-green"></span> Notifications matter MORE for sponsored challenges</h3>
+                        <p>Premium missions show 90-97% completion <em>without</em> notifications &mdash; users complete gaming tasks naturally. Sponsored challenges (Deposit 3.65%, Trade 1.22%, Buy 0.17%) have near-zero baseline completion. The notification click is the <strong>only path</strong> to meaningful partner conversion rates.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3><span class="status-indicator status-green"></span> Premium April Showers: +62pp click uplift</h3>
+                        <p>This is by far the largest click uplift in any campaign. The 36.69% no-notification baseline vs 98.79% clicked suggests April Showers has harder tasks than typical Premium missions (avg 2.94 tasks vs ~1 for older months). The notification is critical here.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3><span class="status-indicator status-yellow"></span> Relative multiplier tells the real story</h3>
+                        <p>Trade completion: 1.22% &rarr; 11.95% = <strong>9.8&times;</strong> with click. Deposit: 3.65% &rarr; 16.52% = <strong>4.5&times;</strong>. For Premium tasks the multiplier is 1.1-2.7&times;. Notifications have disproportionate leverage on partner value challenges.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Season 8 Prestige Path: An outlier</h3>
+                        <p>3.49% clicked / 1.15% impression / 0.40% no-notif. This is a long-term progression path (not a mission) with extremely low completion across all cohorts. Notifications still show a 3.1&times; multiplier, but absolute rates are negligible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. EE vs TRADITIONAL: COMPLETION IMPACT -->
+        <div class="section" id="ee-vs-traditional">
+            <h2 class="section-title">5. EE vs Traditional Notifications: Completion Impact</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Engagement Engine (EE) frameworks use psychological triggers (reward motivation, competitive pressure, progress completion, live reward rush) to re-engage stuck users. How do they compare to standard lifecycle notifications on actual mission completion?
+            </p>
+
+            <div class="kpi-grid">
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">EE Full Completion (Clicked)</div>
+                    <div class="kpi-value" style="color: var(--green);">7.91%</div>
+                    <div class="kpi-sub">19.4K user-campaign pairs</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Traditional Full Completion (Clicked)</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">3.01%</div>
+                    <div class="kpi-sub">670K user-campaign pairs</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">EE Advantage</div>
+                    <div class="kpi-value">2.6&times;</div>
+                    <div class="kpi-sub">full completion rate when clicked</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">EE Click Uplift</div>
+                    <div class="kpi-value">+4.70pp</div>
+                    <div class="kpi-sub">vs Traditional's +1.21pp on full completion</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <div class="chart-container">
+                        <canvas id="eeCompletionChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Cohort</th>
+                                    <th class="number">Full CR</th>
+                                    <th class="number">Avg Tasks</th>
+                                    <th class="number">Users</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: var(--accent-light);"><td><strong>EE Framework</strong></td><td>Clicked</td><td class="number highlight" style="color: var(--green);">7.91%</td><td class="number">1.25</td><td class="number">19,391</td></tr>
+                                <tr style="background-color: var(--accent-light);"><td><strong>EE Framework</strong></td><td>Impression Only</td><td class="number">3.21%</td><td class="number">1.11</td><td class="number">64,818</td></tr>
+                                <tr><td>Traditional</td><td>Clicked</td><td class="number">3.01%</td><td class="number">3.84</td><td class="number">670,362</td></tr>
+                                <tr><td>Traditional</td><td>Impression Only</td><td class="number">1.80%</td><td class="number">1.88</td><td class="number">4,224,965</td></tr>
+                                <tr><td colspan="5" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">30-day data &middot; Full CR = all tasks complete &middot; EE = reward_motivation, competitive_pressure, progress_completion, live_reward_rush</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3><span class="status-indicator status-green"></span> EE clicks convert 2.6&times; better to full completion</h3>
+                    <p>When a user clicks an EE notification, they're 2.6&times; more likely to complete all campaign tasks vs clicking a standard lifecycle notification. This confirms EE's targeting of stuck users who need that final push to finish.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--yellow);">
+                    <h3><span class="status-indicator status-yellow"></span> Traditional drives higher task volume</h3>
+                    <p>Traditional clicked users average 3.84 tasks vs EE's 1.25. This reflects different user journeys: Traditional covers the full lifecycle (auto-join, first task, mid-campaign) while EE targets late-stage re-engagement on fewer remaining tasks.</p>
+                </div>
+            </div>
+
+            <div class="insight-card" style="border-left-color: var(--text-muted); margin-top: 0.5rem;">
+                <h3>Data quality note</h3>
+                <p>Any-completion rate shows 100% for EE due to a counting methodology artifact (users receiving multiple EE frameworks for the same campaign inflate the completion numerator). Full completion rate is unaffected and used as the primary comparison metric throughout.</p>
+            </div>
+        </div>
+
+        <!-- 5b. EE FRAMEWORK BREAKDOWN -->
+        <div class="section" id="ee-framework-breakdown">
+            <h2 class="section-title">5b. EE Framework Completion Breakdown</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Per-framework full completion rates (all tasks complete) — which psychological trigger converts best when users click?</p>
+            <div class="kpi-grid">
+                <div class="kpi-card"><div class="kpi-title">Reward Motivation (Clicked)</div><div class="kpi-value" style="color: var(--green);">12.19%</div><div class="kpi-sub">7,359 pairs &middot; 2.82&times; click uplift</div></div>
+                <div class="kpi-card"><div class="kpi-title">Competitive Pressure (Clicked)</div><div class="kpi-value">6.55%</div><div class="kpi-sub">5,208 pairs &middot; 1.76&times; click uplift</div></div>
+                <div class="kpi-card"><div class="kpi-title">Progress Completion (Clicked)</div><div class="kpi-value">5.97%</div><div class="kpi-sub">7,472 pairs &middot; 1.98&times; click uplift</div></div>
+                <div class="kpi-card"><div class="kpi-title">Live Reward Rush (Clicked)</div><div class="kpi-value">5.71%</div><div class="kpi-sub">4,485 pairs &middot; 2.66&times; click uplift</div></div>
+            </div>
+            <div class="grid-2">
+                <div><div class="chart-container"><canvas id="eeFrameworkChart"></canvas></div></div>
+                <div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead><tr><th>Framework</th><th>Cohort</th><th class="number">Full CR</th><th class="number">Avg Tasks</th><th class="number">Users</th></tr></thead>
+                            <tbody>
+                                <tr style="background-color: var(--accent-light);"><td>Reward Motivation</td><td>Clicked</td><td class="number highlight" style="color: var(--green);">12.19%</td><td class="number">1.37</td><td class="number">7,359</td></tr>
+                                <tr><td>Reward Motivation</td><td>Impression Only</td><td class="number">4.32%</td><td class="number">1.14</td><td class="number">26,843</td></tr>
+                                <tr style="background-color: var(--accent-light);"><td>Competitive Pressure</td><td>Clicked</td><td class="number highlight" style="color: var(--green);">6.55%</td><td class="number">1.22</td><td class="number">5,208</td></tr>
+                                <tr><td>Competitive Pressure</td><td>Impression Only</td><td class="number">3.73%</td><td class="number">1.14</td><td class="number">21,403</td></tr>
+                                <tr style="background-color: var(--accent-light);"><td>Progress Completion</td><td>Clicked</td><td class="number highlight" style="color: var(--green);">5.97%</td><td class="number">1.19</td><td class="number">7,472</td></tr>
+                                <tr><td>Progress Completion</td><td>Impression Only</td><td class="number">3.01%</td><td class="number">1.10</td><td class="number">35,468</td></tr>
+                                <tr style="background-color: var(--accent-light);"><td>Live Reward Rush</td><td>Clicked</td><td class="number highlight" style="color: var(--green);">5.71%</td><td class="number">1.19</td><td class="number">4,485</td></tr>
+                                <tr><td>Live Reward Rush</td><td>Impression Only</td><td class="number">2.15%</td><td class="number">1.08</td><td class="number">34,771</td></tr>
+                                <tr><td colspan="5" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">30-day data &middot; Full CR = all tasks complete &middot; HAVING &ge; 50 pairs</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="insight-card" style="border-left-color: var(--green);"><h3><span class="status-indicator status-green"></span> Reward Motivation dominates full completion</h3><p>12.19% full completion when clicked &mdash; 2&times; the next best framework (Competitive Pressure at 6.55%). Also the highest impression-only rate (4.32%). This confirms CTR leadership (Section 8) translates directly to conversion.</p></div>
+                <div class="insight-card" style="border-left-color: var(--yellow);"><h3><span class="status-indicator status-yellow"></span> CTR ranking &ne; completion ranking</h3><p>The first EE test ranked Progress Completion #1 on CTR. But on full completion, it's #3. Reward Motivation &mdash; not even tested in the first experiment &mdash; leads on the metric that matters for partner value.</p></div>
+            </div>
+        </div>
+
+        <!-- 6. PER-PARTNER BREAKDOWN -->
+        <div class="section" id="per-partner">
+            <h2 class="section-title">6. Per-Partner Breakdown</h2>
+
+            <div class="grid-3">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Winline</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Challenge</th>
+                                    <th class="number">Clicked</th>
+                                    <th class="number">Impr.</th>
+                                    <th class="number">No Notif</th>
+                                    <th class="number">Uplift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Play Match</td><td class="number">97.99%</td><td class="number">92.49%</td><td class="number">80.18%</td><td class="number highlight" style="color: var(--green);">+17.81pp</td></tr>
+                                <tr><td>Deposit</td><td class="number">16.55%</td><td class="number">5.21%</td><td class="number">8.71%</td><td class="number highlight" style="color: var(--green);">+7.84pp</td></tr>
+                                <tr><td>Account Link</td><td class="number">8.93%</td><td class="number">1.37%</td><td class="number">4.11%</td><td class="number highlight" style="color: var(--green);">+4.82pp</td></tr>
+                                <tr><td>Bet</td><td class="number">63.67%</td><td class="number">67.14%</td><td class="number">68.99%</td><td class="number highlight" style="color: var(--red);">&minus;5.32pp</td></tr>
+                                <tr><td>Win Match</td><td class="number">59.82%</td><td class="number">46.18%</td><td class="number">62.09%</td><td class="number highlight" style="color: var(--red);">&minus;2.27pp</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent); padding: 1rem;">
+                        <p style="font-size: 0.85rem; margin: 0;">Winline has the deepest funnel (AL&rarr;Deposit&rarr;Bet). Play Match shows +17.81pp uplift &mdash; the biggest of any partner. Bet notifications are counterproductive.</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Tradeit</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Challenge</th>
+                                    <th class="number">Clicked</th>
+                                    <th class="number">Impr.</th>
+                                    <th class="number">No Notif</th>
+                                    <th class="number">Uplift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Trade</td><td class="number">11.95%</td><td class="number">1.71%</td><td class="number">1.22%</td><td class="number highlight" style="color: var(--green);">+10.73pp</td></tr>
+                                <tr><td>Play Match</td><td class="number">97.47%</td><td class="number">91.65%</td><td class="number">91.23%</td><td class="number highlight" style="color: var(--green);">+6.24pp</td></tr>
+                                <tr><td>Account Link</td><td class="number">&mdash;</td><td class="number">3.82%</td><td class="number">4.31%</td><td class="number" style="color: var(--text-muted);">n/a</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent); padding: 1rem;">
+                        <p style="font-size: 0.85rem; margin: 0;">Trade completion is 9.8&times; higher when users click. Without the click, Trade is essentially dead at 1.22%. AL has no clicked cohort &mdash; notification coverage gap.</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">WhiteMarket</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Challenge</th>
+                                    <th class="number">Clicked</th>
+                                    <th class="number">Impr.</th>
+                                    <th class="number">No Notif</th>
+                                    <th class="number">Uplift</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Buy</td><td class="number">2.85%</td><td class="number">0.68%</td><td class="number">0.17%</td><td class="number highlight" style="color: var(--green);">+2.68pp</td></tr>
+                                <tr><td>Play Match</td><td class="number">96.27%</td><td class="number">85.67%</td><td class="number">91.30%</td><td class="number highlight" style="color: var(--green);">+4.97pp</td></tr>
+                                <tr><td>Win Match</td><td class="number">73.96%</td><td class="number">66.46%</td><td class="number">78.64%</td><td class="number highlight" style="color: var(--red);">&minus;4.68pp</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent); padding: 1rem;">
+                        <p style="font-size: 0.85rem; margin: 0;">Buy completions are 16.8&times; higher with click. But absolute rates are still very low (2.85%). Win Match shows negative uplift &mdash; consistent across all partners.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. NOTIFICATION REACH & CTR (demoted, condensed from old 2-5) -->
+        <div class="section" id="reach-ctr">
+            <h2 class="section-title">7. Notification Reach & CTR (Secondary)</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Total Impressions (7d)</div>
+                    <div class="kpi-value">6,148,487</div>
+                    <div class="kpi-sub">across all campaign notifications</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Unique Users Reached</div>
+                    <div class="kpi-value">470,728+</div>
+                    <div class="kpi-sub">users who saw &ge;1 notification</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Avg Event CTR</div>
+                    <div class="kpi-value">5.4%</div>
+                    <div class="kpi-sub">click events / impression events</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Avg User CTR</div>
+                    <div class="kpi-value">13.4%</div>
+                    <div class="kpi-sub">users who clicked / users who saw</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">90-Day Volume & CTR Trend</h3>
+                    <div class="chart-container tall">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">
+                        Jan 24 &ndash; Apr 23, 2026 &middot; Bars = Impressions &middot; Line = CTR %
+                    </p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Top Notification Types by User CTR</h3>
+                    <div class="chart-container tall">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3><span class="status-indicator status-green"></span> Clear campaign activation cycles</h3>
+                    <p>Three distinct launch spikes: Mar 1 (2.0M), Mar 13-14 (1.7M, 9.2% CTR peak), Apr 2-3 (1.9M). Each follows: volume surge &rarr; CTR spike &rarr; 2-week decay.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--yellow);">
+                    <h3><span class="status-indicator status-yellow"></span> Mid-March was strongest engagement</h3>
+                    <p>Mar 12-13 hit 9.2-9.4% CTR &mdash; nearly double the baseline ~4.5%. Aligns with Tradeit + WhiteMarket launches. Late-March trough shows inter-cycle dead zone.</p>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem;">Full Notification Breakdown</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Notification</th>
+                            <th class="number">Impressions</th>
+                            <th class="number">Clicks</th>
+                            <th class="number">User CTR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Premium Backearn</td><td class="number">30,058</td><td class="number">3,682</td><td class="number highlight">42.0%</td></tr>
+                        <tr><td>Sponsored Complete+Rewards</td><td class="number">12,688</td><td class="number">1,922</td><td class="number">26.8%</td></tr>
+                        <tr><td>Claimed Sponsored (Mid)</td><td class="number">112,433</td><td class="number">15,751</td><td class="number">23.5%</td></tr>
+                        <tr><td>Next Campaign</td><td class="number">2,569</td><td class="number">290</td><td class="number">17.9%</td></tr>
+                        <tr><td>Joined Internal</td><td class="number">868,248</td><td class="number">81,315</td><td class="number">15.9%</td></tr>
+                        <tr><td>Claimed Internal Reward</td><td class="number">1,166,489</td><td class="number">45,085</td><td class="number">14.8%</td></tr>
+                        <tr><td>Mission Complete (no reward)</td><td class="number">2,059,520</td><td class="number">110,280</td><td class="number">13.4%</td></tr>
+                        <tr><td>Sponsored Complete (Mid)</td><td class="number">190,409</td><td class="number">13,157</td><td class="number">11.6%</td></tr>
+                        <tr><td>Mission Complete+Premium</td><td class="number">281,218</td><td class="number">11,889</td><td class="number">12.4%</td></tr>
+                        <tr><td>Upgrade to Premium</td><td class="number">407,474</td><td class="number">9,888</td><td class="number">9.8%</td></tr>
+                        <tr><td>Joined Campaign</td><td class="number">211,521</td><td class="number">6,268</td><td class="number">6.8%</td></tr>
+                        <tr><td>Joined Sponsored Campaign</td><td class="number">750,961</td><td class="number">18,769</td><td class="number highlight" style="color: var(--red);">3.8%</td></tr>
+                        <tr><td>FP Completed</td><td class="number">28,112</td><td class="number">401</td><td class="number">3.3%</td></tr>
+                        <tr><td colspan="4" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">7-day data &middot; User CTR = unique clickers / unique impressees</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. 90-DAY EE FRAMEWORK TREND -->
+        <div class="section" id="ee-90d-trend">
+            <h2 class="section-title">8. Engagement Engine &mdash; 90-Day Framework Trend</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Weekly user CTR over 12 weeks (Feb 2 &ndash; Apr 20, 2026). Is the EE framework ranking shift sustained?
+            </p>
+
+            <div class="kpi-grid">
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">Reward Motivation</div>
+                    <div class="kpi-value">20.9%</div>
+                    <div class="kpi-sub">90d weighted avg user CTR</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid #ef4444;">
+                    <div class="kpi-title">Competitive Pressure</div>
+                    <div class="kpi-value" style="color: #ef4444;">20.8%</div>
+                    <div class="kpi-sub">90d weighted avg user CTR</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--yellow);">
+                    <div class="kpi-title">Progress Completion</div>
+                    <div class="kpi-value" style="color: var(--yellow);">16.1%</div>
+                    <div class="kpi-sub">90d weighted avg user CTR</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--text-muted);">
+                    <div class="kpi-title">Live Reward Rush</div>
+                    <div class="kpi-value" style="color: var(--text-muted);">13.7%</div>
+                    <div class="kpi-sub">90d weighted avg user CTR</div>
+                </div>
+            </div>
+
+            <div class="chart-container" style="height: 400px;">
+                <canvas id="ee90dChart"></canvas>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem; margin-bottom: 2rem;">
+                Source: user_notification_interaction_v2 &middot; Feb 2 &ndash; Apr 20, 2026 &middot; User CTR = unique clickers / unique impressees per week
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Ranking Evolution</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>First EE Test</th>
+                                    <th>7-Day Recent</th>
+                                    <th>90-Day Sustained</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>Progress Completion (10.6%)</td><td style="color: var(--accent); font-weight: 600;">Reward Motivation (7.9%)</td><td style="color: var(--accent); font-weight: 600;">Reward Motivation (20.9%)</td></tr>
+                                <tr><td>2</td><td>Live Reward Rush (9.4%)</td><td>Competitive Pressure (7.1%)</td><td>Competitive Pressure (20.8%)</td></tr>
+                                <tr><td>3</td><td>Competitive Pressure (7.4%)</td><td>Progress Completion (4.3%)</td><td>Progress Completion (16.1%)</td></tr>
+                                <tr><td>4</td><td><em>Reward Motivation (not tested)</em></td><td>Live Reward Rush (3.5%)</td><td>Live Reward Rush (13.7%)</td></tr>
+                                <tr><td colspan="4" style="color: var(--text-muted); font-style: italic; font-size: 0.8rem; text-align: center;">First EE Test = Winline BOFU short window &middot; 90-Day = weighted by reach across all campaigns</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="insight-card" style="border-left-color: var(--green);">
+                        <h3><span class="status-indicator status-green"></span> Reward Motivation is the most decay-resistant</h3>
+                        <p>Sustains higher CTR in late-cycle weeks when all others drop. Strongest default for long-running campaigns.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3><span class="status-indicator status-yellow"></span> Progress Completion has the steepest decay</h3>
+                        <p>Spikes to ~32% at launch but crashes to ~7% by week 3. Launch-week novelty only.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Sawtooth pattern across all frameworks</h3>
+                        <p>CTR spikes 25-35% at campaign launch, decays 50-60% over 2-3 weeks, resets with next campaign.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. DECISION FRAMEWORK -->
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">9. Decision Framework</h2>
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions</h3>
+
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Which notifications should we suppress?</strong></p>
+                        <p>Win Match and Bet &mdash; negative completion uplift across all partners. Suppressing reduces fatigue without losing conversions.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Where should EE Framework expand next?</strong></p>
+                        <p>Trade (Tradeit) and Buy (WhiteMarket) &mdash; 100% click-dependent challenges where EE's 2.6&times; higher full completion rate directly multiplies partner value.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is notification investment justified for Premium missions?</strong></p>
+                        <p>Premium missions show 90-97% completion without notifications. Notification ROI is dramatically higher for sponsored challenges where baseline is near-zero. Prioritise sponsored notification quality over Premium volume.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item">Suppress Bet and Win Match notifications (no conversion cost, reduces fatigue)</li>
+                        <li class="list-item">Expand EE Framework to Trade (Tradeit) and Buy (WhiteMarket) challenge types</li>
+                        <li class="list-item">Investigate AL/Educational notification coverage gap for Tradeit and WhiteMarket</li>
+                        <li class="list-item">Optimise Deposit notification copy/timing for Winline (16.55% clicked CR has room to grow)</li>
+                        <li class="list-item">A/B test notification frequency cap to combat sawtooth decay</li>
+                        <li class="list-item" style="text-decoration: line-through; color: var(--text-muted);">Run Part B of EE vs Traditional query for per-framework completion breakdown ✓ Done — see Section 5b</li>
+                        <li class="list-item">Prioritise Reward Motivation as default EE framework for all partners (12.19% full CR, 2× next best)</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Completion-Based Go/No-Go</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>GREEN</strong></p>
+                        <p>Click uplift &gt;5pp on completion AND positive across cohorts</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>YELLOW</strong></p>
+                        <p>Click uplift 1-5pp OR inconsistent across partners</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>RED</strong></p>
+                        <p>Negative uplift OR no measurable completion difference</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status by Challenge</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Deposit (+11.39pp), Trade (+10.24pp), Play Match (+6.06pp)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Account Link (+7.53pp but low absolute CR), Buy (+2.17pp)</p>
+                        <p><span class="status-indicator status-red"></span> Bet (&minus;3.47pp), Win Match (variable by partner)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data sources: faceit-events-prod-2.user.user_notification_interaction_v2 (7d/30d/90d) | business-intelligence-prod.CampaignService.UserMissions (30d completion join) | CampaignService.Campaigns (campaign metadata) | Internal PM Tool &middot; Updated 27 Apr 2026
+        </div>
+    </div>
+
+    <script>
+        var chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
+            Chart.defaults.color = '#6B7280';
+            Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+            var gridColor = '#E2E8F0';
+            var tooltipBg = '#ffffff';
+            var tooltipBorder = '#E2E8F0';
+            var tooltipTitleColor = '#1A1A2E';
+            var tooltipBodyColor = '#6B7280';
+
+            var tooltipDefaults = {
+                backgroundColor: tooltipBg,
+                titleColor: tooltipTitleColor,
+                bodyColor: tooltipBodyColor,
+                borderColor: tooltipBorder,
+                borderWidth: 1
+            };
+
+            // Challenge Type Effectiveness (Section 3)
+            var challengeCtx = document.getElementById('challengeTypeChart').getContext('2d');
+            new Chart(challengeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Deposit', 'Trade', 'Win Match', 'Account Link', 'Play Match', 'Buy', 'Bet'],
+                    datasets: [
+                        {
+                            label: 'Clicked',
+                            data: [16.52, 11.95, 70.70, 8.92, 97.51, 2.85, 63.67],
+                            backgroundColor: '#2563eb',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Impression Only',
+                            data: [5.13, 1.71, 62.22, 1.39, 91.45, 0.68, 67.14],
+                            backgroundColor: '#CBD5E1',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'No Notification',
+                            data: [3.65, 1.61, 67.96, 4.13, 84.20, 0.17, 68.99],
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true } },
+                        tooltip: Object.assign({}, tooltipDefaults, {
+                            callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.x + '%'; } }
+                        })
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { callback: function(v) { return v + '%'; } }, max: 100 },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // Benchmark: Sponsored vs Premium (Section 4)
+            var benchmarkCtx = document.getElementById('benchmarkChart').getContext('2d');
+            new Chart(benchmarkCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Premium April Showers', 'Beta April Showers', 'Equinox Equilibrium', 'Sponsored Aggregate'],
+                    datasets: [
+                        {
+                            label: 'Clicked',
+                            data: [98.79, 99.86, 99.16, 84.1],
+                            backgroundColor: '#2563eb',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Impression Only',
+                            data: [89.06, 98.68, 96.99, 78.2],
+                            backgroundColor: '#CBD5E1',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'No Notification',
+                            data: [36.69, 92.70, 93.33, null],
+                            backgroundColor: '#f59e0b',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true } },
+                        tooltip: Object.assign({}, tooltipDefaults, {
+                            callbacks: { label: function(ctx) { return ctx.parsed.x !== null ? ctx.dataset.label + ': ' + ctx.parsed.x + '%' : ''; } }
+                        })
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { callback: function(v) { return v + '%'; } }, max: 100 },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // EE vs Traditional Completion (Section 5)
+            var eeCompCtx = document.getElementById('eeCompletionChart').getContext('2d');
+            new Chart(eeCompCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['EE Framework', 'Traditional Activity'],
+                    datasets: [
+                        {
+                            label: 'Clicked (Full CR)',
+                            data: [7.91, 3.01],
+                            backgroundColor: '#2563eb',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Impression Only (Full CR)',
+                            data: [3.21, 1.80],
+                            backgroundColor: '#CBD5E1',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true } },
+                        tooltip: Object.assign({}, tooltipDefaults, {
+                            callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; } }
+                        })
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: gridColor }, ticks: { callback: function(v) { return v + '%'; } } }
+                    }
+                }
+            });
+
+            // EE Framework Breakdown (Section 5b)
+            var eeFrameworkCtx = document.getElementById('eeFrameworkChart').getContext('2d');
+            new Chart(eeFrameworkCtx, { type: 'bar', data: { labels: ['Reward Motivation','Competitive Pressure','Progress Completion','Live Reward Rush'], datasets: [{ label: 'Clicked (Full CR)', data: [12.19,6.55,5.97,5.71], backgroundColor: '#2563eb', borderRadius: 4 },{ label: 'Impression Only (Full CR)', data: [4.32,3.73,3.01,2.15], backgroundColor: '#CBD5E1', borderRadius: 4 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { usePointStyle: true } }, tooltip: Object.assign({}, tooltipDefaults, { callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.x + '%'; } } }) }, scales: { x: { grid: { color: gridColor }, ticks: { callback: function(v) { return v + '%'; } }, max: 14 }, y: { grid: { display: false } } } } });
+
+            // 90-Day Volume & CTR Trend (Section 7)
+            var trendCtx = document.getElementById('trendChart').getContext('2d');
+            new Chart(trendCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan 24','Jan 25','Jan 26','Jan 27','Jan 28','Jan 29','Jan 30','Jan 31','Feb 1','Feb 2','Feb 3','Feb 4','Feb 5','Feb 6','Feb 7','Feb 8','Feb 9','Feb 10','Feb 11','Feb 12','Feb 13','Feb 14','Feb 15','Feb 16','Feb 17','Feb 18','Feb 19','Feb 20','Feb 21','Feb 22','Feb 23','Feb 24','Feb 25','Feb 26','Feb 27','Feb 28','Mar 1','Mar 2','Mar 3','Mar 4','Mar 5','Mar 6','Mar 7','Mar 8','Mar 9','Mar 10','Mar 11','Mar 12','Mar 13','Mar 14','Mar 15','Mar 16','Mar 17','Mar 18','Mar 19','Mar 20','Mar 21','Mar 22','Mar 23','Mar 24','Mar 25','Mar 26','Mar 27','Mar 28','Mar 29','Mar 30','Mar 31','Apr 1','Apr 2','Apr 3','Apr 4','Apr 5','Apr 6','Apr 7','Apr 8','Apr 9','Apr 10','Apr 11','Apr 12','Apr 13','Apr 14','Apr 15','Apr 16','Apr 17','Apr 18','Apr 19','Apr 20','Apr 21','Apr 22','Apr 23'],
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'CTR %',
+                            data: [5.15,4.71,4.35,4.14,3.86,3.89,4.67,5.29,4.85,4.54,5.06,4.95,4.99,4.90,5.19,5.09,4.73,4.62,4.35,4.45,4.89,5.57,4.81,4.48,4.24,3.92,4.14,4.78,5.30,4.56,4.29,4.88,3.94,4.16,4.91,4.88,5.07,4.46,4.36,4.12,4.04,4.59,5.24,4.70,6.90,7.37,6.18,9.36,9.21,8.04,7.27,6.48,6.34,6.00,5.72,5.90,6.94,6.66,6.15,6.28,5.83,6.13,5.76,6.86,5.92,5.75,6.09,5.90,7.16,7.22,6.69,6.18,5.43,5.05,4.72,4.55,4.91,5.32,5.22,4.79,4.94,4.72,4.67,4.62,5.15,5.32,4.74,3.78,6.31,5.30],
+                            borderColor: '#2563eb',
+                            backgroundColor: '#2563eb',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 1,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Impressions',
+                            data: [1001425,981336,814749,712863,610706,598325,1046296,1217584,1246828,1089098,1075503,969363,904958,1269449,1428034,1166365,1028144,885207,784505,735617,1190404,1361167,1203524,1007761,862911,804982,744973,1299918,1501025,1215729,1017810,1016245,806904,718840,1190701,1401314,2028587,1548575,1278157,1123202,1047380,1397159,1584937,1309432,1511698,1299895,1072390,1205446,1668569,1746169,1444690,1242987,1055365,884031,879826,881715,746422,687055,636461,628613,552389,543200,549811,588139,553074,531321,534186,1412219,1916108,1827539,1518283,1349968,1262680,1064504,973601,910227,954660,928595,879798,802284,696475,588784,651976,667120,651767,629407,659528,939886,1766855,1296706],
+                            backgroundColor: '#dbeafe',
+                            yAxisID: 'y'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#6b7280', usePointStyle: true } },
+                        tooltip: tooltipDefaults
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { maxTicksLimit: 15, maxRotation: 45 } },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            grid: { color: gridColor },
+                            ticks: { callback: function(v) { return (v/1000000).toFixed(1) + 'M'; } }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: { callback: function(v) { return v + '%'; } }
+                        }
+                    }
+                }
+            });
+
+            // Notification Type CTR (Section 7)
+            var typeCtx = document.getElementById('typeChart').getContext('2d');
+            new Chart(typeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Premium Backearn','Sponsored Complete+Rewards','Claimed Sponsored (Mid)','Next Campaign','Joined Internal','Claimed Internal','Mission Complete (no reward)','Sponsored Complete (Mid)','Mission Complete+Premium','Joined Campaign'],
+                    datasets: [{
+                        label: 'User CTR %',
+                        data: [42.0, 26.8, 23.5, 17.9, 15.9, 14.8, 13.4, 11.6, 9.8, 6.8],
+                        backgroundColor: '#2563eb',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: tooltipDefaults
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { callback: function(v) { return v + '%'; } } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // 90-Day EE Framework Trend (Section 8)
+            var ee90dCtx = document.getElementById('ee90dChart').getContext('2d');
+            var eeWeeks = ['Feb 2','Feb 9','Feb 16','Feb 23','Mar 2','Mar 9','Mar 16','Mar 23','Mar 30','Apr 6','Apr 13','Apr 20'];
+            new Chart(ee90dCtx, {
+                type: 'line',
+                data: {
+                    labels: eeWeeks,
+                    datasets: [
+                        {
+                            label: 'Reward Motivation',
+                            data: [38.64, 20.56, 17.68, 18.48, 4.93, 30.62, 24.57, 18.35, 11.44, 26.31, 14.95, 11.79],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37,99,235,0.1)',
+                            borderWidth: 2.5,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: false
+                        },
+                        {
+                            label: 'Competitive Pressure',
+                            data: [35.84, 19.56, 17.40, 17.43, 3.50, 25.50, 25.01, 19.74, 11.92, 20.75, 14.19, 11.54],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239,68,68,0.1)',
+                            borderWidth: 2.5,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: false
+                        },
+                        {
+                            label: 'Progress Completion',
+                            data: [50.86, 24.02, 15.29, 12.41, 3.32, 32.29, 19.96, 15.59, 9.05, 24.78, 10.47, 6.91],
+                            borderColor: '#d97706',
+                            backgroundColor: 'rgba(217,119,6,0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 3,
+                            pointHoverRadius: 5,
+                            borderDash: [5, 3],
+                            fill: false
+                        },
+                        {
+                            label: 'Live Reward Rush',
+                            data: [52.38, 19.98, 11.90, 11.99, 2.95, 27.45, 14.99, 11.10, 6.07, 13.34, 12.42, 5.67],
+                            borderColor: '#6b7280',
+                            backgroundColor: 'rgba(107,114,128,0.1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            pointRadius: 3,
+                            pointHoverRadius: 5,
+                            borderDash: [5, 3],
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, padding: 16 } },
+                        tooltip: Object.assign({}, tooltipDefaults, {
+                            callbacks: { label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + '%'; } }
+                        })
+                    },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: {
+                            grid: { color: gridColor },
+                            ticks: { callback: function(v) { return v + '%'; } },
+                            title: { display: true, text: 'User CTR %', color: '#6b7280' }
+                        }
+                    }
+                }
+            });
+
+        }
+
+        // Sortable Tables
+        (function() {
+            var tables = document.querySelectorAll('.table-wrapper table');
+            for (var t = 0; t < tables.length; t++) {
+                var table = tables[t];
+                var headers = table.querySelectorAll('th');
+                for (var h = 0; h < headers.length; h++) {
+                    (function(th, colIndex, tbl) {
+                        if (th.colSpan > 1) return;
+                        if (!th.classList.contains('number')) return;
+                        th.classList.add('sortable');
+                        th.addEventListener('click', function() {
+                            var tbody = tbl.querySelector('tbody');
+                            if (!tbody) return;
+                            var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+                            var dataRows = [];
+                            var footerRows = [];
+                            for (var r = 0; r < rows.length; r++) {
+                                var firstTd = rows[r].querySelector('td');
+                                if (firstTd && firstTd.colSpan > 1) {
+                                    footerRows.push(rows[r]);
+                                } else {
+                                    dataRows.push(rows[r]);
+                                }
+                            }
+                            var isAsc = th.classList.contains('sort-asc');
+                            var allTh = tbl.querySelectorAll('th.sortable');
+                            for (var i = 0; i < allTh.length; i++) {
+                                allTh[i].classList.remove('sort-asc', 'sort-desc');
+                            }
+                            var direction = isAsc ? -1 : 1;
+                            th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+                            dataRows.sort(function(a, b) {
+                                var cellA = a.querySelectorAll('td')[colIndex];
+                                var cellB = b.querySelectorAll('td')[colIndex];
+                                if (!cellA || !cellB) return 0;
+                                var valA = cellA.textContent.replace(/[^0-9.\-\u2212]/g, '').replace('\u2212', '-');
+                                var valB = cellB.textContent.replace(/[^0-9.\-\u2212]/g, '').replace('\u2212', '-');
+                                var numA = parseFloat(valA) || 0;
+                                var numB = parseFloat(valB) || 0;
+                                if (cellA.textContent.trim() === '\u2014' || cellA.textContent.trim() === 'n/a') numA = -Infinity * direction;
+                                if (cellB.textContent.trim() === '\u2014' || cellB.textContent.trim() === 'n/a') numB = -Infinity * direction;
+                                return (numA - numB) * direction;
+                            });
+                            for (var j = 0; j < dataRows.length; j++) {
+                                tbody.appendChild(dataRows[j]);
+                            }
+                            for (var k = 0; k < footerRows.length; k++) {
+                                tbody.appendChild(footerRows[k]);
+                            }
+                        });
+                    })(headers[h], h, table);
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
