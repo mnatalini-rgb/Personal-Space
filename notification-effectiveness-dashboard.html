@@ -42,6 +42,9 @@
         .header p { color: var(--text-muted); font-size: 1rem; }
         .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
         .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+        .act-header { margin: 3rem 0 1.5rem; padding: 1rem 0; border-top: 2px solid var(--accent); }
+        .act-header h2 { font-size: 1.25rem; font-weight: 700; color: var(--accent); margin: 0; text-transform: uppercase; letter-spacing: 0.04em; }
+        .act-header p { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
         .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
         .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
         .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
@@ -112,6 +115,10 @@
             <p>Moritz Natalini &middot; Ads & Partnerships &middot; EFG</p>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
                 <strong>Primary metric:</strong> Challenge completion rate by notification cohort (Clicked / Impression / No Notification)
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+                <strong>Structure:</strong> Part I &mdash; Engagement Engine review (is it working? which framework wins?) &middot; Part II &mdash; Activity Notification analysis (broader notification effectiveness) &middot;
+                <a href="ee-review-slides.html" style="color: var(--accent); text-decoration: none; font-weight: 600;">Meeting deck &rarr;</a>
             </p>
         </header>
         <div class="section" style="border-left: 4px solid var(--yellow); padding: 1.5rem 2rem;">
@@ -269,6 +276,10 @@
                 </div>
             </div>
         </div>
+        <div class="act-header" id="part-1">
+            <h2>Part I — Engagement Engine: Is It Working?</h2>
+            <p>EE has been live since November 2025 with 4 psychological frameworks. Content was iterated but never formally evaluated. Sections 5–5b and 8 answer: does it still work, and which framework converts best?</p>
+        </div>
         <div class="section" id="ee-vs-traditional">
             <h2 class="section-title">5. EE vs Traditional Notifications: Completion Impact</h2>
             <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Engagement Engine (EE) frameworks use psychological triggers (reward motivation, competitive pressure, progress completion, live reward rush) to re-engage stuck users. How do they compare to standard lifecycle notifications on actual mission completion?</p>
@@ -335,6 +346,10 @@
                 <div class="insight-card" style="border-left-color: var(--green);"><h3><span class="status-indicator status-green"></span> Reward Motivation dominates full completion</h3><p>12.19% full completion when clicked &mdash; 2&times; the next best framework (Competitive Pressure at 6.55%). Also the highest impression-only rate (4.32%). This confirms CTR leadership (Section 8) translates directly to conversion.</p></div>
                 <div class="insight-card" style="border-left-color: var(--yellow);"><h3><span class="status-indicator status-yellow"></span> CTR ranking &ne; completion ranking</h3><p>The first EE test ranked Progress Completion #1 on CTR. But on full completion, it's #3. Reward Motivation &mdash; not even tested in the first experiment &mdash; leads on the metric that matters for partner value.</p></div>
             </div>
+        </div>
+        <div class="act-header" id="part-2">
+            <h2>Part II — Activity Notification Analysis</h2>
+            <p>The broader question: is the current notification setup (what, when, to whom) optimal? Per-partner breakdowns, reach, CTR trends, and the decision framework below. This is a separate workstream from the EE review.</p>
         </div>
         <div class="section" id="per-partner">
             <h2 class="section-title">6. Per-Partner Breakdown</h2>
@@ -498,7 +513,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer">Data sources: faceit-events-prod-2.user.user_notification_interaction_v2 (7d/30d/90d) | business-intelligence-prod.CampaignService.UserMissions (30d completion join) | CampaignService.Campaigns (campaign metadata) | Internal PM Tool &middot; Updated 27 Apr 2026</div>
+        <div class="footer">Data sources: faceit-events-prod-2.user.user_notification_interaction_v2 (7d/30d/90d) | business-intelligence-prod.CampaignService.UserMissions (30d completion join) | CampaignService.Campaigns (campaign metadata) | Internal PM Tool &middot; Updated 27 Apr 2026 &middot; <a href="ee-review-slides.html" style="color: var(--accent); text-decoration: none;">EE Review Meeting Deck &rarr;</a></div>
     </div>
     <script>
         var chartAvailable = typeof Chart !== 'undefined';
