@@ -696,3 +696,111 @@ Showing a 15-second outstream video ad immediately after a user joins a matchmak
 - **Low-spec mode detection** — serve static display instead of video for low-end devices to eliminate the conversion dip
 - **Test 30s units** for premium/high-value brand partners to increase eCPM (15s had strong completion, suggesting headroom)
 - **Frequency cap** this placement at 3 impressions per user per day to avoid long-term fatigue
+
+---
+
+## March – April 2026 — Advertising
+
+### Experiment: Prebid Outstream CSStats — Mobalytics vs Primis
+
+**Type**: A/B test (50/50 split on CSStats.gg)
+**Duration**: 25 days (Mar 30 – Apr 23, 2026; GA page views from Mar 27)
+**Inventory**: Outstream video on CSStats.gg
+**Funnel stage**: Advertising — RPV (Revenue Per Page View)
+**Status**: Concluded — Winner: Mobalytics (+134% net RPV)
+**Dashboard**: `analysis/prebid-outstream-csstats-dashboard.html`
+
+#### Problem
+
+CSStats.gg outstream video inventory was served by Primis, which had poor performance, low transparency, and a 20% revenue share fee. Mobalytics (Prebid, via EFG group) offered an alternative with 0% commission.
+
+#### Hypothesis
+
+Mobalytics (Prebid) will deliver higher Revenue Per Page View than Primis for outstream video on CSStats.gg, after accounting for Primis's 20% rev-share fee.
+
+**Result: Hypothesis confirmed.** Mobalytics outperforms Primis by +134% on net RPV.
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Mobalytics (Prebid) | Outstream video via GAM / Mobalytics prebid wrapper (0% commission) |
+| Primis | Outstream video via Primis (20% rev-share fee) |
+
+Traffic split: 50.15% Mobalytics / 49.85% Primis (Δ 0.6% — valid). Remaining ~26% is Russia/consent/Publift noise excluded from comparison.
+
+#### Results
+
+| Metric | Mobalytics | Primis (Gross) | Primis (Net, −20%) | Delta (vs Net) |
+|--------|-----------|----------------|---------------------|----------------|
+| Total Revenue | **$184.05** | $97.76 | $78.21 | Moba +135% |
+| Impressions | ~505,000 | 2,660,269 | — | Primis 5.3x more |
+| eCPM | **$0.36** | $0.037 | $0.029 | Moba 9.7x higher |
+| Page Views (GA) | 4,880,618 | 4,850,989 | — | ~balanced |
+| **RPV (per 1K views)** | **$0.038** | $0.020 | **$0.016** | **Moba +134%** |
+
+**US Fill Gap (key driver):** Moba served 253,371 US impressions ($125.22, 68% of total) vs Primis 499 US impressions ($0.15). This is a Primis supply-side fill issue — GA page views were balanced. Ex-US, Primis net wins by ~$19, but the US gap overwhelms.
+
+#### Conclusions
+
+- **Mobalytics wins clearly** on the primary metric RPV (+134% net) and total revenue (+135% net)
+- US fill is the decisive factor — Primis has near-zero US inventory while Moba fills 253K impressions
+- Primis's 20% rev-share fee widens the gap further (gross comparison is +88%, net is +134%)
+- A hybrid approach (Moba US + Primis RoW) theoretically saves ~$19/month — not worth operational complexity
+- Primis fills 5.3x more impressions but at dramatically lower eCPM ($0.037 vs $0.36) — volume can't compensate
+
+#### Next Steps
+
+- Ship Mobalytics as default outstream provider on CSStats
+- Communicate result to EFG/Max and sunset Primis outstream
+- Monitor Moba RPV post-rollout (100% traffic) for 2 weeks
+- Inform Prebid Outstream FACEIT experiment design with CSStats learnings
+
+---
+
+## April 2026 — Advertising
+
+### Experiment: CMP Non-TCF Geo Test (Publift)
+
+**Type**: A/B test (user-level bucketing)
+**Funnel stage**: Advertising — RPV (Revenue Per Page View)
+**Status**: In Setup — pending Teo implementation
+**Experiment Design**: `docs/product_briefs/cmp-nontcf-experiment-design.md`
+
+#### Problem
+
+FACEIT serves Publift's TCF 2.2 CMP (consent popup) globally, including in geos where GDPR does not apply. The consent flow may suppress ad yield in non-GDPR markets by blocking or delaying ad requests, reducing fill rate and eCPM.
+
+#### Hypothesis
+
+Removing the TCF CMP in non-GDPR geos will increase Revenue Per Page View (RPV) by ≥15%, as ad requests fire immediately without consent gating, improving fill rate and auction competition.
+
+#### Test Design
+
+| Group | Description |
+|-------|-------------|
+| Control | Current Publift Fuse CMP (TCF 2.2 consent popup) |
+| Variant | Publift NoCMP Fuse variant (no consent popup) |
+
+**Geos**: Brazil, Türkiye, Uzbekistan, Australia, Ukraine, Argentina, Kazakhstan
+**Traffic**: ~2.76M impressions/day, ~$161/day
+**MDE**: 15% RPV uplift detectable in 2–3 weeks
+**Tracking**: GAM key-values (`cmp_test=control` / `cmp_test=variant`) for revenue attribution
+
+#### Key Exclusions
+
+- EEA (GDPR), UK (UK GDPR), Switzerland (nFADP)
+- US/Canada (CCPA, state privacy laws, Quebec Law 25)
+
+#### Success Metrics
+
+- **Primary**: RPV (Revenue Per Page View) — ≥15% uplift
+- **Secondary**: Fill rate, eCPM, consent rate delta
+- **Guardrail**: No increase in ad quality complaints or publisher policy violations
+
+#### Next Steps
+
+- Teo to confirm Fugly can pass GAM key-values
+- Decide bucketing approach (Publift UUID vs own)
+- Implement NoCMP Fuse variant in selected geos
+- Monitor for 2–3 weeks, then conclude

@@ -297,6 +297,7 @@
     .icon-tradeit { background: rgba(5, 150, 105, 0.10); }
     .icon-qbr { background: rgba(79, 70, 229, 0.10); }
     .icon-prebid { background: rgba(220, 38, 38, 0.10); }
+    .icon-pulse { background: rgba(59, 130, 246, 0.08); }
     .icon-prebid-slides { background: rgba(234, 88, 12, 0.10); }
     .icon-skinvault { background: rgba(8, 145, 178, 0.10); }
     .icon-peripheral { background: rgba(156, 163, 175, 0.10); }
@@ -309,6 +310,7 @@
     .icon-interstitial { background: rgba(220, 38, 38, 0.10); }
     .icon-csstats { background: rgba(37, 99, 235, 0.10); }
     .icon-ads-alert { background: rgba(79, 70, 229, 0.10); }
+    .icon-cmp { background: rgba(234, 88, 12, 0.10); }
 
     /* Footer */
     .hub-footer {
@@ -553,8 +555,30 @@
 
   <!-- Section 2: Analytics & Metrics -->
   <section id="analytics" class="section">
-    <div class="section-header">Analytics & Metrics &middot; 2</div>
+    <div class="section-header">Analytics & Metrics &middot; 4</div>
     <div class="card-grid">
+
+      <a class="card" href="audience-pulse-dashboard.html">
+        <div class="card-icon icon-pulse"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            Audience Pulse
+            <span class="badge badge-live">Weekly</span>
+          </div>
+          <div class="card-desc">Weekly audience health: users, sessions, matches, WAU by geo</div>
+        </div>
+      </a>
+
+      <a class="card" href="notification-effectiveness-dashboard.html">
+        <div class="card-icon icon-notif"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            Notification Effectiveness
+            <span class="badge badge-live">New</span>
+          </div>
+          <div class="card-desc">Activity notification CTR by type, campaign, and EE framework</div>
+        </div>
+      </a>
 
       <a class="card" href="nsm-dashboard.html">
         <div class="card-icon icon-nsm"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
@@ -590,17 +614,6 @@
     </div>
     <div class="card-grid">
 
-      <a class="card" href="analysis/prebid-outstream-csstats-dashboard.html">
-        <div class="card-icon icon-csstats"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><path d="M6 13l4-4 3 3 5-5"></path></svg></div>
-        <div class="card-body">
-          <div class="card-title">
-            Prebid Outstream — CSStats
-            <span class="badge badge-live">Live</span>
-            <span class="badge badge-area">Advertising</span>
-          </div>
-        </div>
-      </a>
-
       <a class="card" href="skin-vault-dashboard.html">
         <div class="card-icon icon-skinvault"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 22 22 7 12 2"></polygon><polyline points="2 7 12 7 22 7"></polyline><polyline points="12 22 12 7"></polyline></svg></div>
         <div class="card-body">
@@ -633,6 +646,29 @@
         </div>
       </a>
 
+      <a class="card" href="localisation-experiment-dashboard.html">
+        <div class="card-icon" style="background: rgba(37, 99, 235, 0.10);"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            Localisation — Mission Copy
+            <span class="badge badge-sprint">Pre-Launch</span>
+            <span class="badge badge-area">Brand Integration</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="docs/product_briefs/cmp-nontcf-experiment-design.md">
+        <div class="card-icon icon-cmp"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            CMP Non-TCF Geo Experiment
+            <span class="badge badge-sprint">In Setup</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+          <div class="card-desc">A/B test: remove TCF CMP in non-GDPR geos (BR, TR, UZ, AU, UA, AR, KZ)</div>
+        </div>
+      </a>
+
     </div>
 
     <!-- Concluded Experiments -->
@@ -641,6 +677,28 @@
       Concluded Experiments
     </div>
     <div class="card-grid">
+
+      <a class="card" href="analysis/prebid-outstream-csstats-dashboard.html">
+        <div class="card-icon icon-csstats"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><path d="M6 13l4-4 3 3 5-5"></path></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            Prebid Outstream — CSStats
+            <span class="badge badge-concluded">Concluded · Apr</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="prebid-outstream-csstats-slides.html">
+        <div class="card-icon icon-prebid-slides"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 12 12 17 22 12"></polyline><polyline points="2 17 12 22 22 17"></polyline></svg></div>
+        <div class="card-body">
+          <div class="card-title">
+            Outstream Moba vs Primis — Slide Deck
+            <span class="badge badge-concluded">Concluded · Apr</span>
+            <span class="badge badge-area">Advertising</span>
+          </div>
+        </div>
+      </a>
 
       <a class="card" href="skippable-video-dashboard.html">
         <div class="card-icon icon-interstitial"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
