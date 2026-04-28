@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audience Pulse — Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+
+            --text: #1A1A2E;
+            --text-muted: #6B7280;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --accent: #3b82f6;        
+            --accent-light: #dbeafe;
+
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+            --gray-light: #d1d5db;
+
+            --radius-lg: 20px;
+            --radius-md: 14px;
+
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; text-transform: uppercase;}
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.tall { height: 450px; }
+
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); max-height: 450px; overflow-y: auto;}
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; position: sticky; top: 0; cursor: pointer; user-select: none; z-index: 10;}
+        th:hover { background-color: #e2e8f0; }
+        tr:nth-child(even) td { background-color: #f8f9fa; }
+        tr:hover td { background-color: #f1f5f9; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        .delta-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.8rem; }
+        .delta-pos { background-color: #d1fae5; color: var(--green); }
+        .delta-neg { background-color: #fee2e2; color: var(--red); }
+        .delta-new { background-color: var(--accent-light); color: var(--accent); }
+
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        
+        .movers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .mover-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+        .mover-item:last-child { border-bottom: none; }
+        .mover-geo { font-weight: 600; font-size: 1.1rem; }
+        .mover-vol { color: var(--text-muted); font-size: 0.9rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        @media (max-width: 900px) {
+            .kpi-grid, .grid-2, .movers-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;margin:-2rem -2rem 2rem -2rem;">
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+      <span style="color:#CBD5E1;">&middot;</span>
+      <span style="color:#6B7280;">Audience Pulse Dashboard</span>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <span class="badge">Weekly Report</span>
+            <h1>Audience Pulse</h1>
+            <h2>Weekly audience health signals across FACEIT</h2>
+            <p id="date-range">Apr 16–22 vs Apr 9–15, 2026</p>
+        </header>
+
+        <div class="kpi-grid" id="kpi-container">
+            <!-- Rendered via JS -->
+        </div>
+
+        <!-- 1. Monetisable Audience (30-Day Rolling) -->
+        <div class="section">
+            <h2 class="section-title">1. Monetisable Audience — 30-Day Rolling</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Mar 28 – Apr 26 vs Feb 26 – Mar 27, 2026</p>
+            <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 2rem;">
+                <div class="kpi-card">
+                    <div class="kpi-title">Active Users <span style="font-size:0.7rem;color:var(--text-muted);">(Advertising)</span></div>
+                    <div class="kpi-value" id="au-total"></div>
+                    <div class="kpi-sub" id="au-delta"></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Active Players <span style="font-size:0.7rem;color:var(--text-muted);">(Brand Integration)</span></div>
+                    <div class="kpi-value" id="ap-total"></div>
+                    <div class="kpi-sub" id="ap-delta"></div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Player Ratio</div>
+                    <div class="kpi-value" id="player-ratio" style="color: var(--accent);"></div>
+                    <div class="kpi-sub">% of active users who play</div>
+                </div>
+            </div>
+            <div class="chart-container" style="height: 320px; margin-bottom: 2rem;">
+                <canvas id="ytdTrendChart"></canvas>
+            </div>
+            <div class="grid-2">
+                <div class="chart-container tall">
+                    <canvas id="audienceChart"></canvas>
+                </div>
+                <div class="table-wrapper">
+                    <table id="audience-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="country">Country</th>
+                                <th class="number" data-sort="users">Active Users</th>
+                                <th class="number" data-sort="players">Active Players</th>
+                                <th class="number" data-sort="ratio">Player %</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Sessions -->
+        <div class="section">
+            <h2 class="section-title">2. Platform Sessions (Top 15)</h2>
+            <div class="grid-2">
+                <div class="chart-container tall">
+                    <canvas id="sessionsChart"></canvas>
+                </div>
+                <div class="table-wrapper">
+                    <table id="sessions-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="country">Country</th>
+                                <th class="number" data-sort="sessions_this_week">Sessions</th>
+                                <th class="number" data-sort="sessions_last_week">Last Week</th>
+                                <th class="number" data-sort="pct">WoW Delta</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Matches -->
+        <div class="section">
+            <h2 class="section-title">3. Match Volume</h2>
+            <div class="grid-2">
+                <div class="chart-container tall">
+                    <canvas id="matchesChart"></canvas>
+                </div>
+                <div class="table-wrapper">
+                    <table id="matches-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="region">Region</th>
+                                <th data-sort="game">Game</th>
+                                <th class="number" data-sort="matches_this_week">Matches</th>
+                                <th class="number" data-sort="pct">WoW Delta</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. WAU -->
+        <div class="section">
+            <h2 class="section-title">4. Weekly Active Users (WAU)</h2>
+            <div class="grid-2">
+                <div class="chart-container tall">
+                    <canvas id="wauChart"></canvas>
+                </div>
+                <div class="table-wrapper">
+                    <table id="wau-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="country">Country</th>
+                                <th class="number" data-sort="wau_this_week">WAU</th>
+                                <th class="number" data-sort="wau_last_week">Last Week</th>
+                                <th class="number" data-sort="pct">WoW Delta</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Biggest Movers -->
+        <div class="section" style="border-color: var(--accent);">
+            <h2 class="section-title">5. Biggest Movers (WAU)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Auto-computed from WAU data (min. 5,000 WAU to qualify).</p>
+            <div class="movers-grid">
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3>Top 3 Risers</h3>
+                    <div id="top-risers"></div>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--red);">
+                    <h3>Top 3 Fallers</h3>
+                    <div id="top-fallers"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer" id="footer-text">
+            Data sources: BigQuery: DataMart.Users, DataMart.Matches, new_tracking_session_v1 | Ads & Partnerships — FACEIT
+        </div>
+    </div>
+
+    <script>
+        const DASHBOARD_META = { 
+            name: "Audience Pulse", 
+            lastUpdated: "2026-04-27", 
+            weekStart: "2026-04-20", 
+            weekEnd: "2026-04-26", 
+            compareStart: "2026-04-13", 
+            compareEnd: "2026-04-19" 
+        };
+
+        const ACTIVE_USERS_DATA = [
+            {"country":"RU","users_this_period":821670,"users_last_period":815154},
+            {"country":"PL","users_this_period":247793,"users_last_period":245819},
+            {"country":"UA","users_this_period":174921,"users_last_period":165081},
+            {"country":"TR","users_this_period":174698,"users_last_period":152650},
+            {"country":"KZ","users_this_period":147902,"users_last_period":152154},
+            {"country":"US","users_this_period":123170,"users_last_period":105728},
+            {"country":"DE","users_this_period":81119,"users_last_period":72072},
+            {"country":"RO","users_this_period":76468,"users_last_period":73774},
+            {"country":"BR","users_this_period":74606,"users_last_period":64932},
+            {"country":"BY","users_this_period":58792,"users_last_period":56376},
+            {"country":"FR","users_this_period":55409,"users_last_period":50965},
+            {"country":"UZ","users_this_period":54658,"users_last_period":53862},
+            {"country":"GB","users_this_period":49942,"users_last_period":44475},
+            {"country":"AR","users_this_period":48240,"users_last_period":43741},
+            {"country":"MN","users_this_period":47103,"users_last_period":44589},
+            {"country":"PT","users_this_period":47079,"users_last_period":44782},
+            {"country":"FI","users_this_period":44363,"users_last_period":43599},
+            {"country":"DK","users_this_period":43836,"users_last_period":44323},
+            {"country":"SE","users_this_period":43601,"users_last_period":43359},
+            {"country":"JP","users_this_period":38873,"users_last_period":38159},
+            {"country":"CZ","users_this_period":26671,"users_last_period":25091},
+            {"country":"XK","users_this_period":26203,"users_last_period":28037},
+            {"country":"CA","users_this_period":24927,"users_last_period":22504},
+            {"country":"ES","users_this_period":24892,"users_last_period":23099},
+            {"country":"RS","users_this_period":23986,"users_last_period":26237},
+            {"country":"CN","users_this_period":23193,"users_last_period":25863},
+            {"country":"LT","users_this_period":21946,"users_last_period":21932},
+            {"country":"NO","users_this_period":18116,"users_last_period":17136},
+            {"country":"HU","users_this_period":17444,"users_last_period":17893},
+            {"country":"AU","users_this_period":15976,"users_last_period":14386},
+            {"country":"VN","users_this_period":15290,"users_last_period":13513},
+            {"country":"LV","users_this_period":15080,"users_last_period":14555},
+            {"country":"AL","users_this_period":14700,"users_last_period":15238},
+            {"country":"BG","users_this_period":14668,"users_last_period":14649},
+            {"country":"NL","users_this_period":14565,"users_last_period":12693},
+            {"country":"SK","users_this_period":14541,"users_last_period":14089},
+            {"country":"GE","users_this_period":14338,"users_last_period":14489},
+            {"country":"CH","users_this_period":13294,"users_last_period":12718},
+            {"country":"KR","users_this_period":12902,"users_last_period":12332},
+            {"country":"IT","users_this_period":12438,"users_last_period":11877},
+            {"country":"EE","users_this_period":12395,"users_last_period":12237},
+            {"country":"KG","users_this_period":12183,"users_last_period":12459},
+            {"country":"IL","users_this_period":11573,"users_last_period":9982},
+            {"country":"MK","users_this_period":10607,"users_last_period":11219},
+            {"country":"BE","users_this_period":10169,"users_last_period":9373},
+            {"country":"MD","users_this_period":9936,"users_last_period":9674},
+            {"country":"AT","users_this_period":9567,"users_last_period":8727},
+            {"country":"HK","users_this_period":9549,"users_last_period":10266},
+            {"country":"PH","users_this_period":9176,"users_last_period":7927},
+            {"country":"IN","users_this_period":8891,"users_last_period":7780}
+        ];
+
+        const YTD_TREND = [
+            {"week":"2025-12-29","active_users":1356187,"active_players":793280},
+            {"week":"2026-01-05","active_users":1733164,"active_players":1040562},
+            {"week":"2026-01-12","active_users":1797573,"active_players":1040870},
+            {"week":"2026-01-19","active_users":1843740,"active_players":1094442},
+            {"week":"2026-01-26","active_users":1742358,"active_players":1019472},
+            {"week":"2026-02-02","active_users":1794420,"active_players":1059646},
+            {"week":"2026-02-09","active_users":1814116,"active_players":1084255},
+            {"week":"2026-02-16","active_users":1846819,"active_players":1119006},
+            {"week":"2026-02-23","active_users":1885155,"active_players":1143066},
+            {"week":"2026-03-02","active_users":1840188,"active_players":1120777},
+            {"week":"2026-03-09","active_users":1833139,"active_players":1118463},
+            {"week":"2026-03-16","active_users":1822797,"active_players":1109284},
+            {"week":"2026-03-23","active_users":1819229,"active_players":1112077},
+            {"week":"2026-03-30","active_users":1848158,"active_players":1129013},
+            {"week":"2026-04-06","active_users":1826759,"active_players":1118877},
+            {"week":"2026-04-13","active_users":1788816,"active_players":856779},
+            {"week":"2026-04-20","active_users":2113784,"active_players":1323881}
+        ];
+
+        const SESSIONS_DATA = [
+            {"country":"RU","sessions_this_week":14304390,"sessions_last_week":8761236},
+            {"country":"PL","sessions_this_week":6522255,"sessions_last_week":4418734},
+            {"country":"US","sessions_this_week":5645035,"sessions_last_week":3095574},
+            {"country":"UA","sessions_this_week":4450988,"sessions_last_week":2696002},
+            {"country":"KZ","sessions_this_week":4419443,"sessions_last_week":2991652},
+            {"country":"TR","sessions_this_week":3887030,"sessions_last_week":2815184},
+            {"country":"DE","sessions_this_week":3041340,"sessions_last_week":1996658},
+            {"country":"RO","sessions_this_week":1855579,"sessions_last_week":1270168},
+            {"country":"BY","sessions_this_week":1654706,"sessions_last_week":918404},
+            {"country":"BR","sessions_this_week":1344467,"sessions_last_week":893853},
+            {"country":"FI","sessions_this_week":1341669,"sessions_last_week":824774},
+            {"country":"UZ","sessions_this_week":1237542,"sessions_last_week":842797},
+            {"country":"NL","sessions_this_week":1198302,"sessions_last_week":738890},
+            {"country":"FR","sessions_this_week":1174396,"sessions_last_week":803430},
+            {"country":"PT","sessions_this_week":1143047,"sessions_last_week":779780}
+        ];
+
+        const MATCHES_DATA = [
+            {"region":"eu","game":"cs2","matches_this_week":1193759,"matches_last_week":1016596},
+            {"region":"na","game":"cs2","matches_this_week":45936,"matches_last_week":35477},
+            {"region":"sa","game":"cs2","matches_this_week":39673,"matches_last_week":30682},
+            {"region":"sea","game":"cs2","matches_this_week":38755,"matches_last_week":35169},
+            {"region":"oce","game":"cs2","matches_this_week":5711,"matches_last_week":4550},
+            {"region":"eu","game":"dota2","matches_this_week":1723,"matches_last_week":2058},
+            {"region":"eu","game":"warface","matches_this_week":394,"matches_last_week":473},
+            {"region":"eu","game":"clash_royale","matches_this_week":377,"matches_last_week":458},
+            {"region":"na","game":"codbo7","matches_this_week":266,"matches_last_week":22},
+            {"region":"emea","game":"ow2","matches_this_week":132,"matches_last_week":65},
+            {"region":"global","game":"easportsfc26","matches_this_week":127,"matches_last_week":120},
+            {"region":"eu","game":"codbo7","matches_this_week":107,"matches_last_week":26},
+            {"region":"apac","game":"teamfight_tactics","matches_this_week":103,"matches_last_week":0},
+            {"region":"eu","game":"teamfight_tactics","matches_this_week":87,"matches_last_week":0},
+            {"region":"eu","game":"rainbow_6","matches_this_week":84,"matches_last_week":39},
+            {"region":"eu","game":"brawl_stars","matches_this_week":78,"matches_last_week":48},
+            {"region":"na","game":"teamfight_tactics","matches_this_week":54,"matches_last_week":0},
+            {"region":"apac","game":"codbo7","matches_this_week":38,"matches_last_week":0},
+            {"region":"na","game":"ow2","matches_this_week":32,"matches_last_week":65},
+            {"region":"sa","game":"ow2","matches_this_week":31,"matches_last_week":16},
+            {"region":"na","game":"rainbow_6","matches_this_week":22,"matches_last_week":4},
+            {"region":"us","game":"dota2","matches_this_week":22,"matches_last_week":16},
+            {"region":"latam","game":"codbo7","matches_this_week":19,"matches_last_week":1},
+            {"region":"global","game":"fc-mobile","matches_this_week":8,"matches_last_week":0},
+            {"region":"latam","game":"rainbow_6","matches_this_week":4,"matches_last_week":12},
+            {"region":"global","game":"ow2","matches_this_week":4,"matches_last_week":313},
+            {"region":"sa","game":"valorant","matches_this_week":3,"matches_last_week":3},
+            {"region":"las","game":"lol","matches_this_week":1,"matches_last_week":0},
+            {"region":"eu","game":"rocket_league","matches_this_week":1,"matches_last_week":0},
+            {"region":"sa","game":"dota2","matches_this_week":0,"matches_last_week":8},
+            {"region":"br","game":"lol","matches_this_week":0,"matches_last_week":2},
+            {"region":"global","game":"pubgmobile","matches_this_week":0,"matches_last_week":3},
+            {"region":"eun","game":"lol","matches_this_week":0,"matches_last_week":15},
+            {"region":"global","game":"deadlock","matches_this_week":0,"matches_last_week":29},
+            {"region":"na","game":"halo_infinite","matches_this_week":0,"matches_last_week":127},
+            {"region":"global","game":"ufc-5","matches_this_week":0,"matches_last_week":126},
+            {"region":"sea","game":"dota2","matches_this_week":0,"matches_last_week":5}
+        ];
+
+        const WAU_DATA = [
+            {"country":"RU","wau_this_week":528798,"wau_last_week":426310},
+            {"country":"PL","wau_this_week":186841,"wau_last_week":156237},
+            {"country":"KZ","wau_this_week":121696,"wau_last_week":107221},
+            {"country":"DE","wau_this_week":121438,"wau_last_week":91651},
+            {"country":"TR","wau_this_week":111923,"wau_last_week":97708},
+            {"country":"UA","wau_this_week":104562,"wau_last_week":83072},
+            {"country":"US","wau_this_week":86178,"wau_last_week":70223},
+            {"country":"NL","wau_this_week":84552,"wau_last_week":61000},
+            {"country":"RO","wau_this_week":51337,"wau_last_week":44808},
+            {"country":"FI","wau_this_week":48299,"wau_last_week":35750},
+            {"country":"FR","wau_this_week":41802,"wau_last_week":33791},
+            {"country":"BY","wau_this_week":41490,"wau_last_week":32519},
+            {"country":"BR","wau_this_week":41037,"wau_last_week":33365},
+            {"country":"SE","wau_this_week":39594,"wau_last_week":31614},
+            {"country":"UZ","wau_this_week":39502,"wau_last_week":34531},
+            {"country":"GB","wau_this_week":38824,"wau_last_week":30643},
+            {"country":"PT","wau_this_week":30006,"wau_last_week":25937},
+            {"country":"DK","wau_this_week":29905,"wau_last_week":27414},
+            {"country":"AR","wau_this_week":27666,"wau_last_week":23821},
+            {"country":"MN","wau_this_week":27567,"wau_last_week":26240},
+            {"country":"XK","wau_this_week":26491,"wau_last_week":24614},
+            {"country":"CZ","wau_this_week":21225,"wau_last_week":17947},
+            {"country":"LT","wau_this_week":20477,"wau_last_week":15716},
+            {"country":"NO","wau_this_week":18651,"wau_last_week":14710},
+            {"country":"LV","wau_this_week":18233,"wau_last_week":12905},
+            {"country":"ES","wau_this_week":16379,"wau_last_week":13287},
+            {"country":"CA","wau_this_week":15356,"wau_last_week":13091},
+            {"country":"RS","wau_this_week":14223,"wau_last_week":12621},
+            {"country":"HU","wau_this_week":11226,"wau_last_week":9568},
+            {"country":"EE","wau_this_week":10997,"wau_last_week":7837},
+            {"country":"AT","wau_this_week":10952,"wau_last_week":8488},
+            {"country":"BG","wau_this_week":10240,"wau_last_week":9162},
+            {"country":"AU","wau_this_week":10061,"wau_last_week":8679},
+            {"country":"MK","wau_this_week":10021,"wau_last_week":9177},
+            {"country":"SK","wau_this_week":9794,"wau_last_week":8309},
+            {"country":"CH","wau_this_week":9300,"wau_last_week":7765},
+            {"country":"GE","wau_this_week":8770,"wau_last_week":7606},
+            {"country":"KG","wau_this_week":8550,"wau_last_week":7730},
+            {"country":"BE","wau_this_week":8254,"wau_last_week":6880},
+            {"country":"VN","wau_this_week":8187,"wau_last_week":7266},
+            {"country":"IL","wau_this_week":7581,"wau_last_week":6622},
+            {"country":"IT","wau_this_week":7479,"wau_last_week":6083},
+            {"country":"MD","wau_this_week":7089,"wau_last_week":5736},
+            {"country":"CN","wau_this_week":6777,"wau_last_week":6438},
+            {"country":"HK","wau_this_week":6409,"wau_last_week":5501},
+            {"country":"TH","wau_this_week":5108,"wau_last_week":4002},
+            {"country":"GR","wau_this_week":5032,"wau_last_week":4381},
+            {"country":"SG","wau_this_week":4879,"wau_last_week":4155},
+            {"country":"BA","wau_this_week":4749,"wau_last_week":4175},
+            {"country":"PH","wau_this_week":4527,"wau_last_week":3927}
+        ];
+
+        const ROLLING_ACTIVE_DATA = [
+            {"country":"RU","active_this_period":474361,"active_last_period":462625},
+            {"country":"PL","active_this_period":143528,"active_last_period":140205},
+            {"country":"TR","active_this_period":102420,"active_last_period":89102},
+            {"country":"UA","active_this_period":98852,"active_last_period":90780},
+            {"country":"KZ","active_this_period":91384,"active_last_period":93173},
+            {"country":"US","active_this_period":65827,"active_last_period":55291},
+            {"country":"DE","active_this_period":46931,"active_last_period":41302},
+            {"country":"RO","active_this_period":46419,"active_last_period":44582},
+            {"country":"BR","active_this_period":38989,"active_last_period":33764},
+            {"country":"BY","active_this_period":34537,"active_last_period":32659},
+            {"country":"FR","active_this_period":33016,"active_last_period":30403},
+            {"country":"PT","active_this_period":31548,"active_last_period":30046},
+            {"country":"FI","active_this_period":29358,"active_last_period":28504},
+            {"country":"GB","active_this_period":29211,"active_last_period":26572},
+            {"country":"DK","active_this_period":27941,"active_last_period":28289},
+            {"country":"AR","active_this_period":27476,"active_last_period":24375},
+            {"country":"UZ","active_this_period":27323,"active_last_period":26239},
+            {"country":"MN","active_this_period":26652,"active_last_period":25566},
+            {"country":"JP","active_this_period":26284,"active_last_period":26167},
+            {"country":"SE","active_this_period":25760,"active_last_period":25511},
+            {"country":"XK","active_this_period":19683,"active_last_period":21097},
+            {"country":"RS","active_this_period":14895,"active_last_period":14551},
+            {"country":"ES","active_this_period":14654,"active_last_period":13724},
+            {"country":"CZ","active_this_period":14226,"active_last_period":13110},
+            {"country":"CA","active_this_period":13895,"active_last_period":12731},
+            {"country":"LT","active_this_period":12635,"active_last_period":12404},
+            {"country":"CN","active_this_period":11917,"active_last_period":12977},
+            {"country":"NO","active_this_period":11349,"active_last_period":10714},
+            {"country":"AL","active_this_period":11195,"active_last_period":11843},
+            {"country":"HU","active_this_period":9844,"active_last_period":9920},
+            {"country":"CH","active_this_period":9276,"active_last_period":8936},
+            {"country":"LV","active_this_period":9173,"active_last_period":8765},
+            {"country":"GE","active_this_period":8910,"active_last_period":8866},
+            {"country":"KR","active_this_period":8893,"active_last_period":8641},
+            {"country":"AU","active_this_period":8565,"active_last_period":7794},
+            {"country":"NL","active_this_period":8432,"active_last_period":7225},
+            {"country":"BG","active_this_period":8415,"active_last_period":8321},
+            {"country":"SK","active_this_period":8346,"active_last_period":7868},
+            {"country":"IT","active_this_period":8042,"active_last_period":7746},
+            {"country":"EE","active_this_period":7835,"active_last_period":7588},
+            {"country":"VN","active_this_period":7758,"active_last_period":7036},
+            {"country":"KG","active_this_period":7379,"active_last_period":7360},
+            {"country":"MK","active_this_period":6825,"active_last_period":7112},
+            {"country":"IL","active_this_period":6716,"active_last_period":5915},
+            {"country":"BE","active_this_period":6043,"active_last_period":5626},
+            {"country":"MD","active_this_period":5747,"active_last_period":5451},
+            {"country":"AT","active_this_period":5612,"active_last_period":5176},
+            {"country":"GR","active_this_period":5103,"active_last_period":4521},
+            {"country":"BA","active_this_period":5019,"active_last_period":5151},
+            {"country":"PK","active_this_period":4752,"active_last_period":4808}
+        ];
+
+        // Format helpers
+        const fmtNum = (num) => new Intl.NumberFormat('en-US').format(num);
+        
+        function calcDelta(current, prev) {
+            if (prev === 0 && current > 0) return { pct: Infinity, html: '<span class="delta-badge delta-new">NEW</span>' };
+            if (prev === 0 && current === 0) return { pct: 0, html: '<span style="color:#9ca3af;">—</span>' };
+            
+            const pct = ((current - prev) / prev) * 100;
+            const sign = pct > 0 ? '+' : '';
+            const cssClass = pct > 0 ? 'delta-pos' : (pct < 0 ? 'delta-neg' : '');
+            
+            return {
+                pct,
+                html: `<span class="delta-badge ${cssClass}">${sign}${pct.toFixed(1)}%</span>`
+            };
+        }
+
+        // Global KPIs computation
+        const totalWauThis = WAU_DATA.reduce((sum, r) => sum + r.wau_this_week, 0);
+        const totalWauLast = WAU_DATA.reduce((sum, r) => sum + r.wau_last_week, 0);
+        const wauDelta = calcDelta(totalWauThis, totalWauLast);
+
+        const totalSessionsThis = SESSIONS_DATA.reduce((sum, r) => sum + r.sessions_this_week, 0);
+        const totalSessionsLast = SESSIONS_DATA.reduce((sum, r) => sum + r.sessions_last_week, 0);
+        const sessionsDelta = calcDelta(totalSessionsThis, totalSessionsLast);
+
+        const totalMatchesThis = MATCHES_DATA.reduce((sum, r) => sum + r.matches_this_week, 0);
+        const totalMatchesLast = MATCHES_DATA.reduce((sum, r) => sum + r.matches_last_week, 0);
+        const matchesDelta = calcDelta(totalMatchesThis, totalMatchesLast);
+
+        // Enhance data arrays with pct for sorting
+        SESSIONS_DATA.forEach(d => {
+            const delta = calcDelta(d.sessions_this_week, d.sessions_last_week);
+            d.pct = delta.pct;
+            d.pct_html = delta.html;
+        });
+
+        MATCHES_DATA.forEach(d => {
+            const delta = calcDelta(d.matches_this_week, d.matches_last_week);
+            d.pct = delta.pct;
+            d.pct_html = delta.html;
+        });
+
+        WAU_DATA.forEach(d => {
+            const delta = calcDelta(d.wau_this_week, d.wau_last_week);
+            d.pct = delta.pct;
+            d.pct_html = delta.html;
+        });
+
+        ROLLING_ACTIVE_DATA.forEach(d => {
+            const delta = calcDelta(d.active_this_period, d.active_last_period);
+            d.pct = delta.pct;
+            d.pct_html = delta.html;
+        });
+
+        ACTIVE_USERS_DATA.forEach(d => {
+            const delta = calcDelta(d.users_this_period, d.users_last_period);
+            d.pct = delta.pct;
+            d.pct_html = delta.html;
+        });
+
+        const playersByCountry = Object.fromEntries(ROLLING_ACTIVE_DATA.map(d => [d.country, d]));
+        const AUDIENCE_DATA = ACTIVE_USERS_DATA.map(d => {
+            const p = playersByCountry[d.country];
+            const players = p ? p.active_this_period : 0;
+            const ratio = d.users_this_period > 0 ? (players / d.users_this_period * 100) : 0;
+            return { country: d.country, users: d.users_this_period, players, ratio: Math.round(ratio * 10) / 10 };
+        });
+
+        // Find fastest growing geo (minimum WAU > 5000)
+        const qualifyingGeos = WAU_DATA.filter(d => d.wau_last_week > 5000);
+        const topGeos = [...qualifyingGeos].sort((a, b) => b.pct - a.pct);
+        const fastestGeo = topGeos[0] || WAU_DATA[0];
+
+        // Render KPIs
+        const totalRollingThis = ROLLING_ACTIVE_DATA.reduce((sum, r) => sum + r.active_this_period, 0);
+        const totalRollingLast = ROLLING_ACTIVE_DATA.reduce((sum, r) => sum + r.active_last_period, 0);
+        const rollingDelta = calcDelta(totalRollingThis, totalRollingLast);
+
+        const totalAuThis = ACTIVE_USERS_DATA.reduce((sum, r) => sum + r.users_this_period, 0);
+        const totalAuLast = ACTIVE_USERS_DATA.reduce((sum, r) => sum + r.users_last_period, 0);
+        const auDelta = calcDelta(totalAuThis, totalAuLast);
+
+        const globalPlayerRatio = ((totalRollingThis / totalAuThis) * 100).toFixed(1);
+
+        document.getElementById('au-total').textContent = (totalAuThis / 1000000).toFixed(2) + 'M';
+        document.getElementById('au-delta').innerHTML = auDelta.html + ' vs prior 30d';
+        document.getElementById('ap-total').textContent = (totalRollingThis / 1000000).toFixed(2) + 'M';
+        document.getElementById('ap-delta').innerHTML = rollingDelta.html + ' vs prior 30d';
+        document.getElementById('player-ratio').textContent = globalPlayerRatio + '%';
+
+        document.getElementById('kpi-container').innerHTML = `
+            <div class="kpi-card">
+                <div class="kpi-title">Active Users (30d)</div>
+                <div class="kpi-value">${(totalAuThis/1000000).toFixed(2)}M</div>
+                <div class="kpi-sub">${auDelta.html} vs prior 30d</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Active Players (30d)</div>
+                <div class="kpi-value">${(totalRollingThis/1000000).toFixed(2)}M</div>
+                <div class="kpi-sub">${rollingDelta.html} vs prior 30d</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Global WAU</div>
+                <div class="kpi-value">${fmtNum(totalWauThis)}</div>
+                <div class="kpi-sub">${wauDelta.html} vs last week</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">Total Matches</div>
+                <div class="kpi-value">${fmtNum(totalMatchesThis)}</div>
+                <div class="kpi-sub">${matchesDelta.html} vs last week</div>
+            </div>
+        `;
+
+        // Biggest Movers
+        const sortedMovers = [...qualifyingGeos].sort((a, b) => b.pct - a.pct);
+        const topRisers = sortedMovers.slice(0, 3);
+        const topFallers = [...qualifyingGeos].sort((a, b) => a.pct - b.pct).slice(0, 3);
+
+        const buildMoverHtml = (movers) => {
+            return movers.map(m => `
+                <div class="mover-item">
+                    <div>
+                        <div class="mover-geo">${m.country}</div>
+                        <div class="mover-vol">${fmtNum(m.wau_this_week)} WAU</div>
+                    </div>
+                    <div>${m.pct_html}</div>
+                </div>
+            `).join('');
+        };
+
+        document.getElementById('top-risers').innerHTML = buildMoverHtml(topRisers);
+        document.getElementById('top-fallers').innerHTML = buildMoverHtml(topFallers);
+
+        // Sorting Logic for Tables
+        function makeTableSortable(tableId, dataArray, renderFn) {
+            const table = document.getElementById(tableId);
+            const headers = table.querySelectorAll('th[data-sort]');
+            let currentSort = '';
+            let isAsc = false;
+
+            headers.forEach(th => {
+                th.addEventListener('click', () => {
+                    const key = th.getAttribute('data-sort');
+                    if (currentSort === key) {
+                        isAsc = !isAsc;
+                    } else {
+                        currentSort = key;
+                        isAsc = false;
+                    }
+
+                    // Remove carets
+                    headers.forEach(h => h.innerHTML = h.innerHTML.replace(' ↑', '').replace(' ↓', ''));
+                    th.innerHTML = th.innerHTML + (isAsc ? ' ↑' : ' ↓');
+
+                    const sortedData = [...dataArray].sort((a, b) => {
+                        let valA = a[key];
+                        let valB = b[key];
+                        
+                        // Handle Infinity for pct
+                        if (valA === Infinity) valA = 999999;
+                        if (valB === Infinity) valB = 999999;
+
+                        if (valA < valB) return isAsc ? -1 : 1;
+                        if (valA > valB) return isAsc ? 1 : -1;
+                        return 0;
+                    });
+                    
+                    renderFn(table.querySelector('tbody'), sortedData);
+                });
+            });
+            // Initial render
+            renderFn(table.querySelector('tbody'), dataArray);
+        }
+
+        // Render fns
+        const renderSessions = (tbody, data) => {
+            tbody.innerHTML = data.map(d => `
+                <tr>
+                    <td><strong>${d.country}</strong></td>
+                    <td class="number">${fmtNum(d.sessions_this_week)}</td>
+                    <td class="number">${fmtNum(d.sessions_last_week)}</td>
+                    <td class="number">${d.pct_html}</td>
+                </tr>
+            `).join('');
+        };
+
+        const renderMatches = (tbody, data) => {
+            tbody.innerHTML = data.map(d => `
+                <tr>
+                    <td style="text-transform:uppercase; font-size:0.8rem; letter-spacing:1px; color:var(--text-muted);">${d.region}</td>
+                    <td><strong>${d.game}</strong></td>
+                    <td class="number">${fmtNum(d.matches_this_week)}</td>
+                    <td class="number">${d.pct_html}</td>
+                </tr>
+            `).join('');
+        };
+
+        const renderWau = (tbody, data) => {
+            tbody.innerHTML = data.map(d => `
+                <tr>
+                    <td><strong>${d.country}</strong></td>
+                    <td class="number">${fmtNum(d.wau_this_week)}</td>
+                    <td class="number">${fmtNum(d.wau_last_week)}</td>
+                    <td class="number">${d.pct_html}</td>
+                </tr>
+            `).join('');
+        };
+
+        const renderAudience = (tbody, data) => {
+            tbody.innerHTML = data.map(d => `
+                <tr>
+                    <td><strong>${d.country}</strong></td>
+                    <td class="number">${fmtNum(d.users)}</td>
+                    <td class="number">${fmtNum(d.players)}</td>
+                    <td class="number">${d.ratio}%</td>
+                </tr>
+            `).join('');
+        };
+
+        makeTableSortable('audience-table', AUDIENCE_DATA, renderAudience);
+        makeTableSortable('sessions-table', SESSIONS_DATA, renderSessions);
+        makeTableSortable('matches-table', MATCHES_DATA, renderMatches);
+        makeTableSortable('wau-table', WAU_DATA, renderWau);
+
+        // Chart.js init
+        Chart.defaults.color = '#6B7280';
+        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        const gridColor = '#E2E8F0';
+        const tooltipDefaults = { backgroundColor: '#ffffff', titleColor: '#1A1A2E', bodyColor: '#6B7280', borderColor: '#E2E8F0', borderWidth: 1 };
+
+        function createBarChart(ctxId, labels, dataThisWeek, dataLastWeek, labelThis, labelLast) {
+            const ctx = document.getElementById(ctxId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: labelThis,
+                            data: dataThisWeek,
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 4
+                        },
+                        {
+                            label: labelLast,
+                            data: dataLastWeek,
+                            backgroundColor: '#d1d5db',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                        tooltip: tooltipDefaults
+                    },
+                    scales: {
+                        x: { grid: { color: gridColor }, ticks: { callback: v => (v >= 1000 ? (v / 1000) + 'k' : v) } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // Init charts with top 15
+        const top15Audience = AUDIENCE_DATA.slice(0, 15);
+        createBarChart('audienceChart',
+            top15Audience.map(d => d.country),
+            top15Audience.map(d => d.users),
+            top15Audience.map(d => d.players),
+            'Active Users (Ads)', 'Active Players (BI)'
+        );
+
+        const ytdLabels = YTD_TREND.map(d => {
+            const dt = new Date(d.week + 'T00:00:00');
+            return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+        });
+        const ytdCtx = document.getElementById('ytdTrendChart').getContext('2d');
+        new Chart(ytdCtx, {
+            type: 'line',
+            data: {
+                labels: ytdLabels,
+                datasets: [
+                    {
+                        label: 'Active Users (Advertising)',
+                        data: YTD_TREND.map(d => d.active_users),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59,130,246,0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Active Players (Brand Integration)',
+                        data: YTD_TREND.map(d => d.active_players),
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16,185,129,0.08)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: {
+                        ...tooltipDefaults,
+                        callbacks: {
+                            label: ctx => `${ctx.dataset.label}: ${fmtNum(ctx.raw)}`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: gridColor },
+                        ticks: { callback: v => (v / 1000000).toFixed(1) + 'M' },
+                        beginAtZero: false
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        const top15Sessions = SESSIONS_DATA.slice(0, 15);
+        createBarChart('sessionsChart', 
+            top15Sessions.map(d => d.country), 
+            top15Sessions.map(d => d.sessions_this_week), 
+            top15Sessions.map(d => d.sessions_last_week),
+            'Sessions This Week', 'Last Week'
+        );
+
+        const top15Wau = WAU_DATA.slice(0, 15);
+        createBarChart('wauChart', 
+            top15Wau.map(d => d.country), 
+            top15Wau.map(d => d.wau_this_week), 
+            top15Wau.map(d => d.wau_last_week),
+            'WAU This Week', 'Last Week'
+        );
+
+        // Matches chart (grouped by game, only top ones to keep it legible)
+        // Group by game globally first to find top games, but simple approach is top 15 rows
+        const top15Matches = MATCHES_DATA.sort((a,b) => b.matches_this_week - a.matches_this_week).slice(0, 15);
+        const matchesCtx = document.getElementById('matchesChart').getContext('2d');
+        new Chart(matchesCtx, {
+            type: 'bar',
+            data: {
+                labels: top15Matches.map(d => `${d.game.toUpperCase()} (${d.region.toUpperCase()})`),
+                datasets: [
+                    {
+                        label: 'Matches This Week',
+                        data: top15Matches.map(d => d.matches_this_week),
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Matches Last Week',
+                        data: top15Matches.map(d => d.matches_last_week),
+                        backgroundColor: '#d1d5db',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: tooltipDefaults
+                },
+                scales: {
+                    x: { grid: { color: gridColor }, type: 'logarithmic', ticks: { callback: v => (v >= 1000 ? (v / 1000) + 'k' : v) } }, // log scale because CS2 dominates
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Set date string
+        document.getElementById('date-range').innerText = `Data for ${DASHBOARD_META.weekStart} to ${DASHBOARD_META.weekEnd} vs ${DASHBOARD_META.compareStart} to ${DASHBOARD_META.compareEnd}`;
+        document.getElementById('footer-text').innerHTML = `Last updated: ${DASHBOARD_META.lastUpdated} | Data sources: BigQuery: DataMart.Users, DataMart.Matches, new_tracking_session_v1, fact__daily_active_players | Ads & Partnerships — FACEIT`;
+    </script>
+</body>
+</html>

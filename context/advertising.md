@@ -59,10 +59,15 @@ Standard IAB formats sold directly and programmatically:
 - Primis and Publift are not comparable: Publift is significantly better as a partner
 
 ### Prebid Testing — Mobalitics
-- Testing a second prebid solution built by **Mobalitics**
+- Tested a second prebid solution built by **Mobalitics** against Primis on CSStats.gg
 - Mobalitics is a platform acquired by EFG (FACEIT's parent group)
 - Mobalitics currently operates **independently from FACEIT** but sits within the same EFG digital platform group
-- Active test — outcome TBD
+- **CSStats outstream A/B test concluded Apr 2026 — Winner: Mobalytics (+134% net RPV)**
+  - Moba: $184 revenue, $0.038 RPV, $0.36 eCPM, ~505K impressions (0% commission)
+  - Primis net: $78.21 ($97.76 gross − 20% rev-share), $0.016 RPV, $0.029 net eCPM, 2.66M impressions
+  - Key driver: US fill gap — Moba 253K US impressions ($125) vs Primis 499 ($0.15)
+  - Recommendation: ship Mobalytics as default outstream on CSStats, sunset Primis outstream
+  - Dashboard: `analysis/prebid-outstream-csstats-dashboard.html`
 
 ## Key Metrics (NSM: AVU / EAU)
 

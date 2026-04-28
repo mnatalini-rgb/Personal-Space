@@ -1,0 +1,35 @@
+{
+  "total_wl_users": 376459,
+  "total_matched": 376459,
+  "total_lifetime_matches": 228948059,
+  "buckets": {
+    "active_7d": {
+      "user_count": 95312,
+      "total_matches": 109955890
+    },
+    "active_30d": {
+      "user_count": 40576,
+      "total_matches": 31233566
+    },
+    "active_90d": {
+      "user_count": 45563,
+      "total_matches": 27764532
+    },
+    "active_180d": {
+      "user_count": 37831,
+      "total_matches": 19264867
+    },
+    "active_365d": {
+      "user_count": 72836,
+      "total_matches": 26831179
+    },
+    "inactive_over_1y": {
+      "user_count": 71741,
+      "total_matches": 13898025
+    },
+    "never_played": {
+      "user_count": 12600,
+      "total_matches": 0
+    }
+  }
+}

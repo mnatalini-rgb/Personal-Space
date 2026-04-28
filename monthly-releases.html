@@ -492,7 +492,7 @@
     </footer>
 
     <script>
-        const SEED_VERSION = 2;
+        const SEED_VERSION = 3;
         const SEED_DATA = [
             // RELEASES
             {
@@ -685,6 +685,26 @@
                 team: ['moritz'],
                 links: { jira: null, dashboard: null, report: 'docs/product_briefs/trust-modal-experiment-conclusion.md' },
                 notes: 'Apply trust modal pattern to all future partner AL flows (PaySafe, etc.)'
+            },
+            {
+                id: 'exp-7', month: '2026-04', type: 'experiment',
+                name: 'Prebid Outstream CSStats — Moba vs Primis', projectId: 'proj-1',
+                area: 'advertising', priority: 'P1',
+                hypothesis: 'Mobalytics (Prebid) outstream video will deliver higher Revenue per Page View than Primis on CSStats.gg, after accounting for Primis 20% rev-share fee.',
+                startDate: '2026-03-30', endDate: '2026-04-23',
+                primaryMetric: { name: 'Revenue per Page View (RPV)', result: 'Moba $0.038 vs Primis net $0.016 per 1K views (+134%)', target: 'Higher RPV' },
+                secondaryMetrics: [
+                    { name: 'Total Revenue', result: 'Moba $184.05 vs Primis net $78.21', target: null },
+                    { name: 'eCPM', result: 'Moba $0.36 vs Primis $0.037 gross', target: null },
+                    { name: 'US Fill', result: 'Moba 253K imp vs Primis 499 imp', target: null }
+                ],
+                sampleSize: '9.7M page views (50.15/49.85 split)',
+                confidence: 'N/A (deterministic revenue comparison)',
+                verdict: 'confirmed',
+                verdictSummary: 'Moba wins by +134% on net RPV. US fill gap is the key driver (Moba $125 US revenue vs Primis $0.15). Even ex-US, Primis only leads by ~$19/month net — not worth hybrid complexity. Recommendation: ship Moba as default outstream on CSStats and sunset Primis.',
+                team: ['moritz'],
+                links: { jira: null, dashboard: 'prebid-outstream-csstats-dashboard.html', report: 'analysis/prebid-outstream-csstats-dashboard.html', slides: 'prebid-outstream-csstats-slides.html' },
+                notes: 'Primis 20% rev-share applied. Moba 0% commission. Next: communicate to EFG/Max, monitor post-rollout RPV for 2 weeks.'
             }
         ];
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # NSM Dashboard Build Script
 # Reads BQ-exported JSON files and injects them into the dashboard HTML template
-# Output: Personal-Space/nsm-dashboard.html (ready for GitHub Pages)
+# Output: Master_Product_Folder/nsm-dashboard.html
 #
 # Usage: ./scripts/build-dashboard.sh
 # Run after: ./scripts/refresh-nsm-data.sh
@@ -14,7 +14,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 DATA_DIR="$PROJECT_DIR/data/bq_exports"
 TEMPLATE="$PROJECT_DIR/analysis/nsm-dashboard.html"
-OUTPUT_DIR="$PROJECT_DIR/../Personal-Space"
+OUTPUT_DIR="$PROJECT_DIR"
 OUTPUT="$OUTPUT_DIR/nsm-dashboard.html"
 
 echo "=== NSM Dashboard Build ==="
@@ -34,6 +34,11 @@ REQUIRED_FILES=(
     "mission_completions.json"
     "weekly_mission_completions.json"
     "reward_claims.json"
+    "reward_costs.json"
+    "reward_effectiveness.json"
+    "reward_type_interim.json"
+    "reward_step_attribution.json"
+    "reward_hero_summary.json"
 )
 
 for f in "${REQUIRED_FILES[@]}"; do
@@ -51,7 +56,7 @@ fi
 
 if [ ! -d "$OUTPUT_DIR" ]; then
     echo "ERROR: Output directory does not exist: $OUTPUT_DIR"
-    echo "Clone the Personal-Space repo first."
+    echo "Expected project directory to exist."
     exit 1
 fi
 
@@ -70,11 +75,22 @@ WEEKLY_EBU_BY_PARTNER=$(cat "$DATA_DIR/weekly_ebu_by_partner.json" | tr -d '\n')
 MISSION_COMPLETIONS=$(cat "$DATA_DIR/mission_completions.json" | tr -d '\n')
 WEEKLY_MISSION_COMPLETIONS=$(cat "$DATA_DIR/weekly_mission_completions.json" | tr -d '\n')
 REWARD_CLAIMS=$(cat "$DATA_DIR/reward_claims.json" | tr -d '\n')
+REWARD_COSTS=$(cat "$DATA_DIR/reward_costs.json" | tr -d '\n')
+REWARD_EFFECTIVENESS=$(cat "$DATA_DIR/reward_effectiveness.json" | tr -d '\n')
+REWARD_TYPE_INTERIM=$(cat "$DATA_DIR/reward_type_interim.json" | tr -d '\n')
+REWARD_STEP_ATTRIBUTION=$(cat "$DATA_DIR/reward_step_attribution.json" | tr -d '\n')
+REWARD_HERO_SUMMARY=$(cat "$DATA_DIR/reward_hero_summary.json" | tr -d '\n')
 if [ -f "$DATA_DIR/account_linkages.json" ]; then
     ACCOUNT_LINKAGES=$(cat "$DATA_DIR/account_linkages.json" | tr -d '\n')
 else
     echo "⚠ account_linkages.json not found — AL data will be empty"
     ACCOUNT_LINKAGES="[]"
+fi
+if [ -f "$DATA_DIR/cdp_tradeit_signals.json" ]; then
+    CDP_TRADEIT_SIGNALS=$(cat "$DATA_DIR/cdp_tradeit_signals.json" | tr -d '\n')
+else
+    echo "⚠ cdp_tradeit_signals.json not found — CDP data will be empty"
+    CDP_TRADEIT_SIGNALS="[]"
 fi
 
 # Build the BQ_DATA JavaScript object
@@ -86,7 +102,13 @@ BQ_DATA_JS="const BQ_DATA = {
             missionCompletions: ${MISSION_COMPLETIONS},
             weeklyMissionCompletions: ${WEEKLY_MISSION_COMPLETIONS},
             rewardClaims: ${REWARD_CLAIMS},
+            rewardCosts: ${REWARD_COSTS},
+            rewardEffectiveness: ${REWARD_EFFECTIVENESS},
+            rewardTypeInterim: ${REWARD_TYPE_INTERIM},
+            rewardStepAttribution: ${REWARD_STEP_ATTRIBUTION},
+            rewardHeroSummary: ${REWARD_HERO_SUMMARY},
             accountLinkages: ${ACCOUNT_LINKAGES},
+            cdpTradeitSignals: ${CDP_TRADEIT_SIGNALS},
             buildTimestamp: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"
         }; // %%BQ_DATA_PLACEHOLDER%%"
 
@@ -150,7 +172,6 @@ if [ -f "$OUTPUT" ]; then
     echo ""
     echo "Next steps:"
     echo "  1. Open $OUTPUT in a browser to verify"
-    echo "  2. cd ../Personal-Space && git add . && git commit -m 'Update dashboard data' && git push"
 else
     echo "ERROR: Output file was not created"
     exit 1

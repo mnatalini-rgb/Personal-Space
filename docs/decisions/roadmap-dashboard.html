@@ -1,35 +1,25 @@
-<!DOCTYPE html>
+Looks great<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ads & Partnerships Roadmap</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Roadmap Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     :root {
-      --bg: #EEF2F3;
+      --bg: #f9fafb;
       --surface: #ffffff;
-      --text: #1A1A2E;
-      --text-muted: #6B7280;
-      --border: #E2E8F0;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
       --accent: #2563eb;
       --accent-hover: #1d4ed8;
-      --accent-light: rgba(37, 99, 235, 0.08);
-      --p0: #FEE2E2;
-      --p0-text: #C2410C;
-      --p1: #FEF3C7;
-      --p1-text: #92400E;
-      --p2: #E8DEFF;
-      --p2-text: #6D28D9;
+      --p0: #dc2626;
+      --p1: #ea580c;
+      --p2: #3b82f6;
       --success: #16a34a;
-      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --radius: 20px;
-      --radius-sm: 12px;
-      --radius-pill: 24px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.06);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --radius: 8px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,10 +44,11 @@
       align-items: flex-end;
       margin-bottom: 24px;
       padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .header-titles h1 { font-size: 28px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; }
-    .header-titles p { font-size: 14px; color: var(--text-muted); margin-top: 4px; font-weight: 400; }
+    .header-titles h1 { font-size: 24px; font-weight: 600; color: var(--text); }
+    .header-titles p { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 
     .nav-tabs {
       display: flex;
@@ -65,25 +56,19 @@
     }
 
     .tab-btn {
-      background: transparent;
-      border: 1px solid #D1D5DB;
+      background: none;
+      border: none;
       padding: 8px 16px;
       font-size: 14px;
-      font-family: inherit;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--text-muted);
       cursor: pointer;
-      border-radius: 9999px;
-      transition: all 0.15s ease;
+      border-radius: var(--radius);
+      transition: background-color 0.2s, color 0.2s;
     }
 
-    .tab-btn:hover { background-color: #F3F4F6; color: var(--text); border-color: #D1D5DB; }
-    .tab-btn.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-      font-weight: 600;
-    }
+    .tab-btn:hover { background-color: var(--border); color: var(--text); }
+    .tab-btn.active { background-color: var(--accent); color: white; }
 
     /* Views */
     .view-section { display: none; }
@@ -96,12 +81,11 @@
       align-items: center;
       background: var(--surface);
       padding: 16px 24px;
-      border-radius: 9999px;
-      box-shadow: var(--shadow);
-      border: none;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
       margin-bottom: 24px;
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 500;
     }
     
     .filter-tabs {
@@ -120,11 +104,10 @@
     select, input {
       padding: 8px 12px;
       border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius);
       font-family: inherit;
       font-size: 14px;
       outline: none;
-      background: var(--surface);
     }
 
     select:focus, input:focus {
@@ -134,32 +117,25 @@
     /* Sprint Grid */
     .sprint-grid {
       width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
+      border-collapse: collapse;
       background: var(--surface);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       table-layout: fixed;
     }
 
     .sprint-grid th, .sprint-grid td {
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
+      border: 1px solid var(--border);
       padding: 12px;
       text-align: left;
       vertical-align: top;
     }
-    .sprint-grid th:last-child, .sprint-grid td:last-child {
-      border-right: none;
-    }
-    .sprint-grid tr:last-child td {
-      border-bottom: none;
-    }
 
     .sprint-grid th {
-      background: #F8FAFA;
-      font-weight: 500;
+      background: var(--bg);
+      font-weight: 600;
       font-size: 13px;
       color: var(--text-muted);
     }
@@ -169,36 +145,11 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 12px !important;
-      background: #F8FAFA !important;
+      background: #f3f4f6 !important;
     }
 
     .sprint-col { width: 15%; }
-    .sprint-col.current-sprint {
-      background: rgba(26, 26, 46, 0.05);
-    }
-    .sprint-col .current-pill {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      font-size: 9px;
-      font-weight: 500;
-      padding: 1px 6px;
-      border-radius: 9999px;
-      margin-left: 4px;
-      vertical-align: middle;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-    .current-sprint-col {
-      border-top: 2px solid var(--accent) !important;
-      background: rgba(26, 26, 46, 0.03);
-    }
-    .member-col {
-      width: 10%;
-      font-weight: 500;
-      font-size: 15px;
-      color: var(--text);
-    }
+    .member-col { width: 10%; font-weight: 500; font-size: 14px; }
 
     .cell-content {
       min-height: 60px;
@@ -207,49 +158,16 @@
       gap: 8px;
     }
 
-    .cell-content.drag-over {
-      background-color: rgba(59, 130, 246, 0.1);
-      border: 1px dashed var(--accent);
-    }
-
     .holiday-cell {
-      background-color: #FFFBEB !important;
+      background-color: #fef08a !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 400;
-      color: #B45309;
+      font-weight: 500;
+      color: #854d0e;
       height: 100%;
       min-height: 60px;
-      border-radius: var(--radius-sm);
-    }
-
-    .holiday-list {
-      max-height: 300px;
-      overflow-y: auto;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-    }
-
-    .holiday-item {
-      display: grid;
-      grid-template-columns: 2fr 3fr 2fr auto;
-      gap: 12px;
-      align-items: center;
-      padding: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .holiday-item:last-child {
-      border-bottom: none;
-    }
-
-    .holiday-form {
-      background: var(--bg);
-      padding: 16px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
+      border-radius: 4px;
     }
 
     .inactive-cell {
@@ -266,35 +184,29 @@
 
     /* Chips */
     .chip {
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      border-radius: 4px;
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       color: white;
       cursor: pointer;
       word-break: break-word;
       line-height: 1.3;
       transition: opacity 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .chip.dragging {
-      opacity: 0.4;
-      border: 1px dashed var(--text);
     }
 
     .chip:hover { opacity: 0.9; }
 
     .add-btn {
       width: 100%;
-      padding: 6px;
+      padding: 4px;
       background: none;
-      border: 1px dashed #D1D5DB;
-      border-radius: 9999px;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
       color: var(--text-muted);
       cursor: pointer;
       font-size: 12px;
-      transition: all 0.15s ease;
+      transition: all 0.2s;
     }
 
     .add-btn:hover {
@@ -310,14 +222,14 @@
       background: var(--surface);
       border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: var(--shadow);
-      border: none;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       font-size: 14px;
     }
 
     .data-table th {
       background: var(--bg);
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-muted);
       text-align: left;
       padding: 12px 16px;
@@ -340,78 +252,43 @@
     .editable-cell { cursor: pointer; }
     .editable-cell:hover { background-color: rgba(0,0,0,0.02); }
 
-    /* Grouped Sections */
-    .section-header-cell {
-      background: var(--bg);
-      padding: 12px 16px !important;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-header-content {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      font-size: 14px;
-    }
-    .section-count {
-      background: #e5e7eb;
-      color: var(--text-muted);
-      padding: 2px 6px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-    .section-impact {
-      color: var(--success);
-      margin-left: auto;
-    }
-    .section-active { border-left: 4px solid var(--accent) !important; }
-    .section-hold { border-left: 4px solid #f59e0b !important; }
-    .section-done { border-left: 4px solid var(--success) !important; opacity: 0.7; }
-    .section-no-eta { border-left: 4px solid var(--border) !important; }
-    .section-timeline { border-left: 4px solid var(--accent) !important; }
-    .section-timeline-future { border-left: 4px solid #8b5cf6 !important; }
-    
-    .group-collapsed .group-rows { display: none; }
-
     /* Badges & Pills */
     .priority-pill {
       display: inline-block;
       padding: 2px 8px;
-      border-radius: 9999px;
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.15s ease;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      min-width: 36px;
     }
-    .priority-pill.P0 { background-color: var(--p0); color: var(--p0-text); }
-    .priority-pill.P1 { background-color: var(--p1); color: var(--p1-text); }
-    .priority-pill.P2 { background-color: var(--p2); color: var(--p2-text); }
+    .priority-pill.P0 { background-color: var(--p0); }
+    .priority-pill.P1 { background-color: var(--p1); }
+    .priority-pill.P2 { background-color: var(--p2); }
 
     .status-badge {
       display: inline-block;
       padding: 4px 10px;
       border-radius: 12px;
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       text-transform: capitalize;
     }
-    .status-badge.tbd { background: #F3F4F6; color: #4B5563; }
-    .status-badge.in_progress { background: #D1FAE5; color: #065F46; }
-    .status-badge.on_hold { background: #FEF9C3; color: #854D0E; }
-    .status-badge.done { background: #DCFCE7; color: #166534; }
-    .status-badge.blocked { background: #FCE7F3; color: #9D174D; }
+    .status-badge.scoping { background: #f3f4f6; color: #4b5563; }
+    .status-badge.in_progress { background: #ffedd5; color: #c2410c; }
+    .status-badge.on_hold { background: #fef08a; color: #854d0e; }
+    .status-badge.done { background: #dcfce7; color: #166534; }
+    .status-badge.blocked { background: #fee2e2; color: #b91c1c; }
 
     .effort-badge {
       display: inline-block;
       padding: 2px 8px;
-      border-radius: var(--radius-sm);
+      border-radius: 4px;
       background: var(--bg);
-      box-shadow: var(--shadow);
-      border: none;
+      border: 1px solid var(--border);
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
       color: var(--text-muted);
     }
 
@@ -421,7 +298,7 @@
     
     .jira-link {
       color: var(--accent);
-      font-weight: 400;
+      font-weight: 500;
       text-decoration: none;
     }
     .jira-link:hover { text-decoration: underline; }
@@ -432,7 +309,7 @@
       justify-content: center;
       width: 24px;
       height: 24px;
-      border-radius: var(--radius-sm);
+      border-radius: 4px;
       color: var(--text-muted);
       background: var(--bg);
       margin-right: 4px;
@@ -454,13 +331,11 @@
 
     .modal-content {
       background: var(--surface);
-      border-radius: var(--radius);
       padding: 24px;
+      border-radius: var(--radius);
       width: 100%;
-      max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: var(--shadow-lg);
+      max-width: 400px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .modal-header {
@@ -474,469 +349,36 @@
     .close-btn { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
     
     .form-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
-    .form-group label { font-size: 12px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; }
+    .form-group label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
     
-    .btn-primary {
-      background: var(--text);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 9999px;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.15s ease;
-    }
+    .btn-primary { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius); cursor: pointer; font-weight: 500; }
     .btn-primary:hover { background: var(--accent-hover); }
-    .btn-export, .btn-import { background: var(--surface); color: var(--text-muted); box-shadow: var(--shadow); border: none; padding: 6px 14px; border-radius: 9999px; cursor: pointer; font-size: 13px; font-weight: 400; transition: all 0.15s ease; }
-    .btn-export:hover, .btn-import:hover { background: var(--border); color: var(--text); }
-    .btn-danger {
-      background: #FEE2E2;
-      color: #DC2626;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 9999px;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.15s ease;
-    }
+    .btn-danger { background: var(--p0); color: white; border: none; padding: 8px 16px; border-radius: var(--radius); cursor: pointer; font-weight: 500; }
 
     .flex-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 24px; }
 
     /* Footer */
     footer {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
+      margin-top: 48px;
       padding-top: 24px;
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-
-
-    .gantt-container {
-      background: var(--surface);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      border: none;
-    }
-    /* KPI Cards */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .kpi-card {
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 12px;
-      padding: 14px 16px;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .kpi-active { border-top: 2px solid #2563eb; }
-    .kpi-done { border-top: 2px solid #16a34a; }
-    .kpi-blocked { border-top: 2px solid #DC2626; }
-    .kpi-impact { border-top: 2px solid #f59e0b; }
-    .kpi-value { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
-    .kpi-label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em; }
-
-    /* Gantt Styles */
-    .gantt-container {
-      background: var(--surface);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      border: none;
-      position: relative;
-    }
-    .gantt-header {
-      display: flex;
-      background: #F8FAFA;
-      color: var(--text);
-      font-weight: 500;
-      font-size: 13px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-radius: var(--radius) var(--radius) 0 0;
-      height: 40px;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .gantt-quarter-label {
-      padding: 0 16px;
-      font-size: 13px;
-      font-weight: 600;
-      min-width: 80px;
-    }
-    .gantt-months {
-      display: flex;
-      flex: 1;
-      height: 100%;
-    }
-    .gantt-month {
-      flex: 1;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      border-left: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-    .gantt-body {
-      padding: 16px;
-      position: relative;
-    }
-    .gantt-grid-lines {
-      position: absolute;
-      top: 0;
-      left: 80px; /* offset for priority pill space */
-      right: 16px;
-      bottom: 0;
-      pointer-events: none;
-    }
-    .gantt-grid-line {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      border-left: 1px dashed var(--border);
-    }
-    .gantt-today-marker {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      border-left: 2px dashed rgba(220, 38, 38, 0.5);
-      z-index: 5;
-      pointer-events: none;
-    }
-    .gantt-today-pill {
-      position: absolute;
-      top: 0;
-      left: -22px;
-      background: #1A1A2E;
-      color: white;
-      font-size: 10px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-    .gantt-row {
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-      gap: 8px;
-      position: relative;
-      z-index: 2;
-      cursor: pointer;
-    }
-    .gantt-bar-container {
-      flex: 1;
-      display: flex;
-      position: relative;
-      height: 40px;
-    }
-    .gantt-bar-wrapper {
-      position: absolute;
-      height: 28px;
-      border-radius: var(--radius-sm);
-      margin-top: 4px;
-      cursor: pointer;
-      display: flex;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: opacity 0.2s;
-    }
-    .gantt-bar-wrapper:hover { opacity: 0.85; }
-    .gantt-bar-filled {
-      height: 100%;
-      position: relative;
-    }
-    .gantt-bar-remaining {
-      height: 100%;
-    }
-    .gantt-bar-label {
-      position: absolute;
-      left: 8px;
-      top: 0;
-      bottom: 0;
-      right: 40px;
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      pointer-events: none;
-    }
-    .gantt-stage-pill {
-      position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 9px;
-      padding: 1px 5px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    .backlog-section, .blocked-section, .completed-section {
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      border: none;
-      margin-bottom: 16px;
-    }
-    .backlog-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: var(--bg);
-      font-weight: 500;
-      font-size: 14px;
-      cursor: pointer;
-      border-bottom: 1px solid var(--border);
-    }
-    .backlog-col-header {
-      display: grid;
-      grid-template-columns: 16px 40px 1fr 120px 1fr;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .backlog-col-header span {
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .backlog-col-header span:hover { color: var(--text); }
-    .backlog-col-header .sort-arrow { font-size: 10px; opacity: 0.5; }
-    .backlog-col-header .sort-arrow.active { opacity: 1; color: var(--accent); }
-    .backlog-item {
-      display: grid;
-      grid-template-columns: 16px 40px 1fr 120px 1fr;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .backlog-item:last-child { border-bottom: none; }
-    .backlog-item:hover { background: var(--bg); border-radius: var(--radius-sm); }
-    .area-tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      font-size: 11px;
-      font-weight: 400;
-    }
-    .area-tag.advertising { background: #e0f2fe; color: #0369a1; }
-    .area-tag.brand_integrations { background: #fef3c7; color: #92400e; }
-    .section-tbd { border-left: 4px solid #6b7280 !important; }
-    .section-blocked { border-left: 4px solid #dc2626 !important; opacity: 0.7; }
-    
-    .filter-impact-badge {
-      display: inline-block;
-      margin-left: 10px;
-      padding: 2px 8px;
-      font-size: 11px;
-      font-weight: 600;
-      border-radius: 9999px;
-      background: rgba(0, 0, 0, 0.08);
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-    }
-    .tab-btn.active .filter-impact-badge {
-      background: rgba(255, 255, 255, 0.25);
-      color: white;
-    }
-    .sh-links-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .sh-link-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 10px;
-      font-size: 11px;
-      font-weight: 500;
-      border-radius: 999px;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      cursor: pointer;
-    }
-    .sh-link-pill.doc {
-      background: #f0f4ff;
-      color: #2563eb;
-      border: 1px solid #dbeafe;
-    }
-    .sh-link-pill.doc:hover {
-      background: #dbeafe;
-      border-color: #93c5fd;
-    }
-    .sh-link-pill.figma {
-      background: #fdf2f8;
-      color: #db2777;
-      border: 1px solid #fce7f3;
-    }
-    .sh-link-pill.figma:hover {
-      background: #fce7f3;
-      border-color: #f9a8d4;
-    }
-    .sh-link-pill.dashboard {
-      background: #f0fdf4;
-      color: #16a34a;
-      border: 1px solid #dcfce7;
-    }
-    .sh-link-pill.dashboard:hover {
-      background: #dcfce7;
-      border-color: #86efac;
-    }
-    .sh-link-pill.analytics {
-      background: #faf5ff;
-      color: #7c3aed;
-      border: 1px solid #ede9fe;
-    }
-    .sh-link-pill.analytics:hover {
-      background: #ede9fe;
-      border-color: #c4b5fd;
-    }
-    .sh-link-pill.legal {
-      background: #fffbeb;
-      color: #b45309;
-      border: 1px solid #fef3c7;
-    }
-    .sh-link-pill.legal:hover {
-      background: #fef3c7;
-      border-color: #fcd34d;
-    }
-    .sh-edit-links-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .sh-edit-link-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      font-size: 12px;
-      background: #f3f4f6;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-    }
-    .sh-edit-link-chip .remove-link {
-      cursor: pointer;
-      color: #ef4444;
-      font-weight: 600;
-      margin-left: 4px;
-    }
-    .sh-edit-link-chip .remove-link:hover {
-      color: #dc2626;
-    }
-    /* Markdown Preview Modal */
-    .md-preview-container {
-      max-width: 760px;
-      width: 90vw;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .md-preview-header {
+      border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
-      flex-shrink: 0;
-    }
-    .md-preview-title {
+      color: var(--text-muted);
       font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
-    .md-preview-content {
-      overflow-y: auto;
-      flex: 1;
-      padding-right: 8px;
-    }
-    /* Markdown rendered content styles */
-    .md-preview-content h1 { font-size: 22px; font-weight: 700; margin: 24px 0 12px; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-    .md-preview-content h2 { font-size: 18px; font-weight: 600; margin: 20px 0 10px; color: var(--text); }
-    .md-preview-content h3 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--text); }
-    .md-preview-content h4 { font-size: 14px; font-weight: 600; margin: 12px 0 6px; color: var(--text); }
-    .md-preview-content p { font-size: 14px; line-height: 1.7; margin: 0 0 12px; color: var(--text); }
-    .md-preview-content ul, .md-preview-content ol { margin: 0 0 12px; padding-left: 24px; font-size: 14px; line-height: 1.7; }
-    .md-preview-content li { margin-bottom: 4px; }
-    .md-preview-content li ul, .md-preview-content li ol { margin-top: 4px; margin-bottom: 4px; }
-    .md-preview-content strong { font-weight: 600; }
-    .md-preview-content em { font-style: italic; }
-    .md-preview-content a { color: var(--accent); text-decoration: none; }
-    .md-preview-content a:hover { text-decoration: underline; }
-    .md-preview-content code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: 'SF Mono', 'Consolas', monospace; }
-    .md-preview-content pre { background: #f3f4f6; padding: 14px; border-radius: var(--radius-sm); overflow-x: auto; margin: 0 0 12px; }
-    .md-preview-content pre code { background: none; padding: 0; font-size: 13px; }
-    .md-preview-content blockquote { border-left: 3px solid var(--accent); padding: 8px 16px; margin: 0 0 12px; background: var(--accent-light); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-    .md-preview-content blockquote p { margin: 0; color: var(--text-muted); }
-    .md-preview-content hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-    .md-preview-content table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 13px; }
-    .md-preview-content thead { background: #f9fafb; }
-    .md-preview-content th { text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid var(--border); color: var(--text); }
-    .md-preview-content td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
-    .md-preview-content tr:hover { background: #f9fafb; }
-    .md-preview-content img { max-width: 100%; border-radius: var(--radius-sm); }
-    /* Checkbox lists */
-    .md-preview-content input[type="checkbox"] { margin-right: 6px; }
-    /* Scrollbar styling */
-    .md-preview-content::-webkit-scrollbar { width: 6px; }
-    .md-preview-content::-webkit-scrollbar-track { background: transparent; }
-    .md-preview-content::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-    .md-preview-content::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
   </style>
 </head>
 <body>
-  <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
-    <a href="index.html" style="color:#1A1A2E;text-decoration:none;">← Hub</a>
-    <span style="color:#CBD5E1;">·</span>
-    <span style="color:#6B7280;">Ads & Partnerships Roadmap</span>
-  </nav>
   <div class="container">
     <header>
       <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 0.5rem;">
         <div class="header-titles">
-          <h1>Ads & Partnerships Roadmap</h1>
+          <h1>Roadmap Dashboard</h1>
           <p>FACEIT Monetisation — Brand Integrations & Advertising</p>
         </div>
+        <a href="nsm-dashboard.html" style="color: #60a5fa; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.35rem; opacity: 0.85; transition: opacity 0.2s; margin-top: 0.5rem; white-space: nowrap;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">📊 NSM Metrics <span style="font-size: 0.75rem;">→</span></a>
       </div>
       <div class="nav-tabs">
         <button type="button" class="tab-btn active" onclick="switchTab('sprint-view', this)">Internal Sprint View</button>
@@ -947,15 +389,11 @@
     <!-- TAB 1: Internal Sprint View -->
     <section id="sprint-view" class="view-section active">
       <div class="controls">
-        <select id="quarter-select" onchange="currentQuarter=this.value; renderSprintGrid()">
+        <select id="quarter-select" onchange="renderSprintGrid()">
           <option value="Q2-2026">Q2 2026 (Apr - Jun)</option>
-          <option value="Q1-2026">Q1 2026 (Jan - Mar)</option>
         </select>
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <button type="button" class="btn-primary" style="background: #FFFBEB; color: #B45309; border: 1px solid #FDE68A; font-size: 13px; padding: 6px 14px;" onclick="openHolidayModal()">🌴 Holidays</button>
-          <div style="font-size: 14px; color: var(--text-muted);">
-            Double-click a cell to edit.
-          </div>
+        <div style="font-size: 14px; color: var(--text-muted);">
+          Double-click a cell to edit.
         </div>
       </div>
 
@@ -967,23 +405,37 @@
     <!-- TAB 2: Stakeholder Roadmap -->
     <section id="stakeholder-view" class="view-section">
       <div class="summary-bar">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div class="filter-tabs" id="sh-filters">
-            <button type="button" class="tab-btn active" onclick="setShFilter('All', this)">All<span class="filter-impact-badge" id="badge-all"></span></button>
-            <button type="button" class="tab-btn" onclick="setShFilter('brand_integrations', this)">Brand Integrations<span class="filter-impact-badge" id="badge-brand"></span></button>
-            <button type="button" class="tab-btn" onclick="setShFilter('advertising', this)">Advertising<span class="filter-impact-badge" id="badge-ads"></span></button>
-          </div>
-
+        <div class="filter-tabs" id="sh-filters">
+          <button type="button" class="tab-btn active" onclick="setShFilter('All', this)">All</button>
+          <button type="button" class="tab-btn" onclick="setShFilter('brand_integrations', this)">Brand Integrations</button>
+          <button type="button" class="tab-btn" onclick="setShFilter('advertising', this)">Advertising</button>
         </div>
-
+        <div id="sh-summary-stats">
+          <!-- Stats injected via JS -->
+        </div>
       </div>
 
       <div style="overflow-x: auto;">
-        <div id="sh-timeline-container"></div>
+        <table class="data-table" id="sh-table">
+          <thead>
+            <tr>
+              <th style="width: 60px" onclick="sortShData('priority')">Priority ↕</th>
+              <th style="width: 250px" onclick="sortShData('initiative')">Initiative ↕</th>
+              <th style="width: 100px; text-align: right;" onclick="sortShData('impact')">Impact ↕</th>
+              <th style="width: 70px" onclick="sortShData('effort')">Effort ↕</th>
+              <th style="width: 120px" onclick="sortShData('status')">Status ↕</th>
+              <th style="width: 100px" onclick="sortShData('eta')">ETA ↕</th>
+              <th>Notes</th>
+              <th style="width: 80px">Links</th>
+            </tr>
+          </thead>
+          <tbody id="sh-table-body">
+            <!-- Rows injected via JS -->
+          </tbody>
+        </table>
       </div>
-      <div id="sh-summary-stats" style="margin-top: 16px; margin-bottom: 16px;"></div>
       <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-        <span style="font-size: 13px; color: var(--text-muted);">Double-click any item to edit. "AD-XXXX" in Notes automatically link to Jira.</span>
+        <span style="font-size: 13px; color: var(--text-muted);">Double-click any cell to edit. "AD-XXXX" in Notes automatically link to Jira.</span>
         <button type="button" class="btn-primary" onclick="addNewShItem()">+ Add Initiative</button>
       </div>
     </section>
@@ -991,11 +443,6 @@
     <footer>
       <div>
         <a href="productivity-dashboard.html" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Productivity Dashboard</a>
-      </div>
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <button type="button" class="btn-export" onclick="exportRoadmapData()" title="Download roadmap data as JSON backup">Export</button>
-        <button type="button" class="btn-import" onclick="document.getElementById('import-file').click()" title="Restore roadmap data from JSON backup">Import</button>
-        <input type="file" id="import-file" accept=".json" style="display:none;" onchange="importRoadmapData(event)">
       </div>
       <div style="text-align: right;">
         <span id="last-updated">Last updated: -</span><br>
@@ -1041,36 +488,6 @@
         <label>Initiative</label>
         <input type="text" id="sh-edit-initiative">
       </div>
-
-      <div style="display: flex; gap: 16px;">
-        <div class="form-group" style="flex: 1;">
-          <label>Stage</label>
-          <select id="sh-edit-stage">
-            <option value="scoping">Scoping</option>
-            <option value="development">Development</option>
-            <option value="ready">Ready</option>
-            <option value="experimenting">Experimenting</option>
-            <option value="concluded">Concluded</option>
-            <option value="released">Released</option>
-            <option value="completed">Completed</option>
-          </select>
-        </div>
-        <div class="form-group" style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 8px;">
-          <input type="checkbox" id="sh-edit-requiresExperiment" style="width: 16px; height: 16px; margin:0;">
-          <label style="margin:0; text-transform:none;">Requires Experiment</label>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 16px;">
-        <div class="form-group" style="flex: 1;">
-          <label>Start Date</label>
-          <input type="date" id="sh-edit-startDate">
-        </div>
-        <div class="form-group" style="flex: 1;">
-          <label>Dev Start Date</label>
-          <input type="date" id="sh-edit-devStartDate">
-        </div>
-      </div>
       
       <div style="display: flex; gap: 16px;">
         <div class="form-group" style="flex: 1;">
@@ -1105,7 +522,7 @@
         <div class="form-group" style="flex: 1;">
           <label>Status</label>
           <select id="sh-edit-status">
-            <option value="tbd">TBD</option>
+            <option value="scoping">Scoping</option>
             <option value="on_hold">On Hold</option>
             <option value="in_progress">In Progress</option>
             <option value="blocked">Blocked</option>
@@ -1114,18 +531,7 @@
         </div>
         <div class="form-group" style="flex: 1;">
           <label>ETA</label>
-          <select id="sh-edit-eta-select" onchange="toggleEtaCustom()" style="margin-bottom: 4px;">
-            <option value="">No ETA Set</option>
-            <option value="Apr 2026">Apr 2026</option>
-            <option value="May 2026">May 2026</option>
-            <option value="Jun 2026">Jun 2026</option>
-            <option value="Q3 2026">Q3 2026</option>
-            <option value="Q4 2026">Q4 2026</option>
-            <option value="H2 2026">H2 2026</option>
-            <option value="2027">2027</option>
-            <option value="custom">Custom...</option>
-          </select>
-          <input type="text" id="sh-edit-eta" placeholder="e.g. September 15" style="display: none;">
+          <input type="text" id="sh-edit-eta" placeholder="e.g. Q3">
         </div>
       </div>
 
@@ -1139,16 +545,6 @@
         <input type="text" id="sh-edit-jira" placeholder="e.g. AD-1234">
       </div>
 
-      <div class="form-group">
-        <label>Links</label>
-        <div id="sh-edit-links-list" class="sh-edit-links-list"></div>
-        <div style="display: flex; gap: 8px; margin-top: 4px;">
-          <input type="text" id="sh-edit-link-label" placeholder="Label (e.g. PRD, Figma)" style="flex: 1; max-width: 140px;">
-          <input type="text" id="sh-edit-link-url" placeholder="URL or file path" style="flex: 2;">
-          <button type="button" class="btn-primary" style="padding: 8px 12px; font-size: 12px;" onclick="addShEditLink()">Add</button>
-        </div>
-      </div>
-
       <div class="flex-actions" style="justify-content: space-between;">
         <button type="button" class="btn-danger" onclick="deleteShItem()">Delete</button>
         <div>
@@ -1159,228 +555,53 @@
     </div>
   </div>
 
-  <!-- Stakeholder Brief Modal -->
-  <div class="modal-overlay" id="sh-brief-modal" onclick="if(event.target===this)closeModal('sh-brief-modal')">
-    <div class="modal-content" style="max-width: 560px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <span id="sh-brief-title" style="font-size:16px;font-weight:600;color:var(--text);"></span>
-        <button type="button" class="close-btn" onclick="closeModal('sh-brief-modal')">&times;</button>
-      </div>
-      <div id="sh-brief-content"></div>
-    </div>
-  </div>
-
-  <!-- Markdown Document Preview Modal -->
-  <div class="modal-overlay" id="md-preview-modal" onclick="if(event.target===this)closeModal('md-preview-modal')">
-    <div class="modal-content md-preview-container">
-      <div class="md-preview-header">
-        <span id="md-preview-title" class="md-preview-title"></span>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <a id="md-preview-open-link" href="#" target="_blank" style="font-size: 12px; color: var(--accent); text-decoration: none; white-space: nowrap;">Open file ↗</a>
-          <button type="button" class="close-btn" onclick="closeModal('md-preview-modal')">&times;</button>
-        </div>
-      </div>
-      <div id="md-preview-content" class="md-preview-content"></div>
-    </div>
-  </div>
-
-  <!-- Holiday Modal -->
-  <div class="modal-overlay" id="holiday-modal" onclick="if(event.target===this)closeModal('holiday-modal')">
-    <div class="modal-content" style="max-width: 600px;">
-      <div class="modal-header">
-        <h2 class="modal-title">🌴 Manage Holidays</h2>
-        <button type="button" class="close-btn" onclick="closeModal('holiday-modal')">&times;</button>
-      </div>
-      <div id="holiday-list" class="holiday-list"></div>
-      <div class="holiday-form">
-        <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">Add Holiday</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; gap: 8px; align-items: end;">
-          <div>
-            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Team Member</label>
-            <select id="holiday-member" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;"></select>
-          </div>
-          <div>
-            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Start Date</label>
-            <input type="date" id="holiday-start" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
-          </div>
-          <div>
-            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">End Date</label>
-            <input type="date" id="holiday-end" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
-          </div>
-          <div>
-            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Label</label>
-            <input type="text" id="holiday-label" placeholder="e.g. Summer break" style="width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px;">
-          </div>
-          <button type="button" class="btn-primary" onclick="addHoliday()" style="padding: 8px 16px; white-space: nowrap;">+ Add</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
     // Constants & Seed Data
-    const SEED_VERSION = 21;
+    const SEED_VERSION = 1;
     const JIRA_BASE_URL = 'https://efgcloud.atlassian.net/browse/';
 
     const TEAM_MEMBERS = [
-      { id: 'anouk', name: 'Anouk', role: 'Sr. Designer', color: '#8b5cf6', links: [] },
-      { id: 'isabel', name: 'Isabel', role: 'Sr. BE', color: '#06b6d4', links: [] },
-      { id: 'egor', name: 'Egor', role: 'Sr. BE', color: '#f59e0b', links: [] },
-      { id: 'teodor', name: 'Teodor', role: 'Sr. FE', color: '#10b981', links: [] },
-      { id: 'omar', name: 'Omar', role: 'Sr. FE', color: '#ec4899', startDate: '2026-04-20', links: [] },
-      { id: 'moritz', name: 'Moritz', role: 'Dir. PM', color: '#2563eb', links: [] }
+      { id: 'anouk', name: 'Anouk Lubbers', role: 'Product Designer', color: '#8b5cf6' },
+      { id: 'isabel', name: 'Isabel Diezma Pérez', role: 'Senior Backend Engineer', color: '#06b6d4' },
+      { id: 'egor', name: 'Egor Shestakov', role: 'Senior Backend Engineer', color: '#f59e0b' },
+      { id: 'teodor', name: 'Teodor Kuzmanov', role: 'Senior Frontend Engineer', color: '#10b981' },
+      { id: 'omar', name: 'Omar del Real Ouldam', role: 'Senior Frontend Engineer', color: '#ec4899', startDate: '2026-04-20' },
+      { id: 'moritz', name: 'Moritz Natalini', role: 'PM, Monetisation', color: '#2563eb' }
     ];
 
-    const SEED_HOLIDAYS = [
+    const HOLIDAYS = [
       { memberId: 'moritz', startDate: '2026-04-02', endDate: '2026-04-08', label: 'Easter' }
     ];
-    let HOLIDAYS = JSON.parse(localStorage.getItem('roadmap_holidays')) || [...SEED_HOLIDAYS];
-
-    // ── Consistent initiative color map (used in both Sprint Grid + Gantt) ──
-    const INITIATIVE_COLORS = {
-      // Advertising (teal family)
-      'Play Interstitial':             '#0891b2',
-      'Video Skippable Interstitial':  '#06b6d4',
-      'Ads Alerts V2':                 '#22d3ee',
-      'AdOps handover document':       '#0e7490',
-      'Primis / Moba outstream AB test': '#67e8f9',
-      'Primis / Moba display AB test': '#a5f3fc',
-      'Primis content video':          '#155e75',
-      'Primis':                        '#164e63',
-      'Publift display Faceit':        '#0284c7',
-      'Publift: CMP optimisation':     '#0ea5e9',
-      'Publift: AR investigation':     '#38bdf8',
-      'Publift outstream video':       '#7dd3fc',
-      'AdShield Implementation':       '#0c4a6e',
-      'Placement improvements':        '#075985',
-      'Outstream competitors exclusion': '#0369a1',
-      'Ezoic outstream':               '#bae6fd',
-      'Ezoic anchor ads':              '#e0f2fe',
-      'Google':                        '#0d9488',
-      'Rewarded video':                '#14b8a6',
-      // Brand Integrations (amber/orange family)
-      'Blacklyte Activation':          '#f59e0b',
-      'Blacklyte iterations':          '#d97706',
-      'Logitech Brand Takeover + RV experiment': '#ea580c',
-      'Missions Admin Migration':      '#fb923c',
-      'AL Growth — Trust Modal Redesign': '#b45309',
-      // Cross-cutting / Product (purple family)
-      'Skin Initiative':               '#8b5cf6',
-      'Peripherals Initiative Discovery': '#7c3aed',
-      'Hardware component investigation': '#6d28d9',
-      // Neutral / unassigned
-      'Tech Debts':                    '#94a3b8',
-      'Onboarding':                    '#94a3b8',
-      'Advertiser portal Tradeit':     '#64748b'
-    };
-
-    const AREA_FALLBACK_COLORS = {
-      'advertising': '#06b6d4',
-      'brand_integrations': '#f59e0b'
-    };
-
-    function getInitiativeColor(name, area) {
-      if (INITIATIVE_COLORS[name]) return INITIATIVE_COLORS[name];
-      if (area && AREA_FALLBACK_COLORS[area]) return AREA_FALLBACK_COLORS[area];
-      return '#94a3b8';
-    }
-
-    function getContrastColor(hex) {
-      // Returns dark or white text based on background luminance
-      const r = parseInt(hex.slice(1,3), 16);
-      const g = parseInt(hex.slice(3,5), 16);
-      const b = parseInt(hex.slice(5,7), 16);
-      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-      return luminance > 0.35 ? '#1e293b' : '#ffffff';
-    }
 
     const SEED_SPRINT_DATA = {
-      'Q1-2026': {
-        sprints: [
-          { id: 's1.1', name: 'Sprint 1.1', start: '2026-01-05', end: '2026-01-16', month: 'JAN', links: [] },
-          { id: 's1.2', name: 'Sprint 1.2', start: '2026-01-19', end: '2026-01-30', month: 'JAN', links: [] },
-          { id: 's1.3', name: 'Sprint 1.3', start: '2026-02-02', end: '2026-02-13', month: 'FEB', links: [] },
-          { id: 's1.4', name: 'Sprint 1.4', start: '2026-02-16', end: '2026-02-27', month: 'FEB', links: [] },
-          { id: 's1.5', name: 'Sprint 1.5', start: '2026-03-02', end: '2026-03-13', month: 'MAR', links: [] },
-          { id: 's1.6', name: 'Sprint 1.6', start: '2026-03-16', end: '2026-03-27', month: 'MAR', links: [] }
-        ],
-        assignments: {
-          'anouk': {
-            's1.1': [],
-            's1.2': [],
-            's1.3': [{ id: 'q1-1', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
-            's1.4': [{ id: 'q1-2', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
-            's1.5': [{ id: 'q1-3', name: 'Skin Initiative', color: '#8b5cf6' }],
-            's1.6': [{ id: 'q1-4', name: 'Skin Initiative', color: '#8b5cf6' }]
-          },
-          'isabel': {
-            's1.1': [{ id: 'q1-5', name: 'Blacklyte iterations', color: '#d97706' }],
-            's1.2': [{ id: 'q1-6', name: 'Blacklyte iterations', color: '#d97706' }],
-            's1.3': [{ id: 'q1-7', name: 'Missions Admin Migration', color: '#fb923c' }],
-            's1.4': [{ id: 'q1-8', name: 'Missions Admin Migration', color: '#fb923c' }],
-            's1.5': [{ id: 'q1-9', name: 'Missions Admin Migration', color: '#fb923c' }],
-            's1.6': [{ id: 'q1-10', name: 'Skin Initiative', color: '#8b5cf6' }]
-          },
-          'egor': {
-            's1.1': [{ id: 'q1-11', name: 'Primis', color: '#164e63' }],
-            's1.2': [{ id: 'q1-12', name: 'Primis', color: '#164e63' }, { id: 'q1-13', name: 'Publift display Faceit', color: '#0284c7' }],
-            's1.3': [{ id: 'q1-14', name: 'Publift display Faceit', color: '#0284c7' }],
-            's1.4': [{ id: 'q1-15', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }],
-            's1.5': [{ id: 'q1-16', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }],
-            's1.6': [{ id: 'q1-17', name: 'Primis / Moba display AB test', color: '#a5f3fc' }]
-          },
-          'teodor': {
-            's1.1': [{ id: 'q1-18', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
-            's1.2': [{ id: 'q1-19', name: 'Logitech Brand Takeover + RV experiment', color: '#ea580c' }],
-            's1.3': [{ id: 'q1-20', name: 'Play Interstitial', color: '#0891b2' }],
-            's1.4': [{ id: 'q1-21', name: 'Play Interstitial', color: '#0891b2' }],
-            's1.5': [{ id: 'q1-22', name: 'Play Interstitial', color: '#0891b2' }],
-            's1.6': [{ id: 'q1-23', name: 'Play Interstitial', color: '#0891b2' }, { id: 'q1-24', name: 'Video Skippable Interstitial', color: '#06b6d4' }]
-          },
-          'omar': {
-            's1.1': [], 's1.2': [], 's1.3': [], 's1.4': [], 's1.5': [], 's1.6': []
-          },
-          'moritz': {
-            's1.1': [], 's1.2': [], 's1.3': [], 's1.4': [], 's1.5': [], 's1.6': []
-          },
-          'releases': {
-            's1.1': [{ id: 'q1-r1', name: 'Primis', color: '#164e63' }],
-            's1.2': [{ id: 'q1-r2', name: 'Blacklyte iterations', color: '#d97706' }],
-            's1.3': [],
-            's1.4': [{ id: 'q1-r3', name: 'Publift: AR investigation', color: '#38bdf8' }],
-            's1.5': [{ id: 'q1-r4', name: 'Primis / Moba outstream AB test', color: '#67e8f9' }, { id: 'q1-r5', name: 'Primis / Moba display AB test', color: '#a5f3fc' }],
-            's1.6': [{ id: 'q1-r6', name: 'Ads Alerts V2', color: '#22d3ee' }]
-          }
-        }
-      },
       'Q2-2026': {
         sprints: [
-{ id: 's2.1', name: 'Sprint 2.1', start: '2026-03-30', end: '2026-04-10', month: 'APR', links: [] },
-      { id: 's2.2', name: 'Sprint 2.2', start: '2026-04-13', end: '2026-04-24', month: 'APR', links: [] },
-      { id: 's2.3', name: 'Sprint 2.3', start: '2026-04-27', end: '2026-05-08', month: 'MAY', links: [] },
-      { id: 's2.4', name: 'Sprint 2.4', start: '2026-05-11', end: '2026-05-22', month: 'MAY', links: [] },
-      { id: 's2.5', name: 'Sprint 2.5', start: '2026-05-25', end: '2026-06-05', month: 'JUN', links: [] },
-      { id: 's2.6', name: 'Sprint 2.6', start: '2026-06-08', end: '2026-06-19', month: 'JUN', links: [] }
+          { id: 's2.1', name: 'Sprint 2.1', start: '2026-04-07', end: '2026-04-18', month: 'APR' },
+          { id: 's2.2', name: 'Sprint 2.2', start: '2026-04-21', end: '2026-05-02', month: 'APR/MAY' },
+          { id: 's2.3', name: 'Sprint 2.3', start: '2026-05-05', end: '2026-05-15', month: 'MAY' },
+          { id: 's2.4', name: 'Sprint 2.4', start: '2026-05-18', end: '2026-05-29', month: 'MAY' },
+          { id: 's2.5', name: 'Sprint 2.5', start: '2026-06-01', end: '2026-06-12', month: 'JUN' },
+          { id: 's2.6', name: 'Sprint 2.6', start: '2026-06-15', end: '2026-06-26', month: 'JUN' }
         ],
         assignments: {
           'anouk': {
-            's2.1': [{ id: '1', name: 'Peripherals Initiative Discovery', projectId: 'proj-5', color: '#7c3aed' }, { id: '11', name: 'AL Growth — Trust Modal Redesign', projectId: 'proj-3', color: '#b45309' }],
-            's2.2': [{ id: '2', name: 'AL Growth — Trust Modal Redesign', projectId: 'proj-3', color: '#b45309' }],
+            's2.1': [{ id: '1', name: 'Peripherals Initiative Discovery', projectId: 'proj-5', color: '#8b5cf6' }],
+            's2.2': [{ id: '2', name: 'Skin Initiative', projectId: 'proj-3', color: '#06b6d4' }],
             's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
           },
           'isabel': {
-            's2.1': [{ id: '3', name: 'Skin Initiative', projectId: 'proj-3', color: '#8b5cf6' }, { id: '4', name: 'Missions Admin Migration', projectId: 'proj-8', color: '#fb923c' }],
-            's2.2': [{ id: '5', name: 'Skin Initiative', projectId: 'proj-3', color: '#8b5cf6' }],
+            's2.1': [{ id: '3', name: 'Skin Initiative', projectId: 'proj-3', color: '#06b6d4' }, { id: '4', name: 'Missions Admin Migration', projectId: 'proj-8', color: '#f59e0b' }],
+            's2.2': [{ id: '5', name: 'Skin Initiative', projectId: 'proj-3', color: '#06b6d4' }],
             's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
           },
           'egor': {
-            's2.1': [{ id: '6', name: 'Hardware component investigation', projectId: 'proj-5', color: '#6d28d9' }],
-            's2.2': [{ id: '7', name: 'Advertiser portal Tradeit', projectId: null, color: '#64748b' }],
+            's2.1': [{ id: '6', name: 'Hardware component investigation', projectId: 'proj-5', color: '#8b5cf6' }],
+            's2.2': [{ id: '7', name: 'Advertiser portal Tradeit', projectId: null, color: '#94a3b8' }],
             's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
           },
           'teodor': {
             's2.1': [{ id: '8', name: 'Tech Debts', projectId: null, color: '#94a3b8' }],
-            's2.2': [{ id: '9', name: 'Tech Debts', projectId: null, color: '#94a3b8' }, { id: '12', name: 'AL Growth — Trust Modal Redesign', projectId: 'proj-3', color: '#b45309' }],
+            's2.2': [{ id: '9', name: 'Tech Debts', projectId: null, color: '#94a3b8' }],
             's2.3': [], 's2.4': [], 's2.5': [], 's2.6': []
           },
           'omar': {
@@ -1399,43 +620,36 @@
     };
 
     const SEED_STAKEHOLDER_DATA = [
-  { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: '', jiraKey: null, prdLink: 'docs/product_documentation/onePager_ Play Interstitial.md', dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-02-15', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'One-Pager', url: 'docs/product_documentation/onePager_ Play Interstitial.md' }, { label: 'PRD', url: 'docs/product_briefs/PRD — Video Interstitials.md' }, { label: 'Figma Board', url: 'https://www.figma.com/board/PRwDAnFVQpYASGFeg0E8b7/Video-Interstitial-Play?node-id=0-1&t=iw9eKdWDLP2J8MZ9-1' }] },
-  { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'tbd', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'tbd', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html', stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: '2026-01-15', experimentStartDate: '2026-01-20', concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10', links: [{ label: 'Results Dashboard', url: 'analysis/prebid-experiment-results.html' }] },
-  { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'due to AB testing', jiraKey: null, prdLink: 'docs/product_briefs/PRD — Video Interstitials.md', dashboardLink: null, stage: 'development', requiresExperiment: true, startDate: '2026-03-01', devStartDate: '2026-03-20', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'PRD', url: 'docs/product_briefs/PRD — Video Interstitials.md' }, { label: 'Mixpanel', url: 'https://mixpanel.com/project/137688/view/12355/app/boards#id=11052829&edited-bookmark=uxPweTDqbXsg' }] },
-  { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'done', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-10-01', devStartDate: '2025-11-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-02-01', completedDate: '2026-02-15', links: [] },
-  { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: '2026-03-15', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'Moved to backlog — no bandwidth. Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-11-01', devStartDate: '2025-12-01', readyDate: null, experimentStartDate: null, concludedDate: '2026-03-01', releasedDate: null, completedDate: '2026-03-10', links: [] },
-  { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-09-01', devStartDate: '2025-10-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-15', completedDate: '2026-01-15', links: [] },
-  { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-06-01', devStartDate: '2025-07-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2025-09-15', completedDate: '2025-09-15', links: [] },
-  { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: false, startDate: '2025-08-01', devStartDate: '2025-09-01', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: '2026-01-01', completedDate: '2026-01-01', links: [] },
-  { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'completed', requiresExperiment: true, startDate: '2025-07-01', devStartDate: '2025-08-01', readyDate: null, experimentStartDate: null, concludedDate: '2025-12-01', releasedDate: null, completedDate: '2025-12-15', links: [] },
-  { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: '2025-06-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: false, startDate: null, devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-23', initiative: 'Prebid Outstream CSStats', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'Apr 2026', notes: 'Experiment live since 2026-04-09', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-outstream-csstats-dashboard.html', stage: 'experimenting', requiresExperiment: true, startDate: '2026-03-15', devStartDate: '2026-04-01', readyDate: '2026-04-09', experimentStartDate: '2026-04-09', concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/prebid-outstream-csstats-dashboard.html' }] },
-  { id: 'sh-24', initiative: 'Prebid Outstream FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-25', initiative: 'Prebid Display FACEIT', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: '', jiraKey: null, prdLink: null, dashboardLink: null, stage: 'scoping', requiresExperiment: true, startDate: '2026-04-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [] },
-  { id: 'sh-26', initiative: 'AL Growth — Trust Modal Redesign', area: 'brand_integrations', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: 'May 2026', notes: 'Design phase (Anouk) → Dev (Teodor) → Experiment live May 12–30. Trust modal redesign to improve AL completion rate beyond 5.34% baseline.', jiraKey: 'AD-3946', prdLink: null, dashboardLink: 'analysis/al-growth-dashboard.html', stage: 'development', requiresExperiment: true, startDate: '2026-04-01', devStartDate: '2026-04-07', readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/al-growth-dashboard.html' }] },
-  { id: 'sh-27', initiative: 'Peripheral Initiative', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: 'End-to-end peripheral data play: collect hardware telemetry via FACEIT Client, design user-facing profile, normalise storage for ad targeting segments. Live in IT + T3 countries. Egor (BE), Anouk (Design). Gated on Legal (LEGD-8214).', jiraKey: null, prdLink: null, dashboardLink: 'analysis/peripheral-data-dashboard.html', stage: 'development', requiresExperiment: false, startDate: '2026-02-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'PRD', url: 'docs/product_briefs/hardware-ad-targeting-scoping.md' }, { label: 'Dashboard', url: 'analysis/peripheral-data-dashboard.html' }] },
-  { id: 'sh-28', initiative: 'Skin Vault', area: 'brand_integrations', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: 'Q2 2026', notes: 'Live on 300 profiles. Backlog prioritised: direct Steam shop link (FE), rarity filter, skin name search (UX research needed). Mongo DB post-pipeline. Blocked on Steam API rate-limiting + Legal consent UX (LEGD-8213). Anouk: interaction data analysis + FLA0 feedback. Isabel: Mongo + API data share. Theo: backlog tickets.', jiraKey: null, prdLink: null, dashboardLink: 'analysis/skin-vault-dashboard.html', stage: 'development', requiresExperiment: false, startDate: '2026-03-01', devStartDate: null, readyDate: null, experimentStartDate: null, concludedDate: null, releasedDate: null, completedDate: null, links: [{ label: 'Dashboard', url: 'analysis/skin-vault-dashboard.html' }, { label: 'Legal — LEGD-8213', url: 'https://efgcloud.atlassian.net/browse/LEGD-8213' }] }
-];
+      { id: 'sh-1', initiative: 'Play Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'scoping', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-2', initiative: 'Blacklyte Activation', area: 'brand_integrations', priority: 'P1', impact: '€500K', effort: null, status: 'scoping', eta: null, notes: 'waiting for commercial team', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-3', initiative: 'Outstream competitors exclusion', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'scoping', eta: null, notes: "don't show a competitor outstream on brand takeover pages", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-4', initiative: 'AdShield Implementation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'scoping', eta: null, notes: '', jiraKey: 'AD-3753', prdLink: null, dashboardLink: null },
+      { id: 'sh-5', initiative: 'Placement improvements', area: 'advertising', priority: 'P1', impact: null, effort: 'M-L', status: 'on_hold', eta: null, notes: 'increase the viewability to 75% per ad unit', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-6', initiative: 'Primis / Moba outstream AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: 'analysis/prebid-experiment-results.html' },
+      { id: 'sh-7', initiative: 'Video Skippable Interstitial', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'in_progress', eta: null, notes: 'due to AB testing', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-8', initiative: 'Primis content video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: 'waiting for Primis for the documentation', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-9', initiative: 'Publift: CMP optimisation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'on_hold', eta: null, notes: "remove the TCF in geo's where's not needed", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-10', initiative: 'Publift: AR investigation', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: null, notes: 'waiting for Publift', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-11', initiative: 'Ads Alerts V2', area: 'advertising', priority: 'P2', impact: null, effort: null, status: 'in_progress', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-12', initiative: 'AdOps handover document', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'in_progress', eta: null, notes: 'Discuss and align on what tasks need to be handed over to Ad Ops', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-13', initiative: 'Primis / Moba display AB test', area: 'advertising', priority: 'P0', impact: null, effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-14', initiative: 'Blacklyte iterations', area: 'brand_integrations', priority: 'P1', impact: '€420,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-15', initiative: 'Publift display Faceit', area: 'advertising', priority: 'P0', impact: '€258,000', effort: 'S', status: 'done', eta: 'September 15', notes: 'Developed, pending legal signature', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-16', initiative: 'Primis', area: 'advertising', priority: 'P0', impact: '€264,000', effort: 'M', status: 'done', eta: null, notes: 'GAM Integration - Pending legal signature, unclear if it can integrate in our GAM, call needed with Primis', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-17', initiative: 'Logitech Brand Takeover + RV experiment', area: 'brand_integrations', priority: 'P0', impact: '€250,000', effort: null, status: 'done', eta: null, notes: '', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-18', initiative: 'Google', area: 'advertising', priority: 'P0', impact: '€319,000', effort: null, status: 'blocked', eta: null, notes: "Google didn't sign the contract", jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-19', initiative: 'Publift outstream video', area: 'advertising', priority: 'P1', impact: '€264,000', effort: 'M/L', status: 'blocked', eta: null, notes: 'Primis is going live instead', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-20', initiative: 'Rewarded video', area: 'advertising', priority: 'P1', impact: null, effort: null, status: 'blocked', eta: null, notes: 'not worth it at the time due to CMPs', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-21', initiative: 'Ezoic outstream', area: 'advertising', priority: 'P2', impact: '€0', effort: 'M', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null },
+      { id: 'sh-22', initiative: 'Ezoic anchor ads', area: 'advertising', priority: 'P2', impact: '€120,000', effort: 'L', status: 'blocked', eta: null, notes: 'relationships with Ezoic are paused', jiraKey: null, prdLink: null, dashboardLink: null }
+    ];
 
     // State Variables
     let sprintData = {};
     let stakeholderData = [];
     let currentQuarter = 'Q2-2026';
     let currentShFilter = 'All';
-    let currentShView = 'timeline';
-    let currentSort = { column: 'priority', direction: 'asc' };
+    let currentSort = { column: 'status', direction: 'asc' };
     
     let activeSprintEdit = null; // { memberId, sprintId }
 
@@ -1443,29 +657,6 @@
     function init() {
       const storedVersion = localStorage.getItem('roadmap_seed_version');
       if (!storedVersion || parseInt(storedVersion) < SEED_VERSION) {
-        // Auto-backup before overwriting user data with new seed
-        if (storedVersion && localStorage.getItem('roadmap_sprint_data')) {
-          try {
-            const backup = {
-              exportedAt: new Date().toISOString(),
-              autoBackup: true,
-              previousVersion: parseInt(storedVersion),
-              newVersion: SEED_VERSION,
-              lastUpdated: localStorage.getItem('roadmap_last_updated'),
-              sprintData: JSON.parse(localStorage.getItem('roadmap_sprint_data')),
-              stakeholderData: JSON.parse(localStorage.getItem('roadmap_stakeholder_data'))
-            };
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `roadmap-auto-backup-v${storedVersion}-${new Date().toISOString().slice(0,10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-          } catch(e) { console.warn('Auto-backup failed:', e); }
-        }
         localStorage.setItem('roadmap_seed_version', SEED_VERSION);
         localStorage.setItem('roadmap_sprint_data', JSON.stringify(SEED_SPRINT_DATA));
         localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(SEED_STAKEHOLDER_DATA));
@@ -1490,61 +681,7 @@
     function saveData() {
       localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
       localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
-      localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
       updateTimestamp();
-    }
-
-    function exportRoadmapData() {
-      const data = {
-        exportedAt: new Date().toISOString(),
-        seedVersion: parseInt(localStorage.getItem('roadmap_seed_version')) || SEED_VERSION,
-        lastUpdated: localStorage.getItem('roadmap_last_updated') || new Date().toLocaleString(),
-        sprintData: sprintData,
-        stakeholderData: stakeholderData,
-        holidays: HOLIDAYS
-      };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `roadmap-backup-${new Date().toISOString().slice(0,10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function importRoadmapData(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const data = JSON.parse(e.target.result);
-          if (!data.sprintData || !data.stakeholderData) {
-            alert('Invalid backup file — missing sprintData or stakeholderData.');
-            return;
-          }
-          if (!confirm(`Restore roadmap from backup?\n\nBackup date: ${data.exportedAt || 'unknown'}\nThis will overwrite your current data.`)) return;
-          sprintData = data.sprintData;
-          stakeholderData = data.stakeholderData;
-          if (data.holidays) {
-            HOLIDAYS = data.holidays;
-            localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
-          }
-          localStorage.setItem('roadmap_sprint_data', JSON.stringify(sprintData));
-          localStorage.setItem('roadmap_stakeholder_data', JSON.stringify(stakeholderData));
-          if (data.seedVersion) localStorage.setItem('roadmap_seed_version', data.seedVersion);
-          updateTimestamp();
-          renderSprintGrid();
-          renderStakeholderTable();
-          alert('Roadmap restored successfully.');
-        } catch (err) {
-          alert('Failed to parse backup file: ' + err.message);
-        }
-      };
-      reader.readAsText(file);
-      event.target.value = '';
     }
 
     // Tabs
@@ -1553,64 +690,6 @@
       document.getElementById(viewId).classList.add('active');
       document.querySelectorAll('.nav-tabs .tab-btn').forEach(el => { el.classList.remove('active'); });
       btn.classList.add('active');
-    }
-
-    // --- DRAG AND DROP LOGIC --- //
-    
-    let dragSrc = null;
-
-    function handleDragStart(e, memberId, sprintId, chipId) {
-      dragSrc = { memberId, sprintId, chipId };
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('text/plain', chipId);
-      setTimeout(() => e.target.classList.add('dragging'), 0);
-    }
-
-    function handleDragEnd(e) {
-      e.target.classList.remove('dragging');
-      document.querySelectorAll('.drag-over').forEach(el => { el.classList.remove('drag-over'); });
-      dragSrc = null;
-    }
-
-    function handleDragOver(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      // Need to add closest('.cell-content') just to be safe if dragging over child elements
-      const cell = e.target.closest('.cell-content');
-      if (cell) cell.classList.add('drag-over');
-    }
-
-    function handleDragLeave(e) {
-      const cell = e.target.closest('.cell-content');
-      if (cell) cell.classList.remove('drag-over');
-    }
-
-    function handleDrop(e, targetMemberId, targetSprintId) {
-      e.preventDefault();
-      const cell = e.target.closest('.cell-content');
-      if (cell) cell.classList.remove('drag-over');
-      
-      if (!dragSrc) return;
-      const { memberId: srcMemberId, sprintId: srcSprintId, chipId } = dragSrc;
-      
-      if (srcMemberId === targetMemberId && srcSprintId === targetSprintId) return;
-
-      const srcArray = sprintData[currentQuarter].assignments[srcMemberId]?.[srcSprintId] || [];
-      const chipIndex = srcArray.findIndex(c => c.id === chipId);
-      if (chipIndex === -1) return;
-
-      const chip = srcArray.splice(chipIndex, 1)[0];
-
-      if (!sprintData[currentQuarter].assignments[targetMemberId]) {
-        sprintData[currentQuarter].assignments[targetMemberId] = {};
-      }
-      if (!sprintData[currentQuarter].assignments[targetMemberId][targetSprintId]) {
-        sprintData[currentQuarter].assignments[targetMemberId][targetSprintId] = [];
-      }
-      sprintData[currentQuarter].assignments[targetMemberId][targetSprintId].push(chip);
-
-      saveData();
-      renderSprintGrid();
     }
 
     // --- SPRINT VIEW LOGIC --- //
@@ -1657,13 +736,7 @@
           monthHeaders += `<th colspan="${monthCounts[s.month]}" class="month-header">${s.month}</th>`;
           currentMonth = s.month;
         }
-        const today = new Date();
-        const sStart = new Date(s.start);
-        const sEnd = new Date(s.end);
-        const isCurrent = today >= sStart && today <= sEnd;
-        const currentCls = isCurrent ? ' current-sprint' : '';
-        const currentPill = isCurrent ? ' <span class="current-pill">Now</span>' : '';
-        sprintHeaders += `<th class="sprint-col${currentCls}">${s.name}${currentPill}<br><span style="font-weight:400; font-size:11px;">${formatDateRange(s.start, s.end)}</span></th>`;
+        sprintHeaders += `<th class="sprint-col">${s.name}<br><span style="font-weight:400; font-size:11px;">${formatDateRange(s.start, s.end)}</span></th>`;
       });
 
       html = `<table class="sprint-grid">
@@ -1673,10 +746,6 @@
         </thead>
         <tbody>`;
 
-      // Determine current sprint
-      const todayDate = new Date();
-      const currentSprintId = sprints.find(s => todayDate >= new Date(s.start) && todayDate <= new Date(s.end))?.id || null;
-
       // Render Team Members
       TEAM_MEMBERS.forEach(member => {
         html += `<tr><td class="member-col">${member.name}<br><span style="font-weight:400; font-size:12px; color:var(--text-muted);">${member.role}</span></td>`;
@@ -1685,24 +754,23 @@
           const isHol = isHoliday(member.id, sprint.start, sprint.end);
           const active = hasStarted(member.id, sprint.start);
           const cellData = assignments[member.id]?.[sprint.id] || [];
-          const currentColCls = sprint.id === currentSprintId ? ' current-sprint-col' : '';
           
           let cellHtml = '';
           if (!active) {
             cellHtml = `<div class="inactive-cell">Not yet started</div>`;
           } else if (isHol) {
-            cellHtml = `<div class="holiday-cell" style="cursor:pointer;" onclick="openHolidayModal()" title="Click to manage holidays">🌴 Holiday</div>`;
+            cellHtml = `<div class="holiday-cell">🌴 Holiday</div>`;
           } else {
             let chipsHtml = cellData.map(chip => 
-              `<div class="chip" draggable="true" ondragstart="handleDragStart(event, '${member.id}', '${sprint.id}', '${chip.id}')" ondragend="handleDragEnd(event)" style="background-color: ${chip.color}">${chip.name}</div>`
+              `<div class="chip" style="background-color: ${chip.color}">${chip.name}</div>`
             ).join('');
             
-            cellHtml = `<div class="cell-content" ondblclick="openSprintEdit('${member.id}', '${sprint.id}')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, '${member.id}', '${sprint.id}')">
+            cellHtml = `<div class="cell-content" ondblclick="openSprintEdit('${member.id}', '${sprint.id}')">
               ${chipsHtml}
               <button class="add-btn" onclick="openSprintEdit('${member.id}', '${sprint.id}')">+</button>
             </div>`;
           }
-          html += `<td class="${currentColCls}">${cellHtml}</td>`;
+          html += `<td>${cellHtml}</td>`;
         });
         html += `</tr>`;
       });
@@ -1711,11 +779,10 @@
       html += `<tr><td class="member-col" style="background:#f3f4f6;">RELEASES</td>`;
       sprints.forEach(sprint => {
         const cellData = assignments['releases']?.[sprint.id] || [];
-        const relCurrentCls = sprint.id === currentSprintId ? ' current-sprint-col' : '';
         let chipsHtml = cellData.map(chip => 
-          `<div class="chip" draggable="true" ondragstart="handleDragStart(event, 'releases', '${sprint.id}', '${chip.id}')" ondragend="handleDragEnd(event)" style="background-color: ${chip.color}">${chip.name}</div>`
+          `<div class="chip" style="background-color: ${chip.color}">${chip.name}</div>`
         ).join('');
-        html += `<td class="${relCurrentCls}" style="background:#f9fafb;"><div class="cell-content" ondblclick="openSprintEdit('releases', '${sprint.id}')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'releases', '${sprint.id}')">
+        html += `<td style="background:#f9fafb;"><div class="cell-content" ondblclick="openSprintEdit('releases', '${sprint.id}')">
           ${chipsHtml}
           <button class="add-btn" onclick="openSprintEdit('releases', '${sprint.id}')">+</button>
         </div></td>`;
@@ -1785,7 +852,7 @@
         id: Date.now().toString(),
         name,
         projectId: null,
-        color: INITIATIVE_COLORS[name] || colorInput.value
+        color: colorInput.value
       });
 
       nameInput.value = '';
@@ -1809,133 +876,16 @@
       document.getElementById(modalId).classList.remove('active');
     }
 
-    // --- HOLIDAY MANAGEMENT --- //
-
-    function openHolidayModal() {
-      const select = document.getElementById('holiday-member');
-      select.innerHTML = TEAM_MEMBERS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
-      renderHolidayList();
-      document.getElementById('holiday-modal').classList.add('active');
-    }
-
-    function renderHolidayList() {
-      const container = document.getElementById('holiday-list');
-      if (!HOLIDAYS.length) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 13px; padding: 12px;">No holidays scheduled.</p>';
-        return;
-      }
-      const sorted = [...HOLIDAYS].sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-      container.innerHTML = sorted.map((h, idx) => {
-        const member = TEAM_MEMBERS.find(m => m.id === h.memberId);
-        const memberName = member ? member.name : h.memberId;
-        const realIdx = HOLIDAYS.indexOf(h);
-        const fmt = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        return `<div class="holiday-item">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background: ${member?.color || '#94a3b8'}; display: inline-block;"></span>
-            <strong style="font-size: 13px;">${memberName}</strong>
-          </div>
-          <span style="font-size: 13px; color: var(--text-muted);">${fmt(h.startDate)} — ${fmt(h.endDate)}</span>
-          <span style="font-size: 13px;">${h.label || '—'}</span>
-          <button type="button" onclick="deleteHoliday(${realIdx})" style="background: none; border: none; color: #EF4444; cursor: pointer; font-size: 16px; padding: 4px 8px;" title="Delete">&times;</button>
-        </div>`;
-      }).join('');
-    }
-
-    function addHoliday() {
-      const memberId = document.getElementById('holiday-member').value;
-      const startDate = document.getElementById('holiday-start').value;
-      const endDate = document.getElementById('holiday-end').value;
-      const label = document.getElementById('holiday-label').value.trim();
-
-      if (!memberId || !startDate || !endDate) {
-        alert('Please fill in team member, start date, and end date.');
-        return;
-      }
-      if (new Date(endDate) < new Date(startDate)) {
-        alert('End date must be on or after start date.');
-        return;
-      }
-
-      HOLIDAYS.push({ memberId, startDate, endDate, label: label || '' });
-      saveHolidays();
-      renderHolidayList();
-      renderSprintGrid();
-
-      // Clear form
-      document.getElementById('holiday-start').value = '';
-      document.getElementById('holiday-end').value = '';
-      document.getElementById('holiday-label').value = '';
-    }
-
-    function deleteHoliday(idx) {
-      if (!confirm('Delete this holiday?')) return;
-      HOLIDAYS.splice(idx, 1);
-      saveHolidays();
-      renderHolidayList();
-      renderSprintGrid();
-    }
-
-    function saveHolidays() {
-      localStorage.setItem('roadmap_holidays', JSON.stringify(HOLIDAYS));
-      updateTimestamp();
-    }
-
     // --- STAKEHOLDER ROADMAP LOGIC --- //
 
     function setShFilter(filter, btn) {
       currentShFilter = filter;
       document.querySelectorAll('#sh-filters .tab-btn').forEach(el => { el.classList.remove('active'); });
       btn.classList.add('active');
-      
-      let totalAll = 0, totalBrand = 0, totalAds = 0;
-      stakeholderData.forEach(item => {
-        const imp = parseMoney(item.impact);
-        totalAll += imp;
-        if (item.area === 'brand_integrations') totalBrand += imp;
-        if (item.area === 'advertising') totalAds += imp;
-      });
-      const fmt = v => v >= 1000000 ? `€${(v/1000000).toFixed(1)}M` : `€${Math.round(v/1000)}K`;
-      
-      const badgeAll = document.getElementById('badge-all');
-      if(badgeAll) badgeAll.textContent = fmt(totalAll);
-      
-      const badgeBrand = document.getElementById('badge-brand');
-      if(badgeBrand) badgeBrand.textContent = fmt(totalBrand);
-      
-      const badgeAds = document.getElementById('badge-ads');
-      if(badgeAds) badgeAds.textContent = fmt(totalAds);
-
       renderStakeholderTable();
     }
 
-    // setShView removed — timeline is now the only stakeholder view
-
-    function toggleGroup(tbodyId, iconId) {
-      const tbody = document.getElementById(tbodyId);
-      const icon = document.getElementById(iconId);
-      if (tbody.classList.contains('group-collapsed')) {
-        tbody.classList.remove('group-collapsed');
-        if (icon) icon.innerText = '▾';
-      } else {
-        tbody.classList.add('group-collapsed');
-        if (icon) icon.innerText = '▸';
-      }
-    }
-
-    function parseEtaBucket(eta, status) {
-      if (status === 'done') return 'Completed';
-      if (!eta || eta.trim() === '') return 'No ETA Set';
-      
-      const v = eta.toLowerCase().trim();
-      if (['apr 2026', 'april', 'apr'].includes(v)) return 'This Month';
-      if (['may 2026', 'jun 2026', 'june', 'may', 'q2', 'q2 2026'].includes(v)) return 'This Quarter';
-      if (['q3', 'q3 2026', 'q4', 'q4 2026', 'h2', 'h2 2026', 'september 15'].includes(v)) return 'H2 2026';
-      
-      return 'Future';
-    }
-
-    const STATUS_ORDER = { 'in_progress': 1, 'tbd': 2, 'on_hold': 3, 'blocked': 4, 'done': 5 };
+    const STATUS_ORDER = { 'in_progress': 1, 'scoping': 2, 'on_hold': 3, 'done': 4, 'blocked': 5 };
     const PRIORITY_ORDER = { 'P0': 1, 'P1': 2, 'P2': 3 };
 
     function sortShData(column) {
@@ -1956,484 +906,97 @@
       return parseFloat(clean) || 0;
     }
 
-
-    function parseEtaMonths(eta) {
-      if (!eta) return null;
-      const v = eta.toLowerCase().trim();
-      if (v.includes('apr') && !v.includes('may')) return { start: 0, span: 1 }; 
-      if (v.includes('may') && !v.includes('apr') && !v.includes('jun')) return { start: 1, span: 1 };
-      if (v.includes('jun') && !v.includes('may')) return { start: 2, span: 1 };
-      if (v.includes('apr') && v.includes('may')) return { start: 0, span: 2 };
-      if (v.includes('may') && v.includes('jun')) return { start: 1, span: 2 };
-      if (v.includes('q2')) return { start: 0, span: 3 };
-      return null;
-    }
-
-    
-    function dateToGanttPct(dateStr) {
-      if (!dateStr) return null;
-      const d = new Date(dateStr);
-      const qStart = new Date('2026-04-01');
-      const qEnd = new Date('2026-06-30');
-      const totalDays = (qEnd - qStart) / 86400000;
-      const elapsed = (d - qStart) / 86400000;
-      return Math.max(0, Math.min(100, (elapsed / totalDays) * 100));
-    }
-
-    function getTodayPct() {
-      return dateToGanttPct('2026-04-04'); // Using provided today's date
-    }
-
-    function renderGanttView(filtered, container) {
-      // Items with startDate and eta go to Gantt
-      const inTimeline = filtered.filter(i => i.startDate && parseEtaMonths(i.eta) !== null);
-      // Exclude items in timeline from backlog, but keep blocked and done logic intact
-      const backlogList = filtered.filter(i => ['on_hold', 'tbd', 'in_progress'].includes(i.status) && !inTimeline.includes(i));
-      const blockedList = filtered.filter(i => i.status === 'blocked');
-      const doneList = filtered.filter(i => i.status === 'done');
-
-      let html = `
-        <div class="gantt-container">
-          <div class="gantt-header">
-            <div class="gantt-quarter-label">Q2 2026</div>
-            <div class="gantt-months">
-              <div class="gantt-month">April</div>
-              <div class="gantt-month">May</div>
-              <div class="gantt-month">June</div>
-            </div>
-          </div>
-          <div class="gantt-body">
-            <div class="gantt-grid-lines">
-              <div class="gantt-grid-line" style="left: 0%"></div>
-              <div class="gantt-grid-line" style="left: 16.6%"></div>
-              <div class="gantt-grid-line" style="left: 33.3%"></div>
-              <div class="gantt-grid-line" style="left: 50%"></div>
-              <div class="gantt-grid-line" style="left: 66.6%"></div>
-              <div class="gantt-grid-line" style="left: 83.3%"></div>
-              <div class="gantt-grid-line" style="left: 100%"></div>
-              <div class="gantt-today-marker" style="left: ${getTodayPct()}%">
-                <div class="gantt-today-pill">TODAY</div>
-              </div>
-            </div>
-      `;
-
-      const todayPct = getTodayPct();
-
-      inTimeline.forEach(item => {
-        const span = parseEtaMonths(item.eta);
-        const etaEndPct = ((span.start + span.span) / 3) * 100;
-        const startPct = dateToGanttPct(item.startDate);
-        
-        let leftPct = startPct;
-        let widthPct = etaEndPct - startPct;
-        if (widthPct < 0) widthPct = 5; // fallback
-        if (leftPct + widthPct > 100) widthPct = 100 - leftPct;
-
-        const color = getInitiativeColor(item.initiative, item.area);
-        const textColor = getContrastColor(color);
-        
-        let fillPct = 100;
-        if (item.status !== 'done' && item.stage !== 'completed') {
-            if (todayPct < etaEndPct) {
-                fillPct = ((todayPct - startPct) / (etaEndPct - startPct)) * 100;
-                fillPct = Math.max(0, Math.min(100, fillPct));
-            }
-        }
-
-        let stageLabel = item.stage ? item.stage.substring(0,3).toUpperCase() : 'DEV';
-        
-        let stageStyle = "";
-        if (item.stage === 'scoping') stageStyle = "background: linear-gradient(0deg, rgba(255,255,255,0.15), rgba(255,255,255,0.15));";
-        
-        html += `
-          <div class="gantt-row" onclick="openStakeholderBrief('${item.id}')" ondblclick="openShEdit('${item.id}')">
-            <span class="priority-pill ${item.priority}" style="width: 24px; text-align: center;">${item.priority}</span>
-            <div class="gantt-bar-container">
-              <div class="gantt-bar-wrapper" style="left: ${leftPct}%; width: ${widthPct}%;" title="${item.initiative} (${item.stage})">
-                <div class="gantt-bar-filled" style="width: ${fillPct}%; background: ${color}; ${stageStyle}"></div>
-                <div class="gantt-bar-remaining" style="width: ${100 - fillPct}%; background: ${color}; opacity: 0.2;"></div>
-                <span class="gantt-bar-label" style="color: ${textColor}; text-shadow: ${textColor === '#ffffff' ? '0 1px 2px rgba(0,0,0,0.3)' : '0 1px 2px rgba(255,255,255,0.4)'};">${item.initiative}</span>
-                <div class="gantt-stage-pill" style="color: ${textColor}; background: ${textColor === '#ffffff' ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.12)'};">${stageLabel}</div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      html += `</div></div>`; 
-
-      const renderList = (items) => {
-        return items.map(i => {
-          const dotColor = getInitiativeColor(i.initiative, i.area);
-          return `
-          <div class="backlog-item" onclick="openStakeholderBrief('${i.id}')" ondblclick="openShEdit('${i.id}')">
-            <span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${dotColor}; flex-shrink:0;"></span>
-            <span class="priority-pill ${i.priority}">${i.priority}</span>
-            <span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${i.initiative}</span>
-            <span class="area-tag ${i.area}">${i.area.replace('_', ' ')}</span>
-            <span style="color: var(--text-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${i.notes || '—'}</span>
-          </div>
-        `}).join('');
-      };
-
-      const getImpact = (items) => {
-        let t = 0; items.forEach(i => { t += parseMoney(i.impact); });
-        return t >= 1000000 ? `€${(t/1000000).toFixed(1)}M` : (t > 0 ? `€${Math.round(t/1000)}K` : '');
-      };
-
-      html += `
-        <div class="backlog-section">
-          <div class="backlog-header">📋 Backlog <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${backlogList.length})</span></div>
-          ${backlogColHeaders()}
-          <div>${renderList(sortBacklogItems(backlogList))}</div>
-        </div>
-      `;
-
-      const blImpact = getImpact(blockedList);
-      html += `
-        <div class="blocked-section">
-          <div class="backlog-header" onclick="this.parentElement.classList.toggle('collapsed')">
-            <span style="width:16px; font-family: monospace;">▾</span>🚫 Blocked <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${blockedList.length})</span>
-            ${blImpact ? `<span style="margin-left:auto; color:var(--text-muted); font-size:13px;">Total Impact: ${blImpact}</span>` : ''}
-          </div>
-          <div class="collapsible-content" style="display:none; opacity: 0.7;">
-            ${backlogColHeaders()}
-            ${renderList(sortBacklogItems(blockedList))}
-          </div>
-        </div>
-      `;
-
-      const dnImpact = getImpact(doneList);
-      html += `
-        <div class="completed-section">
-          <div class="backlog-header" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'">
-            <span style="width:16px; font-family: monospace;">▾</span>✅ Completed <span style="opacity:0.6; font-weight:normal; font-size:13px;">(${doneList.length})</span>
-            ${dnImpact ? `<span style="margin-left:auto; color:var(--text-muted); font-size:13px;">Total Impact: ${dnImpact}</span>` : ''}
-          </div>
-          <div style="display:none; opacity: 0.6;">
-            ${backlogColHeaders()}
-            ${renderList(sortBacklogItems(doneList))}
-          </div>
-        </div>
-      `;
-
-      container.innerHTML = html;
-    }
-// Backlog sort state
-    let backlogSortKey = null; // 'priority' | 'name' | 'area'
-    let backlogSortDir = 'asc';
-    const PRIORITY_RANK = { P0: 0, P1: 1, P2: 2 };
-
-    function sortBacklogItems(items) {
-      if (!backlogSortKey) return items;
-      const sorted = [...items];
-      sorted.sort((a, b) => {
-        let cmp = 0;
-        if (backlogSortKey === 'priority') {
-          cmp = (PRIORITY_RANK[a.priority] ?? 9) - (PRIORITY_RANK[b.priority] ?? 9);
-        } else if (backlogSortKey === 'name') {
-          cmp = a.initiative.localeCompare(b.initiative);
-        } else if (backlogSortKey === 'area') {
-          cmp = a.area.localeCompare(b.area);
-        }
-        return backlogSortDir === 'asc' ? cmp : -cmp;
-      });
-      return sorted;
-    }
-
-    function toggleBacklogSort(key) {
-      if (backlogSortKey === key) {
-        backlogSortDir = backlogSortDir === 'asc' ? 'desc' : 'asc';
-      } else {
-        backlogSortKey = key;
-        backlogSortDir = 'asc';
-      }
-      renderStakeholderTable();
-    }
-
-    function backlogColHeaders() {
-      const arrow = (key) => {
-        if (backlogSortKey !== key) return '<span class="sort-arrow">↕</span>';
-        return `<span class="sort-arrow active">${backlogSortDir === 'asc' ? '↑' : '↓'}</span>`;
-      };
-      return `<div class="backlog-col-header">
-        <span></span>
-        <span onclick="toggleBacklogSort('priority')">Priority ${arrow('priority')}</span>
-        <span onclick="toggleBacklogSort('name')">Name ${arrow('name')}</span>
-        <span onclick="toggleBacklogSort('area')">Area ${arrow('area')}</span>
-        <span>Notes</span>
-      </div>`;
-    }
-
-    function updateFilterBadges() {
-      let totalAll = 0, totalBrand = 0, totalAds = 0;
-      stakeholderData.forEach(item => {
-        const imp = parseMoney(item.impact);
-        totalAll += imp;
-        if (item.area === 'brand_integrations') totalBrand += imp;
-        if (item.area === 'advertising') totalAds += imp;
-      });
-      const fmt = v => v >= 1000000 ? `€${(v/1000000).toFixed(1)}M` : `€${Math.round(v/1000)}K`;
-      
-      const badgeAll = document.getElementById('badge-all');
-      if(badgeAll) badgeAll.textContent = fmt(totalAll);
-      
-      const badgeBrand = document.getElementById('badge-brand');
-      if(badgeBrand) badgeBrand.textContent = fmt(totalBrand);
-      
-      const badgeAds = document.getElementById('badge-ads');
-      if(badgeAds) badgeAds.textContent = fmt(totalAds);
-    }
-
     function renderStakeholderTable() {
-      updateFilterBadges();
-      const ganttContainer = document.getElementById('sh-timeline-container');
+      const tbody = document.getElementById('sh-table-body');
       
       let filtered = stakeholderData.filter(item => {
         if (currentShFilter === 'All') return true;
         return item.area === currentShFilter;
       });
 
+      filtered.sort((a, b) => {
+        let valA, valB;
+        let diff = 0;
+        
+        switch (currentSort.column) {
+          case 'status':
+            diff = (STATUS_ORDER[a.status] || 9) - (STATUS_ORDER[b.status] || 9);
+            if (diff === 0) diff = (PRIORITY_ORDER[a.priority] || 9) - (PRIORITY_ORDER[b.priority] || 9);
+            break;
+          case 'priority':
+            diff = (PRIORITY_ORDER[a.priority] || 9) - (PRIORITY_ORDER[b.priority] || 9);
+            break;
+          case 'impact':
+            diff = parseMoney(b.impact) - parseMoney(a.impact);
+            break;
+          default:
+            valA = (a[currentSort.column] || '').toLowerCase();
+            valB = (b[currentSort.column] || '').toLowerCase();
+            diff = valA.localeCompare(valB);
+        }
+
+        return currentSort.direction === 'asc' ? diff : -diff;
+      });
+
+      // Update Summary Stats
       let active = 0, done = 0, blocked = 0, totalImpact = 0;
       filtered.forEach(item => {
-        if (item.status === 'in_progress' || item.status === 'tbd') active++;
+        if (item.status === 'in_progress' || item.status === 'scoping') active++;
         else if (item.status === 'done') done++;
         else if (item.status === 'blocked') blocked++;
         totalImpact += parseMoney(item.impact);
       });
       const formatImpact = totalImpact >= 1000000 ? `€${(totalImpact/1000000).toFixed(1)}M` : `€${Math.round(totalImpact/1000)}K`;
-      document.getElementById('sh-summary-stats').innerHTML = `
-        <div class="kpi-grid">
-          <div class="kpi-card kpi-active">
-            <div class="kpi-value">${active}</div>
-            <div class="kpi-label">Active</div>
-          </div>
-          <div class="kpi-card kpi-done">
-            <div class="kpi-value">${done}</div>
-            <div class="kpi-label">Done</div>
-          </div>
-          <div class="kpi-card kpi-blocked">
-            <div class="kpi-value">${blocked}</div>
-            <div class="kpi-label">Blocked</div>
-          </div>
-          <div class="kpi-card kpi-impact">
-            <div class="kpi-value">${formatImpact}</div>
-            <div class="kpi-label">Total Impact</div>
-          </div>
-        </div>
-      `;
+      
+      document.getElementById('sh-summary-stats').innerText = 
+        `${active} Active | ${done} Done | ${blocked} Blocked | Total Impact: ${formatImpact}`;
 
-      renderGanttView(filtered, ganttContainer);
-    }
+      let html = '';
+      filtered.forEach(item => {
+        const priorityPill = item.priority ? `<span class="priority-pill ${item.priority}">${item.priority}</span>` : '';
+        const statusBadge = `<span class="status-badge ${item.status}">${item.status.replace('_', ' ')}</span>`;
+        const effortBadge = item.effort ? `<span class="effort-badge">${item.effort}</span>` : '';
+        
+        // Linkify notes for Jira
+        let notesHtml = (item.notes || '').replace(/(AD-\d+)/g, `<a href="${JIRA_BASE_URL}$1" class="jira-link" target="_blank">$1</a>`);
 
-    function toggleEtaCustom() {
-      const select = document.getElementById('sh-edit-eta-select');
-      const input = document.getElementById('sh-edit-eta');
-      if (select.value === 'custom') {
-        input.style.display = 'block';
-        input.focus();
-      } else {
-        input.style.display = 'none';
-      }
-    }
+        // Links column
+        let linksHtml = '';
+        if (item.jiraKey) linksHtml += `<a href="${JIRA_BASE_URL}${item.jiraKey}" class="icon-link" target="_blank" title="Jira">🎫</a>`;
+        if (item.prdLink) linksHtml += `<a href="${item.prdLink}" class="icon-link" target="_blank" title="PRD">📄</a>`;
+        if (item.dashboardLink) linksHtml += `<a href="${item.dashboardLink}" class="icon-link" target="_blank" title="Dashboard">📊</a>`;
 
-    function openMdPreview(url, title) {
-      var modal = document.getElementById('md-preview-modal');
-      var content = document.getElementById('md-preview-content');
-      var titleEl = document.getElementById('md-preview-title');
-      var openLink = document.getElementById('md-preview-open-link');
-
-      titleEl.textContent = title || url.split('/').pop();
-      openLink.href = url;
-      content.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Loading document...</p>';
-      modal.classList.add('active');
-
-      fetch(url)
-        .then(function(response) {
-          if (!response.ok) throw new Error('Failed to load document');
-          return response.text();
-        })
-        .then(function(md) {
-          content.innerHTML = marked.parse(md);
-          // Make all links open in new tabs
-          content.querySelectorAll('a').forEach(function(a) {
-            a.setAttribute('target', '_blank');
-            a.setAttribute('rel', 'noopener');
-          });
-        })
-        .catch(function(err) {
-          content.innerHTML = '<p style="color:#ef4444;">Could not load document: ' + err.message + '</p><p style="color:var(--text-muted);font-size:13px;">Try the "Open file" link above instead.</p>';
-        });
-    }
-
-    let briefClickTimer = null;
-    function openStakeholderBrief(id) {
-      clearTimeout(briefClickTimer);
-      briefClickTimer = setTimeout(() => {
-        const item = stakeholderData.find(i => i.id === id);
-      if (!item) return;
-
-      const color = getInitiativeColor(item.initiative, item.area);
-      const areaLabel = item.area === 'brand_integrations' ? 'Brand Integrations' : 'Advertising';
-      const stageLabels = { scoping: 'In Scoping', development: 'In Development', ready: 'Ready', experimenting: 'Experimenting', concluded: 'Concluded', released: 'Released', completed: 'Completed' };
-      const statusLabels = { tbd: 'TBD', on_hold: 'On Hold', in_progress: 'In Progress', blocked: 'Blocked', done: 'Done' };
-
-      let html = `<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
-        <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${color};"></span>
-        <span class="area-tag ${item.area}" style="margin:0;">${areaLabel}</span>
-        <span class="priority-pill ${item.priority}" style="margin:0;">${item.priority}</span>
-        <span style="background:var(--accent-light);color:var(--accent);padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">${stageLabels[item.stage] || item.stage || '—'}</span>
-        <span style="background:${item.status === 'blocked' ? '#FEE2E2' : item.status === 'done' ? '#D1FAE5' : '#F3F4F6'};color:${item.status === 'blocked' ? '#DC2626' : item.status === 'done' ? '#059669' : '#6B7280'};padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">${statusLabels[item.status] || item.status}</span>
-        ${item.requiresExperiment ? '<span style="background:#FEF3C7;color:#B45309;padding:2px 10px;border-radius:12px;font-size:12px;font-weight:500;">Experiment Required</span>' : ''}
-      </div>`;
-
-      if (item.notes) {
-        html += `<div style="margin-bottom:16px;">
-          <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Notes</div>
-          <div style="font-size:14px;line-height:1.5;color:var(--text);">${item.notes}</div>
-        </div>`;
-      }
-
-      if (item.impact || item.effort) {
-        html += `<div style="display:flex;gap:24px;margin-bottom:16px;">
-          ${item.impact ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Impact</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.impact}</div></div>` : ''}
-          ${item.effort ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Effort</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.effort}</div></div>` : ''}
-          ${item.eta ? `<div><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">ETA</div><div style="font-size:16px;font-weight:600;color:var(--text);">${item.eta}</div></div>` : ''}
-        </div>`;
-      }
-
-      const dates = [
-        { label: 'Started', value: item.startDate },
-        { label: 'Dev Started', value: item.devStartDate },
-        { label: 'Ready', value: item.readyDate },
-        { label: 'Experiment Started', value: item.experimentStartDate },
-        { label: 'Concluded', value: item.concludedDate },
-        { label: 'Released', value: item.releasedDate },
-        { label: 'Completed', value: item.completedDate }
-      ].filter(d => d.value);
-
-      if (dates.length > 0) {
-        html += `<div style="margin-bottom:16px;">
-          <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Timeline</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            ${dates.map(d => `<div style="background:var(--bg);padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;"><span style="color:var(--text-muted);">${d.label}:</span> <span style="font-weight:500;">${d.value}</span></div>`).join('')}
-          </div>
-        </div>`;
-      }
-
-      let links = [];
-      if (item.jiraKey) links.push('<a href="' + JIRA_BASE_URL + item.jiraKey + '" target="_blank" style="color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;">' + item.jiraKey + ' &rarr;</a>');
-
-      var pillLinks = [];
-      if (item.links && item.links.length > 0) {
-        pillLinks = item.links;
-      } else {
-        if (item.prdLink) pillLinks.push({ label: 'PRD', url: item.prdLink });
-        if (item.dashboardLink) pillLinks.push({ label: 'Dashboard', url: item.dashboardLink });
-      }
-
-      var pillsHtml = '';
-      if (pillLinks.length > 0) {
-        pillsHtml = '<div class="sh-links-row">' + pillLinks.map(function(l) {
-          var isFigma = l.url.indexOf('figma.com') !== -1;
-          var isAnalytics = l.url.indexOf('mixpanel.com') !== -1;
-          var isDash = l.url.indexOf('analysis/') !== -1 || l.url.indexOf('dashboard') !== -1;
-          var isLegal = l.url.indexOf('LEGD-') !== -1 || l.label === 'Legal';
-          var cls = isFigma ? 'figma' : (isAnalytics ? 'analytics' : (isLegal ? 'legal' : (isDash ? 'dashboard' : 'doc')));
-          var icon = isFigma ? '◆' : (isAnalytics ? '📈' : (isLegal ? '⚖️' : (isDash ? '📊' : '📄')));
-          var isMd = l.url.indexOf('.md') === l.url.length - 3;
-          if (isMd) {
-            return '<a class="sh-link-pill ' + cls + '" href="javascript:void(0)" onclick="openMdPreview(\'' + l.url.replace(/'/g, "\\'") + '\', \'' + l.label.replace(/'/g, "\\'") + '\')" title="' + l.label + '">' + icon + ' ' + l.label + '</a>';
-          } else {
-            return '<a class="sh-link-pill ' + cls + '" href="' + l.url + '" target="_blank" title="' + l.label + '">' + icon + ' ' + l.label + '</a>';
-          }
-        }).join('') + '</div>';
-      }
-
-      if (links.length > 0 || pillsHtml) {
-        html += '<div style="padding-top:12px;border-top:1px solid var(--border);">';
-        if (links.length > 0) html += '<div style="display:flex;gap:16px;margin-bottom:' + (pillsHtml ? '8px' : '0') + ';">' + links.join('') + '</div>';
-        if (pillsHtml) html += pillsHtml;
-        html += '</div>';
-      }
-
-      if (!item.notes && !item.impact && !item.effort && dates.length === 0 && links.length === 0 && !pillsHtml) {
-        html += `<div style="color:var(--text-muted);font-size:13px;font-style:italic;">No details available yet. Double-click to edit.</div>`;
-      }
-
-      document.getElementById('sh-brief-title').textContent = item.initiative;
-      document.getElementById('sh-brief-content').innerHTML = html;
-      document.getElementById('sh-brief-modal').classList.add('active');
-      }, 250);
+        html += `<tr class="editable-cell" ondblclick="openShEdit('${item.id}')">
+          <td>${priorityPill}</td>
+          <td style="font-weight:500;">${item.initiative}</td>
+          <td style="text-align: right; color: var(--success); font-weight: 500;">${item.impact || '-'}</td>
+          <td>${effortBadge}</td>
+          <td>${statusBadge}</td>
+          <td>${item.eta || '-'}</td>
+          <td style="font-size: 13px;">${notesHtml}</td>
+          <td>${linksHtml}</td>
+        </tr>`;
+      });
+      
+      tbody.innerHTML = html;
     }
 
     function openShEdit(id) {
-      clearTimeout(briefClickTimer);
       const item = stakeholderData.find(i => i.id === id);
       if (!item) return;
 
       document.getElementById('sh-edit-id').value = item.id;
       document.getElementById('sh-edit-initiative').value = item.initiative || '';
-      document.getElementById('sh-edit-stage').value = item.stage || 'scoping';
-      document.getElementById('sh-edit-requiresExperiment').checked = !!item.requiresExperiment;
-      document.getElementById('sh-edit-startDate').value = item.startDate || '';
-      document.getElementById('sh-edit-devStartDate').value = item.devStartDate || '';
       document.getElementById('sh-edit-area').value = item.area || 'advertising';
       document.getElementById('sh-edit-priority').value = item.priority || 'P1';
       document.getElementById('sh-edit-impact').value = item.impact || '';
       document.getElementById('sh-edit-effort').value = item.effort || '';
-      document.getElementById('sh-edit-status').value = item.status || 'tbd';
-      
-      const etaSelect = document.getElementById('sh-edit-eta-select');
-      const etaInput = document.getElementById('sh-edit-eta');
-      const knownOptions = ["", "Apr 2026", "May 2026", "Jun 2026", "Q3 2026", "Q4 2026", "H2 2026", "2027"];
-      
-      if (!item.eta) {
-        etaSelect.value = "";
-        etaInput.value = "";
-        etaInput.style.display = "none";
-      } else if (knownOptions.includes(item.eta)) {
-        etaSelect.value = item.eta;
-        etaInput.value = item.eta;
-        etaInput.style.display = "none";
-      } else {
-        etaSelect.value = "custom";
-        etaInput.value = item.eta;
-        etaInput.style.display = "block";
-      }
-
+      document.getElementById('sh-edit-status').value = item.status || 'scoping';
+      document.getElementById('sh-edit-eta').value = item.eta || '';
       document.getElementById('sh-edit-notes').value = item.notes || '';
       document.getElementById('sh-edit-jira').value = item.jiraKey || '';
 
-      renderShEditLinks(item.links || []);
-
       document.getElementById('sh-edit-modal').classList.add('active');
-    }
-
-    var shEditLinks = [];
-
-    function renderShEditLinks(links) {
-      shEditLinks = links ? links.slice() : [];
-      var container = document.getElementById('sh-edit-links-list');
-      if (!container) return;
-      container.innerHTML = shEditLinks.map(function(l, i) {
-        return '<span class="sh-edit-link-chip">' + l.label + ' <span class="remove-link" onclick="removeShEditLink(' + i + ')">&times;</span></span>';
-      }).join('');
-    }
-
-    function addShEditLink() {
-      var label = document.getElementById('sh-edit-link-label').value.trim();
-      var url = document.getElementById('sh-edit-link-url').value.trim();
-      if (!label || !url) return;
-      shEditLinks.push({ label: label, url: url });
-      renderShEditLinks(shEditLinks);
-      document.getElementById('sh-edit-link-label').value = '';
-      document.getElementById('sh-edit-link-url').value = '';
-    }
-
-    function removeShEditLink(index) {
-      shEditLinks.splice(index, 1);
-      renderShEditLinks(shEditLinks);
     }
 
     function saveShEdit() {
@@ -2441,25 +1004,17 @@
       const index = stakeholderData.findIndex(i => i.id === id);
       
       if (index > -1) {
-        const etaSelect = document.getElementById('sh-edit-eta-select').value;
-        const etaVal = etaSelect === 'custom' ? document.getElementById('sh-edit-eta').value.trim() : etaSelect;
-
         stakeholderData[index] = {
           ...stakeholderData[index],
           initiative: document.getElementById('sh-edit-initiative').value,
-          stage: document.getElementById('sh-edit-stage').value,
-          requiresExperiment: document.getElementById('sh-edit-requiresExperiment').checked,
-          startDate: document.getElementById('sh-edit-startDate').value || null,
-          devStartDate: document.getElementById('sh-edit-devStartDate').value || null,
           area: document.getElementById('sh-edit-area').value,
           priority: document.getElementById('sh-edit-priority').value,
           impact: document.getElementById('sh-edit-impact').value,
           effort: document.getElementById('sh-edit-effort').value,
           status: document.getElementById('sh-edit-status').value,
-          eta: etaVal || null,
+          eta: document.getElementById('sh-edit-eta').value,
           notes: document.getElementById('sh-edit-notes').value,
-          jiraKey: document.getElementById('sh-edit-jira').value,
-          links: shEditLinks.slice()
+          jiraKey: document.getElementById('sh-edit-jira').value
         };
         
         saveData();
@@ -2486,22 +1041,12 @@
         priority: 'P1',
         impact: null,
         effort: null,
-        status: 'tbd',
+        status: 'scoping',
         eta: null,
         notes: '',
         jiraKey: null,
         prdLink: null,
-        dashboardLink: null,
-        links: [],
-        stage: 'scoping',
-        requiresExperiment: false,
-        startDate: null,
-        devStartDate: null,
-        readyDate: null,
-        experimentStartDate: null,
-        concludedDate: null,
-        releasedDate: null,
-        completedDate: null
+        dashboardLink: null
       };
       stakeholderData.push(newItem);
       saveData();

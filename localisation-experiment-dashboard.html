@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localisation — Mission Copy — Experiment Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #EEF2F3;
+            --surface: #ffffff;
+            --border: #E2E8F0;
+            --text: #1A1A2E;
+            --text-muted: #6B7280;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Blue accent — Brand Integrations */
+            --accent: #2563eb;
+            --accent-light: #dbeafe;
+
+            --green: #059669;
+            --yellow: #d97706;
+            --red: #dc2626;
+            --blue: #2563eb;
+
+            --chart-1: var(--accent);
+            --chart-2: #ef4444;
+            --chart-3: var(--green);
+            --chart-4: var(--yellow);
+            --chart-5: var(--blue);
+
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+        .badge { display: inline-block; background-color: var(--accent-light); color: var(--accent); padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.8125rem; font-weight: 600; margin-bottom: 1rem; letter-spacing: 0.02em; }
+        .header h1 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .header h2 { font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; font-weight: 500; }
+        .header p { color: var(--text-muted); font-size: 1rem; }
+
+        .section { margin-bottom: 3rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow); transition: box-shadow 0.2s; }
+        .section-title { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        .kpi-card { background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s; }
+        .kpi-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+        .kpi-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+        .kpi-value { font-size: 2.5rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+        .kpi-sub { font-size: 0.9rem; color: var(--text); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .chart-container.small { height: 250px; }
+        .chart-container.tall { height: 450px; }
+
+        .table-wrapper { overflow-x: auto; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1.5rem; box-shadow: var(--shadow); }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th, td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        th { background-color: #EEF2F3; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; white-space: nowrap; }
+        tr:hover td { background-color: #f8f9fa; }
+        tr:last-child td { border-bottom: none; }
+        td.number { text-align: right; font-variant-numeric: tabular-nums; }
+        th.number { text-align: right; }
+
+        .highlight { color: var(--accent); font-weight: 600; }
+        .insight-card { background-color: var(--surface); border-left: 4px solid var(--accent); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .insight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text); font-weight: 600; }
+        .insight-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.5rem; }
+
+        .footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+        .funnel-wrapper { display: flex; justify-content: space-between; align-items: stretch; gap: 0.5rem; }
+        .funnel-step { text-align: center; padding: 1rem; background-color: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow); }
+        .funnel-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text); }
+        .funnel-value { font-size: 1.5rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }
+        .funnel-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .funnel-arrow { color: var(--border); font-size: 2rem; display: flex; align-items: center; justify-content: center; }
+
+        .status-indicator { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; }
+        .status-green { background-color: var(--green); box-shadow: 0 0 8px rgba(5, 150, 105, 0.3); }
+        .status-yellow { background-color: var(--yellow); box-shadow: 0 0 8px rgba(217, 119, 6, 0.3); }
+        .status-red { background-color: var(--red); box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); }
+        .decision-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+
+        .experiment-box { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center; }
+        .experiment-box.control { border-top: 4px solid var(--text-muted); }
+        .experiment-box.variant { border-top: 4px solid var(--accent); }
+        .experiment-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .experiment-value { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .experiment-delta { font-size: 1rem; font-weight: 600; }
+
+        .list-item { margin-bottom: 0.5rem; margin-left: 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+        h3 { font-weight: 600; color: var(--text); }
+
+        @media (max-width: 900px) {
+            .kpi-grid, .kpi-grid-3, .grid-2, .grid-3, .decision-grid { grid-template-columns: 1fr; }
+            .funnel-wrapper { flex-direction: column; }
+            .funnel-arrow { transform: rotate(90deg); }
+        }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; padding: 0.5rem; font-size: 11px; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            nav { display: none !important; }
+            .container { max-width: 100%; }
+            .header { margin-bottom: 1rem; padding-bottom: 0.75rem; }
+            .header h1 { font-size: 1.5rem; }
+            .header h2 { font-size: 1rem; }
+            .section { page-break-inside: avoid; break-inside: avoid; margin-bottom: 1.5rem; padding: 1.25rem; box-shadow: none; border-radius: 8px; }
+            .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+            .kpi-grid-3 { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+            .kpi-card { padding: 0.75rem; box-shadow: none; }
+            .kpi-value { font-size: 1.5rem; }
+            .kpi-title { font-size: 0.7rem; }
+            .grid-2 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .decision-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .chart-container, .chart-container.small, .chart-container.tall { height: auto !important; }
+            .table-wrapper { box-shadow: none; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.4rem 0.6rem; }
+            .insight-card { box-shadow: none; margin-bottom: 0.5rem; padding: 0.75rem; }
+            .experiment-box { padding: 0.75rem; }
+            .funnel-step { padding: 0.5rem; }
+            .funnel-value { font-size: 1.1rem; }
+            .footer { margin-top: 1.5rem; font-size: 0.7rem; }
+            #deepdive { page-break-before: always; break-before: page; }
+            #decisions { page-break-before: always; break-before: page; }
+        }
+    </style>
+</head>
+<body>
+    <nav style="background:#EEF2F3;padding:8px 24px;font-family:Inter,-apple-system,sans-serif;font-size:13px;font-weight:500;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="color:#1A1A2E;text-decoration:none;">&larr; Hub</a>
+      <span style="color:#CBD5E1;">&middot;</span>
+      <span style="color:#6B7280;">Localisation &mdash; Mission Copy Dashboard</span>
+    </nav>
+    <div class="container">
+
+        <header class="header">
+            <span class="badge">Experiment &middot; Geo Before/After</span>
+            <h1>Localisation &mdash; Mission Copy</h1>
+            <h2>Tradeit Mission Copy in Local Languages &middot; Pre-Launch &middot; Updated Apr 22, 2026</h2>
+            <p>Moritz Natalini &middot; Ads &amp; Partnerships &middot; EFG</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.75rem;">
+                <strong>Decision:</strong> Does localising mission copy into users&rsquo; local language increase partner task completion rate? <span style="color: var(--yellow); font-weight: 600;">&mdash; Pre-launch. Awaiting geo-sizing confirmation and translation.</span>
+            </p>
+        </header>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  VERDICT — Pre-Launch Summary                                  -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" style="border-left: 4px solid var(--yellow); padding: 1.5rem 2rem;">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Pre-Launch Summary</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Hypothesis validated by data</strong> &mdash; 40x drop between gaming (~90%) and partner (~2%) completion suggests comprehension friction. Language is a plausible barrier in non-English geos.</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-green"></span> <strong>Zero engineering dependency</strong> &mdash; Campaigns already configured per geo. Localisation is a copy swap in campaign config &mdash; Activation Ops owns execution.</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-yellow"></span> <strong>Pre-flight check needed</strong> &mdash; Geo-sizing query must confirm LATAM and Turkey each contribute &ge;37K Tradeit users/month for statistical power.</p>
+                <p style="font-size: 1rem; margin: 0;"><span class="status-indicator status-yellow"></span> <strong>Translations pending</strong> &mdash; Professional translation required for PT-BR and Turkish. Estimated 1 week lead time via Activation Ops vendor.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  1. SETUP — Experiment Design                                  -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="design">
+            <h2 class="section-title">1. Experiment Design</h2>
+
+            <div style="margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Background</h3>
+                <div class="insight-card" style="border-left-color: var(--accent);">
+                    <p><strong>Problem:</strong> Tradeit mission copy is English-only in non-English geos (LATAM, MENA, Turkey). Partner challenge completion is ~2% while gaming completion is ~90%. Users complete the gaming task (play 1 match) but skip partner actions (trade, link account). Precise comprehension matters for partner tasks (&ldquo;Link your account&rdquo;, &ldquo;Trade any item&rdquo;, &ldquo;Trade $250+&rdquo;) &mdash; language friction may explain the 40x drop-off.</p>
+                    <p><strong>Solution:</strong> Localise mission titles, challenge descriptions, CTAs, and reward labels into users&rsquo; local language. Keep reward values, mission structure, and UX unchanged. Measure the impact on partner challenge completion.</p>
+                    <p><strong>Why Geo Before/After:</strong> Tradeit campaigns are configured per geo with specific copy. User-level A/B would require engineering for within-geo bucketing. Geo-level before/after ships immediately with zero engineering: compare EN baseline (prior month) to localised copy (treatment month), using non-test EN geos as seasonality control.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Format Specification</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th>Value</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Type</td><td>Geo before/after with control reference</td></tr>
+                                <tr><td>Partner</td><td>Tradeit (most diverse geo footprint)</td></tr>
+                                <tr><td>Phase 1 Languages</td><td>Portuguese (PT-BR), Turkish</td></tr>
+                                <tr><td>Phase 2 Languages</td><td>Arabic, Spanish (pending Phase 1 results)</td></tr>
+                                <tr><td>Duration</td><td>1 full campaign cycle (4 weeks)</td></tr>
+                                <tr><td>Baseline</td><td>Prior month EN data for same geos</td></tr>
+                                <tr><td>Control Reference</td><td>Non-test EN geos (EU, NA) &mdash; seasonality control</td></tr>
+                                <tr><td>Translation</td><td>Professional (not automated)</td></tr>
+                                <tr><td>Engineering</td><td>None required</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Test Groups</h3>
+                    <div class="insight-card" style="border-left-color: var(--text-muted);">
+                        <h3>Baseline (Prior Month)</h3>
+                        <p>English-only mission copy in LATAM and Turkey geos. Standard Tradeit campaign configuration. This data already exists from previous campaign cycles.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--accent);">
+                        <h3>Treatment (Localised Month)</h3>
+                        <p>Localised mission copy (PT-BR for LATAM, Turkish for Turkey). Same rewards, same structure, same targeting. Only the text changes.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Success Metrics</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Type</th><th>Metric</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Primary</strong></td><td>Partner challenge completion rate (&ge;15% relative lift)</td></tr>
+                                <tr><td><strong>Primary</strong></td><td>Mission completion rate (positive or neutral)</td></tr>
+                                <tr><td><strong>Primary</strong></td><td>Challenge-to-challenge progression rate</td></tr>
+                                <tr><td><strong>Guardrail</strong></td><td>Gaming challenge completion (&ge;85%)</td></tr>
+                                <tr><td><strong>Guardrail</strong></td><td>Downstream conversion quality (C1/C2)</td></tr>
+                                <tr><td><strong>Guardrail</strong></td><td>Reward claim rate (neutral or positive)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Key Design Choice</h3>
+                    <div class="insight-card" style="border-left-color: var(--blue);">
+                        <h3>Copy-Only Test</h3>
+                        <p>This experiment isolates the language variable. Reward values, mission structure, UX layout, and partner landing pages remain unchanged. If completion lifts, it&rsquo;s attributable to comprehension &mdash; not incentive or design changes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  2. TENSION — Baseline KPIs (what we know before launch)       -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="overview">
+            <h2 class="section-title">2. Baseline &amp; Targets</h2>
+
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-title">Baseline Rate</div>
+                    <div class="kpi-value" style="color: var(--red);">2.0%</div>
+                    <div class="kpi-sub">Tradeit EN partner completion (Mar 2026)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Target Lift</div>
+                    <div class="kpi-value">&ge;15%</div>
+                    <div class="kpi-sub">Relative lift (2.0% &rarr; 2.3%)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Sample Required</div>
+                    <div class="kpi-value">~37K</div>
+                    <div class="kpi-sub">Users per geo per cycle (80% power)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Duration</div>
+                    <div class="kpi-value">4 wks</div>
+                    <div class="kpi-sub">1 full Tradeit campaign cycle</div>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-size: 1.1rem; color: var(--text);">Tradeit Baseline — EN Performance (March 2026)</h3>
+            <div class="kpi-grid-3">
+                <div class="kpi-card" style="border-top: 3px solid var(--green);">
+                    <div class="kpi-title">EN Gaming Completion</div>
+                    <div class="kpi-value" style="color: var(--green);">87.6%</div>
+                    <div class="kpi-sub">678K joined &rarr; 597K completed</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--red);">
+                    <div class="kpi-title">EN Partner Completion</div>
+                    <div class="kpi-value" style="color: var(--red);">2.4%</div>
+                    <div class="kpi-sub">583K joined &rarr; 14K completed</div>
+                </div>
+                <div class="kpi-card" style="border-top: 3px solid var(--accent);">
+                    <div class="kpi-title">RU Partner Completion</div>
+                    <div class="kpi-value">1.7%</div>
+                    <div class="kpi-sub">491K joined &rarr; 8K completed (language =/= effect)</div>
+                </div>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: -0.5rem;">
+                <strong>Source:</strong> BigQuery &middot; CampaignService.UserMissions + dim__users &middot; March 2026 Tradeit campaigns
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  3. INSIGHT — Guardrail Plan                                   -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="guardrail">
+            <h2 class="section-title">3. Guardrail Plan &mdash; Gaming Completion &amp; Conversion Quality</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Geo before/after &middot; Treatment geos: LATAM, Turkey &middot; Control reference: EU, NA (EN-only, unchanged) &middot;
+                Metric: <em>Gaming challenge completion rate must remain &ge;85%</em>
+            </p>
+
+            <div class="grid-2" style="margin-bottom: 1.5rem;">
+                <div class="experiment-box variant">
+                    <div class="experiment-label">Treatment — Localised Copy</div>
+                    <div class="experiment-value" style="color: var(--accent);">TBD</div>
+                    <div class="funnel-sub">Post-launch gaming completion in LATAM + Turkey</div>
+                </div>
+                <div class="experiment-box control">
+                    <div class="experiment-label">Baseline — EN Copy</div>
+                    <div class="experiment-value" style="color: var(--text);">~88%</div>
+                    <div class="funnel-sub">Current EN gaming completion (Mar 2026)</div>
+                </div>
+            </div>
+
+            <div class="kpi-grid-3" style="margin-bottom: 2rem;">
+                <div class="kpi-card">
+                    <div class="kpi-title">Gaming Floor</div>
+                    <div class="kpi-value" style="font-size: 2rem; color: var(--green);">&ge;85%</div>
+                    <div class="kpi-sub">Must not drop below this threshold</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">C1/C2 Quality</div>
+                    <div class="kpi-value" style="font-size: 2rem; color: var(--green);">Neutral+</div>
+                    <div class="kpi-sub">Downstream conversion must not regress</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-title">Support Tickets</div>
+                    <div class="kpi-value" style="font-size: 2rem; color: var(--green);">No spike</div>
+                    <div class="kpi-sub">No significant increase in localised geos</div>
+                </div>
+            </div>
+
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">EN vs RU Completion Rates — Tradeit March 2026</h3>
+            <div class="chart-container">
+                <canvas id="guardrailChart"></canvas>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-align: center; margin-top: 0.5rem;">
+                Source: BigQuery &middot; CampaignService.UserMissions &middot; March 2026 &middot; EN and RU Tradeit campaigns
+            </p>
+
+            <div class="grid-2" style="margin-top: 2rem;">
+                <div class="insight-card" style="border-left-color: var(--yellow);">
+                    <h3><span class="status-indicator status-yellow"></span> Awaiting Launch Data</h3>
+                    <p>Guardrail monitoring begins on campaign launch day. First 48h will be monitored for anomalies in join rates or errors. If gaming completion drops &gt;5pp vs baseline, Activation Ops will revert to EN copy immediately.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--blue);">
+                    <h3>RU Anomaly (Important Context)</h3>
+                    <p>RU partner completion (1.7%) is <strong>lower</strong> than EN (2.4%) despite higher gaming completion (92.4% vs 87.6%). This likely reflects audience differences (CIS trading behaviour), not a language effect. The experiment controls for this by comparing before/after <em>within the same geo</em>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  4. INSIGHT — Expected Measurement Funnel                      -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="funnel">
+            <h2 class="section-title">4. Measurement Funnel (Tradeit EN Baseline)</h2>
+
+            <div class="insight-card" style="padding: 2rem; border-left-color: var(--accent);">
+                <h3 style="margin-bottom: 1rem;">Mission Joined &rarr; Partner Conversion Path</h3>
+                <div class="funnel-wrapper">
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Mission Joined</div>
+                        <div class="funnel-value">678K</div>
+                        <div class="funnel-sub">100% &middot; EN users</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Gaming Complete</div>
+                        <div class="funnel-value">597K</div>
+                        <div class="funnel-sub">87.6% completion</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1;">
+                        <div class="funnel-title">Partner Started</div>
+                        <div class="funnel-value">583K</div>
+                        <div class="funnel-sub">85.9% of joined</div>
+                    </div>
+                    <div class="funnel-arrow">&rarr;</div>
+                    <div class="funnel-step" style="flex: 1; border-top: 3px solid var(--green);">
+                        <div class="funnel-title">Partner Complete</div>
+                        <div class="funnel-value" style="color: var(--red);">14K</div>
+                        <div class="funnel-sub">2.4% &middot; the gap we want to close</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 1.5rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Gaming vs Partner Completion</h3>
+                    <div class="chart-container small">
+                        <canvas id="funnelChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">What We Localise</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Copy Element</th>
+                                    <th>Example (EN)</th>
+                                    <th>Localised?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mission title</td>
+                                    <td class="number">&ldquo;Tradeit Monthly Challenge&rdquo;</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Challenge description</td>
+                                    <td class="number">&ldquo;Trade any item on Tradeit&rdquo;</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>CTAs</td>
+                                    <td class="number">&ldquo;Link your account&rdquo;</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Reward labels</td>
+                                    <td class="number">&ldquo;500 FACEIT Points&rdquo;</td>
+                                    <td class="number" style="color: var(--green); font-weight: 600;">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Reward values</td>
+                                    <td class="number">500 FP, $5 code</td>
+                                    <td class="number" style="color: var(--text-muted);">No</td>
+                                </tr>
+                                <tr>
+                                    <td>Mission structure</td>
+                                    <td class="number">Challenge order, UX</td>
+                                    <td class="number" style="color: var(--text-muted);">No</td>
+                                </tr>
+                                <tr>
+                                    <td>Partner landing page</td>
+                                    <td class="number">tradeit.gg</td>
+                                    <td class="number" style="color: var(--text-muted);">No (out of scope)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  5. INSIGHT — Target Geos & Sample Size                        -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="deepdive">
+            <h2 class="section-title">5. Target Geos &amp; Statistical Power</h2>
+
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Sample size: two-proportion z-test &middot; &alpha; = 0.05, 1&minus;&beta; = 0.80 &middot; Base rate 2.0%, MDE 15% relative (2.0% &rarr; 2.3%) &middot; <strong>~37K users per geo per cycle required</strong>
+            </p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Tradeit Geo Volume — March 2026 (EN)</h3>
+                    <div class="chart-container tall">
+                        <canvas id="deepdiveChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Geo Sizing — Feasibility Check</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Geo</th>
+                                    <th class="number">Est. Monthly Users</th>
+                                    <th class="number">Meets 37K?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 600;">Brazil / LATAM</td>
+                                    <td class="number highlight">Pending query</td>
+                                    <td class="number" style="color: var(--yellow); font-weight: 600;">TBC</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;">Turkey</td>
+                                    <td class="number highlight">Pending query</td>
+                                    <td class="number" style="color: var(--yellow); font-weight: 600;">TBC</td>
+                                </tr>
+                                <tr>
+                                    <td>EU (EN control)</td>
+                                    <td class="number">Large</td>
+                                    <td class="number" style="color: var(--green);">Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>NA (EN control)</td>
+                                    <td class="number">Large</td>
+                                    <td class="number" style="color: var(--green);">Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="insight-card" style="border-left-color: var(--yellow);">
+                        <h3>Pre-Flight Query Required</h3>
+                        <p>A geo-sizing BQ query needs to run before committing to launch. It will confirm per-geo Tradeit volumes, current baseline partner completion rates, and whether the 37K minimum is achievable in one cycle. If volume is low, we extend to 2 cycles or add geos.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Power Calculation</h3>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>Parameter</th><th class="number">Value</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Base rate (p1)</td><td class="number">2.0%</td></tr>
+                                <tr><td>Target rate (p2)</td><td class="number">2.3% (+15% relative)</td></tr>
+                                <tr><td>Significance (&alpha;)</td><td class="number">0.05 (two-sided)</td></tr>
+                                <tr><td>Power (1&minus;&beta;)</td><td class="number">0.80</td></tr>
+                                <tr><td>Required n per period</td><td class="number highlight">~36,571</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  6. TIMELINE & OWNERSHIP                                       -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="timeline">
+            <h2 class="section-title">6. Timeline &amp; Ownership</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Week</th>
+                            <th>Action</th>
+                            <th>Owner</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>W1</strong></td>
+                            <td>Run geo-sizing query, confirm target geos have &ge;37K users/month</td>
+                            <td>Moritz</td>
+                            <td style="color: var(--yellow); font-weight: 600;">Pending</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W1</strong></td>
+                            <td>Send copy brief to translation vendor (PT-BR, Turkish)</td>
+                            <td>Activation Ops</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W2</strong></td>
+                            <td>Receive translations, QA review with native speakers</td>
+                            <td>Activation Ops</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W2</strong></td>
+                            <td>Pull baseline data for target geos from current/prior month</td>
+                            <td>Moritz</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W3</strong></td>
+                            <td>Create localised campaign variants in mission config</td>
+                            <td>Activation Ops</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W3</strong></td>
+                            <td>Notify Tradeit (informational &mdash; no partner action needed)</td>
+                            <td>Commercial</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr style="background-color: rgba(37, 99, 235, 0.04);">
+                            <td><strong>W3&ndash;W4</strong></td>
+                            <td>Campaign start: launch localised campaigns</td>
+                            <td>Activation Ops</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W7</strong></td>
+                            <td>Campaign end: pull results</td>
+                            <td>Moritz</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                        <tr>
+                            <td><strong>W8</strong></td>
+                            <td>Analysis + experiment conclusion write-up</td>
+                            <td>Moritz</td>
+                            <td style="color: var(--text-muted);">Not started</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">
+                <strong>Total time to launch:</strong> ~3 weeks (1 week translation, 1 week QA + baseline, 1 week campaign setup). Then 1 full campaign cycle (4 weeks) to collect data.
+            </p>
+
+            <div class="grid-3" style="margin-top: 1.5rem;">
+                <div class="insight-card" style="border-left-color: var(--accent);">
+                    <h3>Activation Ops</h3>
+                    <p>Primary execution owner. Commissions translations, creates campaign variants, launches and monitors. Owns rollback if guardrails trigger.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--green);">
+                    <h3>Moritz (PM)</h3>
+                    <p>Geo-sizing pre-flight, baseline data pull, end-of-cycle analysis, experiment conclusion. Owns the decision framework.</p>
+                </div>
+                <div class="insight-card" style="border-left-color: var(--text-muted);">
+                    <h3>Commercial</h3>
+                    <p>Notification only. Inform Tradeit that copy is being localised in select geos. No partner action required.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!--  7. ACTION — Decision Framework                                -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="section" id="decisions" style="border-color: var(--accent);">
+            <h2 class="section-title">7. Decision Framework</h2>
+            <div class="decision-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Key Questions (to answer post-experiment)</h3>
+
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Does localisation lift partner completion?</strong></p>
+                        <p>Primary question. Comparing partner challenge completion in localised geos vs their own EN baseline. Must see &ge;15% relative lift to declare success.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Which challenge step benefits most?</strong></p>
+                        <p>Challenge-to-challenge progression will reveal whether localisation helps at account linkage, first trade, or deeper trade tiers. This determines whether to localise all copy or focus on specific CTAs.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Does the partner landing page gap limit the effect?</strong></p>
+                        <p>Users click a localised CTA but land on tradeit.gg in English. If we see lift on early steps (AL) but not later (trade), the EN landing page may be the bottleneck. This informs Phase 2 scope.</p>
+                    </div>
+                    <div class="insight-card" style="border-left-color: var(--border);">
+                        <p><strong>Is the effect consistent across geos?</strong></p>
+                        <p>LATAM (Portuguese) and Turkey (Turkish) may respond differently. If one geo lifts and the other doesn&rsquo;t, the insight is geo-specific rather than universal.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Next Steps (Immediate)</h3>
+                    <ol style="margin-left: 1rem;">
+                        <li class="list-item"><strong>Run geo-sizing query</strong> &mdash; Confirm LATAM and Turkey have &ge;37K monthly Tradeit users.</li>
+                        <li class="list-item"><strong>Brief translation vendor</strong> &mdash; Send copy list (titles, descriptions, CTAs, reward labels) with gaming/esports context.</li>
+                        <li class="list-item"><strong>Pull baseline data</strong> &mdash; Per-geo partner completion rates for the prior EN month.</li>
+                        <li class="list-item"><strong>Align with Activation Ops</strong> &mdash; Confirm campaign setup timeline and monitoring plan.</li>
+                        <li class="list-item"><strong>Notify Tradeit (Commercial)</strong> &mdash; Informational only, no partner action.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Go/No-Go Criteria</h3>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-green"></span> <strong>SHIP</strong></p>
+                        <p>Partner completion &ge;15% relative lift<br>All guardrails pass<br>&rarr; Roll out to all non-EN geos. Add Arabic, Spanish in Phase 2.</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>PROMISING</strong></p>
+                        <p>Partner completion 5&ndash;15% lift<br>All guardrails pass<br>&rarr; Extend 1 more cycle for confidence. Consider Phase 2 languages.</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-yellow"></span> <strong>INCONCLUSIVE</strong></p>
+                        <p>Partner completion &lt;5% lift or neutral<br>&rarr; Review translation quality. Consider user-level A/B for higher sensitivity.</p>
+                    </div>
+                    <div class="insight-card">
+                        <p><span class="status-indicator status-red"></span> <strong>REVERT</strong></p>
+                        <p>Any guardrail fails<br>Gaming completion drops &gt;5pp<br>Partner completion drops &gt;20% relative<br>&rarr; Revert to EN. Investigate root cause before retry.</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Current Status</h3>
+                    <div style="background-color: var(--surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Experiment design complete</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Partner selected (Tradeit)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-green"></span> Languages selected (PT-BR, Turkish)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Geo-sizing query (pending)</p>
+                        <p style="margin-bottom: 0.5rem;"><span class="status-indicator status-yellow"></span> Translation (not started)</p>
+                        <p><span class="status-indicator status-yellow"></span> Campaign setup (not started)</p>
+                    </div>
+
+                    <h3 style="margin: 1.5rem 0 1rem; font-size: 1.1rem;">Rollback Plan</h3>
+                    <div class="insight-card" style="border-left-color: var(--red);">
+                        <p>Rollback is instant: Activation Ops swaps campaign copy back to EN. No engineering rollback needed. Triggers:</p>
+                        <p>&bull; Gaming completion drops &gt;5pp vs baseline<br>&bull; Partner completion drops &gt;20% relative<br>&bull; Support ticket spike in localised geos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Data sources: BigQuery &middot; CampaignService.UserMissions, CampaignService.Campaigns, dbt_user.dim__users (March 2026) |
+            Experiment design: <a href="docs/product_briefs/localisation-experiment-design.md" style="color: var(--accent); text-decoration: none;">localisation-experiment-design.md</a> |
+            PRD: <a href="docs/product_briefs/nonlinear-missions-prd.md" style="color: var(--accent); text-decoration: none;">Mission Conversion Pathways PRD</a> |
+            Internal PM Tool
+        </div>
+    </div>
+
+    <script>
+        var chartAvailable = typeof Chart !== 'undefined';
+
+        if (chartAvailable) {
+
+        Chart.defaults.color = '#6B7280';
+        Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+        var gridColor = '#E2E8F0';
+        var tooltipDefaults = {
+            backgroundColor: '#ffffff',
+            titleColor: '#1A1A2E',
+            bodyColor: '#6B7280',
+            borderColor: '#E2E8F0',
+            borderWidth: 1
+        };
+
+        /*
+         * Chart 1: EN vs RU Completion Rates — Grouped Bar
+         * Comparison → grouped bar chart (two language groups, two challenge types)
+         */
+        var guardrailCtx = document.getElementById('guardrailChart').getContext('2d');
+        new Chart(guardrailCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Gaming Completion', 'Partner Completion'],
+                datasets: [
+                    {
+                        label: 'EN (English)',
+                        data: [87.6, 2.4],
+                        backgroundColor: '#2563eb',
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'RU (Russian)',
+                        data: [92.4, 1.7],
+                        backgroundColor: '#94a3b8',
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'top', labels: { color: '#6b7280', usePointStyle: true } },
+                    tooltip: tooltipDefaults
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: {
+                        grid: { color: gridColor },
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { callback: function(v) { return v + '%'; } }
+                    }
+                }
+            }
+        });
+
+        /*
+         * Chart 2: Gaming vs Partner — Doughnut showing the gap
+         * Part-to-whole → doughnut (2 slices: completed vs dropped)
+         */
+        var funnelCtx = document.getElementById('funnelChart').getContext('2d');
+        new Chart(funnelCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Gaming Completed (597K)', 'Partner Completed (14K)', 'Dropped at Partner (569K)'],
+                datasets: [{
+                    data: [597, 14, 569],
+                    backgroundColor: ['#059669', '#2563eb', '#E2E8F0'],
+                    borderWidth: 1,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#6b7280', boxWidth: 12 } },
+                    tooltip: tooltipDefaults
+                },
+                cutout: '65%'
+            }
+        });
+
+        /*
+         * Chart 3: Target Geos — Horizontal bar showing known Tradeit traffic
+         * Ranking → horizontal bar (indexAxis: 'y')
+         * Using skippable video dashboard geo data as a proxy for Tradeit user distribution
+         */
+        var deepdiveCtx = document.getElementById('deepdiveChart').getContext('2d');
+        new Chart(deepdiveCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Brazil (PT-BR) *',
+                    'Turkey (TR) *',
+                    'Argentina (ES)',
+                    'Poland (EN control)',
+                    'Germany (EN control)',
+                    'United States (EN control)',
+                    'United Kingdom (EN control)',
+                    'France (EN control)'
+                ],
+                datasets: [{
+                    label: 'Relative Volume (indicative)',
+                    data: [192, 466, 127, 926, 241, 281, 116, 142],
+                    backgroundColor: function(context) {
+                        var i = context.dataIndex;
+                        if (i <= 1) return '#2563eb';
+                        if (i === 2) return '#d97706';
+                        return '#94a3b8';
+                    },
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipDefaults
+                },
+                scales: {
+                    x: { grid: { color: gridColor }, beginAtZero: true, ticks: { callback: function(v) { return v + 'K'; } } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+
+        } // end chartAvailable guard
+    </script>
+</body>
+</html>

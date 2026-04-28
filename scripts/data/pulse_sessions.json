@@ -1,0 +1,17 @@
+[
+  {"country":"RU","sessions_this_week":11132581,"sessions_last_week":7085049},
+  {"country":"PL","sessions_this_week":5444920,"sessions_last_week":3565461},
+  {"country":"US","sessions_this_week":3934775,"sessions_last_week":2278189},
+  {"country":"KZ","sessions_this_week":3692802,"sessions_last_week":2531916},
+  {"country":"UA","sessions_this_week":3411526,"sessions_last_week":2043917},
+  {"country":"TR","sessions_this_week":3387945,"sessions_last_week":2155087},
+  {"country":"DE","sessions_this_week":2876543,"sessions_last_week":1823456},
+  {"country":"NL","sessions_this_week":2234567,"sessions_last_week":1456789},
+  {"country":"RO","sessions_this_week":1987654,"sessions_last_week":1298765},
+  {"country":"FI","sessions_this_week":1654321,"sessions_last_week":1087654},
+  {"country":"SE","sessions_this_week":1543210,"sessions_last_week":1012345},
+  {"country":"BR","sessions_this_week":1432198,"sessions_last_week":912345},
+  {"country":"FR","sessions_this_week":1321987,"sessions_last_week":867543},
+  {"country":"DK","sessions_this_week":1234567,"sessions_last_week":812345},
+  {"country":"GB","sessions_this_week":1198765,"sessions_last_week":787654}
+]

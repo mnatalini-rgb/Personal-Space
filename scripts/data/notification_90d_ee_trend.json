@@ -1,0 +1,88 @@
+{
+  "analysis_date": "2026-04-23",
+  "window": "90 days",
+  "ninety_day_weighted_average_user_ctr": {
+    "reward_motivation": 20.9,
+    "competitive_pressure": 20.8,
+    "progress_completion": 16.1,
+    "live_reward_rush": 13.7
+  },
+  "ranking_comparison": {
+    "first_ee_test_winline_bofu": {
+      "1": "progress_completion (10.6%)",
+      "2": "live_reward_rush (9.4%)",
+      "3": "competitive_pressure (7.4%)",
+      "4": "reward_motivation (not tested)"
+    },
+    "seven_day_recent": {
+      "1": "reward_motivation (7.9%)",
+      "2": "competitive_pressure (7.1%)",
+      "3": "progress_completion (4.3%)",
+      "4": "live_reward_rush (3.5%)"
+    },
+    "ninety_day_sustained": {
+      "1": "reward_motivation (20.9%)",
+      "2": "competitive_pressure (20.8%)",
+      "3": "progress_completion (16.1%)",
+      "4": "live_reward_rush (13.7%)"
+    }
+  },
+  "weekly_data": {
+    "competitive_pressure": [
+      {"week": "2026-02-02", "user_ctr": 35.84, "users_impressed": 14547},
+      {"week": "2026-02-09", "user_ctr": 19.56, "users_impressed": 15734},
+      {"week": "2026-02-16", "user_ctr": 17.40, "users_impressed": 8599},
+      {"week": "2026-02-23", "user_ctr": 17.43, "users_impressed": 6345},
+      {"week": "2026-03-02", "user_ctr": 3.50, "users_impressed": 1258},
+      {"week": "2026-03-09", "user_ctr": 25.50, "users_impressed": 3028},
+      {"week": "2026-03-16", "user_ctr": 25.01, "users_impressed": 5729},
+      {"week": "2026-03-23", "user_ctr": 19.74, "users_impressed": 6039},
+      {"week": "2026-03-30", "user_ctr": 11.92, "users_impressed": 3254},
+      {"week": "2026-04-06", "user_ctr": 20.75, "users_impressed": 6708},
+      {"week": "2026-04-13", "user_ctr": 14.19, "users_impressed": 9060},
+      {"week": "2026-04-20", "user_ctr": 11.54, "users_impressed": 7380}
+    ],
+    "live_reward_rush": [
+      {"week": "2026-02-02", "user_ctr": 52.38, "users_impressed": 63},
+      {"week": "2026-02-09", "user_ctr": 19.98, "users_impressed": 17544},
+      {"week": "2026-02-16", "user_ctr": 11.90, "users_impressed": 13878},
+      {"week": "2026-02-23", "user_ctr": 11.99, "users_impressed": 8234},
+      {"week": "2026-03-02", "user_ctr": 2.95, "users_impressed": 1524},
+      {"week": "2026-03-09", "user_ctr": 27.45, "users_impressed": 9513},
+      {"week": "2026-03-16", "user_ctr": 14.99, "users_impressed": 14328},
+      {"week": "2026-03-23", "user_ctr": 11.10, "users_impressed": 10851},
+      {"week": "2026-03-30", "user_ctr": 6.07, "users_impressed": 5864},
+      {"week": "2026-04-06", "user_ctr": 13.34, "users_impressed": 3232},
+      {"week": "2026-04-13", "user_ctr": 12.42, "users_impressed": 17694},
+      {"week": "2026-04-20", "user_ctr": 5.67, "users_impressed": 13521}
+    ],
+    "progress_completion": [
+      {"week": "2026-02-02", "user_ctr": 50.86, "users_impressed": 116},
+      {"week": "2026-02-09", "user_ctr": 24.02, "users_impressed": 8219},
+      {"week": "2026-02-16", "user_ctr": 15.29, "users_impressed": 17421},
+      {"week": "2026-02-23", "user_ctr": 12.41, "users_impressed": 10710},
+      {"week": "2026-03-02", "user_ctr": 3.32, "users_impressed": 1866},
+      {"week": "2026-03-09", "user_ctr": 32.29, "users_impressed": 6277},
+      {"week": "2026-03-16", "user_ctr": 19.96, "users_impressed": 9584},
+      {"week": "2026-03-23", "user_ctr": 15.59, "users_impressed": 8270},
+      {"week": "2026-03-30", "user_ctr": 9.05, "users_impressed": 4378},
+      {"week": "2026-04-06", "user_ctr": 24.78, "users_impressed": 13965},
+      {"week": "2026-04-13", "user_ctr": 10.47, "users_impressed": 18315},
+      {"week": "2026-04-20", "user_ctr": 6.91, "users_impressed": 11730}
+    ],
+    "reward_motivation": [
+      {"week": "2026-02-02", "user_ctr": 38.64, "users_impressed": 9516},
+      {"week": "2026-02-09", "user_ctr": 20.56, "users_impressed": 22627},
+      {"week": "2026-02-16", "user_ctr": 17.68, "users_impressed": 10957},
+      {"week": "2026-02-23", "user_ctr": 18.48, "users_impressed": 7191},
+      {"week": "2026-03-02", "user_ctr": 4.93, "users_impressed": 1421},
+      {"week": "2026-03-09", "user_ctr": 30.62, "users_impressed": 4131},
+      {"week": "2026-03-16", "user_ctr": 24.57, "users_impressed": 6887},
+      {"week": "2026-03-23", "user_ctr": 18.35, "users_impressed": 6758},
+      {"week": "2026-03-30", "user_ctr": 11.44, "users_impressed": 3566},
+      {"week": "2026-04-06", "user_ctr": 26.31, "users_impressed": 10990},
+      {"week": "2026-04-13", "user_ctr": 14.95, "users_impressed": 12964},
+      {"week": "2026-04-20", "user_ctr": 11.79, "users_impressed": 9611}
+    ]
+  }
+}
